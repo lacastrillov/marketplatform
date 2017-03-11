@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<sitemesh>
+    
+    <mapping path="/*" decorator="/WEB-INF/decorators/defaultDecorator.jsp"/>
+    <!--<mapping path="/user" decorator="/WEB-INF/decorators/userDecorator.jsp"/>-->
+    
+    <mapping path="/rest/**" exclue="true"/>
+    <mapping path="**/vista/*/table.htm" exclue="true"/>
+    <mapping path="**/vista/*/report/**" exclue="true"/>
+    <mapping path="**/ajax/**" exclue="true"/>
+    <mapping path="**/fileupload/**" exclue="true"/>
+    <mapping path="**/lightbox/**" exclue="true"/>
+    <mapping path="/pagina/**" exclue="true"/>
+    
+</sitemesh>

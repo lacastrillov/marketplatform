@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "beacons-platform-dev",
+    "private_key_id": "207d33ce759cec77d1cccb4f4064beed06812887",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCyTpyCjrVT8qPR\nUHDP6vX/SVR02Lt5CG4alkcRl8QvjuavVsa3t2Uvr4y1jJEgSre51J5GiNFjPC12\nPEAulqFSSatCZ8kF0xX2uUi7Sft/VSIhVefSju0VXYRfgRKOdd8gvjSxCDWR6awT\nD2oQPbwm4TcfsfOgJuI+E4C4n42ME5pClk9TLt3wopq2upMLApr2uAoAFrkEUdLk\nUzovHmyM4uLg9KVQAEUuWJsLhI5Npb3aqUya6e5L/D7i5WKSLX5e+gb/AULfdHEG\nrwBFOyRwM2beoT/4pXavty9TrSIvLxOqQWFKa1R75Ucaq42AJqd+XEazyCB95mY7\nWETfj2xnAgMBAAECggEBAKt7FuIoxRK7I/lF13jeiz69E1Bcr8+y39EJ/cdZof/q\n+sheODavVc0Kk9R2H4xiz1cUuDM1mcpKMZ6oS0GC9BrjZqUykw3a+CCUCPK2L/1B\nrtVIfO7vLeuCSLBgvavsiG5A/wPS1VJC3I5oIKUF+lGZ/x2oUpkPTD5PG1hzefnf\ntPeBLuVpyzs4BQOcABZiQalwSmrwcEsyDLgQSyJn8ls1WzBHnu8Q0FxYizFccons\nQLoXSFT+hOiHv3GnxCVO67w65ywTVCHqR0nIhnfiijDPZu6g+gy3UaL5tTa97Rql\nOX/oj+U1SBYyAiVuAWWnjWul4UnINKXXgkq61at3RsECgYEA35vO7FGHJ8pL6RiX\nzV4NaT+48JCfcgl8Lr+Y7wQzrJUP5JULGv7zrxhKt+QECwhpyc0JX6TdtZRUumIj\nlgHSZvCTLliY091XdcrLRxvjydjz1UO7h6vYwTT5AlfaGBtZbYaAyyBjLyS7aHXZ\nJTlGCN+9XYDFVSLn4/puhicPG4kCgYEAzCLc3xas9OP9buj7AFlkKMfFfS1lIfzK\ndrmoU/Zg9UbuRzSN5UVvCzyapqjw+SGHXCchzvwYoFfP6DhEamWMp/c8xQcyJwOM\no/CefrASR8/tP189WiSqJHvyor0AbvOCpM2Fvd0yODzRrlQK3ppyY6GD+FOMDaJE\nnOvwINujnG8CgYEAh1FWy5Qa4m19urXzR4ifPQ4e8RXUJ8Ktr+yqtBoq20npsD6x\n1chr144vyVDnUXXp7wFxpruyn+v/yjsRpfm8RidYKjfbZHsSLmpm0cWC9+eex3SR\ny+ym42UXO9/GT8hdOfangkU7QJBOCU0n92rNgxlDE46V3IufIUuwDuccMWECgYEA\ntTIM04iRJR5qClSK15iBKyGHzsDIkA6OuCu7miuLjKvVPScM/IFRO6wjqeMzYi+8\nsrOZctyaD1lilkG7mKVi4IS4UDs+7Rpdb/dY+CLZVxzc/e9Pyf/ZdmD+0izpgZJs\nWFSFbi41MW3qwM6gh06YUo8/UOD34/Iw7QkQMFpFM8kCgYA1QBDJsLKxt/OJ0Sjy\nmxRQ8gICdMzgrVqqU1csW+mVQOgBpdj6wr63k5t/9JtCRMhOaYv77NNfTzGwry/X\n6oxF7mejWkMbbO/aJMJpapTmDMK4vCrP1iM52JORI9lK8JIEaTgokZuqk1h51PUZ\nDjKSKTjnOtvlOmgiaoDOsWVH3A==\n-----END PRIVATE KEY-----\n",
+    "client_email": "service@beacons-platform-dev.iam.gserviceaccount.com",
+    "client_id": "103405085909302927439",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service%40beacons-platform-dev.iam.gserviceaccount.com"
+}

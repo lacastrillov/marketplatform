@@ -1,0 +1,50 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.lacv.marketplatform.controllers.view.process;
+
+import com.lacv.marketplatform.dtos.LogProcessDto;
+import com.lacv.marketplatform.dtos.process.MainLocationPDto;
+import com.lacv.marketplatform.dtos.process.ProductoPDto;
+import com.lacv.marketplatform.dtos.process.ResultadoPDto;
+import com.lacv.marketplatform.dtos.process.UsuarioPDto;
+import com.dot.gcpbasedot.controller.ExtProcessController;
+import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.dto.MenuItem;
+import com.dot.gcpbasedot.dto.ProcessConfig;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ *
+ * @author lacastrillov
+ */
+@Controller
+@RequestMapping(value="/vista/processMainLocation")
+public class MainLocationViewProcessController extends ExtProcessController {
+    
+    @Autowired
+    MenuComponent menuComponent;
+    
+    
+    @PostConstruct
+    public void init(){
+        ProcessConfig process= new ProcessConfig("processMainLocation", "logProcess", LogProcessDto.class);
+        process.setMainProcessTitle("Gestionar Proceso Main Location");
+        process.addControlProcessView("crearMainLocation", "Crear Main Location", MainLocationPDto.class, ResultadoPDto.class);
+        process.addControlProcessView("activarUsuario", "Activar Usuario", UsuarioPDto.class, ProductoPDto.class);
+        
+        super.addControlMapping(process);
+        
+        MenuItem menuItem= new MenuItem("Procesos", "processMainLocation", "Gestionar Proceso Main Location");
+        menuComponent.addItemMenu(menuItem);
+        super.addMenuComponent(menuComponent);
+    }
+    
+    
+}

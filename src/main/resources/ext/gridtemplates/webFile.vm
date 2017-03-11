@@ -1,0 +1,15 @@
+<article id="detailResults" class="text-center clearfix">
+    <input type="checkbox" name="item_check" class="item_check" value="${item.id}" />
+    <a class="thumbnail col-xs-12"
+    #if ($item.type == "folder")
+        href='#?filter={"eq":{"webFile":${item.id}}}'
+    #else
+        href='#?id=${item.id}&tab=1'
+    #end
+    >
+      <figure><img class="img-responsive" src="/img/icon_types/${item.icon}.png" alt=""></figure>
+      <div class="cnt-usuario">
+        <strong>${item.name}</strong>
+      </div>
+    </a>
+</article>

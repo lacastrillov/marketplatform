@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "beacons-platform-dev",
+    "private_key_id": "db077e2eef3cc8b1bb9b53326abaaac24d3279ad",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDW3ioDSZz9KHIi\ngFUxNc29g5AyaWkhsRDqVMxxorRHpewE7acBvpC0dd/7GPq1+EIj5OGBOGUBn4tx\n3Kes3m1+QTGdw57PmKvq9juzbdJe6KxY5sc+Ta2RNawEE4Kk4zseYtTToiYlO67j\nIwm68dhKzhQyQ5gl6gaNYv/QLBG9KBrsd5DnB2HfxHbfonR57bgpquMrdxUvmrIO\nLzPJfFzTe60WbpSb+56aWVRlprdz2ppyCQ99PjDErc0d9YU9yCwdNMHoyv/B2g/E\n1wIG1yE5a6ccmnU1uuHCLBXImqKS+ncfMy3AGxeqeF82GrOvUYOVjI8w7a6P7H1Y\n2KdiSXKtAgMBAAECggEBAL41rbt7Tx5Mz7z7Hm+R0bAS53O5HPhWZ0MKDnIKNs22\ndFloiI9iw3b9YmpGkqrEOsjLtVVPNxtYwXjqfQTrYsKBtAqVQeFEpew6Tl9ouPKL\nxwZsRbVBzoTdnol9PAn7njooA3/V6y7KxucL/XEg5vhRtk9Ix0fJBEPlf9ApMwre\n9eaNuZsEC966xH1/vOwKUcFJPWF6mOygP1YiA9n1szMKHh6tAD4cVChjGy46M9ks\n6PdVIO3t5Gyb2cWYNMKfwj34d1GHwTxb7JBVe3YY5MYdRBVP/oPQX0xjK4UMzitk\n1/HCvXOOyJaXdLEg8Cbejhni18MvJ1RPW7blt0pkZYECgYEA+br5aHbDhzUEZ3c3\nORzuLMV9HlRpaPwm2jdgR8g6p5IQmzWMBBpLuAXRatH3/rh6I9Ey5Tqd7OVtf/kb\nUyo8Ju8knuNDn1FeYdjaxlwuUQHsNbODRAeXTg+37OMAwQio105ANC7pbafB044x\nlcTfzDptX/AqFFDYKFB8BEsXEKcCgYEA3EMgikDU1rN5uife5rsl9hbSarSiqnmE\n4DZleGC863BPLV/G5MFicPARkawoSalMr4Odt99vwG/XXBrjijWgnUPU4Qk0RFJr\nZtfIyIkayU1gDRMmowsOGbZlgqpUdz/SPrXcmQcLRighqxstdAPLtfouo5PCtXuy\nRFfaPp/mWIsCgYBLsjIRSRaBcD+SgR9bD3reVUpUnC+LZAr+0BQ+DeJBktO3yCZV\nxAa5lAHjSBvMuOxE2Q99TiQ6f1yOktqGfeHXx1spUifYLdjW/d1qjNx5L4UCzhP2\n1fo17ivJARHkcRSElrJ9Xs7grx3gW1SKWi+f/wHSN8D5gXvT1HmS75PhNwKBgHEC\ne/qTQuCZmxX5CPOHB/YYRYN8BI3E5XkIT82QjL2blPQp1Olfkztw4QLFurH4jCDt\nPYmuuS6Z83wNS7uIwkyOFfYT+94mD3bntdu2BKlN6r8qmUNEE8r7e1+sNsQsWZnV\nQ0a8h3tKcePRgOOqYuWOZEmHMXpd6dwI2zAQaGX7AoGALPcq3CGeDxiNOnRaPmmZ\nYuXT6ewWlBZeuPxEHP1lTsflLTSrp6vybd1brzfQo+Z1IiKZ16rSGJyYOASDHQcB\nLpsnze3TnQc33jtU8aAVAgL+FxfSugNDPso0aTvY5Vw8UYJExx0/GyTlsQwvvC39\nuEX1jUmit9X5yZQ9Mi7UJrA=\n-----END PRIVATE KEY-----\n",
+    "client_email": "beacons-platform-dev@appspot.gserviceaccount.com",
+    "client_id": "116407079692040370721",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/beacons-platform-dev%40appspot.gserviceaccount.com"
+}

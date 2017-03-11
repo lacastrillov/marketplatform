@@ -1,0 +1,102 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+body{
+	font-size: 15px;
+	line-height: 18px;
+	-webkit-font-smoothing: antialiased;
+	color: #FFF;
+	font-family: 'Open Sans', sans-serif;
+}
+
+header{
+	background: #19222b;
+	max-height: 100px;
+	padding: 10px 0;
+
+	-webkit-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    -moz-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    -ms-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+}
+
+header a.brand img{
+	height: 50px;
+}
+
+header a.registro{
+	color: #FFF;
+	text-align: right;
+	text-decoration: underline;
+	padding-top: 20px;
+}
+
+section#login{
+	height: calc(100vh - 130px);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2a3646+0,19222b+100 */
+	background: rgb(42,54,70); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(42,54,70,1) 0%, rgba(25,34,43,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(42,54,70,1) 0%,rgba(25,34,43,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(42,54,70,1) 0%,rgba(25,34,43,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a3646', endColorstr='#19222b',GradientType=0 ); /* IE6-9 */
+}
+
+section#login .box-login{
+	background: #FFF;
+	border-radius: 6px;
+	margin-top: 20vh;
+	min-height: 1px;
+	padding: 0 10px;
+
+	-webkit-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    -moz-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    -ms-box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+    box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+}
+
+section#login .box-input input{
+	border: none;
+	padding: 20px 0;
+	width: calc(100% - 50px);
+	color: #15252f;
+}
+
+section#login .box-input input:hover{
+	outline: none;
+}
+
+section#login .box-input input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: rgb(250, 255, 255);
+    background-image: none;
+    color: #15252f;
+}
+
+section#login .box-input:first-child{
+	border-bottom: 1px solid #747474;
+}
+
+section#login a.btn-ingreso{
+	display: block;
+	width: 100%;
+	background: #f9671e;
+	text-align: center;
+	color: #FFF;
+	height: 40px;
+	line-height: 40px;
+	margin: 20px 0;
+	border-radius: 6px;
+}
+
+section#login a.link-pass{
+	text-align: center;
+	color: #FFF;
+	width: 100%;
+	display: block;
+}
+
+
+footer{
+	max-height: 50px;
+	padding: 10px 0;
+	background: #f6f7f9;
+	color: #15252f;
+}
