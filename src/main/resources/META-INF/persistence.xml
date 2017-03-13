@@ -3,23 +3,27 @@
   <persistence-unit name="MarketPlatformPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.lacv.marketplatform.entities.Category</class>
-    <class>com.lacv.marketplatform.entities.Mail</class>
-    <class>com.lacv.marketplatform.entities.PurchaseorderDetail</class>
-    <class>com.lacv.marketplatform.entities.Payment</class>
+    <class>com.lacv.marketplatform.entities.Commerce</class>
     <class>com.lacv.marketplatform.entities.InventoryOrder</class>
-    <class>com.lacv.marketplatform.entities.PurchaseOrder</class>
+    <class>com.lacv.marketplatform.entities.InventoryorderDetail</class>
+    <class>com.lacv.marketplatform.entities.LogProcess</class>
+    <class>com.lacv.marketplatform.entities.Mail</class>
     <class>com.lacv.marketplatform.entities.MailTemplate</class>
+    <class>com.lacv.marketplatform.entities.MainLocation</class>
+    <class>com.lacv.marketplatform.entities.Payment</class>
     <class>com.lacv.marketplatform.entities.Product</class>
     <class>com.lacv.marketplatform.entities.Property</class>
+    <class>com.lacv.marketplatform.entities.PurchaseOrder</class>
+    <class>com.lacv.marketplatform.entities.PurchaseorderDetail</class>
+    <class>com.lacv.marketplatform.entities.Role</class>
     <class>com.lacv.marketplatform.entities.Supplier</class>
-    <class>com.lacv.marketplatform.entities.InventoryorderDetail</class>
+    <class>com.lacv.marketplatform.entities.User</class>
+    <class>com.lacv.marketplatform.entities.UserRole</class>
+    <class>com.lacv.marketplatform.entities.WebFile</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="${jdbc.url}"/>
-      <property name="javax.persistence.jdbc.driver" value="${jdbc.driverClassName}"/>
-      <property name="javax.persistence.jdbc.user" value="${jdbc.username}"/>
-      <property name="javax.persistence.jdbc.password" value="${jdbc.password}"/>
       <property name="eclipselink.cache.shared.default" value="false"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="wildfly.jpa.default-unit" value="true"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="e1"/>
     </properties>
   </persistence-unit>
 </persistence>

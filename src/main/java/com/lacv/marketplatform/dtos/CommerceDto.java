@@ -51,7 +51,7 @@ public class CommerceDto implements BaseEntity {
     @TextField("Fecha Creaci&oacute;n")
     private Date creationDate;
     
-    @TextField("Centro Comercial")
+    @TextField("Ubicaci&oacute;n Principal")
     private MainLocationDto mainLocation;
     
 
