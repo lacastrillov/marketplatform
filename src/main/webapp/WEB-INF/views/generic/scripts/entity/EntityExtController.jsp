@@ -76,10 +76,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
     Instance.loadGridData= function(){
         Instance.entityExtView.setFilterStore(JSON.stringify(Instance.filter));
         Instance.entityExtView.reloadPageStore(1);
-        if(Instance.entityExtView.formContainer!==null){
-            var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
-            formComponent.setActiveRecord(null);
-        }
+        //Instance.loadFormData("");
     };
     
     Instance.loadFormData= function(id){

@@ -18,6 +18,8 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
     
     //*******************************************************
     
+    var util= new Util();
+    
     
     Instance.init= function(){
         Instance.pluralEntityTitle= '${viewConfig.pluralEntityTitle}';
@@ -86,7 +88,20 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
                     },
                     scope: this
                 }
-            }
+            }/*,
+            getDisplayValue: function() {
+                var me = this,
+                value = me.value,
+                record = null;
+                if(value) {
+                    record = me.getStore().findRecord(me.valueField, value);
+                }
+                if(record) {
+                    console.log(record.get(me.displayField));
+                    return util.htmlEntitiesDecode(record.get(me.displayField));
+                }
+                return value;
+            }*/
         });
         
         if(component!=='grid'){

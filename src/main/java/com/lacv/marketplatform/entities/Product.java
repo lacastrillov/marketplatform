@@ -9,6 +9,7 @@ import com.dot.gcpbasedot.domain.BaseEntity;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -80,15 +81,17 @@ public class Product implements BaseEntity {
     private String keywords;
     @Column(name = "order_level")
     private Integer orderLevel;
-    @Size(max = 45)
-    @Column(name = "image")
-    private String image;
+    @Column(name = "featured")
+    private Boolean featured;
     @Size(max = 45)
     @Column(name = "status")
     private String status;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private Category category;
+    @JoinColumn(name = "subcategory_id", referencedColumnName = "id")
+    @ManyToOne
+    private SubCategory subCategory;
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @ManyToOne
     private Supplier supplier;
@@ -99,6 +102,8 @@ public class Product implements BaseEntity {
     private List<InventoryorderDetail> inventoryorderDetailList;
     @OneToMany(mappedBy = "product")
     private List<PurchaseorderDetail> purchaseorderDetailList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductImage> productImageList;
 
     public Product() {
     }
@@ -227,12 +232,12 @@ public class Product implements BaseEntity {
         this.orderLevel = orderLevel;
     }
 
-    public String getImage() {
-        return image;
+    public Boolean getFeatured() {
+        return featured;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFeatured(Boolean featured) {
+        this.featured = featured;
     }
 
     public String getStatus() {
@@ -249,6 +254,14 @@ public class Product implements BaseEntity {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public SubCategory getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
     }
 
     public Supplier getSupplier() {
@@ -281,6 +294,14 @@ public class Product implements BaseEntity {
 
     public void setPurchaseorderDetailList(List<PurchaseorderDetail> purchaseorderDetailList) {
         this.purchaseorderDetailList = purchaseorderDetailList;
+    }
+    
+    public List<ProductImage> getProductImageList() {
+        return productImageList;
+    }
+
+    public void setProductImageList(List<ProductImage> productImageList) {
+        this.productImageList = productImageList;
     }
 
     @Override

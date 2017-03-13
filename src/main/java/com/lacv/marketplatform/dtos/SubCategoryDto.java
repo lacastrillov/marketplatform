@@ -15,13 +15,12 @@ import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
 import com.dot.gcpbasedot.enums.HideView;
-import java.util.List;
 
 /**
  *
- * @author lacastrillov
+ * @author grupot
  */
-public class CategoryDto implements BaseEntity {
+public class SubCategoryDto implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -35,26 +34,28 @@ public class CategoryDto implements BaseEntity {
     @TextField("Nombre")
     private String name;
     
+    @Order(3)
     @TextField("Descripci&oacute;n")
     @TypeFormField(FieldType.TEXT_AREA)
     private String description;
     
+    @Order(4)
     @TextField("Imagen")
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
     @HideField({HideView.FILTER})
     @ColumnWidth(300)
     private String image;
     
-    private List<ProductDto> productList;
+    private CategoryDto category;
 
-    public CategoryDto() {
+    public SubCategoryDto() {
     }
 
-    public CategoryDto(Integer id) {
+    public SubCategoryDto(Integer id) {
         this.id = id;
     }
 
-    public CategoryDto(Integer id, String name) {
+    public SubCategoryDto(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -93,12 +94,12 @@ public class CategoryDto implements BaseEntity {
         this.image = image;
     }
 
-    public List<ProductDto> getProductList() {
-        return productList;
+    public CategoryDto getCategory() {
+        return category;
     }
 
-    public void setProductList(List<ProductDto> productList) {
-        this.productList = productList;
+    public void setCategory(CategoryDto category) {
+        this.category = category;
     }
 
     @Override
@@ -111,10 +112,10 @@ public class CategoryDto implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CategoryDto)) {
+        if (!(object instanceof SubCategoryDto)) {
             return false;
         }
-        CategoryDto other = (CategoryDto) object;
+        SubCategoryDto other = (SubCategoryDto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +124,7 @@ public class CategoryDto implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.CategoryDto[ id=" + id + " ]";
+        return "com.lacv.marketplatform.entities.SubCategoryDto[ id=" + id + " ]";
     }
     
 }

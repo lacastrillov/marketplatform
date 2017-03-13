@@ -9,6 +9,7 @@ import com.dot.gcpbasedot.mapper.BasicEntityMapper;
 import com.lacv.marketplatform.dtos.CategoryDto;
 import com.lacv.marketplatform.dtos.CommerceDto;
 import com.lacv.marketplatform.dtos.ProductDto;
+import com.lacv.marketplatform.dtos.SubCategoryDto;
 import com.lacv.marketplatform.dtos.SupplierDto;
 import com.lacv.marketplatform.entities.Product;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class ProductMapper implements BasicEntityMapper {
     CategoryMapper categoryMapper;
     
     @Autowired
+    SubCategoryMapper subCategoryMapper;
+    
+    @Autowired
     SupplierMapper supplierMapper;
     
     @Autowired
@@ -42,10 +46,11 @@ public class ProductMapper implements BasicEntityMapper {
             dto.setBrand(entity.getBrand());
             dto.setBuyUnitPrice(entity.getBuyUnitPrice());
             dto.setCategory((CategoryDto) categoryMapper.entityToDto(entity.getCategory()));
+            dto.setSubCategory((SubCategoryDto) subCategoryMapper.entityToDto(entity.getSubCategory()));
             dto.setCode(entity.getCode());
             dto.setDescription(entity.getDescription());
             dto.setDiscount(entity.getDiscount());
-            dto.setImage(entity.getImage());
+            dto.setFeatured(entity.getFeatured());
             dto.setKeywords(entity.getKeywords());
             dto.setName(entity.getName());
             dto.setOrderLevel(entity.getOrderLevel());

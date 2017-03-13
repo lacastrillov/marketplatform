@@ -6,33 +6,28 @@
 package com.lacv.marketplatform.entities;
 
 import com.dot.gcpbasedot.domain.BaseEntity;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author lacastrillov
+ * @author grupot
  */
 @Entity
-@Table(name = "category")
+@Table(name = "product_image")
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
-public class Category implements BaseEntity {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private List<SubCategory> subCategoryList;
+    @NamedQuery(name = "ProductImage.findAll", query = "SELECT p FROM ProductImage p")})
+public class ProductImage implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,29 +36,25 @@ public class Category implements BaseEntity {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 300)
-    @Column(name = "description")
-    private String description;
-    @Size(max = 300)
+    @Size(min = 1, max = 200)
     @Column(name = "image")
     private String image;
-    @OneToMany(mappedBy = "category")
-    private List<Product> productList;
+    @Column(name = "order_level")
+    private Integer order;
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Product product;
 
-    public Category() {
+    public ProductImage() {
     }
 
-    public Category(Integer id) {
+    public ProductImage(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String name) {
+    public ProductImage(Integer id, String image) {
         this.id = id;
-        this.name = name;
+        this.image = image;
     }
 
     @Override
@@ -76,22 +67,6 @@ public class Category implements BaseEntity {
         this.id = (Integer) id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImage() {
         return image;
     }
@@ -100,12 +75,20 @@ public class Category implements BaseEntity {
         this.image = image;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
@@ -118,10 +101,10 @@ public class Category implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof ProductImage)) {
             return false;
         }
-        Category other = (Category) object;
+        ProductImage other = (ProductImage) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -130,15 +113,7 @@ public class Category implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.Category[ id=" + id + " ]";
-    }
-
-    public List<SubCategory> getSubCategoryList() {
-        return subCategoryList;
-    }
-
-    public void setSubCategoryList(List<SubCategory> subCategoryList) {
-        this.subCategoryList = subCategoryList;
+        return "com.lacv.marketplatform.entities.ProductImage[ id=" + id + " ]";
     }
     
 }

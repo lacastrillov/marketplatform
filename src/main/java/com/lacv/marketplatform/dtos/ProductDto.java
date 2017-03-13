@@ -6,14 +6,12 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
-import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
-import com.dot.gcpbasedot.enums.HideView;
 import java.util.Date;
 import java.util.List;
 
@@ -37,13 +35,6 @@ public class ProductDto implements BaseEntity {
     @Order(3)
     @TextField("Nombre")
     private String name;
-    
-    @Order(4)
-    @TextField("Imagen")
-    @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
-    @HideField({HideView.FILTER})
-    @ColumnWidth(300)
-    private String image;
     
     @Order(5)
     @TextField("Marca")
@@ -91,19 +82,27 @@ public class ProductDto implements BaseEntity {
     private String description;
     
     @Order(16)
-    @TextField("Estado")
-    @TypeFormField(value = FieldType.LIST, data = {"Activo", "Inactivo", "Descontinuado", "Eliminado"})
-    private String status;
+    @TextField("Destacado")
+    private Boolean featured;
     
     @Order(17)
+    @TextField("Estado")
+    @TypeFormField(value = FieldType.LIST, data = {"Activo", "Agotado", "Inactivo", "Descontinuado", "Eliminado"})
+    private String status;
+    
+    @Order(18)
     @TextField("Categor&iacute;a")
     private CategoryDto category;
     
-    @Order(18)
+    @Order(19)
+    @TextField("Sub Categor&iacute;a")
+    private SubCategoryDto subCategory;
+    
+    @Order(20)
     @TextField("Proveedor")
     private SupplierDto supplier;
     
-    @Order(19)
+    @Order(21)
     @TextField("Comercio")
     private CommerceDto commerce;
     
@@ -238,12 +237,12 @@ public class ProductDto implements BaseEntity {
         this.orderLevel = orderLevel;
     }
 
-    public String getImage() {
-        return image;
+    public Boolean getFeatured() {
+        return featured;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFeatured(Boolean featured) {
+        this.featured = featured;
     }
 
     public String getStatus() {
@@ -260,6 +259,14 @@ public class ProductDto implements BaseEntity {
 
     public void setCategory(CategoryDto category) {
         this.category = category;
+    }
+
+    public SubCategoryDto getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(SubCategoryDto subCategory) {
+        this.subCategory = subCategory;
     }
 
     public SupplierDto getSupplier() {

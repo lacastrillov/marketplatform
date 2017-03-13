@@ -3,58 +3,62 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.lacv.marketplatform.dtos;
+package com.lacv.marketplatform.entities;
 
-import com.dot.gcpbasedot.annotation.ColumnWidth;
-import com.dot.gcpbasedot.annotation.HideField;
-import com.dot.gcpbasedot.annotation.NotNull;
-import com.dot.gcpbasedot.annotation.Order;
-import com.dot.gcpbasedot.annotation.ReadOnly;
-import com.dot.gcpbasedot.annotation.TextField;
-import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
-import com.dot.gcpbasedot.enums.FieldType;
-import com.dot.gcpbasedot.enums.HideView;
-import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author lacastrillov
+ * @author grupot
  */
-public class CategoryDto implements BaseEntity {
+@Entity
+@Table(name = "sub_category")
+@NamedQueries({
+    @NamedQuery(name = "SubCategory.findAll", query = "SELECT s FROM SubCategory s")})
+public class SubCategory implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
-    
-    @Order(1)
-    @ColumnWidth(100)
-    @ReadOnly
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
-    
-    @Order(2)
+    @Basic(optional = false)
     @NotNull
-    @TextField("Nombre")
+    @Size(min = 1, max = 100)
+    @Column(name = "name")
     private String name;
-    
-    @TextField("Descripci&oacute;n")
-    @TypeFormField(FieldType.TEXT_AREA)
+    @Size(max = 200)
+    @Column(name = "description")
     private String description;
-    
-    @TextField("Imagen")
-    @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
-    @HideField({HideView.FILTER})
-    @ColumnWidth(300)
+    @Size(max = 200)
+    @Column(name = "image")
     private String image;
-    
-    private List<ProductDto> productList;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Category category;
 
-    public CategoryDto() {
+    public SubCategory() {
     }
 
-    public CategoryDto(Integer id) {
+    public SubCategory(Integer id) {
         this.id = id;
     }
 
-    public CategoryDto(Integer id, String name) {
+    public SubCategory(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -93,12 +97,12 @@ public class CategoryDto implements BaseEntity {
         this.image = image;
     }
 
-    public List<ProductDto> getProductList() {
-        return productList;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setProductList(List<ProductDto> productList) {
-        this.productList = productList;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -111,10 +115,10 @@ public class CategoryDto implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CategoryDto)) {
+        if (!(object instanceof SubCategory)) {
             return false;
         }
-        CategoryDto other = (CategoryDto) object;
+        SubCategory other = (SubCategory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +127,7 @@ public class CategoryDto implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.CategoryDto[ id=" + id + " ]";
+        return "com.lacv.marketplatform.entities.SubCategory[ id=" + id + " ]";
     }
     
 }

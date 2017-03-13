@@ -245,7 +245,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             onReset: function(){
                 this.setActiveRecord(null);
                 this.getForm().reset();
-                parentExtController.loadFormData("");
             },
             
             renderReplaceActiveRecord: function(record){

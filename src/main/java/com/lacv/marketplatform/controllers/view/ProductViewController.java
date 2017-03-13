@@ -13,6 +13,7 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
+import com.lacv.marketplatform.entities.ProductImage;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,8 @@ public class ProductViewController extends ExtViewController {
         ViewConfig view= new ViewConfig("product", "name", productService, ProductDto.class);
         view.setSingularEntityTitle("Producto");
         view.setPluralEntityTitle("Productos");
-        view.setMultipartFormData(true);
+        view.addChildExtView("productImage", ProductImage.class, ViewConfig.TCV_STANDARD);
+        view.addComboboxChildDependent("category", "subCategory");
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Productos", "product", "Gestionar Productos");

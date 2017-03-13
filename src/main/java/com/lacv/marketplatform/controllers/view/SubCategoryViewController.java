@@ -6,14 +6,13 @@
 
 package com.lacv.marketplatform.controllers.view;
 
-import com.lacv.marketplatform.dtos.CategoryDto;
-import com.lacv.marketplatform.mappers.CategoryMapper;
-import com.lacv.marketplatform.services.CategoryService;
+import com.lacv.marketplatform.dtos.SubCategoryDto;
+import com.lacv.marketplatform.mappers.SubCategoryMapper;
+import com.lacv.marketplatform.services.SubCategoryService;
 import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
-import com.lacv.marketplatform.entities.SubCategory;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,32 +23,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author lacastrillov
  */
 @Controller
-@RequestMapping(value="/vista/category")
-public class CategoryViewController extends ExtViewController {
+@RequestMapping(value="/vista/subCategory")
+public class SubCategoryViewController extends ExtViewController {
     
     @Autowired
-    CategoryService categoryService;
+    SubCategoryService subCategoryService;
     
     @Autowired
     MenuComponent menuComponent;
     
     @Autowired
-    CategoryMapper categoryMapper;
+    SubCategoryMapper subCategoryMapper;
     
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("category", "name", categoryService, CategoryDto.class);
-        view.setSingularEntityTitle("Categoria");
-        view.setPluralEntityTitle("Categorias");
+        ViewConfig view= new ViewConfig("subCategory", "name", subCategoryService, SubCategoryDto.class);
+        view.setSingularEntityTitle("Sub Categoria");
+        view.setPluralEntityTitle("Sub Categorias");
         view.setMultipartFormData(true);
-        view.addChildExtView("subCategory", SubCategory.class, ViewConfig.TCV_STANDARD);
-        view.addInternalViewButton("product", "Ver productos");
         super.addControlMapping(view);
-        
-        MenuItem menuItem= new MenuItem("Productos", "category", "Gestionar Categorias");
-        menuComponent.addItemMenu(menuItem);
-        super.addMenuComponent(menuComponent);
     }
     
     

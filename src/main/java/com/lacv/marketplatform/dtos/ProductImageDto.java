@@ -7,7 +7,6 @@ package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
 import com.dot.gcpbasedot.annotation.HideField;
-import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
@@ -15,13 +14,12 @@ import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
 import com.dot.gcpbasedot.enums.HideView;
-import java.util.List;
 
 /**
  *
- * @author lacastrillov
+ * @author grupot
  */
-public class CategoryDto implements BaseEntity {
+public class ProductImageDto implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -31,32 +29,30 @@ public class CategoryDto implements BaseEntity {
     private Integer id;
     
     @Order(2)
-    @NotNull
-    @TextField("Nombre")
-    private String name;
-    
-    @TextField("Descripci&oacute;n")
-    @TypeFormField(FieldType.TEXT_AREA)
-    private String description;
-    
     @TextField("Imagen")
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
     @HideField({HideView.FILTER})
     @ColumnWidth(300)
     private String image;
     
-    private List<ProductDto> productList;
+    @Order(3)
+    @TextField("Orden")
+    private Integer order;
+    
+    @Order(4)
+    @TextField("Producto")
+    private ProductDto product;
 
-    public CategoryDto() {
+    public ProductImageDto() {
     }
 
-    public CategoryDto(Integer id) {
+    public ProductImageDto(Integer id) {
         this.id = id;
     }
 
-    public CategoryDto(Integer id, String name) {
+    public ProductImageDto(Integer id, String image) {
         this.id = id;
-        this.name = name;
+        this.image = image;
     }
 
     @Override
@@ -69,22 +65,6 @@ public class CategoryDto implements BaseEntity {
         this.id = (Integer) id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImage() {
         return image;
     }
@@ -93,12 +73,20 @@ public class CategoryDto implements BaseEntity {
         this.image = image;
     }
 
-    public List<ProductDto> getProductList() {
-        return productList;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setProductList(List<ProductDto> productList) {
-        this.productList = productList;
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public ProductDto getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductDto product) {
+        this.product = product;
     }
 
     @Override
@@ -111,10 +99,10 @@ public class CategoryDto implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CategoryDto)) {
+        if (!(object instanceof ProductImageDto)) {
             return false;
         }
-        CategoryDto other = (CategoryDto) object;
+        ProductImageDto other = (ProductImageDto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +111,7 @@ public class CategoryDto implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.CategoryDto[ id=" + id + " ]";
+        return "com.lacv.marketplatform.entities.ProductImageDto[ id=" + id + " ]";
     }
     
 }

@@ -272,7 +272,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             },
 
             onReset: function(){
-                this.setActiveRecord(null);
                 this.getForm().reset();
                 parentExtController.loadFormData("");
             },
@@ -312,6 +311,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                             
                         }
                         if(typeof(value) !== 'undefined'){
+                            //value= util.htmlEntitiesDecode(value);
                             renderReplace.component.setValue(value);
                         }
                     }
@@ -361,8 +361,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 trackMouseOver: !${viewConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        if(formContainer!==null){
-                            formContainer.child('#form'+modelName).setActiveRecord(selected[0] || null);
+                        if(formContainer!==null && selected[0]){
+                            formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
                         }
                     },
                     export: function(typeReport){
