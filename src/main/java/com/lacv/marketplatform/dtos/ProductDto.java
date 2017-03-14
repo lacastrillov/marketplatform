@@ -87,7 +87,7 @@ public class ProductDto implements BaseEntity {
     
     @Order(17)
     @TextField("Estado")
-    @TypeFormField(value = FieldType.LIST, data = {"Activo", "Agotado", "Inactivo", "Descontinuado", "Eliminado"})
+    @TypeFormField(value = FieldType.LIST, data = {"Publicado", "Agotado", "Despublicado", "Descontinuado", "Eliminado"})
     private String status;
     
     @Order(18)
