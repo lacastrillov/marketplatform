@@ -44,6 +44,7 @@ public class PaymentViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Pagos", "payment", "Gestionar Pagos");
+        menuItem.setParentPosition(10);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

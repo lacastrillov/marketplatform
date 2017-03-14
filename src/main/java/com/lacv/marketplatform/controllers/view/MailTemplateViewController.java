@@ -44,6 +44,7 @@ public class MailTemplateViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Correos", "mailTemplate", "Gestionar Plantillas de Correo");
+        menuItem.setParentPosition(5);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

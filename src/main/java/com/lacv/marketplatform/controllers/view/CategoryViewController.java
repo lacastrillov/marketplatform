@@ -13,11 +13,16 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
+import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.SubCategory;
+import com.lacv.marketplatform.services.SubCategoryService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -29,6 +34,9 @@ public class CategoryViewController extends ExtViewController {
     
     @Autowired
     CategoryService categoryService;
+    
+    @Autowired
+    SubCategoryService subCategoryService;
     
     @Autowired
     MenuComponent menuComponent;
@@ -48,9 +56,23 @@ public class CategoryViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Productos", "category", "Gestionar Categorias");
+        menuItem.setParentPosition(7);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }
     
+    @RequestMapping(value = "/component/menu-categories-subcategories", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView getMenuCategoriesSubcategories() {
+        ModelAndView mav = new ModelAndView("market/menu_categories_subcategories");
+        
+        List<Category> categories= categoryService.listAll();
+        for(Category category: categories){
+            category.setSubCategoryList(subCategoryService.findByParameter("category", category));
+        }
+        
+        mav.addObject("categories", categories);
+        
+        return mav;
+    }
     
 }

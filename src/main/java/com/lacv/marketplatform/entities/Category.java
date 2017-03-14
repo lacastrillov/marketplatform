@@ -31,9 +31,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
 public class Category implements BaseEntity {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private List<SubCategory> subCategoryList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +50,8 @@ public class Category implements BaseEntity {
     private String image;
     @OneToMany(mappedBy = "category")
     private List<Product> productList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<SubCategory> subCategoryList;
 
     public Category() {
     }
@@ -99,6 +98,14 @@ public class Category implements BaseEntity {
     public void setImage(String image) {
         this.image = image;
     }
+    
+    public List<SubCategory> getSubCategoryList() {
+        return subCategoryList;
+    }
+
+    public void setSubCategoryList(List<SubCategory> subCategoryList) {
+        this.subCategoryList = subCategoryList;
+    }
 
     public List<Product> getProductList() {
         return productList;
@@ -133,12 +140,6 @@ public class Category implements BaseEntity {
         return "com.lacv.marketplatform.entities.Category[ id=" + id + " ]";
     }
 
-    public List<SubCategory> getSubCategoryList() {
-        return subCategoryList;
-    }
-
-    public void setSubCategoryList(List<SubCategory> subCategoryList) {
-        this.subCategoryList = subCategoryList;
-    }
+    
     
 }

@@ -44,6 +44,7 @@ public class SupplierViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Pedidos", "supplier", "Gestionar Proveedores");
+        menuItem.setParentPosition(8);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

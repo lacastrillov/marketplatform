@@ -40,7 +40,7 @@ CREATE TABLE `marketplatform`.`sub_category` (
 
 ALTER TABLE `marketplatform`.`product` 
 ADD COLUMN `subcategory_id` INT NULL AFTER `category_id`,
-ADD INDEX `fk_product_1_idx` (`subcategory_id` ASC);
+ADD INDEX `fk_product_4_idx` (`subcategory_id` ASC);
 
 ALTER TABLE `marketplatform`.`product` 
 ADD CONSTRAINT `FK_product_subcategory_id`
@@ -50,4 +50,4 @@ ADD CONSTRAINT `FK_product_subcategory_id`
   ON UPDATE NO ACTION;
 
 ALTER TABLE `marketplatform`.`product` 
-ADD COLUMN `featured` `featured` TINYINT(4) NULL DEFAULT 0;
+ADD COLUMN `featured` TINYINT(4) NULL DEFAULT 0;

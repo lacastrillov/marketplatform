@@ -45,6 +45,7 @@ public class PropertyViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Configuraci&oacute;n", "property", "Gestionar Propiedades");
+        menuItem.setParentPosition(2);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

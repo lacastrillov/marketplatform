@@ -48,7 +48,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
     @Override
     @Transactional(readOnly= true)
     public WebFile findByPath(String path){
-        WebFile webFile=null, parentFile=null;
+        WebFile webFile, parentFile=null;
         String[] folders= path.split("/");
         
         if(folders.length>0){

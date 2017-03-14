@@ -52,6 +52,7 @@ public class WebFileViewController extends ExtFileExplorerController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Gestor de Contenidos", "webFile", "Explorador de Archivos");
+        menuItem.setParentPosition(3);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

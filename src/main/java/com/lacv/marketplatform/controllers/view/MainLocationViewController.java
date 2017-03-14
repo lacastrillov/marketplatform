@@ -44,6 +44,7 @@ public class MainLocationViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Comercios", "mainLocation", "Gestionar Ubicaciones Principales");
+        menuItem.setParentPosition(6);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }

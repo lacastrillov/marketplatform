@@ -46,6 +46,7 @@ public class PurchaseOrderViewController extends ExtViewController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Ordenes de Compra", "purchaseOrder", "Gestionar Ordenes de Compra");
+        menuItem.setParentPosition(9);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
     }
