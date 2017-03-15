@@ -17,6 +17,7 @@ import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.FileService;
 import com.dot.gcpbasedot.util.Util;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.FilenameUtils;
@@ -55,9 +56,9 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/create.htm")
     @ResponseBody
     @Override
-    public String create(@RequestParam String data, @RequestParam(required = false) String callback) {
-        String result= super.create(data, callback, entityRef);
-        JSONObject jsonResult= new JSONObject(result);
+    public byte[] create(@RequestParam String data, @RequestParam(required = false) String callback) {
+        byte[] result= super.create(data, callback, entityRef);
+        JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
         
         WebFile webFile= webFileService.findById(jsonResult.getJSONObject("data").getLong("id"));
         String path= webFile.getPath();
@@ -90,7 +91,7 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/update.htm")
     @ResponseBody
     @Override
-    public String update(@RequestParam String data, @RequestParam(required = false) String callback) {
+    public byte[] update(@RequestParam String data, @RequestParam(required = false) String callback) {
         JSONObject jsonObject= new JSONObject(data);
         
         if(jsonObject.has("id") && jsonObject.has("name")){

@@ -32,11 +32,11 @@
                                 <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
                             </div>
                         </div><br/>
-                        <div class="thumbnail">
+                        <!--<div class="thumbnail">
                             <img src="/themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
                             <div class="caption">
                                 <h5>Payment Methods</h5>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- Sidebar end=============================================== -->
