@@ -16,7 +16,7 @@
             <div class="thumbnail">
                 <a href="/tienda/detalle-producto?code=${product.code}" style="height: 200px;">
                     <c:if test="${numImages>0}">
-                        <img style="max-width: 250px; max-height: 200px;" src="${product.productImageList[0].image}" alt="${product.name}"/>
+                        <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
                     </c:if>
                     <c:if test="${numImages==0}">
                         <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
