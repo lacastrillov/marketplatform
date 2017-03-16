@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <bean id="queriesCategory" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="countProductsByCategories">
+                    <value>
+                        select pr.category_id, count(*) as count from product pr
+                        join category ca on ca.id= pr.category_id
+                        group by pr.category_id
+                    </value>
+                </entry>
+                <entry key="countProductsBySubcategories">
+                    <value>
+                        select pr.subcategory_id, count(*) as count from product pr
+                        join sub_category su on su.id= pr.subcategory_id
+                        group by pr.subcategory_id
+                    </value>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+    
+</beans>

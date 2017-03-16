@@ -16,7 +16,9 @@ import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.services.SubCategoryService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,7 +72,21 @@ public class CategoryViewController extends ExtViewController {
             category.setSubCategoryList(subCategoryService.findByParameter("category", category));
         }
         
+        Map<Integer, Long> countProductsByCategories= new HashMap<>();
+        List<Map<String, Object>> listCountProductsByCategories= categoryService.findAllMapEntities("countProductsByCategories", new String[]{}, new Object[]{});
+        for(Map<String, Object> item: listCountProductsByCategories){
+            countProductsByCategories.put((Integer)item.get("category_id"), (Long)item.get("count"));
+        }
+        
+        Map<Integer, Long> countProductsBySubcategories= new HashMap<>();
+        List<Map<String, Object>> listCountProductsBySubcategories= categoryService.findAllMapEntities("countProductsBySubcategories", new String[]{}, new Object[]{});
+        for(Map<String, Object> item: listCountProductsBySubcategories){
+            countProductsBySubcategories.put((Integer)item.get("subcategory_id"), (Long)item.get("count"));
+        }
+        
         mav.addObject("categories", categories);
+        mav.addObject("countProductsByCategories", countProductsByCategories);
+        mav.addObject("countProductsBySubcategories", countProductsBySubcategories);
         
         return mav;
     }

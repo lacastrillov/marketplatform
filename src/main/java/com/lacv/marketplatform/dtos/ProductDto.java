@@ -109,6 +109,9 @@ public class ProductDto implements BaseEntity {
     private List<InventoryorderDetailDto> inventoryorderDetailList;
     
     private List<PurchaseorderDetailDto> purchaseorderDetailList;
+    
+    private List<ProductImageDto> productImageList;
+
 
     public ProductDto() {
     }
@@ -301,6 +304,14 @@ public class ProductDto implements BaseEntity {
         this.purchaseorderDetailList = purchaseorderDetailList;
     }
 
+    public List<ProductImageDto> getProductImageList() {
+        return productImageList;
+    }
+
+    public void setProductImageList(List<ProductImageDto> productImageList) {
+        this.productImageList = productImageList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

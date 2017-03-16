@@ -20,7 +20,7 @@ public class MarketController {
     
     @RequestMapping(value = "/comparar", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getCompair(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView("market/compair");
+        ModelAndView mav = new ModelAndView("market/product/compair");
 
         return mav;
     }
@@ -71,19 +71,19 @@ public class MarketController {
     
     @RequestMapping(value = "/detalle-producto", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getProductDetail() {
-        ModelAndView mav = new ModelAndView("market/product_details");
+        ModelAndView mav = new ModelAndView("market/product/product_details");
         return mav;
     }
     
     @RequestMapping(value = "/carrito-de-compras", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getProductSumary() {
-        ModelAndView mav = new ModelAndView("market/product_summary");
+        ModelAndView mav = new ModelAndView("market/product/product_summary");
         return mav;
     }
     
     @RequestMapping(value = "/productos", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getProducts() {
-        ModelAndView mav = new ModelAndView("market/products");
+        ModelAndView mav = new ModelAndView("market/product/products");
         return mav;
     }
     
