@@ -11,6 +11,7 @@ import com.lacv.marketplatform.mappers.ProductImageMapper;
 import com.lacv.marketplatform.services.ProductImageService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.dtos.ProductImageDto;
 import com.lacv.marketplatform.entities.ProductImage;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
@@ -41,6 +42,7 @@ public class ProductImageController extends RestController {
     @PostConstruct
     public void init(){
         super.addControlMapping("productImage", productImageService, productImageMapper);
+        super.setDtoClass(ProductImageDto.class);
     }
     
     @Override
@@ -62,5 +64,20 @@ public class ProductImageController extends RestController {
         }
     }
     
+    @Override
+    public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idParent){
+        String path= "imagenes/producto/";
+        WebFile webParentFile= webFileService.findByPath(path);
+        
+        try {
+            String imageName= idParent + "_" + width + "x" + height + "_" +fileName.replaceAll(" ", "_");
+            
+            webFileService.createByFileData(webParentFile, 0, imageName, fileType, fileSize, is);
+            
+            return "Archivo " + fileName + " almacenado correctamente con ID " + idParent;
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
     
 }

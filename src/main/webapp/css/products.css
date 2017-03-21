@@ -1,0 +1,14 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19/03/2017, 05:52:24 PM
+    Author     : lacastrillov
+*/
+
+.pagination {float: left; margin: 20px 0; width: 37%;}
+.limit {float: left;width: 35%; margin: 20px 0;}
+.limit label {width: 40px; float: left; margin-right: 10px; margin-top: 5px;}
+.limit select {width: 100px; float: left;}

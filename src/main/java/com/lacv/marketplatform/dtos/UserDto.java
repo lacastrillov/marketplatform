@@ -7,6 +7,7 @@ package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
 import com.dot.gcpbasedot.annotation.HideField;
+import com.dot.gcpbasedot.annotation.ImageResize;
 import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
@@ -28,6 +29,7 @@ public class UserDto implements BaseEntity {
     
     @ColumnWidth(100)
     @Order(1)
+    @ReadOnly
     private Integer id;
     
     @Size(max=100)
@@ -69,6 +71,7 @@ public class UserDto implements BaseEntity {
     
     @Size(max=200)
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
+    @ImageResize({"300,300", "500,500", "800,800"})
     @HideField({HideView.FILTER})
     @TextField("Foto perfil")
     private String urlPhoto;

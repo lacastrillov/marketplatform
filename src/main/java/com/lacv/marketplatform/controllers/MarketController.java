@@ -1,15 +1,23 @@
 package com.lacv.marketplatform.controllers;
 
+import com.lacv.marketplatform.controllers.view.ProductViewController;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/tienda")
 public class MarketController {
+    
+    @Autowired
+    ProductViewController productViewController;
+    
  
     @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getIndex(HttpServletRequest request, HttpServletResponse response) {
@@ -69,10 +77,9 @@ public class MarketController {
         return mav;
     }
     
-    @RequestMapping(value = "/detalle-producto", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getProductDetail() {
-        ModelAndView mav = new ModelAndView("market/product/product_details");
-        return mav;
+    @RequestMapping(value = "/detalle-producto/{code}", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView getProductDetails(PathVariable code) {
+        return productViewController.getProductDetails(code);
     }
     
     @RequestMapping(value = "/carrito-de-compras", method = {RequestMethod.POST, RequestMethod.GET})
@@ -82,9 +89,11 @@ public class MarketController {
     }
     
     @RequestMapping(value = "/productos", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getProducts() {
-        ModelAndView mav = new ModelAndView("market/product/products");
-        return mav;
+    public ModelAndView getProducts(@RequestParam(required = false) String filter,
+            @RequestParam(required = false) Long limit, @RequestParam(required = false) Long page,
+            @RequestParam(required = false) String sort, @RequestParam(required = false) String dir, HttpServletRequest request) {
+        
+        return productViewController.getProductList(filter, limit, page, sort, dir, request);
     }
     
     @RequestMapping(value = "/registro", method = {RequestMethod.POST, RequestMethod.GET})

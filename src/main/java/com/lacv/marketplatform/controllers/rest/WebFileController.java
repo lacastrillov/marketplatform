@@ -56,8 +56,8 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/create.htm")
     @ResponseBody
     @Override
-    public byte[] create(@RequestParam String data, @RequestParam(required = false) String callback) {
-        byte[] result= super.create(data, callback, entityRef);
+    public byte[] create(@RequestParam String data) {
+        byte[] result= super.create(data);
         JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
         
         WebFile webFile= webFileService.findById(jsonResult.getJSONObject("data").getLong("id"));
@@ -91,7 +91,7 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/update.htm")
     @ResponseBody
     @Override
-    public byte[] update(@RequestParam String data, @RequestParam(required = false) String callback) {
+    public byte[] update(@RequestParam String data) {
         JSONObject jsonObject= new JSONObject(data);
         
         if(jsonObject.has("id") && jsonObject.has("name")){
@@ -102,14 +102,14 @@ public class WebFileController extends RestController {
             }
         }
         
-        return update(data, callback, entityRef);
+        return update(data);
     }
     
     @RequestMapping(value = "/delete/byfilter.htm", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     @Override
-    public String deleteByFilter(@RequestParam String filter, @RequestParam(required = false) String callback) {
-        String result= super.deleteByFilter(filter, callback, entityRef);
+    public String deleteByFilter(@RequestParam String filter) {
+        String result= super.deleteByFilter(filter);
         JSONObject jsonResult= new JSONObject(result);
         if(jsonResult.getBoolean("success")){
             JSONArray webFiles= jsonResult.getJSONArray("data");

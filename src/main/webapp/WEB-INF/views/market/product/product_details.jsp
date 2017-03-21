@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="en">
     <head>
         <title>Detalle Producto</title>
@@ -12,14 +17,20 @@
                     
                     <div class="span9">
                         <ul class="breadcrumb">
-                            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                            <li><a href="products.html">Products</a> <span class="divider">/</span></li>
+                            <li><a href="/">Home</a> <span class="divider">/</span></li>
+                            <li><a href="/tienda/productos">Products</a> <span class="divider">/</span></li>
                             <li class="active">product Details</li>
                         </ul>	
-                        <div class="row">	  
+                        <div class="row">
+                            <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
                             <div id="gallery" class="span3">
-                                <a href="/themes/images/products/large/f1.jpg" title="Fujifilm FinePix S2950 Digital Camera">
-                                    <img src="/themes/images/products/large/3.jpg" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera"/>
+                                <a href="javascript:void(0);" title="Fujifilm FinePix S2950 Digital Camera">
+                                    <c:if test="${numImages>0}">
+                                        <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
+                                    </c:if>
+                                    <c:if test="${numImages==0}">
+                                        <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
+                                    </c:if>
                                 </a>
                                 <div id="differentview" class="moreOptopm carousel slide">
                                     <div class="carousel-inner">
@@ -35,8 +46,8 @@
                                         </div>
                                     </div>
                                     <!--  
-                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a> 
+                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">â¹</a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">âº</a> 
                                     -->
                                 </div>
 
@@ -83,7 +94,7 @@
                                 <hr class="soft clr"/>
                                 <p>
                                     14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution. 
-                                    Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 ×81.4x73.4mm. 
+                                    Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 Ãx81.4x73.4mm. 
                                     Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).
 
                                 </p>
@@ -114,7 +125,7 @@
 
                                         <h5>Features</h5>
                                         <p>
-                                            14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution. Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 ×81.4x73.4mm. Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).<br/>
+                                            14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution. Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 Ã81.4x73.4mm. Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).<br/>
                                             OND363338
                                         </p>
 
@@ -126,7 +137,7 @@
 
                                         <h5>Electric powered Fujinon 18x zoom lens</h5>
                                         <p>
-                                            The S2950 sports an impressive 28mm – 504mm* high precision Fujinon optical zoom lens. Simple to operate with an electric powered zoom lever, the huge zoom range means that you can capture all the detail, even when you're at a considerable distance away. You can even operate the zoom during video shooting. Unlike a bulky D-SLR, bridge cameras allow you great versatility of zoom, without the hassle of carrying a bag of lenses.
+                                            The S2950 sports an impressive 28mm â 504mm* high precision Fujinon optical zoom lens. Simple to operate with an electric powered zoom lever, the huge zoom range means that you can capture all the detail, even when you're at a considerable distance away. You can even operate the zoom during video shooting. Unlike a bulky D-SLR, bridge cameras allow you great versatility of zoom, without the hassle of carrying a bag of lenses.
                                         </p>
                                         <h5>Impressive panoramas</h5>
                                         <p>

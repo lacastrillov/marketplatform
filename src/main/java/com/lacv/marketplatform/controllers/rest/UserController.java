@@ -12,6 +12,7 @@ import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
 import java.io.InputStream;
@@ -41,6 +42,7 @@ public class UserController extends RestController {
     @PostConstruct
     public void init(){
         super.addControlMapping("user", userService, userMapper);
+        super.setDtoClass(UserDto.class);
     }
     
     @Override
@@ -56,7 +58,23 @@ public class UserController extends RestController {
             
             webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
             
-            return "Archivo " + fileName + " almacenado correctamente con ID " + idParent;
+            return "Archivo " + imageName + " almacenado correctamente";
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
+    
+    @Override
+    public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idParent){
+        String path= "imagenes/usuario/";
+        WebFile webParentFile= webFileService.findByPath(path);
+        
+        try {
+            String imageName= idParent + "_" + width + "x" + height + "_" +fileName.replaceAll(" ", "_");
+            
+            webFileService.createByFileData(webParentFile, 0, imageName, fileType, fileSize, is);
+            
+            return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
             return ex.getMessage();
         }

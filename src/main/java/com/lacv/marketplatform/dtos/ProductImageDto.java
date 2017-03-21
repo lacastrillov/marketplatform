@@ -7,6 +7,7 @@ package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
 import com.dot.gcpbasedot.annotation.HideField;
+import com.dot.gcpbasedot.annotation.ImageResize;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
@@ -31,6 +32,7 @@ public class ProductImageDto implements BaseEntity {
     @Order(2)
     @TextField("Imagen")
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
+    @ImageResize({"100,100", "200,200", "500,500"})
     @HideField({HideView.FILTER})
     @ColumnWidth(300)
     private String image;

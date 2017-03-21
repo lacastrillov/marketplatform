@@ -50,6 +50,7 @@
 
         <script src="/themes/js/bootshop.js"></script>
         <script src="/themes/js/jquery.lightbox-0.5.js"></script>
+        <script src="/js/util/Util.js"></script>
         
         <sitemesh:write property='head'/>
     </head>
