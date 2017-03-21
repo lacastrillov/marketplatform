@@ -26,4 +26,8 @@ public interface WebFileService extends EntityService<WebFile> {
     
     WebFile createByStorageObject(StorageObject object, WebFile parent, String location);
     
+    WebFile createFolder(WebFile parentFile, String folderName);
+    
+    WebFile createEmptyFile(WebFile parentFile, String fileName);
+    
 }

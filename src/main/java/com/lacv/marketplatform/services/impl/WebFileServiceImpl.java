@@ -21,6 +21,7 @@ import com.lacv.marketplatform.constants.WebConstants;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -119,6 +120,46 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         webFile.setModificationDate(new Date());
         
         super.create(webFile);
+        return webFile;
+    }
+
+    @Override
+    @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
+    public WebFile createFolder(WebFile parentFile, String folderName) {
+        WebFile webFile= new WebFile();
+        webFile.setName(folderName);
+        webFile.setCreationDate(new Date());
+        webFile.setType("folder");
+        webFile.setIcon("folder");
+        webFile.setModificationDate(new Date());
+        webFile.setSize(1);
+        webFile.setWebFile(parentFile);
+        super.create(webFile);
+        
+        String path= webFile.getPath();
+        String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+        FileService.createFolder(location + webFile.getName());
+        
+        return webFile;
+    }
+
+    @Override
+    @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
+    public WebFile createEmptyFile(WebFile parentFile, String fileName) {
+        String extension= FilenameUtils.getExtension(fileName);
+        WebFile webFile= new WebFile();
+        webFile.setName(fileName);
+        webFile.setCreationDate(new Date());
+        webFile.setType(extension);
+        webFile.setIcon(Util.getSimpleContentType(extension));
+        webFile.setModificationDate(new Date());
+        webFile.setSize(1);
+        super.create(webFile);
+        
+        String path= webFile.getPath();
+        String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+        FileService.createFile(location + webFile.getName());
+        
         return webFile;
     }
     

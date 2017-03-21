@@ -17,6 +17,7 @@ import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
 import java.io.InputStream;
 import javax.annotation.PostConstruct;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,36 +46,44 @@ public class ProductImageController extends RestController {
         super.setDtoClass(ProductImageDto.class);
     }
     
-    @Override
-    public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idParent) {
-        String path= "imagenes/producto/";
+    private WebFile getWebParentFile(Object idContainer){
+        String pathSup= "imagenes/producto/";
+        String path= pathSup + idContainer + "/";
         WebFile webParentFile= webFileService.findByPath(path);
-        
+        if(webParentFile==null || !webParentFile.getName().equals(idContainer.toString())){
+            WebFile webParentSupFile= webFileService.findByPath(pathSup);
+            webParentFile= webFileService.createFolder(webParentSupFile, idContainer.toString());
+        }
+        return webParentFile;
+    }
+    
+    @Override
+    public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idEntity) {
         try {
-            String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
-            ProductImage productImage = productImageService.findById(idParent);
-            productImage.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            String imageName= idEntity + "_" +"product-image."+FilenameUtils.getExtension(fileName);
+            ProductImage productImage = productImageService.findById(idEntity);
+            WebFile webParentFile= getWebParentFile(productImage.getProduct().getId());
+            
+            productImage.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + webParentFile.getPath() + webParentFile.getName() + "/" + imageName);
             productImageService.update(productImage);
             
             webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
             
-            return "Archivo " + fileName + " almacenado correctamente con ID " + idParent;
+            return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
             return ex.getMessage();
         }
     }
     
     @Override
-    public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idParent){
-        String path= "imagenes/producto/";
-        WebFile webParentFile= webFileService.findByPath(path);
-        
+    public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idEntity){
         try {
-            String imageName= idParent + "_" + width + "x" + height + "_" +fileName.replaceAll(" ", "_");
-            
+            String imageName= idEntity + "_" + width + "x" + height + "_" +"product-image."+FilenameUtils.getExtension(fileName);
+            ProductImage productImage = productImageService.findById(idEntity);
+            WebFile webParentFile= getWebParentFile(productImage.getProduct().getId());
             webFileService.createByFileData(webParentFile, 0, imageName, fileType, fileSize, is);
             
-            return "Archivo " + fileName + " almacenado correctamente con ID " + idParent;
+            return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
             return ex.getMessage();
         }

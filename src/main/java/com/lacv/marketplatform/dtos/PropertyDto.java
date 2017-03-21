@@ -30,10 +30,10 @@ public class PropertyDto implements BaseEntity {
     private String key;
     
     @TextField("Valor")
-    @TypeFormField(value=FieldType.LIST, data={"String","Number","Date","Boolean","Character"})
     private String value;
     
     @TextField("Tipo")
+    @TypeFormField(value=FieldType.LIST, data={"String","Number","Date","Boolean","Character"})
     private String type;
     
     @TextField("Estado")

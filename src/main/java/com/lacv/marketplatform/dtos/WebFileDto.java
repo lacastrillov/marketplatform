@@ -6,12 +6,14 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
+import com.dot.gcpbasedot.enums.HideView;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +80,7 @@ public class WebFileDto implements BaseEntity {
     
     @TextField("Archivo padre")
     @ReadOnly
+    @HideField({HideView.FILTER, HideView.GRID, HideView.FORM})
     private WebFileDto webFile;
     
     private List<WebFileDto> webFileList;

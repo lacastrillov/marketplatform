@@ -6,9 +6,11 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.domain.BaseEntity;
+import com.dot.gcpbasedot.enums.HideView;
 import java.sql.Time;
 import java.util.Date;
 
@@ -26,6 +28,7 @@ public class LogProcessDto implements BaseEntity {
     
     @Order(2)
     @TextField("Main Process Ref")
+    @HideField({HideView.FILTER, HideView.GRID})
     private String mainProcessRef;
     
     @Order(3)

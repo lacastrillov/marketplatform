@@ -43,9 +43,9 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         
         if(activeTab!==""){
             Instance.entityExtView.tabsContainer.setActiveTab(Number(activeTab));
-        }else{
+        }/*else{
             Instance.entityExtView.tabsContainer.setActiveTab(0);
-        }
+        }*/
         
         if(filter!==""){
             Instance.initFilter();
@@ -120,7 +120,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
     };
     
     Instance.doFilter= function(){
-        var url= "?filter="+JSON.stringify(Instance.filter);
+        var url= "?filter="+JSON.stringify(Instance.filter)+"&tab=1";
         console.log(url);
         mvcExt.navigate(url);
     };
