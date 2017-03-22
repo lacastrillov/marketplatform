@@ -154,6 +154,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         webFile.setIcon(Util.getSimpleContentType(extension));
         webFile.setModificationDate(new Date());
         webFile.setSize(1);
+        webFile.setWebFile(parentFile);
         super.create(webFile);
         
         String path= webFile.getPath();
