@@ -47,7 +47,7 @@
                 <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="/tienda/detalle-producto?code=${product.code}" style="height: 200px;">
+                        <a href="/tienda/detalle-producto/${product.code}" style="height: 200px;">
                             <c:if test="${numImages>0}">
                                 <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
                             </c:if>

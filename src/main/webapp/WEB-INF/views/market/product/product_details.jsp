@@ -6,7 +6,7 @@
 
 <html lang="en">
     <head>
-        <title>Detalle Producto</title>
+        <title>Detalle Producto - ${product.name} - ${product.brand}</title>
     </head>
     <body>
         <div id="mainBody">
@@ -18,20 +18,20 @@
                     <div class="span9">
                         <ul class="breadcrumb">
                             <li><a href="/">Home</a> <span class="divider">/</span></li>
-                            <li><a href="/tienda/productos">Products</a> <span class="divider">/</span></li>
-                            <li class="active">product Details</li>
+                            <li><a href="/tienda/productos?filter={eq:{subCategory:${product.subCategory.id}}}">${product.subCategory.name}</a> <span class="divider">/</span></li>
+                            <li class="active">${product.name}</li>
                         </ul>	
                         <div class="row">
                             <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
                             <div id="gallery" class="span3">
-                                <a href="javascript:void(0);" title="Fujifilm FinePix S2950 Digital Camera">
-                                    <c:if test="${numImages>0}">
+                                <c:if test="${numImages>0}">
+                                    <a href="${product.productImageList[0].image}" title="${product.name}">
                                         <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
-                                    </c:if>
-                                    <c:if test="${numImages==0}">
-                                        <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
-                                    </c:if>
-                                </a>
+                                    </a>
+                                </c:if>
+                                <c:if test="${numImages==0}">
+                                    <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
+                                </c:if>
                                 <div id="differentview" class="moreOptopm carousel slide">
                                     <div class="carousel-inner">
                                         <div class="item active">
@@ -39,11 +39,11 @@
                                             <a href="/themes/images/products/large/f2.jpg"> <img style="width:29%" src="/themes/images/products/large/f2.jpg" alt=""/></a>
                                             <a href="/themes/images/products/large/f3.jpg" > <img style="width:29%" src="/themes/images/products/large/f3.jpg" alt=""/></a>
                                         </div>
-                                        <div class="item">
+                                        <!--<div class="item">
                                             <a href="/themes/images/products/large/f3.jpg" > <img style="width:29%" src="/themes/images/products/large/f3.jpg" alt=""/></a>
                                             <a href="/themes/images/products/large/f1.jpg"> <img style="width:29%" src="/themes/images/products/large/f1.jpg" alt=""/></a>
                                             <a href="/themes/images/products/large/f2.jpg"> <img style="width:29%" src="/themes/images/products/large/f2.jpg" alt=""/></a>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <!--  
                                                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">â¹</a>
@@ -63,12 +63,12 @@
                                 </div>
                             </div>
                             <div class="span6">
-                                <h3>Fujifilm FinePix S2950 Digital Camera  </h3>
-                                <small>- (14MP, 18x Optical Zoom) 3-inch LCD</small>
+                                <h3>${product.name} - ${product.brand}</h3>
+                                <small>- ${product.category.name} - ${product.subCategory.name} </small>
                                 <hr class="soft"/>
                                 <form class="form-horizontal qtyFrm">
                                     <div class="control-group">
-                                        <label class="control-label"><span>$222.00</span></label>
+                                        <label class="control-label"><span>$<fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></span></label>
                                         <div class="controls">
                                             <input type="number" class="span1" placeholder="Qty."/>
                                             <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
@@ -77,28 +77,12 @@
                                 </form>
 
                                 <hr class="soft"/>
-                                <h4>100 items in stock</h4>
-                                <form class="form-horizontal qtyFrm pull-right">
-                                    <div class="control-group">
-                                        <label class="control-label"><span>Color</span></label>
-                                        <div class="controls">
-                                            <select class="span2">
-                                                <option>Black</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>Brown</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
+                                <h4>${product.unitsInStock} unidades en stock</h4>
                                 <hr class="soft clr"/>
                                 <p>
-                                    14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution. 
-                                    Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 Ãx81.4x73.4mm. 
-                                    Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).
-
+                                    ${product.description}
                                 </p>
-                                <a class="btn btn-small pull-right" href="#detail">More Details</a>
+                                <a class="btn btn-small pull-right" href="#detail">M&aacute;s detalles</a>
                                 <br class="clr"/>
                                 <a href="#" name="detail"></a>
                                 <hr class="soft"/>
@@ -106,47 +90,26 @@
 
                             <div class="span9">
                                 <ul id="productDetail" class="nav nav-tabs">
-                                    <li class="active"><a href="#home" data-toggle="tab">Product Details</a></li>
-                                    <li><a href="#profile" data-toggle="tab">Related Products</a></li>
+                                    <li class="active"><a href="#home" data-toggle="tab">Detalle Producto</a></li>
+                                    <li><a href="#profile" data-toggle="tab">Productos Relacionados</a></li>
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div class="tab-pane fade active in" id="home">
-                                        <h4>Product Information</h4>
+                                        <h4>Informaci&oacute;n producto</h4>
                                         <table class="table table-bordered">
                                             <tbody>
-                                                <tr class="techSpecRow"><th colspan="2">Product Details</th></tr>
-                                                <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">Fujifilm</td></tr>
-                                                <tr class="techSpecRow"><td class="techSpecTD1">Model:</td><td class="techSpecTD2">FinePix S2950HD</td></tr>
-                                                <tr class="techSpecRow"><td class="techSpecTD1">Released on:</td><td class="techSpecTD2"> 2011-01-28</td></tr>
-                                                <tr class="techSpecRow"><td class="techSpecTD1">Dimensions:</td><td class="techSpecTD2"> 5.50" h x 5.50" w x 2.00" l, .75 pounds</td></tr>
-                                                <tr class="techSpecRow"><td class="techSpecTD1">Display size:</td><td class="techSpecTD2">3</td></tr>
+                                                <tr class="techSpecRow"><th colspan="2">Detalle Producto</th></tr>
+                                                <tr class="techSpecRow"><td class="techSpecTD1">C&oacute;digo: </td><td class="techSpecTD2">${product.code}</td></tr>
+                                                <tr class="techSpecRow"><td class="techSpecTD1">Marca: </td><td class="techSpecTD2">${product.brand}</td></tr>
+                                                <tr class="techSpecRow"><td class="techSpecTD1">Fecha Registro:</td><td class="techSpecTD2"><fmt:formatDate type="date" value="${product.registerDate}" /></td></tr>
+                                                <tr class="techSpecRow"><td class="techSpecTD1">Categor&iacute;a:</td><td class="techSpecTD2">${product.category.name}</td></tr>
+                                                <tr class="techSpecRow"><td class="techSpecTD1">Sub Categor&iacute;a</td><td class="techSpecTD2">${product.subCategory.name}</td></tr>
                                             </tbody>
                                         </table>
 
-                                        <h5>Features</h5>
+                                        <h5>Rese&ntilde;a</h5>
                                         <p>
-                                            14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution. Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 Ã81.4x73.4mm. Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).<br/>
-                                            OND363338
-                                        </p>
-
-                                        <h4>Editorial Reviews</h4>
-                                        <h5>Manufacturer's Description </h5>
-                                        <p>
-                                            With a generous 18x Fujinon optical zoom lens, the S2950 really packs a punch, especially when matched with its 14 megapixel sensor, large 3.0" LCD screen and 720p HD (30fps) movie capture.
-                                        </p>
-
-                                        <h5>Electric powered Fujinon 18x zoom lens</h5>
-                                        <p>
-                                            The S2950 sports an impressive 28mm â 504mm* high precision Fujinon optical zoom lens. Simple to operate with an electric powered zoom lever, the huge zoom range means that you can capture all the detail, even when you're at a considerable distance away. You can even operate the zoom during video shooting. Unlike a bulky D-SLR, bridge cameras allow you great versatility of zoom, without the hassle of carrying a bag of lenses.
-                                        </p>
-                                        <h5>Impressive panoramas</h5>
-                                        <p>
-                                            With its easy to use Panoramic shooting mode you can get creative on the S2950, however basic your skills, and rest assured that you will not risk shooting uneven landscapes or shaky horizons. The camera enables you to take three successive shots with a helpful tool which automatically releases the shutter once the images are fully aligned to seamlessly stitch the shots together in-camera. It's so easy and the results are impressive.
-                                        </p>
-
-                                        <h5>Sharp, clear shots</h5>
-                                        <p>
-                                            Even at the longest zoom settings or in the most challenging of lighting conditions, the S2950 is able to produce crisp, clean results. With its mechanically stabilised 1/2 3", 14 megapixel CCD sensor, and high ISO sensitivity settings, Fujifilm's Dual Image Stabilisation technology combines to reduce the blurring effects of both hand-shake and subject movement to provide superb pictures.
+                                            ${product.description}
                                         </p>
                                     </div>
                                     <div class="tab-pane fade" id="profile">

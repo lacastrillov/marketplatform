@@ -78,7 +78,7 @@ public class MarketController {
     }
     
     @RequestMapping(value = "/detalle-producto/{code}", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getProductDetails(PathVariable code) {
+    public ModelAndView getProductDetails(@PathVariable String code) {
         return productViewController.getProductDetails(code);
     }
     
