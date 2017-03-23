@@ -17,6 +17,7 @@ import com.dot.gcpbasedot.util.Util;
 import com.lacv.marketplatform.dtos.WebFileDto;
 import java.io.InputStream;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/create.htm")
     @ResponseBody
     @Override
-    public byte[] create(@RequestParam String data) {
+    public byte[] create(@RequestParam String data, HttpServletRequest request) {
         String resultData;
         try {
             JSONObject jsonObject = new JSONObject(data);
@@ -76,7 +77,7 @@ public class WebFileController extends RestController {
     @RequestMapping(value = "/update.htm")
     @ResponseBody
     @Override
-    public byte[] update(@RequestParam String data) {
+    public byte[] update(@RequestParam String data, HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject(data);
 
         if (jsonObject.has("id") && jsonObject.has("name")) {
@@ -87,7 +88,7 @@ public class WebFileController extends RestController {
             }
         }
 
-        return super.update(data);
+        return super.update(data, request);
     }
 
     @RequestMapping(value = "/delete/byfilter.htm", method = {RequestMethod.GET, RequestMethod.POST})
