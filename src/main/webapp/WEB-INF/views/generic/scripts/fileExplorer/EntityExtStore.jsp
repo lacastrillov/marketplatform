@@ -167,6 +167,28 @@ function ${entityName}ExtStore(){
         });
     };
     
+    Instance.getNavigationTreeData= function(func){
+        Ext.MessageBox.show({
+            msg: 'Cargando...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/${entityRef}/getNavigationTreeData.htm",
+            method: "GET",
+            params: "",
+            success: function(response){
+                Ext.MessageBox.hide();
+                var responseText= Ext.decode(response.responseText);
+                func(responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
+            }
+        });
+    };
+    
     Instance.save${entityName}= function(operation, data, func){
         Ext.MessageBox.show({
             msg: 'Guardando...',
@@ -178,6 +200,28 @@ function ${entityName}ExtStore(){
             url: Ext.context+"/rest/${entityRef}/"+operation+".htm",
             method: "POST",
             params: "data="+encodeURIComponent(data),
+            success: function(response){
+                Ext.MessageBox.hide();
+                var responseText= Ext.decode(response.responseText);
+                func(responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
+            }
+        });
+    };
+    
+    Instance.updateByFilter${entityName}= function(filter, func){
+        Ext.MessageBox.show({
+            msg: 'Moviendo...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/${entityRef}/update/byfilter.htm",
+            method: "POST",
+            params: "filter="+filter,
             success: function(response){
                 Ext.MessageBox.hide();
                 var responseText= Ext.decode(response.responseText);

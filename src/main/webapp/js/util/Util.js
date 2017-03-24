@@ -365,30 +365,36 @@ function Util() {
         return string;
     };
     
-    this.objectToJSONMenu= function(object){
+    this.objectToJSONMenu= function(object, expanded){
         var menuObj= {"text":"root","children":[]};
         
-        Instance.addSubmenu(menuObj.children, object);
+        Instance.addSubmenu(menuObj.children, object, expanded);
         
         return menuObj;
     };
     
-    this.addSubmenu= function(menuParent, object){
+    this.addSubmenu= function(menuParent, object, expanded){
         for (var key in object) {
             var type= typeof(object[key]);
             var item={};
+            var text= key;
+            var id= key;
+            if(key.indexOf("::")!==-1){
+                id= key.split("::")[0];
+                text= key.split("::")[1];
+            }
             
             if(type==="string"){
-                item= {"text": key+" : "+"\""+object[key]+"\"", "leaf":true};
+                item= {"text": text+" : "+"\""+object[key]+"\"", "leaf":true};
             }else if(type==="number" || type==="boolean"){
-                item= {"text": key+" : "+""+object[key]+"", "leaf":true};
+                item= {"text": text+" : "+""+object[key]+"", "leaf":true};
             }else if(type==="object"){
                 if(Array.isArray(object)){
-                    item= {"children": [], "expanded": true,"text":menuParent.length};
+                    item= {"text":menuParent.length, "children": [], "expanded": expanded};
                 }else{
-                    item= {"children": [], "expanded": true,"text":key};
+                    item= {"id":id, "text":text, "children": [], "expanded": expanded};
                 }
-                Instance.addSubmenu(item.children, object[key]);
+                Instance.addSubmenu(item.children, object[key], expanded);
             }
             menuParent.push(item);
         }

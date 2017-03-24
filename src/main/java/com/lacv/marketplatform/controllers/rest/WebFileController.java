@@ -10,12 +10,18 @@ import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.mappers.WebFileMapper;
 import com.lacv.marketplatform.services.WebFileService;
 import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.enums.WebFileType;
 import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.FileService;
 import com.dot.gcpbasedot.util.Util;
+import com.google.gson.Gson;
 import com.lacv.marketplatform.dtos.WebFileDto;
+import java.io.File;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
@@ -90,6 +96,34 @@ public class WebFileController extends RestController {
 
         return super.update(data, request);
     }
+    
+    @RequestMapping(value = "/update/byfilter.htm")
+    @ResponseBody
+    @Override
+    public byte[] updateByFilter(@RequestParam(required= false) String filter, HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject(filter);
+        String resultData;
+        try{
+            Long destWebFileId= jsonObject.getJSONObject("uv").getLong("webFile");
+            WebFile destWebFile= webFileService.findById(destWebFileId);
+            String destLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + destWebFile.getPath();
+            
+            JSONArray fileIdToMove= jsonObject.getJSONObject("in").getJSONArray("id");
+            for(int i=0; i<fileIdToMove.length(); i++){
+                WebFile sourceWebFile= webFileService.findById(fileIdToMove.getLong(i));
+                String sourceLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + sourceWebFile.getPath();
+                File sourceFile= new File(sourceLocation + sourceWebFile.getName());
+                File destFile= new File(destLocation + destWebFile.getName());
+                
+                FileService.move(sourceFile, destFile);
+            }
+            
+            return super.updateByFilter(filter, request);
+        }catch(Exception e){
+            resultData= Util.getOperationCallback(null, "Error moviendo los archivos " + e.getMessage(), false);
+        }
+        return getStringBytes(resultData);
+    }
 
     @RequestMapping(value = "/delete/byfilter.htm", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -126,6 +160,44 @@ public class WebFileController extends RestController {
             LOGGER.error("saveFile ", ex);
             return ex.getMessage();
         }
+    }
+    
+    @RequestMapping(value = "/getNavigationTreeData.htm")
+    @ResponseBody
+    public byte[] getNavigationTreeData() {
+        String resultData;
+        try {
+            Gson gson= new Gson();
+            Map tree = new LinkedHashMap();
+            Map childs= new LinkedHashMap();
+            Parameters p= new Parameters();
+            p.whereIsNull("webFile");
+            p.whereEqual("type", "folder");
+            p.orderBy("name", "ASC");
+            List<WebFile> webFiles= webFileService.findByParameters(p);
+            for(WebFile webFile: webFiles){
+                childs.put(webFile.getId()+"::"+webFile.getName(), exploreInDepth(webFile));
+            }
+            tree.put("undefined::Raíz", childs);
+            resultData=gson.toJson(tree);
+        } catch (Exception e) {
+            LOGGER.error("getNavigationTreeData " + entityRef, e);
+            resultData = "Error in getNavigationTreeData";
+        }
+        return super.getStringBytes(resultData);
+    }
+    
+    private Map exploreInDepth(WebFile webFile){
+        Map child= new LinkedHashMap();
+        Parameters p= new Parameters();
+        p.whereEqual("webFile", webFile);
+        p.whereEqual("type", "folder");
+        p.orderBy("name", "ASC");
+        List<WebFile> webFiles= webFileService.findByParameters(p);
+        for(WebFile childWebFile: webFiles){
+            child.put(childWebFile.getId()+"::"+childWebFile.getName(), exploreInDepth(childWebFile));
+        }
+        return child;
     }
 
 }

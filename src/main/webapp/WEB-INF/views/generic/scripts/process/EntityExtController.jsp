@@ -91,7 +91,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                 formComponent.setActiveRecord(record);
                 
                 //Populate tree result
-                var rootMenu= util.objectToJSONMenu(JSON.parse(data.dataOut));
+                var rootMenu= util.objectToJSONMenu(JSON.parse(data.dataOut), true);
                 var treePanel = Ext.getCmp('tree-result-'+data.processName);
                 treePanel.getStore().setRootNode(rootMenu);
             });
@@ -111,7 +111,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         });
         </c:if>
         <c:if test="${not viewConfig.multipartFormData}">
-        var rootMenu= util.objectToJSONMenu(responseText);
+        var rootMenu= util.objectToJSONMenu(responseText, true);
         var treePanel = Ext.getCmp('tree-result-'+processName);
         treePanel.getStore().setRootNode(rootMenu);
         var textMenu= JSON.stringify(responseText);

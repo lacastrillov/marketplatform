@@ -589,7 +589,32 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             },
             
             onMoveFile: function(){
-                alert("Move File");
+                var check_items= document.getElementsByClassName("item_check");
+                Instance.filterMove={"in":{"id":[]},"uv":{}};
+                for(var i=0; i<check_items.length; i++){
+                    if(check_items[i].checked){
+                        Instance.filterMove.in.id.push(check_items[i].value);
+                    }
+                }
+                if(Instance.filterMove.in.id.length>0){
+                    if (!Instance.formMove.isVisible()) {
+                        Instance.entityExtStore.getNavigationTreeData(function(responseText){
+                            var rootMenu= util.objectToJSONMenu(responseText, false);
+                            var treePanel = Ext.getCmp('navigation-tree');
+                            treePanel.getStore().setRootNode(rootMenu);
+                        });
+                        Instance.formMove.show(this.down('#fileMenu'), function() {});
+                    } else {
+                        Instance.formMove.hide(this.down('#fileMenu'), function() {});
+                    }
+                }else{
+                    Ext.MessageBox.show({
+                        title: 'Mover',
+                        msg: 'Para mover, debe seleccionar al menos 1 archivo',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.WARNING
+                    });
+                }
             },
             
             exportTo: function(type){
@@ -659,7 +684,69 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 text: 'Cancelar',
                 handler: function(){
                     progressbar.updateProgress(0,'0%');
-                    Instance.formUpload.hide()
+                    Instance.formUpload.hide();
+                }
+            }]
+        });
+        
+        return win;
+    }
+    
+    function getFormMove(){
+        
+        var store = {
+            model: 'Item',
+            root: {
+                text: 'Root',
+                expanded: true,
+                children: []
+            }
+        };
+
+        // Go ahead and create the TreePanel now so that we can use it below
+         var treePanel = Ext.create('Ext.tree.Panel', {
+            id: 'navigation-tree',
+            //region:'north',
+            split: true,
+            width: '100%',
+            autoHeight: true,
+            minSize: 150,
+            rootVisible: false,
+            autoScroll: true,
+            store: store
+        });
+        
+        treePanel.getSelectionModel().on('select', function(selModel, record) {
+            Instance.filterMove.uv.webFile= record.getId();
+        });
+
+        var win = Ext.create('Ext.window.Window', {
+            autoShow: false,
+            title: 'Mover Archivo',
+            closable: true,
+            closeAction: 'hide',
+            width: 400,
+            height: 400,
+            minWidth: 300,
+            minHeight: 200,
+            layout: 'fit',
+            plain:true,
+            items: treePanel,
+
+            buttons: [{
+                text: 'Mover',
+                handler: function(){
+                    if(Instance.filterMove.uv.webFile!==undefined){
+                        Instance.entityExtStore.updateByFilter${entityName}(JSON.stringify(Instance.filterMove), function(responseText){
+                            Instance.reloadPageStore(Instance.store.currentPage);
+                            setTimeout(function(){ Instance.formMove.hide()},1000);
+                        });
+                    }
+                }
+            },{
+                text: 'Cancelar',
+                handler: function(){
+                    Instance.formMove.hide();
                 }
             }]
         });
@@ -784,6 +871,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         });
         
         Instance.formUpload= getFormUpload();
+        
+        Instance.formMove= getFormMove();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',
