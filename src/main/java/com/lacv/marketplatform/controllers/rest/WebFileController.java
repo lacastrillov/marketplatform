@@ -106,14 +106,14 @@ public class WebFileController extends RestController {
         try{
             Long destWebFileId= jsonObject.getJSONObject("uv").getLong("webFile");
             WebFile destWebFile= webFileService.findById(destWebFileId);
-            String destLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + destWebFile.getPath();
+            String destLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + ((destWebFile!=null)?destWebFile.getPath():"");
             
             JSONArray fileIdToMove= jsonObject.getJSONObject("in").getJSONArray("id");
             for(int i=0; i<fileIdToMove.length(); i++){
                 WebFile sourceWebFile= webFileService.findById(fileIdToMove.getLong(i));
                 String sourceLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + sourceWebFile.getPath();
                 File sourceFile= new File(sourceLocation + sourceWebFile.getName());
-                File destFile= new File(destLocation + destWebFile.getName());
+                File destFile= new File(destLocation + ((destWebFile!=null)?destWebFile.getName():""));
                 
                 FileService.move(sourceFile, destFile);
             }
@@ -178,7 +178,7 @@ public class WebFileController extends RestController {
             for(WebFile webFile: webFiles){
                 childs.put(webFile.getId()+"::"+webFile.getName(), exploreInDepth(webFile));
             }
-            tree.put("undefined::Raíz", childs);
+            tree.put("0::Raíz", childs);
             resultData=gson.toJson(tree);
         } catch (Exception e) {
             LOGGER.error("getNavigationTreeData " + entityRef, e);
