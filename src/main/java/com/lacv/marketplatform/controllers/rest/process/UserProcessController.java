@@ -17,6 +17,7 @@ import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.annotation.DoProcess;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.util.AESEncrypt;
+import com.lacv.marketplatform.constants.WebConstants;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
 import com.lacv.marketplatform.services.mail.MailingService;
 import java.util.HashMap;
@@ -34,9 +35,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/rest/processUser")
 public class UserProcessController extends RestController {
     
-    public static final String SECURITY_SEED_PASSW = "=12GJHG#$%467ryf";
-    public static final String SECURITY_SALT = "38684329";
-    
     @Autowired
     UserService userService;
     
@@ -49,7 +47,7 @@ public class UserProcessController extends RestController {
     @Autowired
     MailingService mailingService;
     
-    AESEncrypt myInstance= AESEncrypt.getDefault(SECURITY_SALT);
+    AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
     
     @PostConstruct
     public void init(){
@@ -72,7 +70,7 @@ public class UserProcessController extends RestController {
         result.setSuccess(false);
         if(user!=null){
             if(createPassword.getPassword().equals(createPassword.getConfirmPassword())){
-                user.setPassword(myInstance.encrypt(createPassword.getPassword(), SECURITY_SEED_PASSW));
+                user.setPassword(myInstance.encrypt(createPassword.getPassword(), WebConstants.SECURITY_SEED_PASSW));
                 userService.update(user);
                 result.setMessage("La contraseña se ha creado correctamente");
                 result.setSuccess(true);

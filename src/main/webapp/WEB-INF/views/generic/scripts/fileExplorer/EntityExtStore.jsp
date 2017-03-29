@@ -7,6 +7,9 @@ function ${entityName}ExtStore(){
     
     var util= new Util();
     
+    var errorGeneral= "Error de servidor";
+    var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
+    
     
     Instance.get${entityName}Store= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -279,6 +282,15 @@ function ${entityName}ExtStore(){
             }
         });
     };
+    
+    function showErrorMessage(errorMsg){
+        Ext.MessageBox.show({
+            title: 'REMOTE EXCEPTION',
+            msg: errorMsg,
+            icon: Ext.MessageBox.ERROR,
+            buttons: Ext.Msg.OK
+        });
+    }
 
 }
 </script>

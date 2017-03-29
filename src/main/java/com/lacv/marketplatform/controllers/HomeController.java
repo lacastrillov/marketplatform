@@ -26,11 +26,8 @@ public class HomeController {
     }
     
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getLogin() {
-
-        ModelAndView mav = new ModelAndView("login");
-        
-        return mav;
+    public String loginPage() {
+        return "login";
     }
 
     @RequestMapping(value = "/denied", method = {RequestMethod.POST, RequestMethod.GET})

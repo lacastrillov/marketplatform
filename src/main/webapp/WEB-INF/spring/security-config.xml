@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <security:http use-expressions="true">
-        <security:access-denied-handler error-page="/denied" />
-        <security:form-login login-page="/login" authentication-failure-url="/login?login_error=true" />
+    <http use-expressions="true" auto-config="true">
+        <access-denied-handler error-page="/denied" />
+        <form-login login-page="/login" authentication-failure-url="/login?login_error=true" username-parameter="j_username" password-parameter="j_password" />
         
-        <security:intercept-url pattern="/vista/*/table.htm" access="hasAnyRole('Administrator','Empleado')" />
-        <security:intercept-url pattern="/vista/*/report/*" access="hasAnyRole('Administrator','Empleado')" />
-        <security:intercept-url pattern="/*/delete/*" access="hasRole('Administrator')" />
-        <security:intercept-url pattern="/*/delete.htm" access="hasRole('Administrator')" />
-        <security:intercept-url pattern="/*/update/*" access="hasRole('Administrator')" />
-        <security:intercept-url pattern="/*/update.htm" access="hasRole('Administrator')" />
-        <security:intercept-url pattern="/home**" access="isAuthenticated()" />
-        <security:logout/>
-    </security:http>
+        <intercept-url pattern="/vista/*/table.htm" access="hasAnyRole('ROLE_Administrator','ROLE_Empleado')" />
+        <intercept-url pattern="/vista/*/report/*" access="hasAnyRole('ROLE_Administrator','ROLE_Empleado')" />
+        <intercept-url pattern="/*/delete/*" access="hasRole('ROLE_Administrator')" />
+        <intercept-url pattern="/*/delete.htm" access="hasRole('ROLE_Administrator')" />
+        <intercept-url pattern="/*/update/*" access="hasRole('ROLE_Administrator')" />
+        <intercept-url pattern="/*/update.htm" access="hasRole('ROLE_Administrator')" />
+        <intercept-url pattern="/home**" access="isAuthenticated()" />
+        <logout />
+    </http>
     
-    <bean id="securityService" class="com.lacv.marketplatform.services.security.impl.SecurityServiceImpl"></bean>
+    <beans:bean id="securityService" class="com.lacv.marketplatform.services.security.impl.SecurityServiceImpl"></beans:bean>
 
-    <security:authentication-manager>
-        <security:authentication-provider ref="securityService"/>
-    </security:authentication-manager>
+    <authentication-manager>
+        <authentication-provider ref="securityService"/>
+    </authentication-manager>
 
-</beans>
+</beans:beans>

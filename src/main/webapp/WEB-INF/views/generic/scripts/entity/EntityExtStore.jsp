@@ -7,6 +7,9 @@ function ${entityName}ExtStore(){
     
     var util= new Util();
     
+    var errorGeneral= "Error de servidor";
+    var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
+    
     
     Instance.get${entityName}Store= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -50,15 +53,16 @@ function ${entityName}ExtStore(){
                 listeners: {
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
+                        console.log(response);
+                        console.log(errorMsg);
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
                     }
                 }
             },
@@ -120,14 +124,13 @@ function ${entityName}ExtStore(){
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
                     }
                 }
             },
@@ -162,7 +165,12 @@ function ${entityName}ExtStore(){
                 func(responseText);
             },
             failure: function(response){
-                console.log(response.responseText);
+                console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -184,7 +192,12 @@ function ${entityName}ExtStore(){
                 func(responseText);
             },
             failure: function(response){
-                console.log(response.responseText);
+                console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -199,7 +212,12 @@ function ${entityName}ExtStore(){
                 func(responseText.data);
             },
             failure: function(response){
-                console.log(response.responseText);
+                console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -210,6 +228,14 @@ function ${entityName}ExtStore(){
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
+            },
+            failure: function(response){
+                console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -231,10 +257,24 @@ function ${entityName}ExtStore(){
                 Ext.MessageBox.hide();
             },
             failure: function(response){
-                console.log(response.responseText);
+                console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
+    
+    function showErrorMessage(errorMsg){
+        Ext.MessageBox.show({
+            title: 'REMOTE EXCEPTION',
+            msg: errorMsg,
+            icon: Ext.MessageBox.ERROR,
+            buttons: Ext.Msg.OK
+        });
+    }
 
 }
 </script>

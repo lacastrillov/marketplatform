@@ -31,11 +31,13 @@ import java.util.Date;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author lacastrillov
  */
+@Service("securityService")
 public class SecurityServiceImpl implements AuthenticationProvider, SecurityService, UserDetailsService {
 
     @Autowired
@@ -73,13 +75,6 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
                 }
 
                 Authentication autentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-                String roles= "";
-                if(userDetails.getAuthorities()!=null){
-                    List<GrantedAuthority> authorities= (List<GrantedAuthority>) userDetails.getAuthorities();
-                    for(GrantedAuthority authority: authorities){
-                        roles+= authority.getAuthority()+" ";
-                    }
-                }
                 user.setFailedAttempts(0);
                 user.setLastLogin(new Date());
                 usuarioService.update(user);
@@ -105,11 +100,14 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         Parameters p = new Parameters();
         p.whereEqual("user", user);
         List<UserRole> userRoles = userRoleService.findByParameters(p);
-        System.out.println("Roles usuario " + user.getUsername());
         for (UserRole usuarioRol : userRoles) {
-            System.out.println("Rol " + usuarioRol.getRole().getName());
-            authorities.add(new SimpleGrantedAuthority(usuarioRol.getRole().getName()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+usuarioRol.getRole().getName()));
         }
+        authorities.add(new SimpleGrantedAuthority("OP_create"));
+        authorities.add(new SimpleGrantedAuthority("OP_update"));
+        authorities.add(new SimpleGrantedAuthority("OP_mail_delete"));
+        authorities.add(new SimpleGrantedAuthority("OP_user_view"));
+        
         return authorities;
     }
 

@@ -27,7 +27,7 @@
                     </p>
                 </div>
                 <div id="loginDiv" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                    <form id="formLogin" action="<c:url value='/j_spring_security_check'/>" method="post">
+                    <form id="formLogin" action="<c:url value='/authenticate'/>" method="post">
                         <div class="box-login">
                             <div class="box-input">
                                 <img src="/img/email.png" width="40" />
