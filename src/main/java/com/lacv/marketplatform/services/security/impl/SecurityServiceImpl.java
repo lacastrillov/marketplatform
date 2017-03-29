@@ -73,13 +73,6 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
                 }
 
                 Authentication autentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-                String roles= "";
-                if(userDetails.getAuthorities()!=null){
-                    List<GrantedAuthority> authorities= (List<GrantedAuthority>) userDetails.getAuthorities();
-                    for(GrantedAuthority authority: authorities){
-                        roles+= authority.getAuthority()+" ";
-                    }
-                }
                 user.setFailedAttempts(0);
                 user.setLastLogin(new Date());
                 usuarioService.update(user);

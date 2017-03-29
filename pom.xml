@@ -26,7 +26,8 @@
         <appengine.target.version>1.9.38</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
-        <spring.security.version>3.2.5.RELEASE</spring.security.version>
+        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <!--<spring.security.version>3.2.5.RELEASE</spring.security.version>-->
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <sitemesh.version>3.0.1</sitemesh.version>
@@ -343,7 +344,7 @@
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password>calsatrilievlo</jdbc.password>
+                <jdbc.password>dot54321</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
                 <mail.username>enviocorreodot1@gmail.com</mail.username>
