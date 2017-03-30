@@ -44,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         // Authorizations
         http.authorizeRequests().antMatchers("/rest/mail/delete.htm").access("hasAuthority('OP_mail_delete')");
-        http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasAuthority('OP_user_view2')");
         http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasAuthority('OP_user_view')");
         
         // Roles
