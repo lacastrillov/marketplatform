@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "/")
 public class HomeController {
- 
+    
     @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getIndex(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("redirect:/vista/user/table.htm");
@@ -35,5 +35,5 @@ public class HomeController {
         ModelAndView mav = new ModelAndView("denied");
         return mav;
     }
-
+    
 }

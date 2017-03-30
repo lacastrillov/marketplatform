@@ -27,6 +27,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
         <spring.security.version>4.2.2.RELEASE</spring.security.version>
+<<<<<<< HEAD
+=======
+        <!--<spring.security.version>3.2.5.RELEASE</spring.security.version>-->
+>>>>>>> 3681a21923c98966bd4f65346e31a88568d0d093
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <sitemesh.version>3.0.1</sitemesh.version>

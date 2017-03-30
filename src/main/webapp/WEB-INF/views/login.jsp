@@ -27,19 +27,25 @@
                     </p>
                 </div>
                 <div id="loginDiv" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+<<<<<<< HEAD
                     <form id="formLogin" action="<c:url value='/authenticate'/>" method="post">
+=======
+                    <form id="formLogin" action="<c:url value='/login'/>" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+>>>>>>> 3681a21923c98966bd4f65346e31a88568d0d093
                         <div class="box-login">
                             <div class="box-input">
                                 <img src="/img/email.png" width="40" />
-                                <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
+                                <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="username" value="" maxlength="50" minlength="3" />
                             </div>
 
                             <div class="box-input">
                                 <img src="/img/password.png" width="40">
-                                <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
+                                <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="password" value="" maxlength="50" minlength="3" />
                             </div>
                         </div>
-                        <a id="linkIngresar" href="#" class="btn-ingreso">Ingresar</a>
+                        <input type="submit" value="Ingresar" /> 
+                        <!--<a id="linkIngresar" href="#" class="btn-ingreso">Ingresar</a>-->
                         <a class="link-pass" onclick="autenticacionUsuario.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
                     </form>
                 </div>
