@@ -31,7 +31,7 @@
                     
                     <p><a href="<%=request.getContextPath()%>/home">Regresar al Home</a></p><br />
                     
-                    <p><a href="<%=request.getContextPath()%>/logout">Cerrar sesi&oacute;n</a></p><br />
+                    <p><a href="<%=request.getContextPath()%>/j_spring_security_logout">Cerrar sesi&oacute;n</a></p><br />
                 </td>
             </tr>
         </table>

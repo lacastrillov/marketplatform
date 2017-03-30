@@ -41,7 +41,7 @@ public class UserProcessController extends RestController {
     @Autowired
     LogProcessService logProcessService;
     
-    //@Autowired
+    @Autowired
     SecurityService securityService;
     
     @Autowired

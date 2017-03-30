@@ -23,7 +23,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!--Security-->
-    <!--<filter>
+    <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
@@ -32,7 +32,7 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>-->
+    </filter-mapping>
     <!--Sitemesh-->
     <filter>
         <filter-name>sitemesh</filter-name>

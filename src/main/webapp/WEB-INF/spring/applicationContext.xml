@@ -26,7 +26,6 @@
     <context:component-scan base-package="com.lacv.marketplatform.services" />
     <context:component-scan base-package="com.lacv.marketplatform.mappers" />
     <context:component-scan base-package="com.lacv.marketplatform.util" />
-    <context:component-scan base-package="com.lacv.marketplatform.security" />
     <context:component-scan base-package="com.dot.gcpbasedot.service.gcp" />
     
     <bean id="xmlMarshaller" class="com.dot.gcpbasedot.util.XMLMarshaller">
