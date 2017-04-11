@@ -12,12 +12,9 @@ import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
-import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.util.AESEncrypt;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,7 +38,7 @@ import org.springframework.stereotype.Service;
 public class SecurityServiceImpl implements AuthenticationProvider, SecurityService, UserDetailsService {
 
     @Autowired
-    UserService usuarioService;
+    UserService userService;
 
     @Autowired
     UserRoleService userRoleService;
@@ -77,11 +74,11 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
                 Authentication autentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
                 user.setFailedAttempts(0);
                 user.setLastLogin(new Date());
-                usuarioService.update(user);
+                userService.update(user);
                 return autentication;
             } else {
                 user.setFailedAttempts(user.getFailedAttempts() + 1);
-                usuarioService.update(user);
+                userService.update(user);
             }
         }
         throw new BadCredentialsException("Usuario y/o contraseña incorrectos");
@@ -97,16 +94,10 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        Parameters p = new Parameters();
-        p.whereEqual("user", user);
-        List<UserRole> userRoles = userRoleService.findByParameters(p);
+        List<UserRole> userRoles = userRoleService.findByParameter("user", user);
         for (UserRole usuarioRol : userRoles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_"+usuarioRol.getRole().getName()));
         }
-        authorities.add(new SimpleGrantedAuthority("OP_create"));
-        authorities.add(new SimpleGrantedAuthority("OP_update"));
-        authorities.add(new SimpleGrantedAuthority("OP_mail_delete"));
-        authorities.add(new SimpleGrantedAuthority("OP_user_view"));
         
         return authorities;
     }
@@ -168,14 +159,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     }
 
     private User getUser(String username) {
-        User user = null;
-        try {
-            Parameters p = new Parameters();
-            p.whereEqual("username", username);
-            user = usuarioService.findUniqueByParameters(p);
-        } catch (Exception ex) {
-            Logger.getLogger(SecurityServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        User user = userService.findUniqueByParameter("username", username);
 
         return user;
     }

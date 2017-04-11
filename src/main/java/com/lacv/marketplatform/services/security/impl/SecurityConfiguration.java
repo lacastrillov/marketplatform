@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -37,32 +38,38 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.exceptionHandling().accessDeniedPage("/denied");
+        
+        http.addFilterAfter(new CustomSecurityFilter(), UsernamePasswordAuthenticationFilter.class);
 
         /***************************
          *    Specific Permissions
          ***************************/
         
         // Authorizations
-        http.authorizeRequests().antMatchers("/rest/mail/delete.htm").access("hasAuthority('OP_mail_delete')");
-        http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasAuthority('OP_user_view')");
+        //http.authorizeRequests().antMatchers("/rest/mail/delete.htm").access("hasAuthority('OP_mail_delete')");
+        //http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasAuthority('OP_user_view')");
         
         // Roles
-        http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasRole('ROLE_Empleado')");
+        //http.authorizeRequests().antMatchers("/vista/user/table.htm").access("hasRole('ROLE_Empleado')");
         
         /***************************
          *    General Permissions
          ***************************/
         
         // Authorizations
-        //http.authorizeRequests().antMatchers("/rest/*/find.htm").access("hasAuthority('OP_find')");
-        http.authorizeRequests().antMatchers("/rest/*/create.htm").access("hasAuthority('OP_create')");
-        http.authorizeRequests().antMatchers("/rest/*/update.htm").access("hasAuthority('OP_update')");
-        http.authorizeRequests().antMatchers("/rest/*/delete.htm").access("hasAuthority('OP_delete')");
-        http.authorizeRequests().antMatchers("/rest/*/doProcess.htm","/rest/*/doProcess/*.htm").access("hasAuthority('OP_doProcess')");
+//        http.authorizeRequests().antMatchers("/rest/*/find.htm").access("hasAuthority('OP_find')");
+//        http.authorizeRequests().antMatchers("/rest/*/create.htm").access("hasAuthority('OP_create')");
+//        http.authorizeRequests().antMatchers("/rest/*/update.htm").access("hasAuthority('OP_update')");
+//        http.authorizeRequests().antMatchers("/rest/*/delete.htm").access("hasAuthority('OP_delete')");
+//        http.authorizeRequests().antMatchers("/rest/*/doProcess.htm","/rest/*/doProcess/*.htm").access("hasAuthority('OP_doProcess')");
         
         // Roles
         http.authorizeRequests().antMatchers("/home**").authenticated();
-        http.authorizeRequests().antMatchers("/vista/*/table.htm", "/vista/*/report/*").access("hasRole('ROLE_Administrator2')");
+        http.authorizeRequests().antMatchers("/vista/*/table.htm", "/vista/*/report/*").access("hasRole('ROLE_Administrator')");
+        http.authorizeRequests().antMatchers("/rest/*/create.htm").access("hasAuthority('OP_create')");
+        http.authorizeRequests().antMatchers("/rest/*/update.htm", "/rest/*/update/byfilter.htm").access("hasAuthority('OP_update')");
+        http.authorizeRequests().antMatchers("/rest/*/delete.htm", "/delete/byfilter.htm").access("hasAuthority('OP_delete')");
+        http.authorizeRequests().antMatchers("/rest/*/doProcess.htm","/rest/*/doProcess/*.htm").access("hasAuthority('OP_doProcess')");
         
         
     }
