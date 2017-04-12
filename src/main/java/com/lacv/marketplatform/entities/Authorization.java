@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,15 +26,10 @@ import javax.validation.constraints.Size;
  * @author grupot
  */
 @Entity
-@Table(name = "role")
+@Table(name = "authorization")
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
-public class Role implements BaseEntity {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<RoleAuthorization> roleAuthorizationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<WebresourceRole> webresourceRoleList;
+    @NamedQuery(name = "Authorization.findAll", query = "SELECT a FROM Authorization a")})
+public class Authorization implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,25 +39,25 @@ public class Role implements BaseEntity {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 200)
     @Column(name = "name")
     private String name;
-    @Size(max = 200)
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<UserRole> userRoleList;
-    @Transient
-    protected Object[] jdoDetachedState;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authorization")
+    private List<RoleAuthorization> roleAuthorizationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authorization")
+    private List<WebresourceAuthorization> webresourceAuthorizationList;
 
-    public Role() {
+    public Authorization() {
     }
 
-    public Role(Integer id) {
+    public Authorization(Integer id) {
         this.id = id;
     }
 
-    public Role(Integer id, String name) {
+    public Authorization(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -94,12 +88,20 @@ public class Role implements BaseEntity {
         this.description = description;
     }
 
-    public List<UserRole> getUserRoleList() {
-        return userRoleList;
+    public List<RoleAuthorization> getRoleAuthorizationList() {
+        return roleAuthorizationList;
     }
 
-    public void setUserRoleList(List<UserRole> userRoleList) {
-        this.userRoleList = userRoleList;
+    public void setRoleAuthorizationList(List<RoleAuthorization> roleAuthorizationList) {
+        this.roleAuthorizationList = roleAuthorizationList;
+    }
+
+    public List<WebresourceAuthorization> getWebresourceAuthorizationList() {
+        return webresourceAuthorizationList;
+    }
+
+    public void setWebresourceAuthorizationList(List<WebresourceAuthorization> webresourceAuthorizationList) {
+        this.webresourceAuthorizationList = webresourceAuthorizationList;
     }
 
     @Override
@@ -112,10 +114,10 @@ public class Role implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof Authorization)) {
             return false;
         }
-        Role other = (Role) object;
+        Authorization other = (Authorization) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,23 +126,7 @@ public class Role implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.Role[ id=" + id + " ]";
-    }
-
-    public List<RoleAuthorization> getRoleAuthorizationList() {
-        return roleAuthorizationList;
-    }
-
-    public void setRoleAuthorizationList(List<RoleAuthorization> roleAuthorizationList) {
-        this.roleAuthorizationList = roleAuthorizationList;
-    }
-
-    public List<WebresourceRole> getWebresourceRoleList() {
-        return webresourceRoleList;
-    }
-
-    public void setWebresourceRoleList(List<WebresourceRole> webresourceRoleList) {
-        this.webresourceRoleList = webresourceRoleList;
+        return "com.lacv.marketplatform.entities.Authorization[ id=" + id + " ]";
     }
     
 }

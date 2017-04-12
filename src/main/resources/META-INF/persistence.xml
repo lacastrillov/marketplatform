@@ -22,6 +22,11 @@
     <class>com.lacv.marketplatform.entities.WebFile</class>
     <class>com.lacv.marketplatform.entities.ProductImage</class>
     <class>com.lacv.marketplatform.entities.SubCategory</class>
+    <class>com.lacv.marketplatform.entities.RoleAuthorization</class>
+    <class>com.lacv.marketplatform.entities.Authorization</class>
+    <class>com.lacv.marketplatform.entities.WebresourceAuthorization</class>
+    <class>com.lacv.marketplatform.entities.WebResource</class>
+    <class>com.lacv.marketplatform.entities.WebresourceRole</class>
     <properties>
       <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="wildfly.jpa.default-unit" value="true"/>

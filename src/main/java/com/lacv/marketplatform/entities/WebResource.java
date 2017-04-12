@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,15 +26,10 @@ import javax.validation.constraints.Size;
  * @author grupot
  */
 @Entity
-@Table(name = "role")
+@Table(name = "web_resource")
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
-public class Role implements BaseEntity {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<RoleAuthorization> roleAuthorizationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<WebresourceRole> webresourceRoleList;
+    @NamedQuery(name = "WebResource.findAll", query = "SELECT w FROM WebResource w")})
+public class WebResource implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,24 +42,32 @@ public class Role implements BaseEntity {
     @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
-    @Size(max = 200)
-    @Column(name = "description")
-    private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<UserRole> userRoleList;
-    @Transient
-    protected Object[] jdoDetachedState;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "pah")
+    private String pah;
+    @Size(max = 45)
+    @Column(name = "type")
+    private String type;
+    @Column(name = "is_public")
+    private Boolean isPublic;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "webResource")
+    private List<WebresourceAuthorization> webresourceAuthorizationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "webResource")
+    private List<WebresourceRole> webresourceRoleList;
 
-    public Role() {
+    public WebResource() {
     }
 
-    public Role(Integer id) {
+    public WebResource(Integer id) {
         this.id = id;
     }
 
-    public Role(Integer id, String name) {
+    public WebResource(Integer id, String name, String pah) {
         this.id = id;
         this.name = name;
+        this.pah = pah;
     }
 
     @Override
@@ -86,20 +88,44 @@ public class Role implements BaseEntity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPah() {
+        return pah;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPah(String pah) {
+        this.pah = pah;
     }
 
-    public List<UserRole> getUserRoleList() {
-        return userRoleList;
+    public String getType() {
+        return type;
     }
 
-    public void setUserRoleList(List<UserRole> userRoleList) {
-        this.userRoleList = userRoleList;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public List<WebresourceAuthorization> getWebresourceAuthorizationList() {
+        return webresourceAuthorizationList;
+    }
+
+    public void setWebresourceAuthorizationList(List<WebresourceAuthorization> webresourceAuthorizationList) {
+        this.webresourceAuthorizationList = webresourceAuthorizationList;
+    }
+
+    public List<WebresourceRole> getWebresourceRoleList() {
+        return webresourceRoleList;
+    }
+
+    public void setWebresourceRoleList(List<WebresourceRole> webresourceRoleList) {
+        this.webresourceRoleList = webresourceRoleList;
     }
 
     @Override
@@ -112,10 +138,10 @@ public class Role implements BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof WebResource)) {
             return false;
         }
-        Role other = (Role) object;
+        WebResource other = (WebResource) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,23 +150,7 @@ public class Role implements BaseEntity {
 
     @Override
     public String toString() {
-        return "com.lacv.marketplatform.entities.Role[ id=" + id + " ]";
-    }
-
-    public List<RoleAuthorization> getRoleAuthorizationList() {
-        return roleAuthorizationList;
-    }
-
-    public void setRoleAuthorizationList(List<RoleAuthorization> roleAuthorizationList) {
-        this.roleAuthorizationList = roleAuthorizationList;
-    }
-
-    public List<WebresourceRole> getWebresourceRoleList() {
-        return webresourceRoleList;
-    }
-
-    public void setWebresourceRoleList(List<WebresourceRole> webresourceRoleList) {
-        this.webresourceRoleList = webresourceRoleList;
+        return "com.lacv.marketplatform.entities.WebResource[ id=" + id + " ]";
     }
     
 }

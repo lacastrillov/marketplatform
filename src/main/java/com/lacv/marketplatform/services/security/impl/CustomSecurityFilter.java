@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,11 +30,7 @@ import org.springframework.web.util.NestedServletException;
  */
 public class CustomSecurityFilter extends GenericFilterBean {
 
-    private static final int ERROR_SESSION = 901;
-
     private final ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
-
-    private final AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -58,7 +52,7 @@ public class CustomSecurityFilter extends GenericFilterBean {
             }
             
             if(ruta.contains("/rest/user/find.htm")){
-                resp.sendError(403, "Acceso denegado");
+                accessDenied(req, resp);
             }
             
             chain.doFilter(request, response);
@@ -75,30 +69,20 @@ public class CustomSecurityFilter extends GenericFilterBean {
             }
 
             if (ase != null) {
-
-                if (ase instanceof AuthenticationException) {
-                    logger.error("AuthenticationException ase ", ase);
-                    throw ase;
-                } else if (ase instanceof AccessDeniedException) {
-                    logger.error("AccessDeniedException ase ", ase);
-                    accessDenied(request, resp, ase);
-                }
+                logger.error("AuthenticationException ase ", ase);
+                throw ase;
             }
 
         }
     }
 
-    private void accessDenied(ServletRequest request, HttpServletResponse resp, RuntimeException ase) throws IOException {
-        if (authenticationTrustResolver.isAnonymous(SecurityContextHolder.getContext().getAuthentication())) {
-            String ajaxHeader = ((HttpServletRequest) request).getHeader("X-Requested-With");
+    private void accessDenied(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String ajaxHeader = req.getHeader("X-Requested-With");
 
-            if ("XMLHttpRequest".equals(ajaxHeader)) {
-                resp.sendError(ERROR_SESSION);
-            } else {
-                throw ase;
-            }
+        if ("XMLHttpRequest".equals(ajaxHeader)) {
+            resp.sendError(403, "Acceso denegado");
         } else {
-            throw ase;
+            resp.sendRedirect("/denied");
         }
     }
 

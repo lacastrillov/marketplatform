@@ -65,12 +65,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         // Roles
         http.authorizeRequests().antMatchers("/home**").authenticated();
-        http.authorizeRequests().antMatchers("/vista/*/table.htm", "/vista/*/report/*").access("hasRole('ROLE_Administrator')");
-        http.authorizeRequests().antMatchers("/rest/*/create.htm").access("hasAuthority('OP_create')");
-        http.authorizeRequests().antMatchers("/rest/*/update.htm", "/rest/*/update/byfilter.htm").access("hasAuthority('OP_update')");
-        http.authorizeRequests().antMatchers("/rest/*/delete.htm", "/delete/byfilter.htm").access("hasAuthority('OP_delete')");
-        http.authorizeRequests().antMatchers("/rest/*/doProcess.htm","/rest/*/doProcess/*.htm").access("hasAuthority('OP_doProcess')");
-        
+//        http.authorizeRequests().antMatchers("/vista/*/table.htm", "/vista/*/report/*").access("hasRole('ROLE_Administrator')");
+//        http.authorizeRequests().antMatchers("/rest/*/create.htm").access("hasAuthority('OP_create')");
+//        http.authorizeRequests().antMatchers("/rest/*/update.htm", "/rest/*/update/byfilter.htm").access("hasAuthority('OP_update')");
+//        http.authorizeRequests().antMatchers("/rest/*/delete.htm", "/delete/byfilter.htm").access("hasAuthority('OP_delete')");
+//        http.authorizeRequests().antMatchers("/rest/*/doProcess.htm","/rest/*/doProcess/*.htm").access("hasAuthority('OP_doProcess')");
+//        
         
     }
 

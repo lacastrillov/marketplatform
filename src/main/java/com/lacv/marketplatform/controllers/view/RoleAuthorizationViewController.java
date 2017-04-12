@@ -6,14 +6,13 @@
 
 package com.lacv.marketplatform.controllers.view;
 
-import com.lacv.marketplatform.dtos.RoleDto;
-import com.lacv.marketplatform.mappers.RoleMapper;
-import com.lacv.marketplatform.services.RoleService;
+import com.lacv.marketplatform.dtos.RoleAuthorizationDto;
+import com.lacv.marketplatform.mappers.RoleAuthorizationMapper;
+import com.lacv.marketplatform.services.RoleAuthorizationService;
 import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
-import com.lacv.marketplatform.entities.RoleAuthorization;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,33 +23,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author lacastrillov
  */
 @Controller
-@RequestMapping(value="/vista/role")
-public class RoleViewController extends ExtViewController {
+@RequestMapping(value="/vista/roleAuthorization")
+public class RoleAuthorizationViewController extends ExtViewController {
     
     @Autowired
-    RoleService roleService;
+    RoleAuthorizationService roleAuthorizationService;
     
     @Autowired
     MenuComponent menuComponent;
     
     @Autowired
-    RoleMapper roleMapper;
+    RoleAuthorizationMapper roleAuthorizationMapper;
     
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("role", "name", roleService, RoleDto.class);
-        view.setSingularEntityTitle("Rol");
-        view.setPluralEntityTitle("Roles");
-        view.addInternalViewButton("userRole", "Ver Usuarios");
-        view.addChildExtView("roleAuthorization", RoleAuthorization.class, ViewConfig.TCV_N_N_MULTICHECK);
+        ViewConfig view= new ViewConfig("roleAuthorization", "id", roleAuthorizationService, RoleAuthorizationDto.class);
+        view.setSingularEntityTitle("Comercio");
+        view.setPluralEntityTitle("Comercios");
+        view.activateNNMulticheckChild("authorization");
         super.addControlMapping(view);
         
-        MenuItem menuItem= new MenuItem("Seguridad", "role", "Gestionar Roles");
-        menuItem.setParentPosition(1);
-        menuItem.setItemPosition(1);
+        /*MenuItem menuItem= new MenuItem("Seguridad", "roleAuthorization", "Gestionar Comercios");
         menuComponent.addItemMenu(menuItem);
-        super.addMenuComponent(menuComponent);
+        super.addMenuComponent(menuComponent);*/
     }
     
     
