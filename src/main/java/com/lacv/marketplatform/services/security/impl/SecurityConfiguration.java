@@ -15,6 +15,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     AuthenticationProvider securityService;
+    
+    @Autowired
+    CustomSecurityFilter customSecurityFilter;
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -39,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedPage("/denied");
         
-        http.addFilterAfter(new CustomSecurityFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(customSecurityFilter, UsernamePasswordAuthenticationFilter.class);
 
         /***************************
          *    Specific Permissions
