@@ -13,6 +13,8 @@ import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.util.AESEncrypt;
+import com.lacv.marketplatform.entities.RoleAuthorization;
+import com.lacv.marketplatform.services.RoleAuthorizationService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
 
     @Autowired
     UserRoleService userRoleService;
+    
+    @Autowired
+    RoleAuthorizationService roleAuthorizationService;
     
     AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
     
@@ -95,8 +100,14 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         List<UserRole> userRoles = userRoleService.findByParameter("user", user);
-        for (UserRole usuarioRol : userRoles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+usuarioRol.getRole().getName()));
+        for (UserRole usuerRoleList : userRoles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+usuerRoleList.getRole().getName()));
+            List<RoleAuthorization> roleAuthorizationList= roleAuthorizationService.findByParameter("role", usuerRoleList.getRole());
+            for(RoleAuthorization roleAuthorization: roleAuthorizationList){
+                if(authorities.contains("OP_"+roleAuthorization.getAuthorization().getName())==false){
+                    authorities.add(new SimpleGrantedAuthority("OP_"+roleAuthorization.getAuthorization().getName()));
+                }
+            }
         }
         
         return authorities;

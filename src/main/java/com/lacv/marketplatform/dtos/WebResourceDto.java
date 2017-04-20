@@ -5,7 +5,12 @@
  */
 package com.lacv.marketplatform.dtos;
 
+import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.Order;
+import com.dot.gcpbasedot.annotation.ReadOnly;
+import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
+import com.dot.gcpbasedot.enums.FieldType;
 import java.util.List;
 
 /**
@@ -16,12 +21,16 @@ public class WebResourceDto implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     
+    @ColumnWidth(100)
+    @Order(1)
+    @ReadOnly
     private Integer id;
     
     private String name;
     
     private String path;
     
+    @TypeFormField(value = FieldType.LIST, data = {"general", "specific"})
     private String type;
     
     private Boolean isPublic;

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/")
@@ -19,9 +20,13 @@ public class HomeController {
     }
     
     @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView("redirect:/vista/user/table.htm");
-
+    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String redirect) {
+        ModelAndView mav;
+        if(redirect!=null){
+            mav = new ModelAndView("redirect:"+redirect);
+        }else{
+            mav = new ModelAndView("redirect:/vista/user/table.htm");
+        }
         return mav;
     }
     
