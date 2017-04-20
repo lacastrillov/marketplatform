@@ -1,6 +1,10 @@
 package com.lacv.marketplatform.services.security.impl;
 
 import com.lacv.marketplatform.dtos.UserDetailsDto;
+import com.lacv.marketplatform.services.AuthorizationService;
+import com.lacv.marketplatform.services.RoleAuthorizationService;
+import com.lacv.marketplatform.services.UserRoleService;
+import com.lacv.marketplatform.services.UserService;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -9,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -16,6 +21,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.security.web.util.ThrowableCauseExtractor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.NestedServletException;
 
@@ -28,7 +34,21 @@ import org.springframework.web.util.NestedServletException;
  * @copy Todos los derechos reservados Metrocuadrado.
  * @version 1.0
  */
+@Component
 public class CustomSecurityFilter extends GenericFilterBean {
+    
+    @Autowired
+    UserService usuarioService;
+
+    @Autowired
+    UserRoleService userRoleService;
+    
+    @Autowired
+    AuthorizationService authorizationService;
+    
+    @Autowired
+    RoleAuthorizationService roleAuthorizationService;
+    
 
     private final ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
 
