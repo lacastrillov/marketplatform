@@ -20,7 +20,7 @@ public class WebResourceDto implements BaseEntity {
     
     private String name;
     
-    private String pah;
+    private String path;
     
     private String type;
     
@@ -40,7 +40,7 @@ public class WebResourceDto implements BaseEntity {
     public WebResourceDto(Integer id, String name, String pah) {
         this.id = id;
         this.name = name;
-        this.pah = pah;
+        this.path = pah;
     }
 
     @Override
@@ -61,12 +61,12 @@ public class WebResourceDto implements BaseEntity {
         this.name = name;
     }
 
-    public String getPah() {
-        return pah;
+    public String getPath() {
+        return path;
     }
 
-    public void setPah(String pah) {
-        this.pah = pah;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getType() {

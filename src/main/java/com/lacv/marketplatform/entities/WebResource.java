@@ -45,8 +45,8 @@ public class WebResource implements BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "pah")
-    private String pah;
+    @Column(name = "path")
+    private String path;
     @Size(max = 45)
     @Column(name = "type")
     private String type;
@@ -67,7 +67,7 @@ public class WebResource implements BaseEntity {
     public WebResource(Integer id, String name, String pah) {
         this.id = id;
         this.name = name;
-        this.pah = pah;
+        this.path = pah;
     }
 
     @Override
@@ -88,12 +88,12 @@ public class WebResource implements BaseEntity {
         this.name = name;
     }
 
-    public String getPah() {
-        return pah;
+    public String getPath() {
+        return path;
     }
 
-    public void setPah(String pah) {
-        this.pah = pah;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getType() {

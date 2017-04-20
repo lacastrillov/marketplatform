@@ -5,6 +5,10 @@
  */
 package com.lacv.marketplatform.dtos;
 
+import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.NotNull;
+import com.dot.gcpbasedot.annotation.Order;
+import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import java.util.List;
 
@@ -16,15 +20,23 @@ public class AuthorizationDto implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     
+    @ColumnWidth(100)
+    @Order(1)
     private Integer id;
     
+    @NotNull
+    @Order(2)
+    @TextField("Nombre")
     private String name;
     
+    @ColumnWidth(300)
+    @TextField("Descripci&oacute;n")
     private String description;
     
     private List<RoleAuthorizationDto> roleAuthorizationList;
     
     private List<WebresourceAuthorizationDto> webresourceAuthorizationList;
+    
 
     public AuthorizationDto() {
     }

@@ -28,7 +28,7 @@ public class WebResourceMapper implements BasicEntityMapper {
             dto.setId(entity.getId());
             dto.setIsPublic(entity.getIsPublic());
             dto.setName(entity.getName());
-            dto.setPah(entity.getPah());
+            dto.setPath(entity.getPath());
             dto.setType(entity.getType());
         }
         return dto;

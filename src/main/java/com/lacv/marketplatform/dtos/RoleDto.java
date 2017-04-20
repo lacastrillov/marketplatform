@@ -34,6 +34,10 @@ public class RoleDto implements BaseEntity {
     private String description;
     
     private List<UserRoleDto> userRoleList;
+    
+    private List<RoleAuthorizationDto> roleAuthorizationList;
+    
+    private List<WebresourceRoleDto> webresourceRoleList;
 
     public RoleDto() {
     }
@@ -79,6 +83,22 @@ public class RoleDto implements BaseEntity {
 
     public void setUserRoleList(List<UserRoleDto> userRoleList) {
         this.userRoleList = userRoleList;
+    }
+    
+    public List<RoleAuthorizationDto> getRoleAuthorizationList() {
+        return roleAuthorizationList;
+    }
+
+    public void setRoleAuthorizationList(List<RoleAuthorizationDto> roleAuthorizationList) {
+        this.roleAuthorizationList = roleAuthorizationList;
+    }
+
+    public List<WebresourceRoleDto> getWebresourceRoleList() {
+        return webresourceRoleList;
+    }
+
+    public void setWebresourceRoleList(List<WebresourceRoleDto> webresourceRoleList) {
+        this.webresourceRoleList = webresourceRoleList;
     }
 
     @Override

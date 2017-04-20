@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,11 +30,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
 public class Role implements BaseEntity {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<RoleAuthorization> roleAuthorizationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<WebresourceRole> webresourceRoleList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,8 +47,10 @@ public class Role implements BaseEntity {
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private List<UserRole> userRoleList;
-    @Transient
-    protected Object[] jdoDetachedState;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    private List<RoleAuthorization> roleAuthorizationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    private List<WebresourceRole> webresourceRoleList;
 
     public Role() {
     }
@@ -101,6 +97,22 @@ public class Role implements BaseEntity {
     public void setUserRoleList(List<UserRole> userRoleList) {
         this.userRoleList = userRoleList;
     }
+    
+    public List<RoleAuthorization> getRoleAuthorizationList() {
+        return roleAuthorizationList;
+    }
+
+    public void setRoleAuthorizationList(List<RoleAuthorization> roleAuthorizationList) {
+        this.roleAuthorizationList = roleAuthorizationList;
+    }
+
+    public List<WebresourceRole> getWebresourceRoleList() {
+        return webresourceRoleList;
+    }
+
+    public void setWebresourceRoleList(List<WebresourceRole> webresourceRoleList) {
+        this.webresourceRoleList = webresourceRoleList;
+    }
 
     @Override
     public int hashCode() {
@@ -125,22 +137,6 @@ public class Role implements BaseEntity {
     @Override
     public String toString() {
         return "com.lacv.marketplatform.entities.Role[ id=" + id + " ]";
-    }
-
-    public List<RoleAuthorization> getRoleAuthorizationList() {
-        return roleAuthorizationList;
-    }
-
-    public void setRoleAuthorizationList(List<RoleAuthorization> roleAuthorizationList) {
-        this.roleAuthorizationList = roleAuthorizationList;
-    }
-
-    public List<WebresourceRole> getWebresourceRoleList() {
-        return webresourceRoleList;
-    }
-
-    public void setWebresourceRoleList(List<WebresourceRole> webresourceRoleList) {
-        this.webresourceRoleList = webresourceRoleList;
     }
     
 }
