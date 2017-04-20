@@ -14,6 +14,7 @@ import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.GridTemplate;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.FileExplorerConfig;
+import com.dot.gcpbasedot.enums.PageType;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,7 @@ public class WebFileViewController extends ExtFileExplorerController {
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Gestor de Contenidos", "webFile", "Explorador de Archivos");
+        menuItem.setPageType(PageType.FILE_EXPLORER);
         menuItem.setParentPosition(3);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);

@@ -11,12 +11,10 @@ and open the template in the editor.
     <mapping path="/tienda/**" decorator="/WEB-INF/decorators/publicDecorator.jsp"/>
     
     <mapping path="/rest/**" exclue="true"/>
-    <mapping path="**/vista/*/table.htm" exclue="true"/>
-    <mapping path="**/vista/*/report/**" exclue="true"/>
+    <mapping path="/vista/**.htm" exclue="true"/>
     <mapping path="**/ajax/**" exclue="true"/>
     <mapping path="**/fileupload/**" exclue="true"/>
     <mapping path="**/lightbox/**" exclue="true"/>
     <mapping path="**/component/**" exclue="true"/>
-    <mapping path="/pagina/**" exclue="true"/>
     
 </sitemesh>

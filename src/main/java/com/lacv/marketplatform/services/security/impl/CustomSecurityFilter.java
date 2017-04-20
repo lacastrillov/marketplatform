@@ -110,7 +110,7 @@ public class CustomSecurityFilter extends GenericFilterBean {
             for(WebResource webResource: generalWebResources){
                 Pattern p = Pattern.compile(webResource.getPath());
                 Matcher m = p.matcher(requestURI);
-                if(m.find() ){
+                if(m.find()){
                     matchWebResource= webResource;
                     break;
                 }
@@ -127,6 +127,7 @@ public class CustomSecurityFilter extends GenericFilterBean {
                         return true;
                     }
                 }
+                return accessDenied(req, resp, userDetails);
             }else{
                 //Verificar si tiene un Rol
                 List<WebresourceRole> webResourceRoleList= webResourceRoleService.findByParameter("webResource", matchWebResource);
@@ -136,9 +137,12 @@ public class CustomSecurityFilter extends GenericFilterBean {
                             return true;
                         }
                     }
+                    return accessDenied(req, resp, userDetails);
                 }
             }
-            return accessDenied(req, resp, userDetails);
+            if(userDetails==null){
+                return accessDenied(req, resp, userDetails);
+            }
         }
         
         return true;

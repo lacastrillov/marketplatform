@@ -50,10 +50,6 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     
     AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
     
-    private final Integer SESSION_MAX_INTENTOS=6;
-    
-    private final Integer SESSION_TIEMPO_DIAS_CAMBIO_CLAVE=360;
-    
     
     @Override
     public Authentication authenticate(Authentication a) throws AuthenticationException {
@@ -64,16 +60,10 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
             
             if (contrasena.equals(a.getCredentials())) {
                 UserDetailsDto userDetails = entityToUserDetail(user);
-                if (userDetails.isAccountNonExpired() == false) {
-                    if (user.getStatus().equals("Inactive")) {
-                        throw new BadCredentialsException("El usuario no ha activado la cuenta por correo");
-                    } else {
-                        throw new BadCredentialsException("El usuario se encuentra en estado " + user.getStatus());
-                    }
-                } else if (userDetails.isEnabled() == false) {
-                    throw new BadCredentialsException("La clave esta vencida");
+                if (userDetails.isEnabled() == false) {
+                    throw new BadCredentialsException("Error, el usuario esta inactivo");
                 } else if (userDetails.isAccountNonLocked() == false) {
-                    throw new BadCredentialsException("La cuenta esta bloqueada por que ha excedido los intentos fallidos");
+                    throw new BadCredentialsException("Error, la cuenta de usuario esta bloqueada");
                 }
 
                 Authentication autentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -104,7 +94,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
             authorities.add(new SimpleGrantedAuthority("ROLE_"+usuerRoleList.getRole().getName()));
             List<RoleAuthorization> roleAuthorizationList= roleAuthorizationService.findByParameter("role", usuerRoleList.getRole());
             for(RoleAuthorization roleAuthorization: roleAuthorizationList){
-                if(authorities.contains("OP_"+roleAuthorization.getAuthorization().getName())==false){
+                if(authorities.contains(new SimpleGrantedAuthority("OP_"+roleAuthorization.getAuthorization().getName()))==false){
                     authorities.add(new SimpleGrantedAuthority("OP_"+roleAuthorization.getAuthorization().getName()));
                 }
             }
@@ -147,26 +137,20 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     }
 
     private void validateUserDetails(UserDetailsDto userDetails, User user) {
-        if (user.getStatus().equals("Active")) {
-            userDetails.setAccountNonExpired(true);
-                
-            if (user.getFailedAttempts() < SESSION_MAX_INTENTOS) {
-                userDetails.setAccountNonLocked(true);
-            } else {
-                userDetails.setAccountNonLocked(false);
-            }
-
-            if (user.getLastLogin()==null || diasEntre(user.getLastLogin(), new Date()) < SESSION_TIEMPO_DIAS_CAMBIO_CLAVE) {
-                userDetails.setEnabled(true);
-            } else {
-                userDetails.setEnabled(false);
-            }
-
-        } else if (user.getStatus().equals("Inactive") && user.getLastLogin() == null) {
-            userDetails.setCredentialsNonExpired(true);
+        if (user.getStatus().equals("Locked")) {
+            userDetails.setAccountNonLocked(false);
         } else {
-            userDetails.setAccountNonExpired(false);
+            userDetails.setAccountNonLocked(true);
         }
+
+        if (user.getStatus().equals("Active")) {
+            userDetails.setEnabled(true);
+        } else {
+            userDetails.setEnabled(false);
+        }
+
+        userDetails.setCredentialsNonExpired(true);
+        userDetails.setAccountNonExpired(true);
     }
 
     private User getUser(String username) {

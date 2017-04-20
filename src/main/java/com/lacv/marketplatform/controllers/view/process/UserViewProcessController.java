@@ -13,6 +13,7 @@ import com.dot.gcpbasedot.controller.ExtProcessController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
+import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class UserViewProcessController extends ExtProcessController {
         super.addControlMapping(process);
         
         MenuItem menuItem= new MenuItem("Procesos", "processUser", "Gestionar Procesos de Usuario");
+        menuItem.setPageType(PageType.PROCESS);
         menuItem.setParentPosition(4);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
