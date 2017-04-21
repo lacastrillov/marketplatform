@@ -38,7 +38,6 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
                 parent= parent.webFile;
             }
             path+= entity.id + "__" + entity.name;
-            console.log(path);
             source['Ruta']= path;
         }else{
             source['Ruta']= "";
