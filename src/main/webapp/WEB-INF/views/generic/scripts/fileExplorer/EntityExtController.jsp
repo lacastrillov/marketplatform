@@ -56,14 +56,16 @@ function ${entityName}ExtController(parentExtController, parentExtView){
             }
         }
         
-        <c:forEach var="associatedER" items="${interfacesEntityRef}">
-            <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-        if(Instance.filter.eq!==undefined && Instance.filter.eq.${associatedER}!==undefined && Instance.filter.eq.${associatedER}!==''){
-            Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.cargar${associatedEntityName}(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel);
-        }else{
-            Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel(null);
+        if(activeTab!=="1"){
+            <c:forEach var="associatedER" items="${interfacesEntityRef}">
+                <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
+            if(Instance.filter.eq!==undefined && Instance.filter.eq.${associatedER}!==undefined && Instance.filter.eq.${associatedER}!==''){
+                Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.cargar${associatedEntityName}(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel);
+            }else{
+                Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel(null);
+            }
+            </c:forEach>
         }
-        </c:forEach>
         
         if(activeTab==="1"){
             Instance.loadFormData(id);
@@ -96,6 +98,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                         var record= Ext.create(Instance.modelName);
                         record.data= data;
                         formComponent.setActiveRecord(record || null);
+                        Instance.entityExtView.webFileExtInterfaces.agregarNivel(data);
                     });
                 }
             }else{

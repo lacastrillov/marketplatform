@@ -863,7 +863,14 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 for(var i=0; i<path.length; i++){
                     if(path[i].indexOf("__")!==-1){
                         var res= path[i].split("__");
-                        breadcrumb+=" / <a href='#?filter={\"eq\":{\"webFile\":"+res[0]+"}}'>"+res[1]+"</a>";
+                        breadcrumb+=" / ";
+                        if(i<path.length-1){
+                            breadcrumb+="<a href='#?filter={\"eq\":{\"webFile\":"+res[0]+"}}'>";
+                        }
+                        breadcrumb+=res[1];
+                        if(i<path.length-1){
+                            breadcrumb+="</a>";
+                        }
                     }
                 }
                 return breadcrumb;

@@ -16,6 +16,7 @@ import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.services.SubCategoryService;
+import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,9 @@ public class CategoryViewController extends ExtViewController {
     @Autowired
     CategoryMapper categoryMapper;
     
+    @Autowired
+    SecurityService securityService;
+    
     
     @PostConstruct
     public void init(){
@@ -61,6 +65,11 @@ public class CategoryViewController extends ExtViewController {
         menuItem.setParentPosition(7);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
+    }
+    
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
     }
     
     @RequestMapping(value = "/component/menu-categories-subcategories", method = {RequestMethod.POST, RequestMethod.GET})

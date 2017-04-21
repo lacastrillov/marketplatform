@@ -15,6 +15,8 @@ import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.WebresourceAuthorization;
 import com.lacv.marketplatform.entities.WebresourceRole;
+import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,9 @@ public class WebResourceViewController extends ExtViewController {
     @Autowired
     WebResourceMapper webResourceMapper;
     
+    @Autowired
+    SecurityService securityService;
+    
     
     @PostConstruct
     public void init(){
@@ -52,5 +57,9 @@ public class WebResourceViewController extends ExtViewController {
         super.addMenuComponent(menuComponent);
     }
     
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
+    }
     
 }

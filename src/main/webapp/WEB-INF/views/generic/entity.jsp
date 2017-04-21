@@ -4,6 +4,7 @@
     Author     : lacastrillov
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
@@ -98,11 +99,13 @@
     </head>
     <body>
         <div id="headerHtml" style="display:none;">
-            <h1 >
-                Administraci&oacute;n MERCANDO
-                <a class="logout" href="<%=request.getContextPath()%>/j_spring_security_logout">&nbsp;Cerrar sesi&oacute;n&nbsp;</a>
-                <a class="home" href="<%=request.getContextPath()%>/home">&nbsp;Home&nbsp;</a>
-            </h1>
+            <h1>Administraci&oacute;n MERCANDO</h1>
+            <a class="logout" href="<%=request.getContextPath()%>/j_spring_security_logout">&nbsp;Cerrar sesi&oacute;n&nbsp;</a>
+            <a class="home" href="<%=request.getContextPath()%>/home">&nbsp;Inicio&nbsp;</a>
+            <sec:authentication var="user" property="principal" />
+            <sec:authorize access="isAuthenticated()">
+                <p class="userSession"><b>${user.username}</b> - ${user.nombre} ${user.apellidos}</p>
+            </sec:authorize>
         </div>
         <script type="text/javascript">
             var navegadorExtInit= new EntityExtInit();

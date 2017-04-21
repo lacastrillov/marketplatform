@@ -15,6 +15,8 @@ import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
+import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class UserViewProcessController extends ExtProcessController {
     @Autowired
     MenuComponent menuComponent;
     
+    @Autowired
+    SecurityService securityService;
+    
     
     @PostConstruct
     public void init(){
@@ -46,6 +51,11 @@ public class UserViewProcessController extends ExtProcessController {
         menuItem.setParentPosition(4);
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
+    }
+    
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
     }
     
     

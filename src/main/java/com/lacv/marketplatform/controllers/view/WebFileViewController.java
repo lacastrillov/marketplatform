@@ -15,6 +15,8 @@ import com.dot.gcpbasedot.dto.GridTemplate;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.FileExplorerConfig;
 import com.dot.gcpbasedot.enums.PageType;
+import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,9 @@ public class WebFileViewController extends ExtFileExplorerController {
     
     @Autowired
     WebFileMapper webFileMapper;
+    
+    @Autowired
+    SecurityService securityService;
     
     
     @PostConstruct
@@ -59,5 +64,9 @@ public class WebFileViewController extends ExtFileExplorerController {
         super.addMenuComponent(menuComponent);
     }
     
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
+    }
     
 }

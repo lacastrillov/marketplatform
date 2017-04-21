@@ -5,6 +5,7 @@
  */
 package com.lacv.marketplatform.services.security.impl;
 
+import com.dot.gcpbasedot.dto.MenuItem;
 import com.lacv.marketplatform.constants.WebConstants;
 import com.lacv.marketplatform.dtos.UserDetailsDto;
 import com.lacv.marketplatform.entities.User;
@@ -14,7 +15,13 @@ import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.util.AESEncrypt;
 import com.lacv.marketplatform.entities.RoleAuthorization;
+import com.lacv.marketplatform.entities.WebResource;
+import com.lacv.marketplatform.entities.WebresourceAuthorization;
+import com.lacv.marketplatform.entities.WebresourceRole;
 import com.lacv.marketplatform.services.RoleAuthorizationService;
+import com.lacv.marketplatform.services.WebResourceService;
+import com.lacv.marketplatform.services.WebresourceAuthorizationService;
+import com.lacv.marketplatform.services.WebresourceRoleService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +34,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,6 +49,10 @@ import org.springframework.stereotype.Service;
  */
 @Service("securityService")
 public class SecurityServiceImpl implements AuthenticationProvider, SecurityService, UserDetailsService {
+    
+    protected static final Logger LOGGER = Logger.getLogger(SecurityServiceImpl.class);
+    
+    AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
 
     @Autowired
     UserService userService;
@@ -48,7 +63,21 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     @Autowired
     RoleAuthorizationService roleAuthorizationService;
     
-    AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
+    @Autowired
+    WebResourceService webResourceService;
+    
+    @Autowired
+    WebresourceAuthorizationService webResourceAuthorizationService;
+    
+    @Autowired
+    WebresourceRoleService webResourceRoleService;
+    
+    @Autowired
+    HttpSession session;
+    
+    private List<WebResource> generalWebResources;
+    
+    private boolean webResourcesUpdated= false;
     
     
     @Override
@@ -102,21 +131,27 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         
         return authorities;
     }
+    
+    public UserDetailsDto getUserDetails(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication!=null){
+            try{
+                UserDetailsDto userDetails = (UserDetailsDto) authentication.getPrincipal();
+                return userDetails;
+            }catch(Exception e){
+            }
+        }
+        return null;
+    }
 
     @Override
     public User getCurrentUser() {
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            try {
-                UserDetailsDto userDetails = (UserDetailsDto) principal;
-                User user = getUser(userDetails.getUsername());
-                return user;
-            } catch (Exception e) {
-                return null;
-            }
-        } else {
-            return null;
+        UserDetailsDto userDetails = getUserDetails();
+        if(userDetails!=null){
+            User user = getUser(userDetails.getUsername());
+            return user;
         }
+        return null;
     }
 
     private UserDetailsDto entityToUserDetail(User user) {
@@ -169,31 +204,93 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         }
         return null;
     }
+    
+    @Override
+    public boolean checkAccessResource(String requestURI) {
+        UserDetailsDto userDetails= getUserDetails();
+        
+        //Check Specific resources
+        WebResource matchWebResource= webResourceService.findUniqueByParameter("path", requestURI);
+        if(matchWebResource==null){
+            if(generalWebResources==null || webResourcesUpdated){
+                generalWebResources= webResourceService.findByParameter("type", "general");
+                webResourcesUpdated= false;
+            }
+            for(WebResource webResource: generalWebResources){
+                Pattern p = Pattern.compile(webResource.getPath());
+                Matcher m = p.matcher(requestURI);
+                if(m.find()){
+                    matchWebResource= webResource;
+                    break;
+                }
+            }
+        }
+        
+        if(matchWebResource!=null && matchWebResource.getIsPublic()==false){
+        
+            //Verificar si tiene una autorizacion
+            List<WebresourceAuthorization> webResourceAuthorizationList= webResourceAuthorizationService.findByParameter("webResource", matchWebResource);
+            if(webResourceAuthorizationList.size()>0){
+                for(WebresourceAuthorization webresourceAuthorization: webResourceAuthorizationList){
+                    if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("OP_"+webresourceAuthorization.getAuthorization().getName()))){
+                        return true;
+                    }
+                }
+                return false;
+            }else{
+                //Verificar si tiene un Rol
+                List<WebresourceRole> webResourceRoleList= webResourceRoleService.findByParameter("webResource", matchWebResource);
+                if(webResourceRoleList.size()>0){
+                    for(WebresourceRole webresourceRole: webResourceRoleList){
+                        if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_"+webresourceRole.getRole().getName()))){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+            if(userDetails==null){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData) {
+        if(session.getAttribute("menuData")==null){
+            LOGGER.info("Generate MENU DATA...");
+            for (MenuItem itemParent : menuData) {
+                itemParent.setVisible(false);
+                for(int j=0; j<itemParent.getSubMenus().size(); j++){
+                    String requestURI= itemParent.getSubMenus().get(j).getHref();
 
+                    //Check Specific resources
+                    boolean visibleMenu= checkAccessResource(requestURI);
+                    if(visibleMenu){
+                        itemParent.getSubMenus().get(j).setVisible(true);
+                        itemParent.setVisible(true);
+                    }else{
+                        itemParent.getSubMenus().get(j).setVisible(false);
+                    }
+                }
+            }
+            session.setAttribute("menuData", menuData);
+            return menuData;
+        }else{
+            LOGGER.info("Get MENU DATA from Session...");
+            return (List<MenuItem>)session.getAttribute("menuData");
+        }
+    }
+
+    public void setWebResourcesUpdated(boolean webResourcesUpdated) {
+        this.webResourcesUpdated = webResourcesUpdated;
+    }
+    
     @Override
     public boolean supports(Class<?> type) {
         return true;
     }
-
-    @Override
-    public String getCurrentUserEmail() {
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            try {
-                UserDetailsDto userDetails = (UserDetailsDto) principal;
-                User user = getUser(userDetails.getUsername());
-                return user.getEmail();
-            } catch (Exception e) {
-                return "";
-            }
-        } else {
-            return "";
-        }
-    }
     
-    private long diasEntre(Date one, Date two) {
-        long difference = (one.getTime() - two.getTime()) / 86400000;
-        return Math.abs(difference);
-    }
-
 }

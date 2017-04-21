@@ -11,7 +11,6 @@ import com.lacv.marketplatform.mappers.InventoryorderDetailMapper;
 import com.lacv.marketplatform.services.InventoryorderDetailService;
 import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
-import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,6 +13,8 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
+import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,9 @@ public class AuthorizationViewController extends ExtViewController {
     @Autowired
     AuthorizationMapper authorizationMapper;
     
+    @Autowired
+    SecurityService securityService;
+    
     
     @PostConstruct
     public void init(){
@@ -48,5 +53,9 @@ public class AuthorizationViewController extends ExtViewController {
         super.addMenuComponent(menuComponent);
     }
     
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
+    }
     
 }

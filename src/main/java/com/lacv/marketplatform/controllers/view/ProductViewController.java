@@ -19,6 +19,7 @@ import com.lacv.marketplatform.entities.ProductImage;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.services.ProductImageService;
 import com.lacv.marketplatform.services.SubCategoryService;
+import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,9 @@ public class ProductViewController extends ExtViewController {
 
     @Autowired
     ProductMapper productMapper;
+    
+    @Autowired
+    SecurityService securityService;
 
     
     @PostConstruct
@@ -67,6 +71,11 @@ public class ProductViewController extends ExtViewController {
         MenuItem menuItem = new MenuItem("Productos", "product", "Gestionar Productos");
         menuComponent.addItemMenu(menuItem);
         super.addMenuComponent(menuComponent);
+    }
+    
+    @Override
+    public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
+        return securityService.configureVisibilityMenu(menuData);
     }
 
     @RequestMapping(value = "/product-list", method = {RequestMethod.POST, RequestMethod.GET})

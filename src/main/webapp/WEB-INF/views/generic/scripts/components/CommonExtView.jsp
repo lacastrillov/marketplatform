@@ -172,7 +172,7 @@ function CommonExtView(parentExtController, parentExtView, model){
     };
     
     Instance.downloadRender= function(value, field) {
-        var fileName= value.split('/').pop().toLowerCase();
+        var fileName= value.split('/').pop();
         if(value){
             return '<h2>'+fileName+'</h2>'+
                    '<a href="'+value+'" target="_blank">'+

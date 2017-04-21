@@ -1,16 +1,9 @@
 package com.lacv.marketplatform.services.security.impl;
 
 import com.lacv.marketplatform.dtos.UserDetailsDto;
-import com.lacv.marketplatform.entities.WebResource;
-import com.lacv.marketplatform.entities.WebresourceAuthorization;
-import com.lacv.marketplatform.entities.WebresourceRole;
-import com.lacv.marketplatform.services.WebResourceService;
-import com.lacv.marketplatform.services.WebresourceAuthorizationService;
-import com.lacv.marketplatform.services.WebresourceRoleService;
+import com.lacv.marketplatform.services.security.SecurityService;
 import java.io.IOException;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.net.URLDecoder;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,13 +11,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.security.web.util.ThrowableCauseExtractor;
 import org.springframework.stereotype.Component;
@@ -44,13 +35,7 @@ import org.springframework.web.util.NestedServletException;
 public class CustomSecurityFilter extends GenericFilterBean {
     
     @Autowired
-    WebResourceService webResourceService;
-    
-    @Autowired
-    WebresourceAuthorizationService webResourceAuthorizationService;
-    
-    @Autowired
-    WebresourceRoleService webResourceRoleService;
+    SecurityService securityService;
 
     private final ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
     
@@ -62,29 +47,18 @@ public class CustomSecurityFilter extends GenericFilterBean {
         resp.setHeader("x-frame-options", "allow");
         try {
             String requestURI= req.getRequestURI();
-            logger.info("CustomTimeoutRedirectFilter INGRESA :"+requestURI);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserDetailsDto userDetails= null;
-            if(authentication!=null){
-                try{
-                    userDetails = (UserDetailsDto) authentication.getPrincipal();
-                    logger.info("LOGIN ON: "+userDetails.getUsername());
-                }catch(Exception e){
-                    logger.info("LOGIN ON: "+authentication.getPrincipal());
-                }
-            }else{
-                logger.info("LOGIN OFF");
-            }
+            logger.info("CustomSecurityFilter INGRESA :"+requestURI);
             
-            boolean continueAccess= checkAccessResource(requestURI, userDetails, req, resp);
+            boolean continueAccess= securityService.checkAccessResource(requestURI);
             
             if(continueAccess){
                 chain.doFilter(request, response);
+            }else{
+                accessDenied(req, resp);
             }
-            //resp.sendRedirect("/denied");
-            logger.info("CustomTimeoutRedirectFilter FIN ");
+            logger.info("CustomSecurityFilter FIN ");
         } catch (Exception ex) {
-            logger.error("CustomTimeoutRedirectFilter ex ", ex);
+            logger.error("CustomSecurityFilter ex ", ex);
             
             Throwable[] causeChain = throwableAnalyzer.determineCauseChain(ex);
             RuntimeException ase = (AuthenticationException) throwableAnalyzer.getFirstThrowableOfType(AuthenticationException.class, causeChain);
@@ -92,63 +66,15 @@ public class CustomSecurityFilter extends GenericFilterBean {
             if (ase == null) {
                 ase = (AccessDeniedException) throwableAnalyzer.getFirstThrowableOfType(AccessDeniedException.class, causeChain);
             }
-
             if (ase != null) {
                 logger.error("AuthenticationException ase ", ase);
                 throw ase;
             }
-
         }
     }
-    
-    private boolean checkAccessResource(String requestURI, UserDetailsDto userDetails, HttpServletRequest req, HttpServletResponse resp) throws IOException{
-        
-        //Check Specific resources
-        WebResource matchWebResource= webResourceService.findUniqueByParameter("path", requestURI);
-        if(matchWebResource==null){
-            List<WebResource> generalWebResources= webResourceService.findByParameter("type", "general");
-            for(WebResource webResource: generalWebResources){
-                Pattern p = Pattern.compile(webResource.getPath());
-                Matcher m = p.matcher(requestURI);
-                if(m.find()){
-                    matchWebResource= webResource;
-                    break;
-                }
-            }
-        }
-        
-        if(matchWebResource!=null && matchWebResource.getIsPublic()==false){
-        
-            //Verificar si tiene una autorizacion
-            List<WebresourceAuthorization> webResourceAuthorizationList= webResourceAuthorizationService.findByParameter("webResource", matchWebResource);
-            if(webResourceAuthorizationList.size()>0){
-                for(WebresourceAuthorization webresourceAuthorization: webResourceAuthorizationList){
-                    if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("OP_"+webresourceAuthorization.getAuthorization().getName()))){
-                        return true;
-                    }
-                }
-                return accessDenied(req, resp, userDetails);
-            }else{
-                //Verificar si tiene un Rol
-                List<WebresourceRole> webResourceRoleList= webResourceRoleService.findByParameter("webResource", matchWebResource);
-                if(webResourceRoleList.size()>0){
-                    for(WebresourceRole webresourceRole: webResourceRoleList){
-                        if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_"+webresourceRole.getRole().getName()))){
-                            return true;
-                        }
-                    }
-                    return accessDenied(req, resp, userDetails);
-                }
-            }
-            if(userDetails==null){
-                return accessDenied(req, resp, userDetails);
-            }
-        }
-        
-        return true;
-    }
 
-    private boolean accessDenied(HttpServletRequest req, HttpServletResponse resp, UserDetailsDto userDetails) throws IOException {
+    private boolean accessDenied(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        UserDetailsDto userDetails= securityService.getUserDetails();
         String ajaxHeader = req.getHeader("X-Requested-With");
 
         if ("XMLHttpRequest".equals(ajaxHeader)) {
@@ -156,8 +82,12 @@ public class CustomSecurityFilter extends GenericFilterBean {
         } else if(userDetails!=null) {
             resp.sendRedirect("/denied");
         } else {
-            String redirectUrl= req.getRequestURI() + ((req.getQueryString()!=null)?"?"+req.getQueryString():"");
-            resp.sendRedirect("/home?redirect="+redirectUrl);
+            String queryString= "";
+            if(req.getQueryString()!=null){
+                queryString= "?" + URLDecoder.decode(req.getQueryString(), "UTF-8");
+            }
+            String redirectUrl= req.getRequestURI() + queryString;
+            resp.sendRedirect("/home?redirect="+Base64.encodeBase64String(redirectUrl.getBytes("UTF-8")));
         }
         
         return false;
@@ -173,11 +103,12 @@ public class CustomSecurityFilter extends GenericFilterBean {
                 @Override
                 public Throwable extractCause(Throwable throwable) {
                     verifyThrowableHierarchy(throwable, NestedServletException.class);
-
                     return ((NestedServletException) throwable).getRootCause();
                 }
+                
             });
         }
+        
     }
     
 }

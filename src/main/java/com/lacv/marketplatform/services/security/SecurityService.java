@@ -1,11 +1,11 @@
 package com.lacv.marketplatform.services.security;
 
+import com.dot.gcpbasedot.dto.MenuItem;
+import com.lacv.marketplatform.dtos.UserDetailsDto;
 import com.lacv.marketplatform.entities.User;
+import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
-
-
 
 
 /**
@@ -21,8 +21,12 @@ public interface SecurityService {
     
     void connect(User user);
     
-    public User getCurrentUser();
+    UserDetailsDto getUserDetails();
     
-    public String getCurrentUserEmail();
+    User getCurrentUser();
+    
+    boolean checkAccessResource(String requestURI);
+    
+    List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData);
 
 }
