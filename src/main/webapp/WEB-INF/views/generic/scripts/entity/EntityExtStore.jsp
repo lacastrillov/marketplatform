@@ -5,8 +5,6 @@ function ${entityName}ExtStore(){
     
     var Instance = this;
     
-    var util= new Util();
-    
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
@@ -53,8 +51,6 @@ function ${entityName}ExtStore(){
                 listeners: {
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
-                        console.log(response);
-                        console.log(errorMsg);
                         if(typeof errorMsg === "object"){
                             if(errorMsg.status===403){
                                 errorMsg= error403;

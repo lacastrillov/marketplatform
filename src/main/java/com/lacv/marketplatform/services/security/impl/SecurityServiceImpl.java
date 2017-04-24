@@ -7,13 +7,14 @@ package com.lacv.marketplatform.services.security.impl;
 
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.lacv.marketplatform.constants.WebConstants;
-import com.lacv.marketplatform.dtos.UserDetailsDto;
+import com.lacv.marketplatform.dtos.security.UserDetailsDto;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.util.AESEncrypt;
+import com.lacv.marketplatform.dtos.security.WebResourceAuthorities;
 import com.lacv.marketplatform.entities.RoleAuthorization;
 import com.lacv.marketplatform.entities.WebResource;
 import com.lacv.marketplatform.entities.WebresourceAuthorization;
@@ -34,9 +35,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.http.HttpSession;
+import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -72,12 +75,9 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     @Autowired
     WebresourceRoleService webResourceRoleService;
     
-    @Autowired
-    HttpSession session;
+    private Map<String, WebResourceAuthorities> specificWebResources;
     
-    private List<WebResource> generalWebResources;
-    
-    private boolean webResourcesUpdated= false;
+    private Map<String, WebResourceAuthorities> generalWebResources;
     
     
     @Override
@@ -132,6 +132,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         return authorities;
     }
     
+    @Override
     public UserDetailsDto getUserDetails(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null){
@@ -210,39 +211,37 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         UserDetailsDto userDetails= getUserDetails();
         
         //Check Specific resources
-        WebResource matchWebResource= webResourceService.findUniqueByParameter("path", requestURI);
-        if(matchWebResource==null){
-            if(generalWebResources==null || webResourcesUpdated){
-                generalWebResources= webResourceService.findByParameter("type", "general");
-                webResourcesUpdated= false;
-            }
-            for(WebResource webResource: generalWebResources){
-                Pattern p = Pattern.compile(webResource.getPath());
-                Matcher m = p.matcher(requestURI);
-                if(m.find()){
-                    matchWebResource= webResource;
-                    break;
+        WebResourceAuthorities webResourceAuthorities= specificWebResources.get(requestURI);
+        if(webResourceAuthorities==null){
+            for(Map.Entry<String, WebResourceAuthorities> entry : generalWebResources.entrySet()){
+                try{
+                    Pattern p = Pattern.compile(entry.getKey());
+                    Matcher m = p.matcher(requestURI);
+                    if(m.find()){
+                        webResourceAuthorities= entry.getValue();
+                        break;
+                    }
+                }catch(Exception e){
+                    LOGGER.error("ERROR Pattern - Matcher...", e);
                 }
             }
         }
         
-        if(matchWebResource!=null && matchWebResource.getIsPublic()==false){
+        if(webResourceAuthorities!=null && webResourceAuthorities.getIsPublic()==false){
         
             //Verificar si tiene una autorizacion
-            List<WebresourceAuthorization> webResourceAuthorizationList= webResourceAuthorizationService.findByParameter("webResource", matchWebResource);
-            if(webResourceAuthorizationList.size()>0){
-                for(WebresourceAuthorization webresourceAuthorization: webResourceAuthorizationList){
-                    if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("OP_"+webresourceAuthorization.getAuthorization().getName()))){
+            if(webResourceAuthorities.getAuthorizations().size()>0){
+                for(String authorization : webResourceAuthorities.getAuthorizations()){
+                    if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("OP_"+authorization))){
                         return true;
                     }
                 }
                 return false;
             }else{
                 //Verificar si tiene un Rol
-                List<WebresourceRole> webResourceRoleList= webResourceRoleService.findByParameter("webResource", matchWebResource);
-                if(webResourceRoleList.size()>0){
-                    for(WebresourceRole webresourceRole: webResourceRoleList){
-                        if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_"+webresourceRole.getRole().getName()))){
+                if(webResourceAuthorities.getRoles().size()>0){
+                    for(String role: webResourceAuthorities.getRoles()){
+                        if(userDetails!=null && userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_"+role))){
                             return true;
                         }
                     }
@@ -259,33 +258,51 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     
     @Override
     public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData) {
-        if(session.getAttribute("menuData")==null){
-            LOGGER.info("Generate MENU DATA...");
-            for (MenuItem itemParent : menuData) {
-                itemParent.setVisible(false);
-                for(int j=0; j<itemParent.getSubMenus().size(); j++){
-                    String requestURI= itemParent.getSubMenus().get(j).getHref();
+        for (MenuItem itemParent : menuData) {
+            itemParent.setVisible(false);
+            for(int j=0; j<itemParent.getSubMenus().size(); j++){
+                String requestURI= itemParent.getSubMenus().get(j).getHref();
 
-                    //Check Specific resources
-                    boolean visibleMenu= checkAccessResource(requestURI);
-                    if(visibleMenu){
-                        itemParent.getSubMenus().get(j).setVisible(true);
-                        itemParent.setVisible(true);
-                    }else{
-                        itemParent.getSubMenus().get(j).setVisible(false);
-                    }
+                //Check Specific resources
+                boolean visibleMenu= checkAccessResource(requestURI);
+                if(visibleMenu){
+                    itemParent.getSubMenus().get(j).setVisible(true);
+                    itemParent.setVisible(true);
+                }else{
+                    itemParent.getSubMenus().get(j).setVisible(false);
                 }
             }
-            session.setAttribute("menuData", menuData);
-            return menuData;
-        }else{
-            LOGGER.info("Get MENU DATA from Session...");
-            return (List<MenuItem>)session.getAttribute("menuData");
         }
+        return menuData;
     }
 
-    public void setWebResourcesUpdated(boolean webResourcesUpdated) {
-        this.webResourcesUpdated = webResourcesUpdated;
+    @Override
+    @PostConstruct
+    public void reconfigureAccessControl(){
+        LOGGER.info("Reconfigure Access Control...");
+        specificWebResources= new HashMap<>();
+        generalWebResources= new HashMap<>();
+        List<WebResource> webResources= webResourceService.listAll();
+        
+        for(WebResource webResource: webResources){
+            List<WebresourceAuthorization> webResourceAuthorizationList= webResourceAuthorizationService.findByParameter("webResource", webResource);
+            List<WebresourceRole> webResourceRoleList= webResourceRoleService.findByParameter("webResource", webResource);
+            
+            WebResourceAuthorities webResourceAuthorities= new WebResourceAuthorities(webResource.getPath());
+            webResourceAuthorities.setIsPublic(webResource.getIsPublic());
+            for(WebresourceAuthorization webresourceAuthorization: webResourceAuthorizationList){
+                webResourceAuthorities.addAuthorization(webresourceAuthorization.getAuthorization().getName());
+            }
+            for(WebresourceRole webresourceRole: webResourceRoleList){
+                webResourceAuthorities.addRole(webresourceRole.getRole().getName());
+            }
+            
+            if(webResource.getType().equals("specific")){
+                specificWebResources.put(webResource.getPath(), webResourceAuthorities);
+            }else{
+                generalWebResources.put(webResource.getPath(), webResourceAuthorities);
+            }
+        }
     }
     
     @Override
