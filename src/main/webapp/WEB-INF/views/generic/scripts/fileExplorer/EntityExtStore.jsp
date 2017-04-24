@@ -5,8 +5,6 @@ function ${entityName}ExtStore(){
     
     var Instance = this;
     
-    var util= new Util();
-    
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
@@ -54,14 +52,13 @@ function ${entityName}ExtStore(){
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
                     }
                 }
             },
@@ -123,14 +120,13 @@ function ${entityName}ExtStore(){
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
                     }
                 }
             },
@@ -166,6 +162,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -188,6 +189,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -210,6 +216,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -232,6 +243,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -247,6 +263,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };
@@ -279,6 +300,11 @@ function ${entityName}ExtStore(){
             },
             failure: function(response){
                 console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
             }
         });
     };

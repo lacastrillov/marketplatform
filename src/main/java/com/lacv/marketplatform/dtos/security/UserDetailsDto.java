@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.lacv.marketplatform.dtos;
+package com.lacv.marketplatform.dtos.security;
 
 import java.io.Serializable;
 import java.util.Collection;

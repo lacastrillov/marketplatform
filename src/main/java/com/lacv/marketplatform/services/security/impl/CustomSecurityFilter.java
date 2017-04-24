@@ -1,9 +1,11 @@
 package com.lacv.marketplatform.services.security.impl;
 
-import com.lacv.marketplatform.dtos.UserDetailsDto;
+import com.lacv.marketplatform.dtos.security.UserDetailsDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -36,6 +38,20 @@ public class CustomSecurityFilter extends GenericFilterBean {
     
     @Autowired
     SecurityService securityService;
+    
+    private final String[] accessControlModifiers= {
+        "/rest/webResource/create.htm",
+        "/rest/webResource/update.htm",
+        "/rest/webResource/delete.htm",
+        "/rest/webresourceRole/create.htm",
+        "/rest/webresourceRole/update.htm",
+        "/rest/webresourceRole/delete.htm",
+        "/rest/webresourceAuthorization/create.htm",
+        "/rest/webresourceAuthorization/update.htm",
+        "/rest/webresourceAuthorization/delete.htm"
+    };
+    
+    private final List accessControlModifiersList= Arrays.asList(accessControlModifiers);
 
     private final ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
     
@@ -53,6 +69,10 @@ public class CustomSecurityFilter extends GenericFilterBean {
             
             if(continueAccess){
                 chain.doFilter(request, response);
+                
+                if(accessControlModifiersList.contains(requestURI)){
+                    securityService.reconfigureAccessControl();
+                }
             }else{
                 accessDenied(req, resp);
             }

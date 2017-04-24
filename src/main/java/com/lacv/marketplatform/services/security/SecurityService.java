@@ -1,7 +1,7 @@
 package com.lacv.marketplatform.services.security;
 
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.lacv.marketplatform.dtos.UserDetailsDto;
+import com.lacv.marketplatform.dtos.security.UserDetailsDto;
 import com.lacv.marketplatform.entities.User;
 import java.util.List;
 import org.springframework.security.core.Authentication;
@@ -28,5 +28,7 @@ public interface SecurityService {
     boolean checkAccessResource(String requestURI);
     
     List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData);
+    
+    void reconfigureAccessControl();
 
 }
