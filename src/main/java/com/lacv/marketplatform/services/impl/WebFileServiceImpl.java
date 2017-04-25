@@ -49,7 +49,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
     @Override
     @Transactional(readOnly= true)
     public WebFile findByPath(String path){
-        WebFile webFile, parentFile=null;
+        WebFile webFile, parentWebFile=null;
         String[] folders= path.split("/");
         
         if(folders.length>0){
@@ -57,22 +57,22 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
             p1.whereIsNull("webFile");
             p1.whereEqual("name", folders[0]);
             try {
-                parentFile= super.findUniqueByParameters(p1);
+                parentWebFile= super.findUniqueByParameters(p1);
             } catch (Exception ex) {}
-            webFile= parentFile;
+            webFile= parentWebFile;
                 
             for(int i=1; i<folders.length; i++){
                 if(!folders[i].equals("")){
                     Parameters p2= new Parameters();
-                    p2.whereEqual("webFile", parentFile);
+                    p2.whereEqual("webFile", parentWebFile);
                     p2.whereEqual("name", folders[i]);
                     try {
-                        parentFile= super.findUniqueByParameters(p2);
+                        parentWebFile= super.findUniqueByParameters(p2);
                     } catch (Exception ex) {
-                        parentFile= null;
+                        parentWebFile= null;
                     }
-                    if(parentFile!=null){
-                        webFile= parentFile;
+                    if(parentWebFile!=null){
+                        webFile= parentWebFile;
                     }
                 }
             }
@@ -83,9 +83,9 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
     
     @Override
     @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
-    public WebFile createByFileData(WebFile webParentFile, int slice, String fileName, String fileType, int fileSize, InputStream is) throws IOException {
+    public WebFile createByFileData(WebFile parentWebFile, int slice, String fileName, String fileType, int fileSize, InputStream is) throws IOException {
         WebFile webFile= new WebFile();
-        webFile.setWebFile(webParentFile);
+        webFile.setWebFile(parentWebFile);
         String path= webFile.getPath();
         String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
 
@@ -125,7 +125,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
 
     @Override
     @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
-    public WebFile createFolder(WebFile parentFile, String folderName) {
+    public WebFile createFolder(WebFile parentWebFile, String folderName) {
         WebFile webFile= new WebFile();
         webFile.setName(folderName);
         webFile.setCreationDate(new Date());
@@ -133,7 +133,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         webFile.setIcon("folder");
         webFile.setModificationDate(new Date());
         webFile.setSize(1);
-        webFile.setWebFile(parentFile);
+        webFile.setWebFile(parentWebFile);
         super.create(webFile);
         
         String path= webFile.getPath();
@@ -145,7 +145,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
 
     @Override
     @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
-    public WebFile createEmptyFile(WebFile parentFile, String fileName) {
+    public WebFile createEmptyFile(WebFile parentWebFile, String fileName) {
         String extension= FilenameUtils.getExtension(fileName);
         WebFile webFile= new WebFile();
         webFile.setName(fileName);
@@ -154,7 +154,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         webFile.setIcon(Util.getSimpleContentType(extension));
         webFile.setModificationDate(new Date());
         webFile.setSize(1);
-        webFile.setWebFile(parentFile);
+        webFile.setWebFile(parentWebFile);
         super.create(webFile);
         
         String path= webFile.getPath();

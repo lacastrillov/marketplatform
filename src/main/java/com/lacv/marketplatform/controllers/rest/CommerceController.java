@@ -46,7 +46,7 @@ public class CommerceController extends RestController {
     @Override
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idEntity) {
         String path= "imagenes/comercio/";
-        WebFile webParentFile= webFileService.findByPath(path);
+        WebFile parentWebFile= webFileService.findByPath(path);
         
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
@@ -54,7 +54,7 @@ public class CommerceController extends RestController {
             commerce.setCommerceImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             commerceService.update(commerce);
             
-            webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
+            webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
             
             return "Archivo " + fileName + " almacenado correctamente con ID " + idEntity;
         } catch (Exception ex) {

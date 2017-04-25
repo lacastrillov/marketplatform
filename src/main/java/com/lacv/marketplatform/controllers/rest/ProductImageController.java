@@ -46,15 +46,15 @@ public class ProductImageController extends RestController {
         super.setDtoClass(ProductImageDto.class);
     }
     
-    private WebFile getWebParentFile(Object idContainer){
+    private WebFile getParentWebFile(Object idContainer){
         String pathSup= "imagenes/producto/";
         String path= pathSup + idContainer + "/";
-        WebFile webParentFile= webFileService.findByPath(path);
-        if(webParentFile==null || !webParentFile.getName().equals(idContainer.toString())){
+        WebFile parentWebFile= webFileService.findByPath(path);
+        if(parentWebFile==null || !parentWebFile.getName().equals(idContainer.toString())){
             WebFile webParentSupFile= webFileService.findByPath(pathSup);
-            webParentFile= webFileService.createFolder(webParentSupFile, idContainer.toString());
+            parentWebFile= webFileService.createFolder(webParentSupFile, idContainer.toString());
         }
-        return webParentFile;
+        return parentWebFile;
     }
     
     @Override
@@ -62,12 +62,12 @@ public class ProductImageController extends RestController {
         try {
             String imageName= idEntity + "_" +"product-image."+FilenameUtils.getExtension(fileName);
             ProductImage productImage = productImageService.findById(idEntity);
-            WebFile webParentFile= getWebParentFile(productImage.getProduct().getId());
+            WebFile parentWebFile= getParentWebFile(productImage.getProduct().getId());
             
-            productImage.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + webParentFile.getPath() + webParentFile.getName() + "/" + imageName);
+            productImage.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + imageName);
             productImageService.update(productImage);
             
-            webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
+            webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
             
             return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
@@ -80,8 +80,8 @@ public class ProductImageController extends RestController {
         try {
             String imageName= idEntity + "_" + width + "x" + height + "_" +"product-image."+FilenameUtils.getExtension(fileName);
             ProductImage productImage = productImageService.findById(idEntity);
-            WebFile webParentFile= getWebParentFile(productImage.getProduct().getId());
-            webFileService.createByFileData(webParentFile, 0, imageName, fileType, fileSize, is);
+            WebFile parentWebFile= getParentWebFile(productImage.getProduct().getId());
+            webFileService.createByFileData(parentWebFile, 0, imageName, fileType, fileSize, is);
             
             return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {

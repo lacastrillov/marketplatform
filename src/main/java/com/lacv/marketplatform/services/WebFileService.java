@@ -22,12 +22,12 @@ public interface WebFileService extends EntityService<WebFile> {
     
     WebFile findByPath(String path);
     
-    WebFile createByFileData(WebFile webParentFile, int slice, String fileName, String fileType, int fileSize, InputStream is) throws IOException;
+    WebFile createByFileData(WebFile parentWebFile, int slice, String fileName, String fileType, int fileSize, InputStream is) throws IOException;
     
     WebFile createByStorageObject(StorageObject object, WebFile parent, String location);
     
-    WebFile createFolder(WebFile parentFile, String folderName);
+    WebFile createFolder(WebFile parentWebFile, String folderName);
     
-    WebFile createEmptyFile(WebFile parentFile, String fileName);
+    WebFile createEmptyFile(WebFile parentWebFile, String fileName);
     
 }

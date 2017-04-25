@@ -63,12 +63,15 @@ public class WebFileController extends RestController {
         try {
             JSONObject jsonObject = new JSONObject(data);
             WebFile webFile = null;
-            WebFile parentFile = webFileService.findById(jsonObject.getLong("webFile"));
+            WebFile parentWebFile = null;
+            if(jsonObject.has("webFile")){
+                parentWebFile= webFileService.findById(jsonObject.getLong("webFile"));
+            }
 
             if (jsonObject.getString("type").equals(WebFileType.folder.name())) {
-                webFile = webFileService.createFolder(parentFile, jsonObject.getString("name"));
+                webFile = webFileService.createFolder(parentWebFile, jsonObject.getString("name"));
             } else if (jsonObject.getString("type").equals(WebFileType.file.name())) {
-                webFile = webFileService.createEmptyFile(parentFile, jsonObject.getString("name"));
+                webFile = webFileService.createEmptyFile(parentWebFile, jsonObject.getString("name"));
             }
 
             WebFileDto dto = (WebFileDto) mapper.entityToDto(webFile);
@@ -149,11 +152,11 @@ public class WebFileController extends RestController {
     @Override
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream filePart, Object idParent) {
         try {
-            WebFile webParentFile = null;
+            WebFile parentWebFile = null;
             if (!idParent.toString().equals("undefined")) {
-                webParentFile = webFileService.findById(new Long(idParent.toString()));
+                parentWebFile = webFileService.findById(new Long(idParent.toString()));
             }
-            webFileService.createByFileData(webParentFile, slice, fileName, fileType, fileSize, filePart);
+            webFileService.createByFileData(parentWebFile, slice, fileName, fileType, fileSize, filePart);
 
             return "Archivo " + fileName + " almacenado correctamente";
         } catch (Exception ex) {

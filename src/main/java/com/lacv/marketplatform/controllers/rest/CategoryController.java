@@ -46,7 +46,7 @@ public class CategoryController extends RestController {
     @Override
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idParent) {
         String path= "imagenes/categoria/";
-        WebFile webParentFile= webFileService.findByPath(path);
+        WebFile parentWebFile= webFileService.findByPath(path);
         
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
@@ -54,7 +54,7 @@ public class CategoryController extends RestController {
             category.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             categoryService.update(category);
             
-            webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
+            webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
             
             return "Archivo " + fileName + " almacenado correctamente con ID " + idParent;
         } catch (Exception ex) {

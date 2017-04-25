@@ -48,7 +48,7 @@ public class UserController extends RestController {
     @Override
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idParent) {
         String path= "imagenes/usuario/";
-        WebFile webParentFile= webFileService.findByPath(path);
+        WebFile parentWebFile= webFileService.findByPath(path);
         
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
@@ -56,7 +56,7 @@ public class UserController extends RestController {
             user.setUrlPhoto(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             userService.update(user);
             
-            webFileService.createByFileData(webParentFile, slice, imageName, fileType, fileSize, is);
+            webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
             
             return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
@@ -67,12 +67,12 @@ public class UserController extends RestController {
     @Override
     public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idParent){
         String path= "imagenes/usuario/";
-        WebFile webParentFile= webFileService.findByPath(path);
+        WebFile parentWebFile= webFileService.findByPath(path);
         
         try {
             String imageName= idParent + "_" + width + "x" + height + "_" +fileName.replaceAll(" ", "_");
             
-            webFileService.createByFileData(webParentFile, 0, imageName, fileType, fileSize, is);
+            webFileService.createByFileData(parentWebFile, 0, imageName, fileType, fileSize, is);
             
             return "Archivo " + imageName + " almacenado correctamente";
         } catch (Exception ex) {
