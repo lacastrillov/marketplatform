@@ -262,8 +262,6 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
             itemParent.setVisible(false);
             for(int j=0; j<itemParent.getSubMenus().size(); j++){
                 String requestURI= itemParent.getSubMenus().get(j).getHref();
-
-                //Check Specific resources
                 boolean visibleMenu= checkAccessResource(requestURI);
                 if(visibleMenu){
                     itemParent.getSubMenus().get(j).setVisible(true);
