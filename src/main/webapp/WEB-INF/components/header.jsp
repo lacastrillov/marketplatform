@@ -3,7 +3,8 @@
     Created on : 13/03/2017, 09:31:40 PM
     Author     : lacastrillov
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
     <div id="header">
@@ -48,28 +49,32 @@
                         <li class=""><a href="normal.html">Delivery</a></li>
                         <li class=""><a href="contact.html">Contact</a></li>
                         <li class="">
-                            <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
+                            <a href="#login" role="button" data-toggle="modal" style="padding-right:0">
+                                <span class="btn btn-large btn-success">Login</span>
+                            </a>
                             <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3>Login Block</h3>
+                                    <h3>Iniciar Sesi&oacute;n</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form-horizontal loginFrm">
-                                        <div class="control-group">								
-                                            <input type="text" id="inputEmail" placeholder="Email">
+                                    <form id="formLogin" action="<c:url value='/authenticate'/>" method="post" class="form-horizontal loginFrm">
+                                        <div class="control-group">
+                                            <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
+                                            <!--<input type="text" id="inputEmail" placeholder="Email">-->
                                         </div>
                                         <div class="control-group">
-                                            <input type="password" id="inputPassword" placeholder="Password">
+                                            <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
+                                            <!--<input type="password" id="inputPassword" placeholder="Password">-->
                                         </div>
                                         <div class="control-group">
                                             <label class="checkbox">
-                                                <input type="checkbox"> Remember me
+                                                <input type="checkbox"> Recordarme
                                             </label>
                                         </div>
-                                    </form>		
-                                    <button type="submit" class="btn btn-success">Sign in</button>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                        <input type="submit" class="btn btn-success" value="Iniciar Sesi&oacute;n" />
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                                    </form>
                                 </div>
                             </div>
                         </li>

@@ -32,7 +32,7 @@
 
         <header>
             <div class="container">
-                <a style="display: inline-block;width: 300px" class="brand col-xs-6 col-md-2" href="#">
+                <a style="display: inline-block;width: 300px" class="brand col-xs-6 col-md-2" href="/">
                     <img style="float:left" src="/img/logo.png" class="img-responsive">
                     <p style="float:left; color: white; font-size: 30px; font-weight: bold; margin: 14px;">MERCANDO</p>
                 </a>

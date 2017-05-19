@@ -6,6 +6,7 @@
 
 package com.lacv.marketplatform.dtos.security;
 
+import com.lacv.marketplatform.entities.User;
 import java.io.Serializable;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +39,8 @@ public class UserDetailsDto implements UserDetails, Serializable {
     private boolean credentialsNonExpired;
     
     private boolean enabled;
+    
+    private User user;
     
     
     /**
@@ -160,6 +163,20 @@ public class UserDetailsDto implements UserDetails, Serializable {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
     
 }

@@ -28,6 +28,8 @@ public class RoleMapper implements BasicEntityMapper {
             dto.setId(entity.getId());
             dto.setDescription(entity.getDescription());
             dto.setName(entity.getName());
+            dto.setHomePage(entity.getHomePage());
+            dto.setPriorityCheck(entity.getPriorityCheck());
         }
         return dto;
     }

@@ -149,8 +149,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     public User getCurrentUser() {
         UserDetailsDto userDetails = getUserDetails();
         if(userDetails!=null){
-            User user = getUser(userDetails.getUsername());
-            return user;
+            return userDetails.getUser();
         }
         return null;
     }
@@ -164,6 +163,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         userDetails.setPassword(user.getPassword());
         userDetails.setNombre(user.getName());
         userDetails.setImgPerfil(user.getUrlPhoto());
+        userDetails.setUser(user);
         
         validateUserDetails(userDetails, user);
 

@@ -26,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        
         http.formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?login_error=true")
@@ -34,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutUrl("/j_spring_security_logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/home.htm")
                 .invalidateHttpSession(true)
                 .permitAll();
 
@@ -47,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         /***************************
          *    Fixed Authorizations
          ***************************/
-        http.authorizeRequests().antMatchers("/home**").authenticated();
+        http.authorizeRequests().antMatchers("/home.htm").authenticated();
         
     }
 

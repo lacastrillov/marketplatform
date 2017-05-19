@@ -33,6 +33,12 @@ public class RoleDto implements BaseEntity {
     @TextField("Descripci&oacute;n")
     private String description;
     
+    @TextField("P&aacute;gina de Inicio")
+    private String homePage;
+    
+    @TextField("Prioridad de validaci&oacute;n")
+    private Integer priorityCheck;
+    
     private List<UserRoleDto> userRoleList;
     
     private List<RoleAuthorizationDto> roleAuthorizationList;
@@ -75,6 +81,22 @@ public class RoleDto implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public String getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
+    }
+
+    public Integer getPriorityCheck() {
+        return priorityCheck;
+    }
+
+    public void setPriorityCheck(Integer priorityCheck) {
+        this.priorityCheck = priorityCheck;
     }
 
     public List<UserRoleDto> getUserRoleList() {

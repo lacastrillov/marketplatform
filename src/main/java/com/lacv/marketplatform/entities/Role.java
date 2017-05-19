@@ -45,6 +45,11 @@ public class Role implements BaseEntity {
     @Size(max = 200)
     @Column(name = "description")
     private String description;
+    @Size(max = 200)
+    @Column(name = "home_page")
+    private String homePage;
+    @Column(name = "priority_check")
+    private Integer priorityCheck;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private List<UserRole> userRoleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
@@ -88,6 +93,22 @@ public class Role implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public String getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
+    }
+
+    public Integer getPriorityCheck() {
+        return priorityCheck;
+    }
+
+    public void setPriorityCheck(Integer priorityCheck) {
+        this.priorityCheck = priorityCheck;
     }
 
     public List<UserRole> getUserRoleList() {
