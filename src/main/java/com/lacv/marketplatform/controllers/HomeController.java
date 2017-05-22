@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -39,9 +38,9 @@ public class HomeController {
         return mav;
     }
     
-    @RequestMapping(value = "/home.htm", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String redirect) {
-        if(redirect!=null){
+    @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true) String redirect) {
+        if(!redirect.equals("user")){
             try {
                 response.sendRedirect(new String(Base64.decodeBase64(redirect), StandardCharsets.UTF_8));
             } catch (IOException ex) {

@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutUrl("/j_spring_security_logout")
-                .logoutSuccessUrl("/home.htm")
+                .logoutSuccessUrl("/home?redirect=user")
                 .invalidateHttpSession(true)
                 .permitAll();
 
@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         /***************************
          *    Fixed Authorizations
          ***************************/
-        http.authorizeRequests().antMatchers("/home.htm").authenticated();
+        http.authorizeRequests().antMatchers("/home").authenticated();
         
     }
 
