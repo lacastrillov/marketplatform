@@ -1,6 +1,5 @@
 package com.lacv.marketplatform.controllers;
 
-import com.dot.gcpbasedot.util.FileService;
 import com.lacv.marketplatform.controllers.view.ProductViewController;
 import java.io.File;
 import java.io.FileInputStream;
