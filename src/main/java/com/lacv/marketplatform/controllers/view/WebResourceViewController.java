@@ -50,6 +50,8 @@ public class WebResourceViewController extends ExtViewController {
         view.setPluralEntityTitle("Recursos Web");
         view.addChildExtView("webresourceRole", WebresourceRole.class, ViewConfig.TCV_N_N_MULTICHECK);
         view.addChildExtView("webresourceAuthorization", WebresourceAuthorization.class, ViewConfig.TCV_N_N_MULTICHECK);
+        view.setDefaultOrderBy("category");
+        view.setDefaultOrderDir("ASC");
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Seguridad", "webResource", "Gestionar Recursos Web");

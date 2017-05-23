@@ -52,6 +52,9 @@ public class WebResource implements BaseEntity {
     private String type;
     @Column(name = "is_public")
     private Boolean isPublic;
+    @Size(max = 100)
+    @Column(name = "category")
+    private String category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "webResource")
     private List<WebresourceAuthorization> webresourceAuthorizationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "webResource")
@@ -110,6 +113,14 @@ public class WebResource implements BaseEntity {
 
     public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<WebresourceAuthorization> getWebresourceAuthorizationList() {

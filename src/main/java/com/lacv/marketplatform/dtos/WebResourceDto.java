@@ -8,6 +8,7 @@ package com.lacv.marketplatform.dtos;
 import com.dot.gcpbasedot.annotation.ColumnWidth;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
+import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
@@ -26,14 +27,21 @@ public class WebResourceDto implements BaseEntity {
     @ReadOnly
     private Integer id;
     
+    @TextField("Nombre")
     private String name;
     
+    @TextField("Path")
     private String path;
     
+    @TextField("Tipo")
     @TypeFormField(value = FieldType.LIST, data = {"general", "specific"})
     private String type;
     
+    @TextField("Es p&uacute;blico")
     private Boolean isPublic;
+    
+    @TextField("Categor&iacute;a")
+    private String category;
     
     private List<WebresourceAuthorizationDto> webresourceAuthorizationList;
     
@@ -92,6 +100,14 @@ public class WebResourceDto implements BaseEntity {
 
     public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<WebresourceAuthorizationDto> getWebresourceAuthorizationList() {

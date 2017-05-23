@@ -30,6 +30,7 @@ public class WebResourceMapper implements BasicEntityMapper {
             dto.setName(entity.getName());
             dto.setPath(entity.getPath());
             dto.setType(entity.getType());
+            dto.setCategory(entity.getCategory());
         }
         return dto;
     }
