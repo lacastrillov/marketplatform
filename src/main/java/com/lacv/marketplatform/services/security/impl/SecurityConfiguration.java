@@ -31,11 +31,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?login_error=true")
                 .loginProcessingUrl("/authenticate").usernameParameter("j_username").passwordParameter("j_password")
+                .defaultSuccessUrl("/home?redirect=user", false)
                 .permitAll();
 
         http.logout()
                 .logoutUrl("/j_spring_security_logout")
-                .logoutSuccessUrl("/home.htm")
+                .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
                 .permitAll();
 
@@ -46,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(customSecurityFilter, UsernamePasswordAuthenticationFilter.class);
 
         /***************************
-         *    Fixed Authorizations
+         *    Fixed Permissions
          ***************************/
-        http.authorizeRequests().antMatchers("/home.htm").authenticated();
+        http.authorizeRequests().antMatchers("/home*").access("isAuthenticated()");
         
     }
 

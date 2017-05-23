@@ -38,9 +38,9 @@ public class HomeController {
         return mav;
     }
     
-    @RequestMapping(value = "/home.htm", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String redirect) {
-        if(redirect!=null){
+    @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView getHome(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true) String redirect) {
+        if(!redirect.equals("user")){
             try {
                 response.sendRedirect(new String(Base64.decodeBase64(redirect), StandardCharsets.UTF_8));
             } catch (IOException ex) {
