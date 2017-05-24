@@ -73,8 +73,12 @@ public class HomeController {
     }
     
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
-    public String loginPage() {
-        return "login";
+    public ModelAndView loginPage(HttpServletRequest request, HttpServletResponse response) {
+        User user= securityService.getCurrentUser();
+        if(user!=null){
+            return getHome(request, response, "user");
+        }
+        return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/denied", method = {RequestMethod.POST, RequestMethod.GET})
