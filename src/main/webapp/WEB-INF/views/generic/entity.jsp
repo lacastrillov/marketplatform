@@ -100,7 +100,7 @@
     <body>
         <div id="headerHtml" style="display:none;">
             <h1>Administraci&oacute;n MERCANDO</h1>
-            <a class="logout" href="<%=request.getContextPath()%>/j_spring_security_logout">&nbsp;Cerrar sesi&oacute;n&nbsp;</a>
+            <a class="logout" href="<%=request.getContextPath()%>/security_logout">&nbsp;Cerrar sesi&oacute;n&nbsp;</a>
             <a class="home" href="<%=request.getContextPath()%>/home?redirect=user">&nbsp;Inicio&nbsp;</a>
             <sec:authentication var="user" property="principal" />
             <sec:authorize access="isAuthenticated()">

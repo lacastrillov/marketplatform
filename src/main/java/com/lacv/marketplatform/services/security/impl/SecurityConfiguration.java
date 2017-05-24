@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.logout()
-                .logoutUrl("/j_spring_security_logout")
+                .logoutUrl("/security_logout")
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
                 .permitAll();
