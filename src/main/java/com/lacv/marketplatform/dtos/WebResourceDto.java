@@ -27,21 +27,26 @@ public class WebResourceDto implements BaseEntity {
     @ReadOnly
     private Integer id;
     
+    @Order(2)
+    @TextField("Categor&iacute;a")
+    private String category;
+    
+    @Order(3)
     @TextField("Nombre")
     private String name;
     
+    @Order(4)
     @TextField("Path")
     private String path;
     
+    @Order(5)
     @TextField("Tipo")
     @TypeFormField(value = FieldType.LIST, data = {"general", "specific"})
     private String type;
     
+    @Order(6)
     @TextField("Es p&uacute;blico")
     private Boolean isPublic;
-    
-    @TextField("Categor&iacute;a")
-    private String category;
     
     private List<WebresourceAuthorizationDto> webresourceAuthorizationList;
     
