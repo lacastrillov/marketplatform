@@ -40,9 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .permitAll();
 
-        http.csrf().disable();
-
         http.exceptionHandling().accessDeniedPage("/denied");
+        
+        http.csrf().disable();
         
         http.addFilterAfter(customSecurityFilter, UsernamePasswordAuthenticationFilter.class);
 

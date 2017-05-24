@@ -114,6 +114,19 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
+    
+    @Override
+    public boolean connect(String username, String password) throws AuthenticationException {
+        User user= getUser(username);
+        if (user != null){
+            String contrasena= myInstance.decrypt(user.getPassword(), WebConstants.SECURITY_SEED_PASSW);
+            if (contrasena.equals(password)) {
+                connect(user);
+                return true;
+            }
+        }
+        throw new BadCredentialsException("Usuario y/o contraseña incorrectos");
+    }
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();

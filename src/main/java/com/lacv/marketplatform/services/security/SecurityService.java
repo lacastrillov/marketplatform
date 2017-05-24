@@ -21,6 +21,8 @@ public interface SecurityService {
     
     void connect(User user);
     
+    boolean connect(String username, String password) throws AuthenticationException;
+    
     UserDetailsDto getUserDetails();
     
     User getCurrentUser();

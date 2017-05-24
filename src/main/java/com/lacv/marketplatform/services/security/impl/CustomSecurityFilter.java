@@ -4,6 +4,7 @@ import com.lacv.marketplatform.dtos.security.UserDetailsDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,6 +66,10 @@ public class CustomSecurityFilter extends GenericFilterBean {
             String requestURI= req.getRequestURI();
             logger.info("CustomSecurityFilter INGRESA :"+requestURI);
             
+            if(req.getHeader("Authorization")!=null){
+                connectUserByBasicAuthentication(req);
+            }
+            
             boolean continueAccess= securityService.checkAccessResource(requestURI);
             
             if(continueAccess){
@@ -111,6 +116,18 @@ public class CustomSecurityFilter extends GenericFilterBean {
         }
         
         return false;
+    }
+    
+    public void connectUserByBasicAuthentication(HttpServletRequest req) {
+        String authorization = req.getHeader("Authorization");
+        if (authorization != null && authorization.startsWith("Basic")) {
+            // Authorization: Basic base64credentials
+            String base64Credentials = authorization.substring("Basic".length()).trim();
+            String credentials = new String(Base64.decodeBase64(base64Credentials), Charset.forName("UTF-8"));
+            // credentials = username:password
+            String[] values = credentials.split(":", 2);
+            securityService.connect(values[0], values[1]);
+        }
     }
 
     private static final class DefaultThrowableAnalyzer extends ThrowableAnalyzer {
