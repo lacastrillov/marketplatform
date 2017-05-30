@@ -611,7 +611,16 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     </c:if>
     
-    function getTablaDePropiedades(renderers){
+    function getTablaDePropiedades(){
+        var renderers= {
+            <c:forEach var="associatedER" items="${interfacesEntityRef}">
+                <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
+            ${associatedEntityName}: function(entity){
+                var res = entity.split("__");
+                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
+            },
+            </c:forEach>
+        };
         var pg= Ext.create('Ext.grid.property.Grid', {
             id: 'propertyGrid${entityName}',
             region: 'north',
@@ -707,15 +716,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.checkboxGroupContainer= getCheckboxGroupContainer();
         </c:if>
         
-        Instance.propertyGrid= getTablaDePropiedades({
-            <c:forEach var="associatedER" items="${interfacesEntityRef}">
-                <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-            ${associatedEntityName}: function(entity){
-                var res = entity.split("__");
-                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
-            },
-            </c:forEach>
-        });
+        Instance.propertyGrid= getTablaDePropiedades();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',

@@ -754,7 +754,27 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         return win;
     }
     
-    function getTablaDePropiedades(renderers){
+    function getTablaDePropiedades(){
+        var renderers= {
+            "Ruta": function(entity){
+                var breadcrumb= "<a href='#?filter={\"isn\":[\"webFile\"]}'>Ra&iacute;z</a>";
+                var path = entity.split("/");
+                for(var i=0; i<path.length; i++){
+                    if(path[i].indexOf("__")!==-1){
+                        var res= path[i].split("__");
+                        breadcrumb+=" / ";
+                        if(i<path.length-1){
+                            breadcrumb+="<a href='#?filter={\"eq\":{\"webFile\":"+res[0]+"}}'>";
+                        }
+                        breadcrumb+=res[1];
+                        if(i<path.length-1){
+                            breadcrumb+="</a>";
+                        }
+                    }
+                }
+                return breadcrumb;
+            },
+        };
         var pg= Ext.create('Ext.grid.property.Grid', {
             id: 'propertyGrid${entityName}',
             region: 'north',
@@ -856,26 +876,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.store.gridContainer= Instance.gridContainer;
         </c:if>
         
-        Instance.propertyGrid= getTablaDePropiedades({
-            "Ruta": function(entity){
-                var breadcrumb= "<a href='#?filter={\"isn\":[\"webFile\"]}'>Ra&iacute;z</a>";
-                var path = entity.split("/");
-                for(var i=0; i<path.length; i++){
-                    if(path[i].indexOf("__")!==-1){
-                        var res= path[i].split("__");
-                        breadcrumb+=" / ";
-                        if(i<path.length-1){
-                            breadcrumb+="<a href='#?filter={\"eq\":{\"webFile\":"+res[0]+"}}'>";
-                        }
-                        breadcrumb+=res[1];
-                        if(i<path.length-1){
-                            breadcrumb+="</a>";
-                        }
-                    }
-                }
-                return breadcrumb;
-            },
-        });
+        Instance.propertyGrid= getTablaDePropiedades();
         
         Instance.formUpload= getFormUpload();
         
