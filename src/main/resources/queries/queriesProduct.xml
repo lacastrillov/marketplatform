@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <bean id="queriesProduct" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="reporteProductos">
+                    <value>
+                        select p.id, p.brand, p.buy_unit_price, p.code, p.description, p.discount, p.keywords,
+                        p.name, p.order_level, p.quantity_per_unit, p.register_date, p.seggested_unit_price,
+                        p.featured, p.status, p.units_in_order, p.units_in_stock,
+                        ca.name as category, sca.name as subcategory,
+                        co.commerce_name as commerce, su.company_name as supplier
+                        from product p
+                        left join category ca on p.category_id= ca.id
+                        left join sub_category sca on p.subcategory_id= sca.id
+                        left join commerce co on p.commerce_id=co.commerce_id
+                        left join supplier su on p.supplier_id=su.id
+                    </value>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+    
+</beans>

@@ -182,7 +182,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         }, this);
         combobox.labelWidth= 80;
         combobox.width= 250;
-        combobox.setValue("${viewConfig.defaultOrderBy}");
+        combobox.setValue("${reportConfig.defaultOrderBy}");
         
         return combobox;
     }

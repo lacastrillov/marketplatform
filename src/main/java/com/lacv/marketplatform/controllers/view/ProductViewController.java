@@ -12,8 +12,11 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.dto.MenuItem;
+import com.dot.gcpbasedot.dto.ReportConfig;
 import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.enums.PageType;
 import com.dot.gcpbasedot.util.FilterQueryJSON;
+import com.lacv.marketplatform.dtos.reports.ProductReportDto;
 import com.lacv.marketplatform.entities.Product;
 import com.lacv.marketplatform.entities.ProductImage;
 import com.lacv.marketplatform.entities.SubCategory;
@@ -70,6 +73,19 @@ public class ProductViewController extends ExtViewController {
 
         MenuItem menuItem = new MenuItem("Productos", "product", "Gestionar Productos");
         menuComponent.addItemMenu(menuItem);
+        
+        ReportConfig report = new ReportConfig("product", "reporteProductos", productService, ProductReportDto.class);
+        report.setPluralReportTitle("Reporte de Productos");
+        report.setMaxResultsPerPage(100L);
+        report.setDefaultOrderBy("id");
+        report.setDefaultOrderDir("DESC");
+        super.addReportMapping(report);
+        
+        MenuItem menuItem2 = new MenuItem("Productos", "product", "Reporte de Productos");
+        menuItem2.setReportName("reporteProductos");
+        menuItem2.setPageType(PageType.REPORT);
+        menuComponent.addItemMenu(menuItem2);
+        
         super.addMenuComponent(menuComponent);
     }
     
