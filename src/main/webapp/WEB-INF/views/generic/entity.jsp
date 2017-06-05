@@ -91,6 +91,8 @@
         
         
         <script src="<%=request.getContextPath()%>/js/util/Util.js"></script>
+        <script type="text/javascript" src=http://maps.google.com/maps?file=api&amp;v=3&amp;key=AIzaSyD_IP-Js3_ETbJ9psH605u-4iqZihp_-Jg&sensor=true"></script>
+        <script src="<%=request.getContextPath()%>/js/util/GoogleMaps.js"></script>
         
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navegador.css">

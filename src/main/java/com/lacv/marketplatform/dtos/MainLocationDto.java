@@ -38,6 +38,7 @@ public class MainLocationDto implements BaseEntity {
     
     @Size(max=200)
     @TextField("Localizaci&oacute;n")
+    @TypeFormField(FieldType.GOOGLE_MAP)
     private String mlLocation;
     
     private List<CommerceDto> commerceList;

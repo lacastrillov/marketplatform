@@ -4,44 +4,31 @@
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-        <title>Actualizar latitud y longitud de vitrina</title>
-        <script type="text/javascript" src="/web/jsseguro/jquery/jquery1.7.js"></script>
-        <script type="text/javascript" src=http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyD_IP-Js3_ETbJ9psH605u-4iqZihp_-Jg&sensor=true"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/publicacion/vitrina.js"></script>
-        <link href="<%=request.getContextPath()%>/css/publication_styles.css" rel="stylesheet" type="text/css" />
-
-        <c:set var="latitud" value="0"></c:set>
-        <c:set var="longitud" value="0"></c:set>
+        <title>Google Maps</title>
+        <script type="text/javascript" src=http://maps.google.com/maps?file=api&amp;v=3&amp;key=AIzaSyD_IP-Js3_ETbJ9psH605u-4iqZihp_-Jg&sensor=true"></script>
 
         <script type="text/javascript">
 
-            function load() {
+            function load(mapId, latitud, longitud) {
                 if (GBrowserIsCompatible()) {
-                    var map = new GMap2(document.getElementById("map"));
+                    var map = new GMap2(document.getElementById(mapId));
                     map.addControl(new GSmallMapControl());
                     map.addControl(new GMapTypeControl());
                     var center;
-                    <c:if test="${latitud != '0' && longitud !='0'}">
-                    center = new GLatLng(${latitud},${longitud});
-                    </c:if>
-                    <c:if test="${latitud == '0' and longitud == '0' }">
-                    center = new GLatLng(4.668912, -74.08287);
-                    </c:if>
+                    if (latitud !== 0 && longitud !== 0) {
+                        center = new GLatLng(latitud, longitud);
+                        document.getElementById("lat").value = latitud;
+                        document.getElementById("lng").value = longitud;
+                    } else {
+                        center = new GLatLng(4.668912, -74.08287);
+                        document.getElementById("lat").value = center.lat().toFixed(5);
+                        document.getElementById("lng").value = center.lng().toFixed(5);
+                    }
 
-                    map.setCenter(center, 13);
+                    map.setCenter(center, 12);
                     geocoder = new GClientGeocoder();
                     var marker = new GMarker(center, {draggable: true});
                     map.addOverlay(marker);
-
-                    <c:if test="${latitud != '0' && longitud !='0'}">
-                    document.getElementById("lat").value = ${latitud};
-                    document.getElementById("lng").value = ${longitud};
-                    </c:if>
-
-                    <c:if test="${latitud == '0' and longitud == '0' }">
-                    document.getElementById("lat").value = center.lat().toFixed(5);
-                    document.getElementById("lng").value = center.lng().toFixed(5);
-                    </c:if>
 
                     GEvent.addListener(marker, "dragend", function () {
                         var point = marker.getPoint();
@@ -69,8 +56,8 @@
                 }
             }
 
-            function showAddress(address) {
-                var map = new GMap2(document.getElementById("map"));
+            function showAddress(mapId, address) {
+                var map = new GMap2(document.getElementById(mapId));
                 map.addControl(new GSmallMapControl());
                 map.addControl(new GMapTypeControl());
                 if (geocoder) {
@@ -108,47 +95,32 @@
                                 });
 
                             });
-
                         }
                     });
                 }
             }
         </script>
     </head>
-
-
-    <body onload="load()" onunload="GUnload()" >
-
-        <form action="#" onsubmit="showAddress(this.address.value); return false">
-            <p>        
-                <input type="text" size="60" name="address" value="Bogot&aacute; Colombia" />
-                <input type="submit" value="Buscar" />
-            </p>
+    <body onload="load('map1', 0, 0)" onunload="GUnload()" >
+        <form action="#" onsubmit="showAddress('map1', this.address.value); return false">
+            <input type="text" size="50" name="address" value="Bogot&aacute; Colombia" />
+            <input type="submit" value="Buscar" />
         </form>
-
-        <p align="left">
-
-        <form id="datosCoordenadasVitrina" action="${pageContext.request.contextPath}/vitrina/lightbox/guardarCoordenadas.do">
+        <form id="datosCoordenadasVitrina" action="${pageContext.request.contextPath}/guardarCoordenadas.do">
             <label>Latitud</label>
-            <input id="lat" type="text" name="latitud" value ="${latitud}" readonly/>
+            <input id="lat" type="text" name="latitud" value="" readonly/>
 
             <label>Longitud</label>
-            <input id="lng" type="text" name="longitud" value ="${longitud}"readonly/>
+            <input id="lng" type="text" name="longitud" value="" readonly/>
 
-            <input type="hidden"  value="${idVitrina}" name="idVitrina"/>
-            <input type="submit" id="editar_coordenadas_vitrina" value="Guardar Coordenadas" />
+            <input type="submit" id="editar_coordenadas" value="Guardar Coordenadas" />
         </form>
-    </p>
-    <p>
-    <div align="center" id="map" style="width: 600px; height: 400px"><br/></div>
-</p>
-</div>
-<script type="text/javascript">
-//<![CDATA[
-    if (typeof _gstat !== "undefined")
-        _gstat.audience('', 'pagesperso-orange.fr');
-//]]>
-</script>
-</body>
-
+        <div align="center" id="map1" style="width: 600px; height: 400px"></div>
+        <script type="text/javascript">
+            //<![CDATA[
+            if (typeof _gstat !== "undefined")
+                _gstat.audience('', 'pagesperso-orange.fr');
+            //]]>
+        </script>
+    </body>
 </html>
