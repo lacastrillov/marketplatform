@@ -9,16 +9,17 @@ function GoogleMaps() {
     var Instance = this;
 
     Instance.init = function () {
-        
+        Instance.DEFAULT_LAT= 4.668912;
+        Instance.DEFAULT_LON= -74.08287;
     };
     
     this.load= function(fieldName, value){
         var mapId= fieldName+"Map";
-        var latitud= 4.668912;
-        var longitud= -74.08287;
+        var latitude= Instance.DEFAULT_LAT;
+        var longitude= Instance.DEFAULT_LON;
         if(value!=="" && value.indexOf(",")!==-1){
-            latitud= parseFloat(value.split(",")[0]);
-            longitud= parseFloat(value.split(",")[1]);
+            latitude= parseFloat(value.split(",")[0]);
+            longitude= parseFloat(value.split(",")[1]);
         }
         if (GBrowserIsCompatible()) {
             var map = new GMap2(document.getElementById(mapId));
@@ -26,10 +27,10 @@ function GoogleMaps() {
             map.addControl(new GMapTypeControl());
             var center;
 
-            center = new GLatLng(latitud, longitud);
+            center = new GLatLng(latitude, longitude);
             
             var fields= document.getElementsByName(fieldName);
-            fields[fields.length-1].value= latitud+","+longitud;
+            fields[fields.length-1].value= latitude+","+longitude;
 
             map.setCenter(center, 13);
             geocoder = new GClientGeocoder();
