@@ -234,7 +234,7 @@ function CommonExtView(parentExtController, parentExtView, model){
         return '<div class="googleMaps">'+
                '    <input id="'+field.name+'Address" type="text" size="50" placeholder="Bogot&aacute; Colombia" />'+
                '    <input type="button" value="Buscar" onclick="googleMaps.showAddress(\''+field.name+'\')" />'+
-               '    <div id="'+field.name+'Map" style="width: 600px; height: 400px"></div>'+
+               '    <div id="'+field.name+'Map" style="width: 100%; height: 400px"></div>'+
                '</div>';
     };
     
