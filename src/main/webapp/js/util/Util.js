@@ -15,6 +15,7 @@ function Util() {
 
     Instance.init = function () {
         Instance.jssImported = {};
+        Instance.indexMap= {};
 
         Instance.HtmlEntitiesMap = {
             "'": "&apos;", "<": "&lt;", ">": "&gt;",
@@ -100,55 +101,14 @@ function Util() {
             "♣": "&clubs;", "♥": "&hearts;", "♦": "&diams;"
         };
     };
-
-    Instance.configurarDatepicker = function (elemnt, max, min) {
-        $(elemnt).pickadate({
-            labelMonthNext: 'Siguiente mes',
-            labelMonthPrev: 'Anterior mes',
-            labelMonthSelect: 'seleccione mes',
-            labelYearSelect: 'seleccione año',
-            monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'],
-            weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-            weekdaysShort: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
-            weekdaysLetter: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-            today: 'Hoy',
-            clear: 'Borrar',
-            close: 'Cerrar',
-            selectYears: true,
-            selectMonths: true,
-            format: 'dd/mm/yyyy',
-            max: max,
-            min: min
-        });
-    };
-
-    Instance.configurarDatepickerMonth = function (elemnt, max, min) {
-        $(elemnt).pickadate({
-            labelMonthNext: 'Siguiente mes',
-            labelMonthPrev: 'Anterior mes',
-            labelMonthSelect: 'seleccione mes',
-            labelYearSelect: 'seleccione año',
-            monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'],
-            weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-            weekdaysShort: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
-            weekdaysLetter: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-            today: 'Hoy',
-            clear: 'Borrar',
-            close: 'Cerrar',
-            selectYears: true,
-            selectMonths: true,
-            format: 'yyyy/mm',
-            max: max,
-            min: min
-        });
-    };
-
-    Instance.addmetodValidator = function () {
-        jQuery.validator.addMethod("lettersonly", function (value, element) {
-            return this.optional(element) || /^[a-z\s]+$/i.test(value);
-        }, "Only alphabetical characters");
+    
+    Instance.getIndex= function(name){
+        if(name in Instance.indexMap){
+            Instance.indexMap[name]+=1;
+        }else{
+            Instance.indexMap[name]=0;
+        }
+        return Instance.indexMap[name];
     };
 
     Instance.getPath = function (url) {
@@ -378,7 +338,7 @@ function Util() {
             var type= typeof(object[key]);
             var item={};
             var text= key;
-            var id= key;
+            var id= key+"_"+Instance.getIndex(key);
             if(key.indexOf("::")!==-1){
                 id= key.split("::")[0];
                 text= key.split("::")[1];

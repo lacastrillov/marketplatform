@@ -8,13 +8,12 @@ package com.lacv.marketplatform.controllers.view.process;
 
 import com.lacv.marketplatform.dtos.LogProcessDto;
 import com.lacv.marketplatform.dtos.process.BasicResultDto;
-import com.lacv.marketplatform.dtos.process.CreatePasswordDto;
 import com.dot.gcpbasedot.controller.ExtProcessController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
-import com.lacv.marketplatform.dtos.process.ContactUserPDto;
+import com.lacv.marketplatform.dtos.process.NetworkPDto;
 import com.lacv.marketplatform.dtos.process.SolicitudePDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -43,12 +42,13 @@ public class ExternalServiceViewProcessController extends ExtProcessController {
         ProcessConfig process= new ProcessConfig("externalService", "logProcess", LogProcessDto.class);
         process.setMainProcessTitle("Gestionar Servicios Externos");
         process.addControlProcessView("maquinasNovaventa", "Maquinas Novaventa", SolicitudePDto.class, BasicResultDto.class);
-        
+        process.addControlProcessView("merakiDevices", "Meraki Devices", NetworkPDto.class, BasicResultDto.class);
         super.addControlMapping(process);
         
         MenuItem menuItem= new MenuItem("Procesos", "externalService", "Gestionar Servicios Externos");
         menuItem.setPageType(PageType.PROCESS);
         menuComponent.addItemMenu(menuItem);
+        
         super.addMenuComponent(menuComponent);
     }
     
