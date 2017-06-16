@@ -152,8 +152,7 @@ function ${entityName}ExtStore(){
             jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
             success: function(response){
                 Ext.MessageBox.hide();
-                var responseText= Ext.decode(response.responseText);
-                func(processName, responseText);
+                func(processName, response.responseText);
             },
             failure: function(response){
                 console.log(response.responseText);

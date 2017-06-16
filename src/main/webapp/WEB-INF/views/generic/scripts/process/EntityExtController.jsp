@@ -91,32 +91,29 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                 formComponent.setActiveRecord(record);
                 
                 //Populate tree result
-                var rootMenu= util.objectToJSONMenu(JSON.parse(data.dataOut), true);
-                var treePanel = Ext.getCmp('tree-result-'+data.processName);
-                treePanel.getStore().setRootNode(rootMenu);
+                try{
+                    var rootMenu= util.objectToJSONMenu(JSON.parse(data.dataOut), true);
+                    var treePanel = Ext.getCmp('tree-result-'+data.processName);
+                    treePanel.getStore().setRootNode(rootMenu);
+                }catch(e){
+                    var divPanel = Ext.getCmp('div-result-'+data.processName);
+                    divPanel.update('<textarea readonly style="width:100%; height:500px; white-space: pre !important;">' + data.dataOut+ '</textarea>');
+                }
             });
         }
     };
     
     Instance.formSavedResponse= function(processName, responseText){
-        //var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
-        <c:if test="${viewConfig.multipartFormData}">
-        Instance.entityExtView.entityExtStore.upload${entityName}(formComponent, responseText.data.id, function(responseUpload){
-            Ext.MessageBox.alert('Status', responseText.message+"<br>"+responseUpload.message);
-            if(responseUpload.success){
-                var record= Ext.create(Instance.modelName);
-                record.data= responseUpload.data;
-                formComponent.setActiveRecord(record || null);
-            }
-        });
-        </c:if>
-        <c:if test="${not viewConfig.multipartFormData}">
-        var rootMenu= util.objectToJSONMenu(responseText, true);
-        var treePanel = Ext.getCmp('tree-result-'+processName);
-        treePanel.getStore().setRootNode(rootMenu);
-        var textMenu= JSON.stringify(responseText);
-        Ext.MessageBox.alert('Status', textMenu);
-        </c:if>
+        try{
+            var responseObject= Ext.decode(responseText);
+            var rootMenu= util.objectToJSONMenu(responseObject, true);
+            var treePanel = Ext.getCmp('tree-result-'+processName);
+            treePanel.getStore().setRootNode(rootMenu);
+            Ext.MessageBox.alert('Status', responseText);
+        }catch(e){
+            var divPanel = Ext.getCmp('div-result-'+processName);
+            divPanel.update('<textarea readonly style="width:100%; height:500px; white-space: pre !important;">' + responseText + '</textarea>');
+        }
     };
     
     Instance.doFilter= function(){
