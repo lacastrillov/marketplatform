@@ -14,7 +14,9 @@ import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dto.ExternalServiceDto;
 import com.lacv.marketplatform.dtos.process.NetworkPDto;
+import com.lacv.marketplatform.dtos.process.ProductoPDto;
 import com.lacv.marketplatform.dtos.process.SolicitudePDto;
+import com.lacv.marketplatform.dtos.process.UsuarioPDto;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -49,8 +51,11 @@ public class ExternalServiceProcessController extends RestController {
         ExternalServiceDto service3= new ExternalServiceDto("maquinasNovaventa", "https://portal-contenido-novaventa.appspot.com/rest/{entity}/find.htm", HttpMethod.GET, SolicitudePDto.class);
         super.enableExternalService(service3);
         
-        /*ExternalServiceDto service4= new ExternalServiceDto("maquinasNovaventa", "https://portal-contenido-novaventa.appspot.com/rest/{entity}/find.htm", HttpMethod.POST, SolicitudePDto.class);
-        super.enableExternalService(service4);*/
+        ExternalServiceDto service4= new ExternalServiceDto("estaInBody", "http://localhost:8084/tempprocess/inbody", HttpMethod.POST, UsuarioPDto.class);
+        super.enableExternalService(service4);
+        
+        ExternalServiceDto service5= new ExternalServiceDto("estaInParameters", "http://localhost:8084/tempprocess/inparameters", HttpMethod.POST, ProductoPDto.class);
+        super.enableExternalService(service5);
     }
     
     @Override

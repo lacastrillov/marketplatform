@@ -14,7 +14,9 @@ import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.dtos.process.NetworkPDto;
+import com.lacv.marketplatform.dtos.process.ProductoPDto;
 import com.lacv.marketplatform.dtos.process.SolicitudePDto;
+import com.lacv.marketplatform.dtos.process.UsuarioPDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,6 +45,8 @@ public class ExternalServiceViewProcessController extends ExtProcessController {
         process.setMainProcessTitle("Gestionar Servicios Externos");
         process.addControlProcessView("maquinasNovaventa", "Maquinas Novaventa", SolicitudePDto.class, BasicResultDto.class);
         process.addControlProcessView("merakiDevices", "Meraki Devices", NetworkPDto.class, BasicResultDto.class);
+        process.addControlProcessView("estaInBody", "Esta In Body", UsuarioPDto.class, BasicResultDto.class);
+        process.addControlProcessView("estaInParameters", "Esta In Parameters", ProductoPDto.class, BasicResultDto.class);
         super.addControlMapping(process);
         
         MenuItem menuItem= new MenuItem("Procesos", "externalService", "Gestionar Servicios Externos");
