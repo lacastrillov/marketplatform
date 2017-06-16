@@ -13,6 +13,7 @@ import com.lacv.marketplatform.services.LogProcessService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dto.ExternalServiceDto;
+import com.lacv.marketplatform.dtos.process.BasicPDto;
 import com.lacv.marketplatform.dtos.process.NetworkPDto;
 import com.lacv.marketplatform.dtos.process.ProductoPDto;
 import com.lacv.marketplatform.dtos.process.SolicitudePDto;
@@ -42,19 +43,23 @@ public class ExternalServiceProcessController extends RestController {
     public void init(){
         super.addControlProcess("externalService", LogProcess.class, logProcessService);
         
+        ExternalServiceDto service0= new ExternalServiceDto("maquinasNovaventaXml", "https://portal-contenido-novaventa.appspot.com/rest/{entity}/find/xml.htm", HttpMethod.GET, SolicitudePDto.class);
+        super.enableExternalService(service0);
+        
         ExternalServiceDto service1= new ExternalServiceDto("maquinasNovaventa", "https://portal-contenido-novaventa.appspot.com/rest/{entity}/find.htm", HttpMethod.GET, SolicitudePDto.class);
         super.enableExternalService(service1);
         
         ExternalServiceDto service2= new ExternalServiceDto("merakiDevices", "https://dashboard.meraki.com/api/v0/networks/{networkId}/devices", HttpMethod.GET, NetworkPDto.class);
         super.enableExternalService(service2);
         
-        ExternalServiceDto service3= new ExternalServiceDto("maquinasNovaventa", "https://portal-contenido-novaventa.appspot.com/rest/{entity}/find.htm", HttpMethod.GET, SolicitudePDto.class);
+        ExternalServiceDto service3= new ExternalServiceDto("noticiasCarroya", "http://www.carroya.com/noticias/", HttpMethod.POST, BasicPDto.class);
         super.enableExternalService(service3);
         
-        ExternalServiceDto service4= new ExternalServiceDto("estaInBody", "http://localhost:8084/tempprocess/inbody", HttpMethod.POST, UsuarioPDto.class);
+        ExternalServiceDto service4= new ExternalServiceDto("estaInBody", "http://localhost:8084/tempprocess/ajax/inbody", HttpMethod.POST, UsuarioPDto.class);
+        service4.setTypeSendingData("IN_BODY");
         super.enableExternalService(service4);
         
-        ExternalServiceDto service5= new ExternalServiceDto("estaInParameters", "http://localhost:8084/tempprocess/inparameters", HttpMethod.POST, ProductoPDto.class);
+        ExternalServiceDto service5= new ExternalServiceDto("estaInParameters", "http://localhost:8084/tempprocess/ajax/inparameters", HttpMethod.POST, ProductoPDto.class);
         super.enableExternalService(service5);
     }
     

@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/tempprocess")
 public class TempProcessController {
     
     
-    @RequestMapping(value = "/inbody", method = {RequestMethod.POST})
+    @ResponseBody
+    @RequestMapping(value = "/ajax/inbody", method = {RequestMethod.POST})
     public String inBody(HttpServletRequest request, HttpServletResponse response) {
         String jsonBody;
         try {
@@ -27,7 +29,8 @@ public class TempProcessController {
         }
     }
     
-    @RequestMapping(value = "/inparameters", method = {RequestMethod.POST})
+    @ResponseBody
+    @RequestMapping(value = "/ajax/inparameters", method = {RequestMethod.POST})
     public String inParameters(HttpServletRequest request, HttpServletResponse response) {
         String jsonIn;
         Map<String, String[]> map= request.getParameterMap();

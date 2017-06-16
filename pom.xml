@@ -39,16 +39,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.6</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.3.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.3-alpha1</version>
-        </dependency>
 
         <!-- Compile/runtime dependencies -->
         <dependency>
@@ -113,16 +103,11 @@
             <artifactId>libphonenumber</artifactId>
             <version>7.4.3</version>
         </dependency>-->
-        <dependency>
-            <groupId>net.thegreshams</groupId>
-            <artifactId>firebase4j</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
-        </dependency>
+        </dependency>-->
         
         <!-- ####################### SPRING ini ####################### -->
         <dependency>
@@ -343,7 +328,7 @@
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password>calsatrilievlo</jdbc.password>
+                <jdbc.password>dot54321</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
                 <mail.username>enviocorreodot1@gmail.com</mail.username>

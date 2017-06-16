@@ -125,8 +125,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 }
             }
         }];
-        
+            
         itemsForm.push(getResultTree("${processName.key}"));
+        
+        itemsForm.push({id: 'div-result-${processName.key}', xtype: "panel", html: ""});
         
         return Ext.create('Ext.container.Container', {
             id: 'formContainer${processName.key}Model',
@@ -777,7 +779,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             frame: false,
             layout: 'border',
             items: [
-                Instance.propertyGrid,
+                //Instance.propertyGrid,
                 Instance.tabsContainer
             ]
         };
