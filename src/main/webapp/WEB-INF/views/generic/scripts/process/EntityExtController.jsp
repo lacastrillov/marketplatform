@@ -97,7 +97,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                     treePanel.getStore().setRootNode(rootMenu);
                 }catch(e){
                     var divPanel = Ext.getCmp('div-result-'+data.processName);
-                    divPanel.update('<textarea readonly style="width:100%; height:500px; white-space: pre !important;">' + data.dataOut+ '</textarea>');
+                    divPanel.update('<textarea readonly style="width:100%; height:400px; white-space: pre !important;">' + data.dataOut+ '</textarea>');
                 }
             });
         }
@@ -112,7 +112,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
             Ext.MessageBox.alert('Status', responseText);
         }catch(e){
             var divPanel = Ext.getCmp('div-result-'+processName);
-            divPanel.update('<textarea readonly style="width:100%; height:500px; white-space: pre !important;">' + responseText + '</textarea>');
+            divPanel.update('<textarea readonly style="width:100%; height:400px; white-space: pre !important;">' + responseText + '</textarea>');
         }
     };
     

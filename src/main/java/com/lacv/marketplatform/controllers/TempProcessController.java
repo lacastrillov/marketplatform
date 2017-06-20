@@ -1,6 +1,7 @@
 package com.lacv.marketplatform.controllers;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -18,26 +19,34 @@ public class TempProcessController {
     
     @ResponseBody
     @RequestMapping(value = "/ajax/inbody", method = {RequestMethod.POST})
-    public String inBody(HttpServletRequest request, HttpServletResponse response) {
+    public byte[] inBody(HttpServletRequest request, HttpServletResponse response) {
         String jsonBody;
         try {
             jsonBody = IOUtils.toString(request.getInputStream());
             JSONObject jsonObject= new JSONObject(jsonBody);
-            return jsonObject.toString();
+            return getStringBytes(jsonObject.toString());
         } catch (IOException ex) {
-            return "ERROR inBody";
+            return getStringBytes("ERROR inBody");
         }
     }
     
     @ResponseBody
     @RequestMapping(value = "/ajax/inparameters", method = {RequestMethod.POST})
-    public String inParameters(HttpServletRequest request, HttpServletResponse response) {
+    public byte[] inParameters(HttpServletRequest request, HttpServletResponse response) {
         String jsonIn;
         Map<String, String[]> map= request.getParameterMap();
         JSONObject jsonObject= new JSONObject(map);
         jsonIn= jsonObject.toString();
         
-        return jsonIn;
+        return getStringBytes(jsonIn);
+    }
+    
+    protected byte[] getStringBytes(String data){
+        try {
+            return data.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            return null;
+        }
     }
     
 }
