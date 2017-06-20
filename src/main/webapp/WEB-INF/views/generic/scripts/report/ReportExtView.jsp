@@ -21,14 +21,13 @@ function ${reportName}ExtView(parentExtController, parentExtView){
     
     // COMPONENTS *******************************************
     
-    var gridExtComponent= new GridExtComponent();
-    
     Instance.commonExtView= new CommonExtView(parentExtController, Instance, '${reportName}');
     
     //*******************************************************
     
     
     Instance.init= function(){
+        Instance.typeView= "${typeView}";
         Instance.reportExtModel.define${reportName}Model(Instance.modelName);
         Instance.store= Instance.reportExtStore.get${reportName}Store(Instance.modelName);
         <c:if test="${reportConfig.activeGridTemplate}">
@@ -57,8 +56,223 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         </c:if>
     };
     
+    <c:if test="${reportConfig.visibleForm}">
+    function getFormContainer(modelName, store, childExtControllers){
+        var formFields= ${jsonFormFields};
+
+        var renderReplacements= [];
+
+        var additionalButtons= [];
+
+        Instance.defineWriterForm(Instance.modelName, formFields, renderReplacements, additionalButtons, childExtControllers, Instance.typeView);
+        
+        var itemsForm= [{
+            itemId: 'form'+modelName,
+            xtype: 'writerform'+modelName,
+            border: false,
+            width: '100%',
+            listeners: {
+                create: function(form, data){
+                    Instance.entityExtStore.save${entityName}('create', JSON.stringify(data), parentExtController.formSavedResponse);
+                },
+                update: function(form, data){
+                    Instance.entityExtStore.save${entityName}('update', JSON.stringify(data), parentExtController.formSavedResponse);
+                },
+                render: function(panel) {
+                    Instance.commonExtView.enableManagementTabHTMLEditor();
+                }
+            }
+        }];
+        
+        if(Instance.typeView==="Parent"){
+            itemsForm.push(getChildsExtViewTabs(childExtControllers));
+        }
+        
+        return Ext.create('Ext.container.Container', {
+            id: 'formContainer'+modelName,
+            title: 'Detalle',
+            type: 'fit',
+            align: 'stretch',
+            items: itemsForm
+        });
+    };
+    
+    function getChildsExtViewTabs(childExtControllers){
+        var items=[];
+        
+        childExtControllers.forEach(function(childExtController) {
+            var itemTab= {
+                xtype:'tabpanel',
+                title: childExtController.entityExtView.pluralEntityTitle,
+                plain:true,
+                activeTab: 0,
+                style: 'background-color:#dfe8f6; padding:10px;',
+                defaults: {bodyStyle: 'padding:15px', autoScroll:true},
+                items:[
+                    childExtController.entityExtView.gridContainer,
+
+                    childExtController.entityExtView.formContainer
+
+                ]
+            };
+            
+            items.push(itemTab);
+        });
+        
+        var tabObect= {
+            xtype:'tabpanel',
+            plain:true,
+            activeTab: 0,
+            style: 'padding:25px 15px 45px 15px;',
+            items:items
+        };
+        
+        return tabObect;
+    };
+    
+    Instance.setFormActiveRecord= function(record){
+        var formComponent= Instance.formContainer.child('#form'+Instance.modelName);
+        formComponent.setActiveRecord(record || null);
+    };
+    
+    Instance.defineWriterForm= function(modelName, fields, renderReplacements, additionalButtons){
+        Ext.define('WriterForm'+modelName, {
+            extend: 'Ext.form.Panel',
+            alias: 'widget.writerform'+modelName,
+
+            requires: ['Ext.form.field.Text'],
+
+            initComponent: function(){
+                this.addEvents('create');
+                
+                var buttons= [];
+                if(additionalButtons){
+                    for(var i=0; i<additionalButtons.length; i++){
+                        buttons.push(additionalButtons[i]);
+                    }
+                }
+                Ext.apply(this, {
+                    activeRecord: null,
+                    //iconCls: 'icon-user',
+                    frame: false,
+                    defaultType: 'textfield',
+                    bodyPadding: 15,
+                    fieldDefaults: {
+                        minWidth: 300,
+                        anchor: '50%',
+                        labelAlign: 'right'
+                    },
+                    items: fields,
+                    dockedItems: [{
+                        xtype: 'toolbar',
+                        dock: 'bottom',
+                        ui: 'footer',
+                        items: buttons
+                    }]
+                });
+                this.callParent();
+            },
+
+            setActiveRecord: function(record){
+                this.activeRecord = record;
+                if (this.activeRecord) {
+                    if(this.down('#save'+modelName)!==null){
+                        this.down('#save'+modelName).enable();
+                    }
+                    this.getForm().loadRecord(this.activeRecord);
+                    this.renderReplaceActiveRecord(this.activeRecord);
+                } else {
+                    if(this.down('#save'+modelName)!==null){
+                        this.down('#save'+modelName).disable();
+                    }
+                    this.getForm().reset();
+                }
+            },
+                    
+            getActiveRecord: function(){
+                return this.activeRecord;
+            },
+            
+            onSave: function(){
+                var active = this.activeRecord,
+                    form = this.getForm();
+            
+                if (!active) {
+                    return;
+                }
+                if (form.isValid()) {
+                    this.fireEvent('update', this, form.getValues());
+                    //form.updateRecord(active);
+                    //this.onReset();
+                }
+            },
+
+            onCreate: function(){
+                var form = this.getForm();
+
+                if (form.isValid()) {
+                    this.fireEvent('create', this, form.getValues());
+                    //form.reset();
+                }
+
+            },
+
+            onReset: function(){
+                this.getForm().reset();
+                parentExtController.loadFormData("");
+            },
+            
+            renderReplaceActiveRecord: function(record){
+                if(renderReplacements){
+                    for(var i=0; i<renderReplacements.length; i++){
+                        var renderReplace= renderReplacements[i];
+                        var replaceField= renderReplace.replace.field;
+                        var replaceAttribute= renderReplace.replace.attribute;
+                        var value="ND";
+                        
+                        if (typeof record.data[replaceField] === "object" && Object.getOwnPropertyNames(record.data[replaceField]).length === 0){
+                            value= "";
+                        }else if(replaceAttribute.indexOf(".")===-1){
+                            value= record.data[replaceField][replaceAttribute];
+                        }else{
+                            var niveles= replaceAttribute.split(".");
+                            try{
+                                switch(niveles.length){
+                                    case 2:
+                                        value= record.data[replaceField][niveles[0]][niveles[1]];
+                                        break;
+                                    case 3:
+                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]];
+                                        break;
+                                    case 4:
+                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]][niveles[3]];
+                                        break;
+                                    case 5:
+                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]][niveles[3]][niveles[4]];
+                                        break;
+                                }
+                            }catch(err){
+                                console.log(err);
+                            }
+                            
+                        }
+                        if(typeof(value) !== 'undefined'){
+                            //value= util.htmlEntitiesDecode(value);
+                            renderReplace.component.setValue(value);
+                        }
+                    }
+                }
+                return record;
+            }
+    
+        });
+        
+    };
+    
+    </c:if>
+    
     <c:if test="${reportConfig.visibleValueMapForm}">
-    function getFormContainer(){
+    function getValueMapFormContainer(){
         return Ext.widget({
             xtype: 'form',
             layout: 'form',
@@ -109,7 +323,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         
         return Ext.create('Ext.container.Container', {
             id: 'gridContainer'+modelName,
-            title: 'Listado ${reportConfig.pluralReportTitle}',
+            title: 'Listado',
             region: 'center',
             layout: {
                 type: 'vbox',
@@ -124,6 +338,11 @@ function ${reportName}ExtView(parentExtController, parentExtView){
                 disableSelection: ${reportConfig.activeGridTemplate},
                 trackMouseOver: !${reportConfig.activeGridTemplate},
                 listeners: {
+                    selectionchange: function(selModel, selected) {
+                        if(selected[0]){
+                            parentExtController.loadFormData(selected[0].data.id)
+                        }
+                    },
                     export: function(typeReport){
                         var data= "?filter="+JSON.stringify(parentExtController.filter);
                         data+="&limit="+store.pageSize+"&page="+store.currentPage;
@@ -297,11 +516,42 @@ function ${reportName}ExtView(parentExtController, parentExtView){
     };
 
     Instance.createMainView= function(){
+        Instance.childExtControllers= [];
+    
         <c:if test="${reportConfig.visibleValueMapForm}">
-        Instance.formContainer = getFormContainer();
+        Instance.valueMapformContainer = getValueMapFormContainer();
         </c:if>
+            
+        Instance.formContainer= null;
+        <c:if test="${reportConfig.visibleForm}">
+        Instance.formContainer = getFormContainer(Instance.modelName, Instance.store, Instance.childExtControllers);
+        Instance.store.formContainer= Instance.formContainer;
+        </c:if>
+            
         Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, null);
         Instance.store.gridContainer= Instance.gridContainer;
+        
+        Instance.tabsContainer= Ext.widget('tabpanel', {
+            region: 'center',
+            activeTab: 0,
+            style: 'background-color:#dfe8f6; margin:0px',
+            defaults: {bodyStyle: 'padding:15px', autoScroll:true},
+            items:[
+                Instance.gridContainer,
+                <c:if test="${reportConfig.visibleForm}">
+                Instance.formContainer
+                </c:if>
+            ],
+            listeners: {
+                tabchange: function(tabPanel, tab){
+                    var idx = tabPanel.items.indexOf(tab);
+                    var url= util.addUrlParameter(parentExtController.request,"tab", idx);
+                    if(url!==""){
+                        mvcExt.navigate(url);
+                    }
+                }
+            }
+        });
         
         Instance.mainView= {
             id: Instance.id,
@@ -310,9 +560,9 @@ function ${reportName}ExtView(parentExtController, parentExtView){
             layout: 'border',
             items: [
                 <c:if test="${reportConfig.visibleValueMapForm}">
-                Instance.formContainer,
+                Instance.valueMapformContainer,
                 </c:if>
-                Instance.gridContainer
+                Instance.tabsContainer
             ]
         };
         

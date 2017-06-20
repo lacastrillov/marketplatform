@@ -361,8 +361,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 trackMouseOver: !${viewConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        if(formContainer!==null && selected[0]){
-                            formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
+                        if(selected[0]){
+                            parentExtController.loadFormData(selected[0].data.id)
                         }
                     },
                     export: function(typeReport){

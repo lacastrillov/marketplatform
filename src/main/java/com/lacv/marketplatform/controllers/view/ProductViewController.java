@@ -76,6 +76,7 @@ public class ProductViewController extends ExtViewController {
         
         ReportConfig report = new ReportConfig("product", "reporteProductos", productService, ProductReportDto.class);
         report.setPluralReportTitle("Reporte de Productos");
+        report.addChildExtReport("productImage", "reporteImagenesProducto");
         report.setMaxResultsPerPage(100L);
         report.setDefaultOrderBy("id");
         report.setDefaultOrderDir("DESC");

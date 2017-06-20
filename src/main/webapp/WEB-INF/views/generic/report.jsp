@@ -30,16 +30,36 @@
         <!-- ############################ IMPORT MODELS ################################### -->
         
         <c:import url="${basePath}/${entityRef}/reportExtModel/${reportName}.htm"/>
+        <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
+            <c:import url="${basePath}/${childExtReport.key}/reportExtModel/${childExtReport.value}.htm"/>
+        </c:forEach>
         
         <!-- ############################ IMPORT STORES ################################### -->
         
         <c:import url="${basePath}/${entityRef}/reportExtStore/${reportName}.htm"/>
+        <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
+            <c:import url="${basePath}/${childExtReport.key}/reportExtStore/${childExtReport.value}.htm"/>
+        </c:forEach>
         
         <!-- ############################ IMPORT VIEWS ################################### -->
         
-        <c:import url="${basePath}/${entityRef}/reportExtView/${reportName}.htm"/>
+        <c:import url="${basePath}/${entityRef}/reportExtView/${reportName}.htm">
+            <c:param name="typeView" value="Parent"/>
+        </c:import>
+        <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
+            <c:import url="${basePath}/${childExtReport.key}/reportExtView/${childExtReport.value}.htm">
+                <c:param name="typeView" value="Child"/>
+            </c:import>
+        </c:forEach>
         
-        <c:import url="${basePath}/${entityRef}/reportExtController/${reportName}.htm"/>
+        <c:import url="${basePath}/${entityRef}/reportExtController/${reportName}.htm">
+            <c:param name="typeController" value="Parent"/>
+        </c:import>
+        <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
+            <c:import url="${basePath}/${childExtReport.key}/reportExtController/${childExtReport.value}.htm">
+                <c:param name="typeController" value="Child"/>
+            </c:import>
+        </c:forEach>
         
         <c:import url="${basePath}/${entityRef}/reportViewportExtView/${reportName}.htm"/>
         
@@ -47,7 +67,6 @@
         
         <!-- ############################ IMPORT COMPONENTS ################################### -->
         
-        <jsp:include page="/WEB-INF/views/generic/scripts/components/GridExtComponent.jsp" />
         <jsp:include page="/WEB-INF/views/generic/scripts/components/CommonExtView.jsp" />
         
         <!-- ############################ IMPORT CONFIG ################################### -->
