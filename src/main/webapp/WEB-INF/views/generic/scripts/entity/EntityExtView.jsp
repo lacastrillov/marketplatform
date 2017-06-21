@@ -30,12 +30,12 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     Instance.init= function(){
         Instance.typeView= "${typeView}";
         Instance.pluralEntityTitle= '${viewConfig.pluralEntityTitle}';
-        Instance.entityExtModel.define${entityName}Model(Instance.modelName);
-        Instance.store= Instance.entityExtStore.get${entityName}Store(Instance.modelName);
+        Instance.entityExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         <c:if test="${viewConfig.activeGridTemplate}">
         Instance.gridModelName= "${entityName}TemplateModel";
-        Instance.entityExtModel.define${entityName}TemplateModel(Instance.gridModelName);
-        Instance.gridStore= Instance.entityExtStore.get${entityName}TemplateStore(Instance.gridModelName);
+        Instance.entityExtModel.defineTemplateModel(Instance.gridModelName);
+        Instance.gridStore= Instance.entityExtStore.getTemplateStore(Instance.gridModelName);
         </c:if>
         Instance.createMainView();
     };
@@ -71,7 +71,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     
     Instance.findAndLoadNNMultichecks= function(filter){
-        Instance.entityExtStore.find${entityName}(filter, function(responseText){
+        Instance.entityExtStore.find(filter, function(responseText){
             if(responseText.success){
                 responseText.data.forEach(function(item){
                     var itemCheckValue= item.${viewConfig.entityRefNNMulticheckChild}.id;
@@ -102,10 +102,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             width: '100%',
             listeners: {
                 create: function(form, data){
-                    Instance.entityExtStore.save${entityName}('create', JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.save('create', JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 update: function(form, data){
-                    Instance.entityExtStore.save${entityName}('update', JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.save('update', JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();
@@ -361,8 +361,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 trackMouseOver: !${viewConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        if(selected[0]){
+                        /*if(selected[0]){
                             parentExtController.loadFormData(selected[0].data.id)
+                        }*/
+                        if(formContainer!==null && selected[0]){
+                            formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
                         }
                     },
                     export: function(typeReport){
@@ -573,7 +576,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         }
                     }
                     if(filter.in.id.length>0){
-                        Instance.entityExtStore.deleteByFilter${entityName}(JSON.stringify(filter), function(responseText){
+                        Instance.entityExtStore.deleteByFilter(JSON.stringify(filter), function(responseText){
                             console.log(responseText.data);
                             Instance.reloadPageStore(Instance.store.currentPage);
                         });
@@ -620,13 +623,13 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         }
                         record.data[checkbox.name]= checkbox.inputValue;
                         if(isChecked){
-                            Instance.entityExtStore.save${entityName}('create', JSON.stringify(record.data), function(responseText){
+                            Instance.entityExtStore.save('create', JSON.stringify(record.data), function(responseText){
                                 console.log(responseText.data);
                             });
                         }else{
                             var filter= record.data;
                             delete filter["id"];
-                            Instance.entityExtStore.deleteByFilter${entityName}(JSON.stringify({"eq":filter}), function(responseText){
+                            Instance.entityExtStore.deleteByFilter(JSON.stringify({"eq":filter}), function(responseText){
                                 console.log(responseText.data);
                             });
                         }
@@ -639,7 +642,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     </c:if>
     
-    function getTablaDePropiedades(){
+    function getPropertyGrid(){
         var renderers= {
             <c:forEach var="associatedER" items="${interfacesEntityRef}">
                 <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
@@ -754,7 +757,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.checkboxGroupContainer= getCheckboxGroupContainer();
         </c:if>
         
-        Instance.propertyGrid= getTablaDePropiedades();
+        Instance.propertyGrid= getPropertyGrid();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',

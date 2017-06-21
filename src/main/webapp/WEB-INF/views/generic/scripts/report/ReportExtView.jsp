@@ -28,12 +28,13 @@ function ${reportName}ExtView(parentExtController, parentExtView){
     
     Instance.init= function(){
         Instance.typeView= "${typeView}";
-        Instance.reportExtModel.define${reportName}Model(Instance.modelName);
-        Instance.store= Instance.reportExtStore.get${reportName}Store(Instance.modelName);
+        Instance.pluralReportTitle= '${reportConfig.pluralReportTitle}';
+        Instance.reportExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.reportExtStore.getStore(Instance.modelName);
         <c:if test="${reportConfig.activeGridTemplate}">
         Instance.gridModelName= "${reportName}TemplateModel";
-        Instance.reportExtModel.define${reportName}TemplateModel(Instance.gridModelName);
-        Instance.gridStore= Instance.reportExtStore.get${reportName}TemplateStore(Instance.gridModelName);
+        Instance.reportExtModel.defineTemplateModel(Instance.gridModelName);
+        Instance.gridStore= Instance.reportExtStore.getTemplateStore(Instance.gridModelName);
         </c:if>
         Instance.createMainView();
     };
@@ -103,15 +104,15 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         childExtControllers.forEach(function(childExtController) {
             var itemTab= {
                 xtype:'tabpanel',
-                title: childExtController.entityExtView.pluralEntityTitle,
+                title: childExtController.reportExtView.pluralReportTitle,
                 plain:true,
                 activeTab: 0,
                 style: 'background-color:#dfe8f6; padding:10px;',
                 defaults: {bodyStyle: 'padding:15px', autoScroll:true},
                 items:[
-                    childExtController.entityExtView.gridContainer,
+                    childExtController.reportExtView.gridContainer,
 
-                    childExtController.entityExtView.formContainer
+                    childExtController.reportExtView.formContainer
 
                 ]
             };
@@ -339,8 +340,11 @@ function ${reportName}ExtView(parentExtController, parentExtView){
                 trackMouseOver: !${reportConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        if(selected[0]){
+                        /*if(selected[0]){
                             parentExtController.loadFormData(selected[0].data.id)
+                        }*/
+                        if(formContainer!==null && selected[0]){
+                            formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
                         }
                     },
                     export: function(typeReport){
@@ -514,9 +518,47 @@ function ${reportName}ExtView(parentExtController, parentExtView){
             
         });
     };
+    
+    function ${reportConfig.idColumnName}EntityRender(value, p, record){
+        if(record){
+            if(Instance.typeView==="Parent"){
+                return "<a style='font-size: 15px;' href='#?id="+record.data.${reportConfig.idColumnName}+"&tab=1'>"+value+"</a>";
+            }else{
+                return value;
+            }
+        }else{
+            return value;
+        }
+    };
+    
+    Instance.hideParentField= function(entityRef){
+        if(Instance.formContainer!==null){
+            var fieldsForm= Instance.formContainer.child('#form'+Instance.modelName).items.items;
+            fieldsForm.forEach(function(field) {
+                if(field.name===entityRef){
+                    field.hidden= true;
+                }
+            });
+        }
+        if(Instance.gridContainer!==null){
+            var columnsGrid= Instance.gridContainer.child('#grid'+Instance.modelName).columns;
+            columnsGrid.forEach(function(column) {
+                if(column.dataIndex===entityRef){
+                    column.hidden= true;
+                }
+            });
+        }
+    };
 
     Instance.createMainView= function(){
         Instance.childExtControllers= [];
+        if(Instance.typeView==="Parent"){
+        <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
+            var ${childExtReport.value}ExtControllerVar= new ${childExtReport.value}ExtController(parentExtController, Instance);
+            ${childExtReport.value}ExtControllerVar.reportExtView.hideParentField("${reportConfig.childRefColumnNames[childExtReport.value]}");
+            Instance.childExtControllers.push(${childExtReport.value}ExtControllerVar);
+        </c:forEach>
+        }
     
         <c:if test="${reportConfig.visibleValueMapForm}">
         Instance.valueMapformContainer = getValueMapFormContainer();
@@ -528,7 +570,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         Instance.store.formContainer= Instance.formContainer;
         </c:if>
             
-        Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, null);
+        Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, Instance.formContainer);
         Instance.store.gridContainer= Instance.gridContainer;
         
         Instance.tabsContainer= Ext.widget('tabpanel', {

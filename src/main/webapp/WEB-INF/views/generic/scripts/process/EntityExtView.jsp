@@ -118,7 +118,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             width: '100%',
             listeners: {
                 doProcess: function(form, data){
-                    Instance.entityExtStore.doProcess${entityName}('${processName.key}',JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.doProcess('${processName.key}',JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();
@@ -572,48 +572,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         });
     };
     </c:if>
-
-    <c:if test="${viewConfig.activeNNMulticheckChild}">
-    function getCheckboxGroupContainer(){
-        var checkboxGroupContainer= Ext.create('Ext.container.Container', {
-            title: 'Lista '+Instance.${viewConfig.entityRefNNMulticheckChild}ExtInterfaces.pluralEntityTitle,
-            style: 'background-color:#dfe8f6; padding:10px;',
-            layout: 'anchor',
-            defaults: {
-                anchor: '100%'
-            },
-            items: [
-                Instance.${viewConfig.entityRefNNMulticheckChild}ExtInterfaces.getCheckboxGroup('${entityName}', '${viewConfig.entityRefNNMulticheckChild}',
-                function (checkbox, isChecked) {
-                    if(checkbox.activeChange){
-                        var record= Ext.create(Instance.modelName);
-                        if(Object.keys(parentExtController.filter.eq).length !== 0){
-                            for (var key in parentExtController.filter.eq) {
-                                record.data[key]= parentExtController.filter.eq[key];
-                            }
-                        }
-                        record.data[checkbox.name]= checkbox.inputValue;
-                        if(isChecked){
-                            Instance.entityExtStore.save${entityName}('create', JSON.stringify(record.data), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }else{
-                            var filter= record.data;
-                            delete filter["id"];
-                            Instance.entityExtStore.deleteByFilter${entityName}(JSON.stringify({"eq":filter}), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }
-                    }
-                })
-            ]
-        });
-        
-        return checkboxGroupContainer;
-    }
-    </c:if>
     
-    function getTablaDePropiedades(){
+    function getPropertyGrid(){
         var renderers= {
             <c:forEach var="associatedER" items="${interfacesEntityRef}">
                 <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
@@ -718,7 +678,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.checkboxGroupContainer= getCheckboxGroupContainer();
         </c:if>
         
-        Instance.propertyGrid= getTablaDePropiedades();
+        Instance.propertyGrid= getPropertyGrid();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',

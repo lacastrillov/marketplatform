@@ -6,7 +6,7 @@ function ${reportName}ExtModel(){
     var Instance = this;
     
     
-    Instance.define${reportName}Model= function(modelName){
+    Instance.defineModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
             fields: ${jsonModel}
@@ -14,7 +14,7 @@ function ${reportName}ExtModel(){
     };
     
     <c:if test="${reportConfig.activeGridTemplate}">
-    Instance.define${reportName}TemplateModel= function(modelName){
+    Instance.defineTemplateModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
             fields: ${jsonTemplateModel}

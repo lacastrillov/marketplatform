@@ -58,9 +58,9 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         <c:forEach var="associatedER" items="${interfacesEntityRef}">
             <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
         if(Instance.filter.eq.${associatedER}!==undefined && Instance.filter.eq.${associatedER}!==''){
-            Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.cargar${associatedEntityName}(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel);
+            Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.cargar${associatedEntityName}(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.addLevel);
         }else{
-            Instance.entityExtView.${associatedER}ExtInterfaces.agregarNivel(null);
+            Instance.entityExtView.${associatedER}ExtInterfaces.addLevel(null);
         }
         </c:forEach>
         
@@ -86,7 +86,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                 var activeRecord= formComponent.getActiveRecord();
 
                 if(activeRecord===null){
-                    Instance.entityExtView.entityExtStore.cargar${entityName}(id, function(data){
+                    Instance.entityExtView.entityExtStore.load(id, function(data){
                         var record= Ext.create(Instance.modelName);
                         record.data= data;
                         formComponent.setActiveRecord(record || null);
@@ -130,7 +130,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         if(responseText.success){
             var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
             <c:if test="${viewConfig.multipartFormData}">
-            Instance.entityExtView.entityExtStore.upload${entityName}(formComponent, responseText.data.id, function(responseUpload){
+            Instance.entityExtView.entityExtStore.upload(formComponent, responseText.data.id, function(responseUpload){
                 Ext.MessageBox.alert('Status', responseText.message+"<br>"+responseUpload.message);
                 if(responseUpload.success){
                     var record= Ext.create(Instance.modelName);

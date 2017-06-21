@@ -23,13 +23,13 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
     
     Instance.init= function(){
         Instance.pluralEntityTitle= '${viewConfig.pluralEntityTitle}';
-        Instance.entityExtModel.define${entityName}Model(Instance.modelName);
-        Instance.store= Instance.entityExtStore.get${entityName}Store(Instance.modelName);
+        Instance.entityExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         Instance.combobox={};
         Instance.comboboxRender={};
     };
     
-    Instance.agregarNivel= function(entity){
+    Instance.addLevel= function(entity){
         var source= parentExtView.propertyGrid.getSource();
         
         if(entity!==null && typeof(entity)!=='undefined'){
@@ -154,7 +154,7 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
             items: []
         });
         
-        Instance.entityExtStore.find${entityName}("", function(responseText){
+        Instance.entityExtStore.find("", function(responseText){
             if(responseText.success){
                 responseText.data.forEach(function(item){
                     var cb = Ext.create('Ext.form.field.Checkbox', {

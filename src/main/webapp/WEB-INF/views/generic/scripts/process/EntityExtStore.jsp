@@ -11,7 +11,7 @@ function ${entityName}ExtStore(){
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
     
-    Instance.get${entityNameLogProcess}Store= function(modelName){
+    Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
             model: modelName,
             autoLoad: false,
@@ -89,7 +89,7 @@ function ${entityName}ExtStore(){
         return store;
     };
 
-    Instance.find${entityName}= function(filter, func){
+    Instance.find= function(filter, func){
         Ext.Ajax.request({
             url: Ext.context+"/rest/${entityRefLogProcess}/find.htm",
             method: "GET",
@@ -109,7 +109,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.save${entityName}= function(operation, processName, data, func){
+    Instance.save= function(operation, processName, data, func){
         Ext.MessageBox.show({
             msg: 'Ejecutando...',
             width:200,
@@ -136,7 +136,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.doProcess${entityName}= function(processName, data, func){
+    Instance.doProcess= function(processName, data, func){
         Ext.MessageBox.show({
             msg: 'Ejecutando...',
             width:200,
@@ -153,63 +153,6 @@ function ${entityName}ExtStore(){
             success: function(response){
                 Ext.MessageBox.hide();
                 func(processName, response.responseText);
-            },
-            failure: function(response){
-                console.log(response.responseText);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.cargar${entityNameLogProcess}= function(id${entityNameLogProcess}, func){
-        Ext.MessageBox.show({
-            msg: 'Cargando...',
-            width:200,
-            wait:true,
-            waitConfig: {interval:200}
-        });
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRefLogProcess}/load.htm",
-            method: "GET",
-            params: 'data='+encodeURIComponent('{"id":'+id${entityNameLogProcess}+'}'),
-            success: function(response){
-                var responseText= Ext.decode(response.responseText);
-                func(responseText.data);
-                Ext.MessageBox.hide();
-            },
-            failure: function(response){
-                console.log(response.responseText);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.upload${entityName}= function(form, idEntity, func){
-        form.submit({
-            url: Ext.context+"/rest/${entityRef}/upload/"+idEntity+".htm",
-            waitMsg: 'Subiendo archivo...',
-            success: function(form, action) {
-                func(action.result);
-            }
-        });
-    };
-    
-    Instance.deleteByFilter${entityName}= function(filter, func){
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/delete/byfilter.htm",
-            method: "POST",
-            params: "filter="+encodeURIComponent(filter),
-            success: function(response){
-                var responseText= Ext.decode(response.responseText);
-                func(responseText);
             },
             failure: function(response){
                 console.log(response.responseText);

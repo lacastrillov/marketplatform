@@ -32,12 +32,12 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     Instance.init= function(){
         Instance.typeView= "${typeView}";
         Instance.pluralEntityTitle= '${viewConfig.pluralEntityTitle}';
-        Instance.entityExtModel.define${entityName}Model(Instance.modelName);
-        Instance.store= Instance.entityExtStore.get${entityName}Store(Instance.modelName);
+        Instance.entityExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         <c:if test="${viewConfig.activeGridTemplate}">
         Instance.gridModelName= "${entityName}TemplateModel";
-        Instance.entityExtModel.define${entityName}TemplateModel(Instance.gridModelName);
-        Instance.gridStore= Instance.entityExtStore.get${entityName}TemplateStore(Instance.gridModelName);
+        Instance.entityExtModel.defineTemplateModel(Instance.gridModelName);
+        Instance.gridStore= Instance.entityExtStore.getTemplateStore(Instance.gridModelName);
         </c:if>
         Instance.createMainView();
     };
@@ -77,7 +77,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             width: '100%',
             listeners: {
                 update: function(form, data){
-                    Instance.entityExtStore.save${entityName}('update', JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.save('update', JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();
@@ -506,7 +506,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         }
                     }
                     if(filter.in.id.length>0){
-                        Instance.entityExtStore.deleteByFilter${entityName}(JSON.stringify(filter), function(responseText){
+                        Instance.entityExtStore.deleteByFilter(JSON.stringify(filter), function(responseText){
                             Instance.reloadPageStore(Instance.store.currentPage);
                         });
                     }
@@ -530,7 +530,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         if(parentExtController.filter.eq!==undefined && parentExtController.filter.eq.webFile!==undefined){
                             data["webFile"]=parentExtController.filter.eq.webFile;
                         }
-                        Instance.entityExtStore.save${entityName}('create', JSON.stringify(data), function(responseText){
+                        Instance.entityExtStore.save('create', JSON.stringify(data), function(responseText){
                             Instance.reloadPageStore(Instance.store.currentPage);
                         });
                     }
@@ -544,7 +544,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         if(parentExtController.filter.eq!==undefined && parentExtController.filter.eq.webFile!==undefined){
                             data["webFile"]=parentExtController.filter.eq.webFile;
                         }
-                        Instance.entityExtStore.save${entityName}('create', JSON.stringify(data), function(responseText){
+                        Instance.entityExtStore.save('create', JSON.stringify(data), function(responseText){
                             Instance.reloadPageStore(Instance.store.currentPage);
                         });
                     }
@@ -573,7 +573,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     Ext.MessageBox.prompt('Renombrar', 'Por favor, ingrese el nuevo nombre:', function(btn, text){
                         if(text!==""){
                             var data= {"id":checkedValue,"name":text};
-                            Instance.entityExtStore.save${entityName}('update', JSON.stringify(data), function(responseText){
+                            Instance.entityExtStore.save('update', JSON.stringify(data), function(responseText){
                                 Instance.reloadPageStore(Instance.store.currentPage);
                             });
                         }
@@ -737,7 +737,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 text: 'Mover',
                 handler: function(){
                     if(Instance.filterMove.uv.webFile!==undefined){
-                        Instance.entityExtStore.updateByFilter${entityName}(JSON.stringify(Instance.filterMove), function(responseText){
+                        Instance.entityExtStore.updateByFilter(JSON.stringify(Instance.filterMove), function(responseText){
                             Instance.reloadPageStore(Instance.store.currentPage);
                             setTimeout(function(){ Instance.formMove.hide()},1000);
                         });
@@ -754,7 +754,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         return win;
     }
     
-    function getTablaDePropiedades(){
+    function getPropertyGrid(){
         var renderers= {
             "Ruta": function(entity){
                 var breadcrumb= "<a href='#?filter={\"isn\":[\"webFile\"]}'>Ra&iacute;z</a>";
@@ -876,7 +876,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.store.gridContainer= Instance.gridContainer;
         </c:if>
         
-        Instance.propertyGrid= getTablaDePropiedades();
+        Instance.propertyGrid= getPropertyGrid();
         
         Instance.formUpload= getFormUpload();
         

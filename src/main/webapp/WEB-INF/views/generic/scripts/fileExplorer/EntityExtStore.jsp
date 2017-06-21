@@ -9,7 +9,7 @@ function ${entityName}ExtStore(){
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
     
-    Instance.get${entityName}Store= function(modelName){
+    Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
             model: modelName,
             autoLoad: false,
@@ -88,7 +88,7 @@ function ${entityName}ExtStore(){
     };
     
     <c:if test="${viewConfig.activeGridTemplateAsParent || viewConfig.activeGridTemplateAsChild}">
-    Instance.get${entityName}TemplateStore= function(modelName){
+    Instance.getTemplateStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
             model: modelName,
             autoLoad: false,
@@ -151,7 +151,7 @@ function ${entityName}ExtStore(){
     };
     </c:if>
 
-    Instance.find${entityName}= function(filter, func){
+    Instance.find= function(filter, func){
         Ext.Ajax.request({
             url: Ext.context+"/rest/${entityRef}/find.htm",
             method: "GET",
@@ -198,7 +198,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.save${entityName}= function(operation, data, func){
+    Instance.save= function(operation, data, func){
         Ext.MessageBox.show({
             msg: 'Guardando...',
             width:200,
@@ -225,7 +225,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.updateByFilter${entityName}= function(filter, func){
+    Instance.updateByFilter= function(filter, func){
         Ext.MessageBox.show({
             msg: 'Moviendo...',
             width:200,
@@ -252,7 +252,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.cargar${entityName}= function(id${entityName}, func){
+    Instance.load= function(id${entityName}, func){
         Ext.Ajax.request({
             url: Ext.context+"/rest/${entityRef}/load.htm",
             method: "GET",
@@ -272,7 +272,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.upload${entityName}= function(form, idParent, func){
+    Instance.upload= function(form, idParent, func){
         form.submit({
             url: Ext.context+"/rest/${entityRef}/multiupload/"+idParent+".htm",
             //waitMsg: 'Subiendo archivo...',
@@ -282,7 +282,7 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.deleteByFilter${entityName}= function(filter, func){
+    Instance.deleteByFilter= function(filter, func){
         Ext.MessageBox.show({
             msg: 'Eliminando...',
             width:200,

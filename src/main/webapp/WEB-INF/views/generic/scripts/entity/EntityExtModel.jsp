@@ -6,7 +6,7 @@ function ${entityName}ExtModel(){
     var Instance = this;
     
     
-    Instance.define${entityName}Model= function(modelName){
+    Instance.defineModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
             fields: ${jsonModel},
@@ -15,7 +15,7 @@ function ${entityName}ExtModel(){
     };
     
     <c:if test="${viewConfig.activeGridTemplateAsParent || viewConfig.activeGridTemplateAsChild}">
-    Instance.define${entityName}TemplateModel= function(modelName){
+    Instance.defineTemplateModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
             fields: ${jsonTemplateModel}

@@ -5,8 +5,10 @@ function ${reportName}ExtStore(){
     
     var Instance = this;
     
+    var errorGeneral= "Error de servidor";
+    var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
-    Instance.get${reportName}Store= function(modelName){
+    Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
             model: modelName,
             autoLoad: false,
@@ -37,14 +39,13 @@ function ${reportName}ExtStore(){
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
                     }
                 }
             },
@@ -63,7 +64,7 @@ function ${reportName}ExtStore(){
     };
     
     <c:if test="${reportConfig.activeGridTemplate}">
-    Instance.get${reportName}TemplateStore= function(modelName){
+    Instance.getTemplateStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
             model: modelName,
             autoLoad: false,
@@ -96,14 +97,22 @@ function ${reportName}ExtStore(){
                     exception: function(proxy, response, operation){
                         var errorMsg= operation.getError();
                         if(typeof errorMsg === "object"){
-                            errorMsg= "Error de servidor";
+                            if(errorMsg.status===403){
+                                errorMsg= error403;
+                            }else{
+                                errorMsg= errorGeneral;
+                            }
                         }
-                        Ext.MessageBox.show({
-                            title: 'REMOTE EXCEPTION',
-                            msg: errorMsg,
-                            icon: Ext.MessageBox.ERROR,
-                            buttons: Ext.Msg.OK
-                        });
+                        showErrorMessage(errorMsg);
+                    }
+                }
+            },
+            listeners: {
+                load: function() {
+                    var gridComponent= null;
+                    if(this.gridContainer){
+                        gridComponent= this.gridContainer.child('#grid'+modelName);
+                        gridComponent.getSelectionModel().deselectAll();
                     }
                 }
             },
@@ -121,6 +130,34 @@ function ${reportName}ExtStore(){
         return store;
     };
     </c:if>
+
+    Instance.load= function(idRecord, func){
+        Ext.Ajax.request({
+            url:  Ext.context+'/rest/${entityRef}/report/${reportName}.htm',
+            method: "GET",
+            params: 'filter='+encodeURIComponent('{"${reportConfig.idColumnName}":'+idRecord+'}')+'&dtoName=${reportConfig.dtoName}',
+            success: function(response){
+                var responseText= Ext.decode(response.responseText);
+                func(responseText.data[0]);
+            },
+            failure: function(response){
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
+            }
+        });
+    };
+    
+    function showErrorMessage(errorMsg){
+        Ext.MessageBox.show({
+            title: 'REMOTE EXCEPTION',
+            msg: errorMsg,
+            icon: Ext.MessageBox.ERROR,
+            buttons: Ext.Msg.OK
+        });
+    }
     
 }
 </script>

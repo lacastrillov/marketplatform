@@ -22,7 +22,7 @@ function ${reportName}ExtController(parentExtView){
     
     
     Instance.init= function(){
-        Instance.entityRef= "${entityRef}";
+        Instance.reportName= "${reportName}";
         Instance.typeController= "${typeController}";
         mvcExt.mappingController(Instance.id, Instance);
         Instance.requireValueMap= ${reportConfig.visibleValueMapForm};
@@ -80,7 +80,7 @@ function ${reportName}ExtController(parentExtView){
                 var activeRecord= formComponent.getActiveRecord();
 
                 if(activeRecord===null){
-                    Instance.reportExtView.entityExtStore.cargar${entityName}(id, function(data){
+                    Instance.reportExtView.reportExtStore.load(id, function(data){
                         var record= Ext.create(Instance.modelName);
                         record.data= data;
                         formComponent.setActiveRecord(record || null);
@@ -102,8 +102,10 @@ function ${reportName}ExtController(parentExtView){
     
     Instance.loadChildExtControllers= function(idEntitySelected){
         if(Instance.typeController==="Parent"){
+            var jsonChildRefColumnNames= ${jsonChildRefColumnNames};
             Instance.reportExtView.childExtControllers.forEach(function(childExtController) {
-                childExtController.filter= {"eq":{"${entityRef}":idEntitySelected}};
+                childExtController.filter= {"eq":{}};
+                childExtController.filter.eq[jsonChildRefColumnNames[childExtController.reportName]]= idEntitySelected;
                 childExtController.loadGridData();
                 childExtController.loadFormData("");
             });
