@@ -60,7 +60,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
             <c:forEach var="associatedER" items="${interfacesEntityRef}">
                 <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
             if(Instance.filter.eq!==undefined && Instance.filter.eq.${associatedER}!==undefined && Instance.filter.eq.${associatedER}!==''){
-                Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.cargar${associatedEntityName}(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.addLevel);
+                Instance.entityExtView.${associatedER}ExtInterfaces.entityExtStore.load(Instance.filter.eq.${associatedER}, Instance.entityExtView.${associatedER}ExtInterfaces.addLevel);
             }else{
                 Instance.entityExtView.${associatedER}ExtInterfaces.addLevel(null);
             }

@@ -109,33 +109,6 @@ function ${entityName}ExtStore(){
         });
     };
     
-    Instance.save= function(operation, processName, data, func){
-        Ext.MessageBox.show({
-            msg: 'Ejecutando...',
-            width:200,
-            wait:true,
-            waitConfig: {interval:200}
-        });
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/"+operation+"/"+processName+".htm",
-            method: "POST",
-            params: "data="+encodeURIComponent(util.remakeJSONObject(data)),
-            success: function(response){
-                Ext.MessageBox.hide();
-                var responseText= Ext.decode(response.responseText);
-                func(processName, responseText);
-            },
-            failure: function(response){
-                console.log(response.responseText);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
     Instance.doProcess= function(processName, data, func){
         Ext.MessageBox.show({
             msg: 'Ejecutando...',
@@ -153,6 +126,33 @@ function ${entityName}ExtStore(){
             success: function(response){
                 Ext.MessageBox.hide();
                 func(processName, response.responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
+            }
+        });
+    };
+    
+    Instance.load= function(idEntity, func){
+        Ext.MessageBox.show({
+            msg: 'Cargando...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/${entityRefLogProcess}/load.htm",
+            method: "GET",
+            params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
+            success: function(response){
+                var responseText= Ext.decode(response.responseText);
+                func(responseText.data);
+                Ext.MessageBox.hide();
             },
             failure: function(response){
                 console.log(response.responseText);

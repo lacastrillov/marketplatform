@@ -80,7 +80,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
     
     Instance.loadFormData= function(id){
         if(id!==""){
-            Instance.entityExtView.entityExtStore.cargar${viewConfig.entityNameLogProcess}(id, function(data){
+            Instance.entityExtView.entityExtStore.load(id, function(data){
                 //Show Process
                 Ext.getCmp('content-processes').layout.setActiveItem('formContainer'+data.processName+'Model');
                 

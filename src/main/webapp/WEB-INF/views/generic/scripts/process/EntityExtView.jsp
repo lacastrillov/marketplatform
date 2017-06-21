@@ -33,8 +33,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.entityExtModel.define${processName.key}Model("${processName.key}Model");
         </c:forEach>
         
-        Instance.entityExtModel.define${viewConfig.entityNameLogProcess}Model(Instance.modelName);
-        Instance.store= Instance.entityExtStore.get${viewConfig.entityNameLogProcess}Store(Instance.modelName);
+        Instance.entityExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         
         Instance.createMainView();
     };

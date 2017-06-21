@@ -5,6 +5,14 @@ function ${entityName}ExtModel(){
     
     var Instance = this;
     
+    Instance.defineModel= function(modelName){
+        Ext.define(modelName, {
+            extend: 'Ext.data.Model',
+            fields: ${jsonModelLogProcess},
+            validations: ${jsonModelValidationsLogProcess}
+        });
+    };
+    
     <c:forEach var="processName" items="${nameProcesses}">
     Instance.define${processName.key}Model= function(modelName){
         Ext.define(modelName, {
@@ -14,14 +22,6 @@ function ${entityName}ExtModel(){
         });
     };
     </c:forEach>
-
-    Instance.define${viewConfig.entityNameLogProcess}Model= function(modelName){
-        Ext.define(modelName, {
-            extend: 'Ext.data.Model',
-            fields: ${jsonModelLogProcess},
-            validations: ${jsonModelValidationsLogProcess}
-        });
-    };
     
 }
 </script>
