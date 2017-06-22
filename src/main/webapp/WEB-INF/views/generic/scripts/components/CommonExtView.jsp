@@ -203,7 +203,7 @@ function CommonExtView(parentExtController, parentExtView, model){
     Instance.videoFileUploadRender= function(value, field) {
         if(value){
             return '<a id="linkFile" href="'+value+'" target="_blank">'+value+'</a>'+
-                   '<video width="528" height="297" controls>'+
+                   '<video style="width:528px;height:297px" controls>'+
                    '    <source src="'+value+'" type="video/'+value.split('.').pop()+'">'+
                    '    Your browser does not support the video tag.'+
                    '</video>';
@@ -215,7 +215,7 @@ function CommonExtView(parentExtController, parentExtView, model){
     Instance.audioFileUploadRender= function(value, field) {
         if(value){
             return '<a id="linkFile" href="'+value+'" target="_blank">'+value+'</a>'+
-                   '<audio width="500" src="'+value+'" preload="auto" controls>'+
+                   '<audio style="width:500px" src="'+value+'" preload="auto" controls>'+
                    '    Your browser does not support the video tag.'+
                    '</audio>';
         }else{

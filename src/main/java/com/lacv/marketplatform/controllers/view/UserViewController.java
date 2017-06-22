@@ -14,6 +14,7 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
+import com.lacv.marketplatform.dtos.process.CreatePasswordDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -48,6 +49,7 @@ public class UserViewController extends ExtViewController {
         view.setSingularEntityTitle("Usuario");
         view.setPluralEntityTitle("Usuarios");
         view.addChildExtView("userRole", UserRole.class, ViewConfig.TCV_N_N_MULTICHECK);
+        view.addProcessButton("processUser", "createPassword", "Crear Password", "username", CreatePasswordDto.class);
         view.setMultipartFormData(true);
         super.addControlMapping(view);
         
