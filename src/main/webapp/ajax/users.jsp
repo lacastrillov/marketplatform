@@ -1191,7 +1191,7 @@ function UserExtView(parentExtController, parentExtView){
             sortable: false,
             menuDisabled: true,
             items: [{
-                icon: 'http://www.iconsfind.com/wp-content/uploads/2015/12/20151201_565d89144f009.png',
+                icon: 'https://cdn3.iconfinder.com/data/icons/cosmo-color-player-1/40/button_minus_1-128.png',
                 tooltip: 'Delete Plant',
                 scope: this,
                 handler: function (grid, rowIndex, colIndex) {
@@ -1199,7 +1199,7 @@ function UserExtView(parentExtController, parentExtView){
                     alert("Delete Plant " + rec.get('id'));
                 }
             },'-',{
-                icon: 'http://findicons.com/files/icons/1676/primo/128/button_blue_stop.png',
+                icon: 'https://cdn4.iconfinder.com/data/icons/ui-3d-01-of-3/100/UI_2-128.png',
                 tooltip: 'Add Plant',
                 scope: this,
                 handler: function (grid, rowIndex, colIndex) {
@@ -1207,7 +1207,7 @@ function UserExtView(parentExtController, parentExtView){
                     alert("Add Plant " + rec.get('id'));
                 }
             },'-',{
-                icon: 'http://icons.iconarchive.com/icons/graphicloads/100-flat-2/128/inside-logout-icon.png',
+                icon: 'http://findicons.com/files/icons/1620/crystal_project/128/graphic_design.png',
                 tooltip: 'Change Plant',
                 scope: this,
                 handler: function (grid, rowIndex, colIndex) {
