@@ -108,7 +108,7 @@ public class MailingServiceImpl implements MailingService {
      */
     @Override
     public boolean sendMail(String mailTo, String text, String subject) {
-        boolean sent= false;
+        boolean sent;
         String from = userlabel + " <" + username + ">";
         MimeMultipart multipart = new MimeMultipart("related");
         BodyPart messageBodyPart = new MimeBodyPart();
