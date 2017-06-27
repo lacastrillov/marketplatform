@@ -27,6 +27,7 @@
     <context:component-scan base-package="com.lacv.marketplatform.mappers" />
     <context:component-scan base-package="com.lacv.marketplatform.util" />
     <context:component-scan base-package="com.dot.gcpbasedot.service.gcp" />
+    <context:component-scan base-package="com.dot.gcpbasedot.components" />
     
     <bean id="xmlMarshaller" class="com.dot.gcpbasedot.util.XMLMarshaller">
         <property name="marshaller" ref="castorMarshaller" />
