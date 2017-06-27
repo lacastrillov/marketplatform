@@ -15,7 +15,7 @@ function ${reportName}ExtController(parentExtView){
     
     // VIEWS **********************************************
     
-    Instance.reportExtView= new ${reportName}ExtView(Instance, null);
+    Instance.entityExtView= new ${reportName}ExtView(Instance, null);
     
     //*******************************************************
     
@@ -43,9 +43,9 @@ function ${reportName}ExtController(parentExtView){
         var id= util.getParameter(request,"id");
         
         if(activeTab!==""){
-            Instance.reportExtView.tabsContainer.setActiveTab(Number(activeTab));
+            Instance.entityExtView.tabsContainer.setActiveTab(Number(activeTab));
         }else{
-            Instance.reportExtView.tabsContainer.setActiveTab(0);
+            Instance.entityExtView.tabsContainer.setActiveTab(0);
         }
         
         if(filter!==""){
@@ -67,20 +67,20 @@ function ${reportName}ExtController(parentExtView){
     
     Instance.loadGridData= function(){
         if(!Instance.requireValueMap || Object.getOwnPropertyNames(Instance.filter.vm).length !== 0){
-            Instance.reportExtView.setFilterStore(JSON.stringify(Instance.filter));
-            Instance.reportExtView.reloadPageStore(1);
+            Instance.entityExtView.setFilterStore(JSON.stringify(Instance.filter));
+            Instance.entityExtView.reloadPageStore(1);
         }
     };
     
     Instance.loadFormData= function(id){
-        if(Instance.reportExtView.formContainer!==null){
-            var formComponent= Instance.reportExtView.formContainer.child('#form'+Instance.modelName);
+        if(Instance.entityExtView.formContainer!==null){
+            var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
             if(id!==""){
                 Instance.idEntitySelected= id;
                 var activeRecord= formComponent.getActiveRecord();
 
                 if(activeRecord===null){
-                    Instance.reportExtView.reportExtStore.load(id, function(data){
+                    Instance.entityExtView.entityExtStore.load(id, function(data){
                         var record= Ext.create(Instance.modelName);
                         record.data= data;
                         formComponent.setActiveRecord(record || null);
@@ -103,7 +103,7 @@ function ${reportName}ExtController(parentExtView){
     Instance.loadChildExtControllers= function(idEntitySelected){
         if(Instance.typeController==="Parent"){
             var jsonChildRefColumnNames= ${jsonChildRefColumnNames};
-            Instance.reportExtView.childExtControllers.forEach(function(childExtController) {
+            Instance.entityExtView.childExtControllers.forEach(function(childExtController) {
                 childExtController.filter= {"eq":{}};
                 childExtController.filter.eq[jsonChildRefColumnNames[childExtController.reportName]]= idEntitySelected;
                 childExtController.loadGridData();

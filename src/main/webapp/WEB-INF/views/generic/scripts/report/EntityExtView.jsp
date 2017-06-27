@@ -13,11 +13,11 @@ function ${reportName}ExtView(parentExtController, parentExtView){
     
     // MODELS **********************************************
     
-    Instance.reportExtModel= new ${reportName}ExtModel();
+    Instance.entityExtModel= new ${reportName}ExtModel();
     
     // STORES **********************************************
     
-    Instance.reportExtStore= new ${reportName}ExtStore();
+    Instance.entityExtStore= new ${reportName}ExtStore();
     
     // COMPONENTS *******************************************
     
@@ -29,12 +29,12 @@ function ${reportName}ExtView(parentExtController, parentExtView){
     Instance.init= function(){
         Instance.typeView= "${typeView}";
         Instance.pluralReportTitle= '${reportConfig.pluralReportTitle}';
-        Instance.reportExtModel.defineModel(Instance.modelName);
-        Instance.store= Instance.reportExtStore.getStore(Instance.modelName);
+        Instance.entityExtModel.defineModel(Instance.modelName);
+        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         <c:if test="${reportConfig.activeGridTemplate}">
         Instance.gridModelName= "${reportName}TemplateModel";
-        Instance.reportExtModel.defineTemplateModel(Instance.gridModelName);
-        Instance.gridStore= Instance.reportExtStore.getTemplateStore(Instance.gridModelName);
+        Instance.entityExtModel.defineTemplateModel(Instance.gridModelName);
+        Instance.gridStore= Instance.entityExtStore.getTemplateStore(Instance.gridModelName);
         </c:if>
         Instance.createMainView();
     };
@@ -104,15 +104,15 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         childExtControllers.forEach(function(childExtController) {
             var itemTab= {
                 xtype:'tabpanel',
-                title: childExtController.reportExtView.pluralReportTitle,
+                title: childExtController.entityExtView.pluralReportTitle,
                 plain:true,
                 activeTab: 0,
                 style: 'background-color:#dfe8f6; padding:10px;',
                 defaults: {bodyStyle: 'padding:15px', autoScroll:true},
                 items:[
-                    childExtController.reportExtView.gridContainer,
+                    childExtController.entityExtView.gridContainer,
 
-                    childExtController.reportExtView.formContainer
+                    childExtController.entityExtView.formContainer
 
                 ]
             };
@@ -555,7 +555,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         if(Instance.typeView==="Parent"){
         <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
             var ${childExtReport.value}ExtControllerVar= new ${childExtReport.value}ExtController(parentExtController, Instance);
-            ${childExtReport.value}ExtControllerVar.reportExtView.hideParentField("${reportConfig.childRefColumnNames[childExtReport.value]}");
+            ${childExtReport.value}ExtControllerVar.entityExtView.hideParentField("${reportConfig.childRefColumnNames[childExtReport.value]}");
             Instance.childExtControllers.push(${childExtReport.value}ExtControllerVar);
         </c:forEach>
         }

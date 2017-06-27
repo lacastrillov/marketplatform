@@ -9,13 +9,13 @@ function ${reportName}ViewportExtView(){
     
     var util= new Util();
     
-    Instance.reportExtController= new ${reportName}ExtController(Instance);
+    Instance.entityExtController= new ${reportName}ExtController(Instance);
     
     
     Instance.init= function(){
         var views = [];
         
-        views.push(Instance.reportExtController.reportExtView.getMainView());
+        views.push(Instance.entityExtController.entityExtView.getMainView());
 
         Instance.contentViews = {
              id: 'content-panel',
@@ -77,15 +77,15 @@ function ${reportName}ViewportExtView(){
                     text: 'Filtrar',
                     scope: this,
                     handler: function(){
-                        Instance.reportExtController.doFilter();
+                        Instance.entityExtController.doFilter();
                     }
                 },{
                     text: 'Limpiar Filtros',
                     scope: this,
                     handler: function(){
                         Instance.filters.getForm().reset();
-                        Instance.reportExtController.initFilter();
-                        Instance.reportExtController.doFilter();
+                        Instance.entityExtController.initFilter();
+                        Instance.entityExtController.doFilter();
                     }
                 }]
             }]

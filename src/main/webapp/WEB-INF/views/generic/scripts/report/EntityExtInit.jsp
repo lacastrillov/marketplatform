@@ -1,6 +1,6 @@
 <script>
 
-function ReportExtInit(){
+function EntityExtInit(){
     
     var Instance= this;
     
