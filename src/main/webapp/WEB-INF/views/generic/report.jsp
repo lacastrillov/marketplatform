@@ -91,7 +91,7 @@
             </sec:authorize>
         </div>
         <script type="text/javascript">
-            var navegadorExtInit= new ReportExtInit();
+            var navegadorExtInit= new EntityExtInit();
         </script>
     </body>
 </html>
