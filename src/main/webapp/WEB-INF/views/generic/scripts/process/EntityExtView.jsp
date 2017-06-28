@@ -101,14 +101,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     
     <c:forEach var="processName" items="${nameProcesses}">
-    function getFormContainer${processName.key}(modelName, store, childExtControllers){
+    function getFormContainer${processName.key}(modelName, store){
         var formFields= ${jsonFormFieldsMap[processName.key]};
 
-        var renderReplacements= [];
-
-        var additionalButtons= ${jsonInternalViewButtons};
-
-        Instance.defineWriterForm("${processName.key}Model", formFields, renderReplacements, additionalButtons, childExtControllers, Instance.typeView);
+        Instance.defineWriterForm("${processName.key}Model", formFields);
         
         var itemsForm= [{
             itemId: 'form${processName.key}Model',
@@ -172,7 +168,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         formComponent.setActiveRecord(record || null);
     };
     
-    Instance.defineWriterForm= function(modelName, fields, renderReplacements, additionalButtons){
+    Instance.defineWriterForm= function(modelName, fields){
         Ext.define('WriterForm'+modelName, {
             extend: 'Ext.form.Panel',
             alias: 'widget.writerform'+modelName,
@@ -196,11 +192,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     handler: this.onReset
                 },'|'];
                 </c:if>
-                if(additionalButtons){
-                    for(var i=0; i<additionalButtons.length; i++){
-                        buttons.push(additionalButtons[i]);
-                    }
-                }
                 Ext.apply(this, {
                     activeRecord: null,
                     //iconCls: 'icon-user',
@@ -247,48 +238,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             onReset: function(){
                 this.setActiveRecord(null);
                 this.getForm().reset();
-            },
-            
-            renderReplaceActiveRecord: function(record){
-                if(renderReplacements){
-                    for(var i=0; i<renderReplacements.length; i++){
-                        var renderReplace= renderReplacements[i];
-                        var replaceField= renderReplace.replace.field;
-                        var replaceAttribute= renderReplace.replace.attribute;
-                        var value="ND";
-                        
-                        if (typeof record.data[replaceField] === "object" && Object.getOwnPropertyNames(record.data[replaceField]).length === 0){
-                            value= "";
-                        }else if(replaceAttribute.indexOf(".")===-1){
-                            value= record.data[replaceField][replaceAttribute];
-                        }else{
-                            var niveles= replaceAttribute.split(".");
-                            try{
-                                switch(niveles.length){
-                                    case 2:
-                                        value= record.data[replaceField][niveles[0]][niveles[1]];
-                                        break;
-                                    case 3:
-                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]];
-                                        break;
-                                    case 4:
-                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]][niveles[3]];
-                                        break;
-                                    case 5:
-                                        value= record.data[replaceField][niveles[0]][niveles[1]][niveles[2]][niveles[3]][niveles[4]];
-                                        break;
-                                }
-                            }catch(err){
-                                console.log(err);
-                            }
-                            
-                        }
-                        if(typeof(value) !== 'undefined'){
-                            renderReplace.component.setValue(value);
-                        }
-                    }
-                }
-                return record;
             }
     
         });
@@ -573,38 +522,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     };
     </c:if>
     
-    function getPropertyGrid(){
-        var renderers= {
-            <c:forEach var="associatedER" items="${interfacesEntityRef}">
-                <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-            ${associatedEntityName}: function(entity){
-                var res = entity.split("__");
-                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
-            },
-            </c:forEach>
-        };
-        var pg= Ext.create('Ext.grid.property.Grid', {
-            id: 'propertyGrid${entityName}',
-            region: 'north',
-            hideHeaders: true,
-            resizable: true,
-            defaults: {
-                sortable: false
-            },
-            customRenderers: renderers,
-            listeners: {
-                'beforeedit':{
-                    fn:function(){
-                        return false;
-                    }
-                }
-            }
-        });
-        pg.getStore().sorters.items= [];
-        
-        return pg;
-    };
-    
     function ${labelField}EntityRender(value, p, record){
         if(record){
             if(Instance.typeView==="Parent"){
@@ -617,52 +534,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         }
     };
     
-    Instance.hideParentField= function(entityRef){
-        if(Instance.formContainer!==null){
-            var fieldsForm= Instance.formContainer.child('#form'+Instance.modelName).items.items;
-            fieldsForm.forEach(function(field) {
-                if(field.name===entityRef){
-                    field.hidden= true;
-                }
-            });
-        }
-        if(Instance.gridContainer!==null){
-            var columnsGrid= Instance.gridContainer.child('#grid'+Instance.modelName).columns;
-            columnsGrid.forEach(function(column) {
-                if(column.dataIndex===entityRef){
-                    column.hidden= true;
-                }
-            });
-        }
-    };
-    
     Instance.createMainView= function(){
-        <c:forEach var="associatedER" items="${interfacesEntityRef}">
-            <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-            <c:set var="associatedEntityTitle" value="${titledFieldsMap[associatedER]}"></c:set>
-        Instance.${associatedER}ExtInterfaces= new ${associatedEntityName}ExtInterfaces(parentExtController, Instance);
-        Instance.formCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('form', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.gridCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('grid', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.filterCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('filter', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.combobox${associatedEntityName}Render= Instance.${associatedER}ExtInterfaces.getComboboxRender('grid');
-        </c:forEach>
-            
-        <c:forEach var="entry" items="${viewConfig.comboboxChildDependent}">
-            <c:set var="parentEntityName" value="${fn:toUpperCase(fn:substring(entry.key, 0, 1))}${fn:substring(entry.key, 1,fn:length(entry.key))}"></c:set>
-            <c:forEach var="childEntityRef" items="${entry.value}">
-                <c:set var="childEntityName" value="${fn:toUpperCase(fn:substring(childEntityRef, 0, 1))}${fn:substring(childEntityRef, 1,fn:length(childEntityRef))}"></c:set>
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.filterCombobox${parentEntityName}.comboboxDependent.push(Instance.filterCombobox${childEntityName});
-            </c:forEach>
-        </c:forEach>
-        
-        Instance.childExtControllers= [];
-                
         Instance.formContainer= null;
         <c:if test="${viewConfig.visibleForm}">
         Instance.menuProcesses= getTreeMenuProcesses();
@@ -673,12 +545,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.store.gridContainer= Instance.gridContainer;
         Instance.filters= getFiltersPanel();
         </c:if>
-            
-        <c:if test="${viewConfig.activeNNMulticheckChild}">
-        Instance.checkboxGroupContainer= getCheckboxGroupContainer();
-        </c:if>
-        
-        Instance.propertyGrid= getPropertyGrid();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',
@@ -739,7 +605,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             frame: false,
             layout: 'border',
             items: [
-                //Instance.propertyGrid,
                 Instance.tabsContainer
             ]
         };
