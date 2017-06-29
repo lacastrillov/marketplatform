@@ -366,7 +366,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             initComponent: function(){
 
                 this.editing = Ext.create('Ext.grid.plugin.CellEditing');
-                
 
                 Ext.apply(this, {
                     //iconCls: 'icon-grid',
@@ -395,33 +394,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                                 {text: 'Renombrar', handler: function(){this.onRenameFile();}, scope: this},
                                 {text: 'Mover', handler: function(){this.onMoveFile();}, scope: this}]
                         },
-                        /*<c:if test="${viewConfig.visibleRemoveButtonInGrid}">
-                        {
-                            //iconCls: 'icon-delete',
-                            text: 'Eliminar',
-                            <c:if test="${not viewConfig.activeGridTemplate}">
-                            disabled: true,
-                            </c:if>
-                            itemId: 'delete',
-                            scope: this,
-                            handler: this.onDeleteClick
-                        },
-                        </c:if>
-                        {
-                            //iconCls: 'icon-delete',
-                            text: 'Crear Carpeta',
-                            itemId: 'createFolder',
-                            scope: this,
-                            handler: this.onCreateFolder
-                        },
-                        {
-                            //iconCls: 'icon-delete',
-                            text: 'Subir Archivo',
-                            itemId: 'uploadFile',
-                            scope: this,
-                            handler: this.onUploadFile
-                        },*/
-                        
                         <c:if test="${viewConfig.visibleExportButton}">
                         {
                             text: 'Exportar',
