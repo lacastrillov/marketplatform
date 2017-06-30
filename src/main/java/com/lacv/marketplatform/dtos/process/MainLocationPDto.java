@@ -38,6 +38,7 @@ public class MainLocationPDto {
     @Order(4)
     @Size(max=200)
     @TextField("Ml Location")
+    @TypeFormField(FieldType.GOOGLE_MAP)
     private String mlLocation;
     
     @Order(5)

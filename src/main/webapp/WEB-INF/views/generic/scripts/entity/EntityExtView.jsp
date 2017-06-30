@@ -597,7 +597,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             exportTo: function(type){
                 this.fireEvent('export', type);
             }
-            
+
         });
     };
     </c:if>
@@ -673,6 +673,92 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         pg.getStore().sorters.items= [];
         
         return pg;
+    };
+    
+    <c:forEach var="processButton" items="${viewConfig.processButtons}">
+    function getForm${processButton.processName}Process(){
+        
+        var processForm = Ext.create('Ext.form.Panel', {
+            itemId: 'form${processButton.processName}Process',
+            defaultType: 'textfield',
+            border: false,
+            bodyPadding: 15,
+            autoScroll: true,
+            fieldDefaults: {
+                minWidth: 300,
+                anchor: '100%',
+                labelAlign: 'right'
+            },
+
+            items: ${jsonFormFieldsProcessMap[processButton.processName]}
+        });
+
+        var win = Ext.create('Ext.window.Window', {
+            autoShow: false,
+            title: '${processButton.processTitle}',
+            closable: true,
+            closeAction: 'hide',
+            width: '50%',
+            height: 300,
+            minWidth: 300,
+            minHeight: 200,
+            layout: 'fit',
+            plain:true,
+            maximizable: true,
+            minimizable: true,
+            items: processForm,
+
+            buttons: [{
+                text: 'Ejecutar',
+                handler: function(){
+                    var jsonData= JSON.stringify(processForm.getForm().getValues());
+                    Instance.entityExtStore.doProcess('${processButton.mainProcessRef}', '${processButton.processName}', jsonData, function(responseText){
+                        Ext.MessageBox.alert('Status', responseText);
+                        win.hide();
+                    });
+                }
+            },{
+                text: 'Cancelar',
+                handler: function(){
+                    win.hide();
+                }
+            }],
+            listeners: {
+                "minimize": function (window, opts) {
+                    window.collapse();
+                    window.setWidth(150);
+                    window.alignTo(Ext.getBody(), 'bl-bl')
+                }
+            },
+            tools: [{
+                type: 'restore',
+                handler: function (evt, toolEl, owner, tool) {
+                    var window = owner.up('window');
+                    window.setWidth(600);
+                    window.setHeight(300);
+                    window.expand('', false);
+                    window.center();
+                }
+            }]
+        });
+        
+        return win;
+    }
+    </c:forEach>
+    
+    Instance.showProcessForm= function(processName, fieldToTransfer, fieldReceived, rowIndex){
+        var initData={};
+        if(rowIndex!==-1){
+            var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
+            initData[fieldReceived]=rec.get(fieldToTransfer);
+        }else{
+            var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
+            initData[fieldReceived]=formData[fieldToTransfer];
+        }
+        Instance.processForms[processName].show(null, function() {});
+        var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
+        processForm.getForm().reset();
+        processForm.getForm().setValues(initData);
     };
     
     function ${labelField}EntityRender(value, p, record){
@@ -756,6 +842,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         <c:if test="${viewConfig.activeNNMulticheckChild}">
         Instance.checkboxGroupContainer= getCheckboxGroupContainer();
         </c:if>
+        
+        Instance.processForms={};
+        <c:forEach var="processButton" items="${viewConfig.processButtons}">
+        Instance.processForms["${processButton.processName}"]= getForm${processButton.processName}Process();
+        </c:forEach>
         
         Instance.propertyGrid= getPropertyGrid();
 

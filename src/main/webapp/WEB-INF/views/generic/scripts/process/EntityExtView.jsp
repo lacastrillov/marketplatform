@@ -111,7 +111,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             xtype: 'writerform${processName.key}Model',
             title: '${processName.value}',
             border: false,
-            width: '100%',
+            width: '60%',
+            minWidth: 300,
             listeners: {
                 doProcess: function(form, data){
                     Instance.entityExtStore.doProcess('${processName.key}',JSON.stringify(data), parentExtController.formSavedResponse);
@@ -200,7 +201,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     bodyPadding: 15,
                     fieldDefaults: {
                         minWidth: 300,
-                        anchor: '50%',
+                        anchor: '100%',
                         labelAlign: 'right'
                     },
                     items: fields,

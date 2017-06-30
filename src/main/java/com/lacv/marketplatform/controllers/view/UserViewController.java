@@ -13,8 +13,10 @@ import com.lacv.marketplatform.services.UserService;
 import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
+import com.dot.gcpbasedot.dto.ProcessButton;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.dtos.process.CreatePasswordDto;
+import com.lacv.marketplatform.dtos.process.MainLocationPDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,8 +51,20 @@ public class UserViewController extends ExtViewController {
         view.setSingularEntityTitle("Usuario");
         view.setPluralEntityTitle("Usuarios");
         view.addChildExtView("userRole", UserRole.class, ViewConfig.TCV_N_N_MULTICHECK);
-        view.addProcessButton("processUser", "createPassword", "Crear Password", "username", CreatePasswordDto.class);
         view.setMultipartFormData(true);
+        
+        view.addProcessButton("processUser", "createPassword", "Crear Password", "username", "username", CreatePasswordDto.class);
+        
+        ProcessButton mainLocationButton= new ProcessButton();
+        mainLocationButton.setMainProcessRef("processMainLocation");
+        mainLocationButton.setProcessName("crearMainLocation");
+        mainLocationButton.setProcessTitle("Crear Main Location");
+        mainLocationButton.setFieldToTransfer("email");
+        mainLocationButton.setFieldReceived("usuario.correo");
+        mainLocationButton.setDtoClass(MainLocationPDto.class);
+        mainLocationButton.setIconUrl("http://localhost/recursos/imagenes/icons/ml-process.png");
+        view.addProcessButton(mainLocationButton);
+        
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Seguridad", "user", "Gestionar Usuarios");
