@@ -35,6 +35,11 @@ public class UsuarioPDto {
     private Date fechaRegistro;
     
     @Order(5)
+    @TextField("Estado")
+    @TypeFormField(value = FieldType.LIST, data = {"Active", "Inactive", "Locked", "Deleted"})
+    private String estado;
+    
+    @Order(6)
     private RolPDto rol;
 
     /**
@@ -91,6 +96,22 @@ public class UsuarioPDto {
      */
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    /**
+     * 
+     * @return estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * 
+     * @param estado 
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     /**

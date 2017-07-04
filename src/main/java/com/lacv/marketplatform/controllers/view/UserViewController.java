@@ -53,16 +53,24 @@ public class UserViewController extends ExtViewController {
         view.addChildExtView("userRole", UserRole.class, ViewConfig.TCV_N_N_MULTICHECK);
         view.setMultipartFormData(true);
         
-        view.addProcessButton("processUser", "createPassword", "Crear Password", "username", "username", CreatePasswordDto.class);
+        ProcessButton setPasswordButton= new ProcessButton();
+        setPasswordButton.setMainProcessRef("processUser");
+        setPasswordButton.setProcessName("createPassword");
+        setPasswordButton.setProcessTitle("Crear Password");
+        setPasswordButton.addSourceByDestinationField("username", "username");
+        setPasswordButton.setDtoClass(CreatePasswordDto.class);
+        setPasswordButton.setIconUrl("/img/process_icons/password.png");
+        view.addProcessButton(setPasswordButton);
         
         ProcessButton mainLocationButton= new ProcessButton();
         mainLocationButton.setMainProcessRef("processMainLocation");
         mainLocationButton.setProcessName("crearMainLocation");
         mainLocationButton.setProcessTitle("Crear Main Location");
-        mainLocationButton.setFieldToTransfer("email");
-        mainLocationButton.setFieldReceived("usuario.correo");
+        mainLocationButton.addSourceByDestinationField("email", "usuario.correo");
+        mainLocationButton.addSourceByDestinationField("name", "usuario.nombre");
+        mainLocationButton.addSourceByDestinationField("status", "usuario.estado");
         mainLocationButton.setDtoClass(MainLocationPDto.class);
-        mainLocationButton.setIconUrl("http://localhost/recursos/imagenes/icons/ml-process.png");
+        mainLocationButton.setIconUrl("/img/process_icons/ml-process.png");
         view.addProcessButton(mainLocationButton);
         
         super.addControlMapping(view);

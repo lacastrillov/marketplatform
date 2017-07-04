@@ -746,14 +746,22 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     </c:forEach>
     
-    Instance.showProcessForm= function(processName, fieldToTransfer, fieldReceived, rowIndex){
+    Instance.showProcessForm= function(processName, sourceByDestinationFields, rowIndex){
         var initData={};
         if(rowIndex!==-1){
             var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
-            initData[fieldReceived]=rec.get(fieldToTransfer);
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=rec.get(source);
+            }
+            
         }else{
             var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
-            initData[fieldReceived]=formData[fieldToTransfer];
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=formData[source];
+            }
+            
         }
         Instance.processForms[processName].show(null, function() {});
         var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
