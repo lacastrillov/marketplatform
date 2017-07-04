@@ -63,7 +63,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
 
         var renderReplacements= [];
 
-        var additionalButtons= [];
+        var additionalButtons= ${jsonInternalViewButtons};
 
         Instance.defineWriterForm(Instance.modelName, formFields, renderReplacements, additionalButtons, childExtControllers, Instance.typeView);
         
@@ -519,6 +519,100 @@ function ${reportName}ExtView(parentExtController, parentExtView){
         });
     };
     
+    <c:forEach var="processButton" items="${reportConfig.processButtons}">
+    function getForm${processButton.processName}Process(){
+        
+        var processForm = Ext.create('Ext.form.Panel', {
+            itemId: 'form${processButton.processName}Process',
+            defaultType: 'textfield',
+            border: false,
+            bodyPadding: 15,
+            autoScroll: true,
+            fieldDefaults: {
+                minWidth: 300,
+                anchor: '100%',
+                labelAlign: 'right'
+            },
+
+            items: ${jsonFormFieldsProcessMap[processButton.processName]}
+        });
+
+        var win = Ext.create('Ext.window.Window', {
+            autoShow: false,
+            title: '${processButton.processTitle}',
+            closable: true,
+            closeAction: 'hide',
+            width: '50%',
+            height: 300,
+            minWidth: 300,
+            minHeight: 200,
+            layout: 'fit',
+            plain:true,
+            maximizable: true,
+            minimizable: true,
+            items: processForm,
+
+            buttons: [{
+                text: 'Ejecutar',
+                handler: function(){
+                    var jsonData= JSON.stringify(processForm.getForm().getValues());
+                    Instance.entityExtStore.doProcess('${processButton.mainProcessRef}', '${processButton.processName}', jsonData, function(responseText){
+                        Ext.MessageBox.alert('Status', responseText);
+                        win.hide();
+                    });
+                }
+            },{
+                text: 'Cancelar',
+                handler: function(){
+                    win.hide();
+                }
+            }],
+            listeners: {
+                "minimize": function (window, opts) {
+                    window.collapse();
+                    window.setWidth(150);
+                    window.alignTo(Ext.getBody(), 'bl-bl')
+                }
+            },
+            tools: [{
+                type: 'restore',
+                handler: function (evt, toolEl, owner, tool) {
+                    var window = owner.up('window');
+                    window.setWidth(600);
+                    window.setHeight(300);
+                    window.expand('', false);
+                    window.center();
+                }
+            }]
+        });
+        
+        return win;
+    }
+    </c:forEach>
+    
+    Instance.showProcessForm= function(processName, sourceByDestinationFields, rowIndex){
+        var initData={};
+        if(rowIndex!==-1){
+            var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=rec.get(source);
+            }
+            
+        }else{
+            var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=formData[source];
+            }
+            
+        }
+        Instance.processForms[processName].show(null, function() {});
+        var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
+        processForm.getForm().reset();
+        processForm.getForm().setValues(initData);
+    };
+    
     function ${reportConfig.idColumnName}EntityRender(value, p, record){
         if(record){
             if(Instance.typeView==="Parent"){
@@ -572,6 +666,11 @@ function ${reportName}ExtView(parentExtController, parentExtView){
             
         Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, Instance.formContainer);
         Instance.store.gridContainer= Instance.gridContainer;
+        
+        Instance.processForms={};
+        <c:forEach var="processButton" items="${reportConfig.processButtons}">
+        Instance.processForms["${processButton.processName}"]= getForm${processButton.processName}Process();
+        </c:forEach>
         
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',

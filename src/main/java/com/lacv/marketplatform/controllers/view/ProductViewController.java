@@ -12,10 +12,12 @@ import com.dot.gcpbasedot.controller.ExtViewController;
 import com.dot.gcpbasedot.controller.MenuComponent;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.dto.MenuItem;
+import com.dot.gcpbasedot.dto.ProcessButton;
 import com.dot.gcpbasedot.dto.ReportConfig;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.dot.gcpbasedot.util.FilterQueryJSON;
+import com.lacv.marketplatform.dtos.process.ActivationProductPDto;
 import com.lacv.marketplatform.dtos.reports.ProductReportDto;
 import com.lacv.marketplatform.entities.Product;
 import com.lacv.marketplatform.entities.ProductImage;
@@ -80,6 +82,18 @@ public class ProductViewController extends ExtViewController {
         report.setMaxResultsPerPage(100L);
         report.setDefaultOrderBy("id");
         report.setDefaultOrderDir("DESC");
+        
+        ProcessButton setPasswordButton= new ProcessButton();
+        setPasswordButton.setMainProcessRef("processProduct");
+        setPasswordButton.setProcessName("activarProducto");
+        setPasswordButton.setProcessTitle("Activar Producto");
+        setPasswordButton.addSourceByDestinationField("id", "productId");
+        setPasswordButton.addSourceByDestinationField("code", "productCode");
+        setPasswordButton.addSourceByDestinationField("brand", "brand");
+        setPasswordButton.addSourceByDestinationField("registerDate", "registerDate");
+        setPasswordButton.setDtoClass(ActivationProductPDto.class);
+        report.addProcessButton(setPasswordButton);
+        
         super.addReportMapping(report);
         
         MenuItem menuItem2 = new MenuItem("Productos", "product", "Reporte de Productos");

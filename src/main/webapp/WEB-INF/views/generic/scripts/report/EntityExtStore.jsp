@@ -150,6 +150,35 @@ function ${reportName}ExtStore(){
         });
     };
     
+    Instance.doProcess= function(mainProcessRef, processName, data, func){
+        Ext.MessageBox.show({
+            msg: 'Ejecutando...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/"+mainProcessRef+"/doProcess.htm",
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
+            success: function(response){
+                Ext.MessageBox.hide();
+                func(response.responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
+            }
+        });
+    };
+    
     function showErrorMessage(errorMsg){
         Ext.MessageBox.show({
             title: 'REMOTE EXCEPTION',
