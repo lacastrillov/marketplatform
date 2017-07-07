@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administracion MERCANDO</title>
+        <title>${viewConfig.pluralEntityTitle} - Administracion MERCANDO</title>
         <link rel="icon" type="image/icon" href="/img/favicon.png" /> 
         
         <script type="text/javascript">
