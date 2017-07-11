@@ -33,7 +33,7 @@ public class PropertyDto implements BaseEntity {
     private String value;
     
     @TextField("Tipo")
-    @TypeFormField(value=FieldType.LIST, data={"String","Number","Date","Boolean","Character"})
+    @TypeFormField(value=FieldType.LIST, data={"String","Number","Date","Time","Boolean","Character"})
     private String type;
     
     @TextField("Estado")

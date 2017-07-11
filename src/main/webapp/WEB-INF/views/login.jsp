@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Mercando | Iniciar Sesion</title>
+        <title>Iniciar Sesion - Mercando</title>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/web/usuario/AutenticacionUsuario.js"></script>
         
         <script>

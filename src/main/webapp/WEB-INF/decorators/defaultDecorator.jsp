@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/icon" href="/img/favicon.png" />
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Mercando</title>
+        <title><sitemesh:write property='title'>Mercando</sitemesh:write></title>
 
         <script type="text/javascript" src="/js/libs/jquery/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src="/js/util/Util.js"></script>
