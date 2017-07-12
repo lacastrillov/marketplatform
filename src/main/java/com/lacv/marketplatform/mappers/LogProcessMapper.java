@@ -29,6 +29,7 @@ public class LogProcessMapper implements BasicEntityMapper {
             dto.setClientId(entity.getClientId());
             dto.setDataIn(entity.getDataIn());
             dto.setDataOut(entity.getDataOut());
+            dto.setOutputDataFormat(entity.getOutputDataFormat());
             dto.setDuration(entity.getDuration());
             dto.setMainProcessRef(entity.getMainProcessRef());
             dto.setMessage(entity.getMessage());

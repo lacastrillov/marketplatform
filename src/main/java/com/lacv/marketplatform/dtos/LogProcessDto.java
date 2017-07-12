@@ -9,7 +9,9 @@ import com.dot.gcpbasedot.annotation.ColumnWidth;
 import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.TextField;
+import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
+import com.dot.gcpbasedot.enums.FieldType;
 import com.dot.gcpbasedot.enums.HideView;
 import java.sql.Time;
 import java.util.Date;
@@ -44,21 +46,26 @@ public class LogProcessDto implements BaseEntity {
     private String dataOut;
     
     @Order(6)
+    @TextField("Output Data Format")
+    @TypeFormField(value = FieldType.LIST, data = {"JSON", "XML", "HTML", "PLAIN"})
+    private String outputDataFormat;
+    
+    @Order(7)
     @TextField("Registration Date")
     private Date registrationDate;
     
-    @Order(7)
+    @Order(8)
     @TextField("Record Time")
     private Time recordTime;
     
-    @Order(8)
+    @Order(9)
     @TextField("Duration mls")
     private Integer duration;
     
-    @Order(9)
+    @Order(10)
     private Boolean success;
     
-    @Order(10)
+    @Order(11)
     private String message;
     
     @TextField("Client Id")
@@ -118,6 +125,14 @@ public class LogProcessDto implements BaseEntity {
 
     public void setDataOut(String dataOut) {
         this.dataOut = dataOut;
+    }
+    
+    public String getOutputDataFormat() {
+        return outputDataFormat;
+    }
+
+    public void setOutputDataFormat(String outputDataFormat) {
+        this.outputDataFormat = outputDataFormat;
     }
 
     public Date getRegistrationDate() {

@@ -54,6 +54,7 @@ public class ExternalServiceProcessController extends RestController {
         super.enableExternalService(service2);
         
         ExternalServiceDto service3= new ExternalServiceDto("noticiasCarroya", "http://www.carroya.com/noticias/", HttpMethod.POST, BasicPDto.class);
+        service3.setResponseDataFormat(ExternalServiceDto.HTML);
         super.enableExternalService(service3);
         
         ExternalServiceDto service4= new ExternalServiceDto("estaInBody", "http://localhost:8084/tempprocess/ajax/inbody", HttpMethod.POST, UsuarioPDto.class);

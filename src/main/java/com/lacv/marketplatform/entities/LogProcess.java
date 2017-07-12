@@ -50,6 +50,8 @@ public class LogProcess implements LogProcesInterface {
     @Lob
     @Column(name = "data_out")
     private String dataOut;
+    @Column(name = "output_data_format")
+    private String outputDataFormat;
     @Column(name = "registration_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
@@ -127,6 +129,16 @@ public class LogProcess implements LogProcesInterface {
     @Override
     public void setDataOut(String dataOut) {
         this.dataOut = dataOut;
+    }
+
+    @Override
+    public String getOutputDataFormat() {
+        return outputDataFormat;
+    }
+
+    @Override
+    public void setOutputDataFormat(String outputDataFormat) {
+        this.outputDataFormat = outputDataFormat;
     }
 
     @Override

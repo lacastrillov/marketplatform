@@ -91,28 +91,29 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                 formComponent.setActiveRecord(record);
                 
                 //Populate tree result
-                try{
-                    var rootMenu= util.objectToJSONMenu(JSON.parse(data.dataOut), true);
-                    var treePanel = Ext.getCmp('tree-result-'+data.processName);
-                    treePanel.getStore().setRootNode(rootMenu);
-                }catch(e){
-                    var divPanel = Ext.getCmp('div-result-'+data.processName);
-                    divPanel.update('<textarea readonly style="width:100%; height:400px; white-space: pre !important;">' + data.dataOut+ '</textarea>');
-                }
+                Instance.formSavedResponse(data.processName, data.dataOut, data.outputDataFormat);
             });
         }
     };
     
-    Instance.formSavedResponse= function(processName, responseText){
-        try{
-            var responseObject= Ext.decode(responseText);
-            var rootMenu= util.objectToJSONMenu(responseObject, true);
+    Instance.formSavedResponse= function(processName, dataOut, outputDataFormat){
+        if(outputDataFormat==='JSON'){
+            var rootMenu= util.objectToJSONMenu(JSON.parse(dataOut), true);
             var treePanel = Ext.getCmp('tree-result-'+processName);
             treePanel.getStore().setRootNode(rootMenu);
-            Ext.MessageBox.alert('Status', responseText);
-        }catch(e){
+        }else if(outputDataFormat==='HTML'){
             var divPanel = Ext.getCmp('div-result-'+processName);
-            divPanel.update('<textarea readonly style="width:100%; height:400px; white-space: pre !important;">' + responseText + '</textarea>');
+            divPanel.update('<div style="width:99%; height:400px; overflow:auto;">'+ dataOut + '</div>');
+        }else{
+            var divPanel = Ext.getCmp('div-result-'+processName);
+            var textDataOut= dataOut;
+            var textStyle='';
+            if(outputDataFormat==='XML'){
+                textDataOut= vkbeautify.xml(dataOut);
+                textStyle= 'color:blue;';
+            }
+            divPanel.update('<textarea readonly style="width:99%; height:400px; white-space: pre !important; '+textStyle+'">'
+                            + textDataOut + '</textarea>');
         }
     };
     
