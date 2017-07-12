@@ -29,12 +29,6 @@
     <context:component-scan base-package="com.dot.gcpbasedot.service.gcp" />
     <context:component-scan base-package="com.dot.gcpbasedot.components" />
     
-    <bean id="xmlMarshaller" class="com.dot.gcpbasedot.util.XMLMarshaller">
-        <property name="marshaller" ref="castorMarshaller" />
-        <property name="unmarshaller" ref="castorMarshaller" />
-    </bean>
-    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
-    
     <bean id="menuComponent" class="com.dot.gcpbasedot.controller.MenuComponent">
         <property name="basePath" value="/vista" />
     </bean>
