@@ -21,7 +21,7 @@ public class ResultListUsers {
 
     private String message;
 
-    private List<UserDto> data;
+    private List<UserDto> users;
 
     private Long totalCount;
 
@@ -54,17 +54,17 @@ public class ResultListUsers {
     }
 
     /**
-     * @return the data
+     * @return the users
      */
-    public List<UserDto> getData() {
-        return data;
+    public List<UserDto> getUsers() {
+        return users;
     }
 
     /**
-     * @param data the data to set
+     * @param users the users to set
      */
-    public void setData(List<UserDto> data) {
-        this.data = data;
+    public void setUsers(List<UserDto> users) {
+        this.users = users;
     }
 
     /**
@@ -82,39 +82,25 @@ public class ResultListUsers {
     }
     
     public static void main(String[] args) {
-        String tmp1="<ROOT><data><birthday>23/04/2003</birthday><passwordExpiration>23/04/2022</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/4_1239698382-img.gal11858.jpeg</urlPhoto><password>sNrcn449MAilNJHAM0OaNg==</password><name>Elsy Arias</name><id>4</id><email>elsyarias@yopmail.com</email><username>elsari</username><status>Inactive</status></data><data><birthday>28/11/1988</birthday><lastLogin>23/05/2017</lastLogin><passwordExpiration>23/04/2022</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/3_20160325_143241.jpg</urlPhoto><password>zGSrMyQutqYN+u9doClXzw==</password><name>Erika Castellanos</name><id>3</id><email>castell.erika@gmail.com</email><username>ericas</username><status>Active</status></data><data><birthday>19/11/2007</birthday><lastLogin>13/06/2017</lastLogin><passwordExpiration>29/07/2017</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/2_19C.jpg</urlPhoto><password>zbvufU9QU9AlIWDV6sOSiQ==</password><name>Laura Camila</name><id>2</id><email>laucastrillo@yopmail.com</email><username>laucas</username><status>Active</status></data><data><lastLogin>11/07/2017</lastLogin><gender>M</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><tokenUser/><urlPhoto>http://localhost/recursos/imagenes/usuario/1_10391534.jpg</urlPhoto><password>6ABEgsah4gtG4nBmzHfGCw==</password><name>Luis Castrillo</name><id>1</id><email>lacastrillov@gmail.com</email><username>lcastrillo</username><status>Active</status></data><success>true</success><message>Busqueda de user realizada...</message><totalCount>4</totalCount></ROOT>";
-        String tmp2="<data xsi:type=\"java:com.lacv.marketplatform.dtos.RoleDto\"><priority-check>3</priority-check><name>Agente</name><description>Agente de una Empresa</description><homePage>/vista/purchaseOrder/table.htm</homePage><id xsi:type=\"java:java.lang.Integer\">4</id></data><data xsi:type=\"java:com.lacv.marketplatform.dtos.RoleDto\"><priority-check>2</priority-check><name>Empleado</name><description>Empleado de Mercando</description><homePage>/vista/inventoryOrder/table.htm</homePage><id xsi:type=\"java:java.lang.Integer\">3</id></data><data xsi:type=\"java:com.lacv.marketplatform.dtos.RoleDto\"><priority-check>4</priority-check><name>Cliente</name><description>Cliente de los servicios</description><homePage>/vista/product/table.htm</homePage><id xsi:type=\"java:java.lang.Integer\">2</id></data><data xsi:type=\"java:com.lacv.marketplatform.dtos.RoleDto\"><priority-check>1</priority-check><name>Administrador</name><description>Usuario Administrador del Sistema</description><homePage>/vista/user/table.htm</homePage><id xsi:type=\"java:java.lang.Integer\">1</id></data>";
-        String tmp3="{'success':true,'message':'Busqueda de user realizada...','data':[{'id':4,'name':'Elsy Arias','email':'elsyarias@yopmail.com','username':'elsari','password':'sNrcn449MAilNJHAM0OaNg\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/4_1239698382-img.gal11858.jpeg','birthday':'23/04/2003','status':'Inactive','verified':true,'failedAttempts':0,'passwordExpiration':'23/04/2022'},{'id':3,'name':'Erika Castellanos','email':'castell.erika@gmail.com','username':'ericas','password':'zGSrMyQutqYN+u9doClXzw\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/3_20160325_143241.jpg','birthday':'28/11/1988','status':'Active','verified':true,'failedAttempts':0,'passwordExpiration':'23/04/2022','lastLogin':'23/05/2017'},{'id':2,'name':'Laura Camila','email':'laucastrillo@yopmail.com','username':'laucas','password':'zbvufU9QU9AlIWDV6sOSiQ\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/2_19C.jpg','birthday':'19/11/2007','status':'Active','verified':true,'failedAttempts':0,'passwordExpiration':'29/07/2017','lastLogin':'13/06/2017'},{'id':1,'name':'Luis Castrillo','email':'lacastrillov@gmail.com','username':'lcastrillo','password':'6ABEgsah4gtG4nBmzHfGCw\\u003d\\u003d','gender':'M','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/1_10391534.jpg','tokenUser':'','status':'Active','verified':true,'failedAttempts':0,'lastLogin':'11/07/2017'}],'totalCount':4}";
-        String tmp4="[{'id':4,'name':'Elsy Arias','email':'elsyarias@yopmail.com','username':'elsari','password':'sNrcn449MAilNJHAM0OaNg\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/4_1239698382-img.gal11858.jpeg','birthday':'23/04/2003','status':'Inactive','verified':true,'failedAttempts':0,'passwordExpiration':'23/04/2022'},{'id':3,'name':'Erika Castellanos','email':'castell.erika@gmail.com','username':'ericas','password':'zGSrMyQutqYN+u9doClXzw\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/3_20160325_143241.jpg','birthday':'28/11/1988','status':'Active','verified':true,'failedAttempts':0,'passwordExpiration':'23/04/2022','lastLogin':'23/05/2017'},{'id':2,'name':'Laura Camila','email':'laucastrillo@yopmail.com','username':'laucas','password':'zbvufU9QU9AlIWDV6sOSiQ\\u003d\\u003d','gender':'F','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/2_19C.jpg','birthday':'19/11/2007','status':'Active','verified':true,'failedAttempts':0,'passwordExpiration':'29/07/2017','lastLogin':'13/06/2017'},{'id':1,'name':'Luis Castrillo','email':'lacastrillov@gmail.com','username':'lcastrillo','password':'6ABEgsah4gtG4nBmzHfGCw\\u003d\\u003d','gender':'M','link':'','urlPhoto':'http://localhost/recursos/imagenes/usuario/1_10391534.jpg','tokenUser':'','status':'Active','verified':true,'failedAttempts':0,'lastLogin':'11/07/2017'}]";
+        String tmp1="<ResultListCallback><users><birthday>23/04/2003</birthday><passwordExpiration>23/04/2022</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/4_1239698382-img.gal11858.jpeg</urlPhoto><password>sNrcn449MAilNJHAM0OaNg==</password><name>Elsy Arias</name><id>4</id><email>elsyarias@yopmail.com</email><username>elsari</username><status>Inactive</status></users><users><birthday>28/11/1988</birthday><lastLogin>23/05/2017</lastLogin><passwordExpiration>23/04/2022</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/3_20160325_143241.jpg</urlPhoto><password>zGSrMyQutqYN+u9doClXzw==</password><name>Erika Castellanos</name><id>3</id><email>castell.erika@gmail.com</email><username>ericas</username><status>Active</status></users><users><birthday>19/11/2007</birthday><lastLogin>13/06/2017</lastLogin><passwordExpiration>29/07/2017</passwordExpiration><gender>F</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><urlPhoto>http://localhost/recursos/imagenes/usuario/2_19C.jpg</urlPhoto><password>zbvufU9QU9AlIWDV6sOSiQ==</password><name>Laura Camila</name><id>2</id><email>laucastrillo@yopmail.com</email><username>laucas</username><status>Active</status></users><users><lastLogin>11/07/2017</lastLogin><gender>M</gender><failedAttempts>0</failedAttempts><link/><verified>true</verified><tokenUser/><urlPhoto>http://localhost/recursos/imagenes/usuario/1_10391534.jpg</urlPhoto><password>6ABEgsah4gtG4nBmzHfGCw==</password><name>Luis Castrillo</name><id>1</id><email>lacastrillov@gmail.com</email><username>lcastrillo</username><status>Active</status></users><success>true</success><message>Busqueda de user realizada...</message><totalCount>4</totalCount></ResultListCallback>";
+        String tmp2="<UserDto><birthday>23/04/2003</birthday><status>Inactive</status><link/><urlPhoto>http://localhost/recursos/imagenes/usuario/4_1239698382-img.gal11858.jpeg</urlPhoto><passwordExpiration>23/04/2022</passwordExpiration><password>sNrcn449MAilNJHAM0OaNg==</password><id>4</id><username>elsari</username><email>elsyarias@yopmail.com</email><failedAttempts>0</failedAttempts><verified>true</verified><name>Elsy Arias</name><gender>F</gender></UserDto><UserDto><birthday>28/11/1988</birthday><status>Active</status><link/><urlPhoto>http://localhost/recursos/imagenes/usuario/3_20160325_143241.jpg</urlPhoto><passwordExpiration>23/04/2022</passwordExpiration><password>zGSrMyQutqYN+u9doClXzw==</password><id>3</id><lastLogin>23/05/2017</lastLogin><username>ericas</username><email>castell.erika@gmail.com</email><failedAttempts>0</failedAttempts><verified>true</verified><name>Erika Castellanos</name><gender>F</gender></UserDto><UserDto><birthday>19/11/2007</birthday><status>Active</status><link/><urlPhoto>http://localhost/recursos/imagenes/usuario/2_19C.jpg</urlPhoto><passwordExpiration>29/07/2017</passwordExpiration><password>zbvufU9QU9AlIWDV6sOSiQ==</password><id>2</id><lastLogin>13/06/2017</lastLogin><username>laucas</username><email>laucastrillo@yopmail.com</email><failedAttempts>0</failedAttempts><verified>true</verified><name>Laura Camila</name><gender>F</gender></UserDto><UserDto><tokenUser/><status>Active</status><link/><urlPhoto>http://localhost/recursos/imagenes/usuario/1_10391534.jpg</urlPhoto><password>6ABEgsah4gtG4nBmzHfGCw==</password><id>1</id><lastLogin>11/07/2017</lastLogin><username>lcastrillo</username><email>lacastrillov@gmail.com</email><failedAttempts>0</failedAttempts><verified>true</verified><name>Luis Castrillo</name><gender>M</gender></UserDto>";
         
-        //Object
-        System.out.println("\nOBJECT");
+        System.out.println("\n XML to Object");
         ResultListUsers obj = (ResultListUsers) XMLMarshaller.convertXMLToObject(tmp1, ResultListUsers.class);
         System.out.println(Util.objectToJson(obj));
         
+        System.out.println("\n XML to LIST");
+        List<UserDto> users= XMLMarshaller.convertXMLToList(tmp2, UserDto.class);
+        System.out.println(Util.objectToJson(users));
+        
+        System.out.println("\n Object to XML");
         String xml= XMLMarshaller.convertObjectToXML(obj);
         System.out.println(xml);
         
-        //List
-        System.out.println("\nLIST");
-        //List<RoleDto> ciudades= XMLMarshaller.convertXMLToList(tmp2, RoleDto.class);
-        //System.out.println(Util.objectToJson(ciudades));
+        System.out.println("\n LIST to XML");
+        String xml2= XMLMarshaller.convertObjectToXML(users);
+        System.out.println(xml2);
         
-        
-        System.out.println("\nXML");
-        /*try {
-            XMLMarshaller.convertObjectToXMLFile(obj, "/home/lacastrillov/callback.xml");
-            ResultListUsers obj2= (ResultListUsers) XMLMarshaller.convertXMLFileToObject("/home/lacastrillov/callback.xml", ResultListUsers.class);
-            System.out.println(Util.objectToJson(obj2));
-        } catch (IOException ex) {
-            Logger.getLogger(ResultListUsers.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        
-        //String xml= XMLMarshaller.convertJSONToXML(tmp4);
-        //System.out.println(xml);
-        
-        //List<UserDto> users= XMLMarshaller.convertXMLToList(xml, UserDto.class);
-        //System.out.println(Util.objectToJson(users));
     }
 
 }
