@@ -27,6 +27,9 @@
     <class>com.lacv.marketplatform.entities.WebresourceAuthorization</class>
     <class>com.lacv.marketplatform.entities.WebResource</class>
     <class>com.lacv.marketplatform.entities.WebresourceRole</class>
+    <class>com.lacv.marketplatform.entities.LeadTable</class>
+    <class>com.lacv.marketplatform.entities.Column</class>
+    <class>com.lacv.marketplatform.entities.TableColumn</class>
     <properties>
       <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="wildfly.jpa.default-unit" value="true"/>

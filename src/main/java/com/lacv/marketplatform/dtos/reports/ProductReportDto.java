@@ -36,15 +36,15 @@ public class ProductReportDto {
     
     @Order(6)
     @TextField("Cantidad por unidad")
-    private String quantityPerUnit;
+    private String quantity_per_unit;
     
     @Order(7)
     @TextField("Precio Segerido")
-    private Integer seggestedUnitPrice;
+    private Integer seggested_unit_price;
     
     @Order(8)
     @TextField("Precio Unitario")
-    private Integer buyUnitPrice;
+    private Integer buy_unit_price;
     
     @Order(9)
     @TextField("Descuento")
@@ -52,15 +52,15 @@ public class ProductReportDto {
     
     @Order(10)
     @TextField("Unidades en Stock")
-    private Integer unitsInStock;
+    private Integer units_in_stock;
     
     @Order(11)
     @TextField("Unidades en Ordenes")
-    private Integer unitsInOrder;
+    private Integer units_in_order;
     
     @Order(12)
     @TextField("Fecha Registro")
-    private Date registerDate;
+    private Date register_date;
     
     @Order(13)
     @TextField("Palabras clave")
@@ -68,7 +68,7 @@ public class ProductReportDto {
     
     @Order(14)
     @TextField("Orden")
-    private Integer orderLevel;
+    private Integer order_level;
     
     @Order(15)
     @TextField("Descripci&oacute;n")
@@ -89,7 +89,7 @@ public class ProductReportDto {
     
     @Order(19)
     @TextField("Sub Categor&iacute;a")
-    private String subCategory;
+    private String subcategory;
     
     @Order(20)
     @TextField("Proveedor")
@@ -156,45 +156,45 @@ public class ProductReportDto {
     }
 
     /**
-     * @return the quantityPerUnit
+     * @return the quantity_per_unit
      */
-    public String getQuantityPerUnit() {
-        return quantityPerUnit;
+    public String getQuantity_per_unit() {
+        return quantity_per_unit;
     }
 
     /**
-     * @param quantityPerUnit the quantityPerUnit to set
+     * @param quantity_per_unit the quantity_per_unit to set
      */
-    public void setQuantityPerUnit(String quantityPerUnit) {
-        this.quantityPerUnit = quantityPerUnit;
+    public void setQuantity_per_unit(String quantity_per_unit) {
+        this.quantity_per_unit = quantity_per_unit;
     }
 
     /**
-     * @return the seggestedUnitPrice
+     * @return the seggested_unit_price
      */
-    public Integer getSeggestedUnitPrice() {
-        return seggestedUnitPrice;
+    public Integer getSeggested_unit_price() {
+        return seggested_unit_price;
     }
 
     /**
-     * @param seggestedUnitPrice the seggestedUnitPrice to set
+     * @param seggested_unit_price the seggested_unit_price to set
      */
-    public void setSeggestedUnitPrice(Integer seggestedUnitPrice) {
-        this.seggestedUnitPrice = seggestedUnitPrice;
+    public void setSeggested_unit_price(Integer seggested_unit_price) {
+        this.seggested_unit_price = seggested_unit_price;
     }
 
     /**
-     * @return the buyUnitPrice
+     * @return the buy_unit_price
      */
-    public Integer getBuyUnitPrice() {
-        return buyUnitPrice;
+    public Integer getBuy_unit_price() {
+        return buy_unit_price;
     }
 
     /**
-     * @param buyUnitPrice the buyUnitPrice to set
+     * @param buy_unit_price the buy_unit_price to set
      */
-    public void setBuyUnitPrice(Integer buyUnitPrice) {
-        this.buyUnitPrice = buyUnitPrice;
+    public void setBuy_unit_price(Integer buy_unit_price) {
+        this.buy_unit_price = buy_unit_price;
     }
 
     /**
@@ -212,45 +212,45 @@ public class ProductReportDto {
     }
 
     /**
-     * @return the unitsInStock
+     * @return the units_in_stock
      */
-    public Integer getUnitsInStock() {
-        return unitsInStock;
+    public Integer getUnits_in_stock() {
+        return units_in_stock;
     }
 
     /**
-     * @param unitsInStock the unitsInStock to set
+     * @param units_in_stock the units_in_stock to set
      */
-    public void setUnitsInStock(Integer unitsInStock) {
-        this.unitsInStock = unitsInStock;
+    public void setUnits_in_stock(Integer units_in_stock) {
+        this.units_in_stock = units_in_stock;
     }
 
     /**
-     * @return the unitsInOrder
+     * @return the units_in_order
      */
-    public Integer getUnitsInOrder() {
-        return unitsInOrder;
+    public Integer getUnits_in_order() {
+        return units_in_order;
     }
 
     /**
-     * @param unitsInOrder the unitsInOrder to set
+     * @param units_in_order the units_in_order to set
      */
-    public void setUnitsInOrder(Integer unitsInOrder) {
-        this.unitsInOrder = unitsInOrder;
+    public void setUnits_in_order(Integer units_in_order) {
+        this.units_in_order = units_in_order;
     }
 
     /**
-     * @return the registerDate
+     * @return the register_date
      */
-    public Date getRegisterDate() {
-        return registerDate;
+    public Date getRegister_date() {
+        return register_date;
     }
 
     /**
-     * @param registerDate the registerDate to set
+     * @param register_date the register_date to set
      */
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
+    public void setRegister_date(Date register_date) {
+        this.register_date = register_date;
     }
 
     /**
@@ -268,17 +268,17 @@ public class ProductReportDto {
     }
 
     /**
-     * @return the orderLevel
+     * @return the order_level
      */
-    public Integer getOrderLevel() {
-        return orderLevel;
+    public Integer getOrder_level() {
+        return order_level;
     }
 
     /**
-     * @param orderLevel the orderLevel to set
+     * @param order_level the order_level to set
      */
-    public void setOrderLevel(Integer orderLevel) {
-        this.orderLevel = orderLevel;
+    public void setOrder_level(Integer order_level) {
+        this.order_level = order_level;
     }
 
     /**
@@ -338,17 +338,17 @@ public class ProductReportDto {
     }
 
     /**
-     * @return the subCategory
+     * @return the subcategory
      */
-    public String getSubCategory() {
-        return subCategory;
+    public String getSubcategory() {
+        return subcategory;
     }
 
     /**
-     * @param subCategory the subCategory to set
+     * @param subcategory the subcategory to set
      */
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
     /**
