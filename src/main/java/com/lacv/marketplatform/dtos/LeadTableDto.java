@@ -42,8 +42,9 @@ public class LeadTableDto implements BaseEntity {
     private String tableAlias;
     
     @Size(max=200)
-    @Order(3)
+    @Order(4)
     @TextField("Descripci&oacute;n")
+    @TypeFormField(value= FieldType.TEXT_AREA)
     private String description;
     
     @Size(max=45)

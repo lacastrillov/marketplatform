@@ -30,10 +30,10 @@ CREATE TABLE `marketplatform`.`table_column` (
   `options` VARCHAR(400) NULL,
   PRIMARY KEY (`id`));
 
-ALTER TABLE `marketplatform`.`column` 
+ALTER TABLE `marketplatform`.`table_column` 
 ADD COLUMN `lead_table_id` INT NOT NULL AFTER `options`,
 ADD INDEX `fk_column_1_idx` (`lead_table_id` ASC);
-ALTER TABLE `marketplatform`.`column` 
+ALTER TABLE `marketplatform`.`table_column` 
 ADD CONSTRAINT `fk_column_1`
   FOREIGN KEY (`lead_table_id`)
   REFERENCES `marketplatform`.`lead_table` (`id`)

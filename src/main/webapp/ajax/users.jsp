@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administracion MERCANDO</title>
+        <title>Tablas Lead - Administracion MERCANDO</title>
         <link rel="icon" type="image/icon" href="/img/favicon.png" /> 
         
         <script type="text/javascript">
@@ -31,7 +31,7 @@
             
 <script>
 
-function UserExtModel(){
+function LeadTableExtModel(){
     
     var Instance = this;
     
@@ -39,8 +39,8 @@ function UserExtModel(){
     Instance.defineModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
-            fields: [{"dateFormat":"d/m/Y","name":"birthday","type":"date"},{"name":"email","type":"string"},{"name":"failedAttempts","type":"int"},{"name":"gender","type":"string"},{"useNull":true,"name":"id","type":"int"},{"dateFormat":"d/m/Y","name":"lastLogin","type":"date"},{"name":"link","type":"string"},{"name":"name","type":"string"},{"name":"password","type":"string"},{"dateFormat":"d/m/Y","name":"passwordExpiration","type":"date"},{"name":"status","type":"string"},{"name":"tokenUser","type":"string"},{"name":"urlPhoto","type":"string"},{"name":"username","type":"string"},{"name":"verified","type":"bool"}],
-            validations: [{"min":0,"field":"urlPhoto","max":200,"type":"length"},{"min":0,"field":"password","max":60,"type":"length"},{"min":0,"field":"gender","max":1,"type":"length"},{"min":0,"field":"name","max":100,"type":"length"},{"min":0,"field":"link","max":200,"type":"length"},{"min":0,"field":"tokenUser","max":200,"type":"length"},{"min":0,"field":"email","max":100,"type":"length"},{"min":0,"field":"username","max":100,"type":"length"},{"min":0,"field":"status","max":45,"type":"length"}]
+            fields: [{"name":"description","type":"string"},{"useNull":true,"name":"id","type":"int"},{"name":"name","type":"string"},{"name":"status","type":"string"},{"name":"tableAlias","type":"string"}],
+            validations: [{"min":0,"field":"name","max":100,"type":"length"},{"min":0,"field":"description","max":200,"type":"length"},{"min":0,"field":"tableAlias","max":100,"type":"length"},{"min":0,"field":"status","max":45,"type":"length"}]
         });
     };
     
@@ -52,7 +52,7 @@ function UserExtModel(){
             
 <script>
 
-function UserRoleExtModel(){
+function TableColumnExtModel(){
     
     var Instance = this;
     
@@ -60,29 +60,8 @@ function UserRoleExtModel(){
     Instance.defineModel= function(modelName){
         Ext.define(modelName, {
             extend: 'Ext.data.Model',
-            fields: [{"useNull":true,"name":"id","type":"int"},{"name":"role"},{"name":"user"}],
-            validations: [{"min":1,"field":"role","type":"length"},{"min":1,"field":"user","type":"length"}]
-        });
-    };
-    
-    
-    
-}
-</script>
-        
-            
-<script>
-
-function RoleExtModel(){
-    
-    var Instance = this;
-    
-    
-    Instance.defineModel= function(modelName){
-        Ext.define(modelName, {
-            extend: 'Ext.data.Model',
-            fields: [{"name":"description","type":"string"},{"name":"homePage","type":"string"},{"useNull":true,"name":"id","type":"int"},{"name":"name","type":"string"},{"name":"priorityCheck","type":"int"}],
-            validations: [{"min":1,"field":"name","type":"length"}]
+            fields: [{"name":"columnAlias","type":"string"},{"name":"columnOrder","type":"int"},{"name":"columnSize","type":"int", defaultValue: '99'},{"name":"dataType","type":"string"},{"name":"defaultValue","type":"string"},{"name":"fieldType","type":"string"},{"useNull":true,"name":"id","type":"int"},{"name":"leadTable"},{"name":"name","type":"string"},{"name":"options","type":"string"},{"name":"width","type":"int"}],
+            validations: [{"min":1,"field":"leadTable","type":"length"},{"min":0,"field":"dataType","max":45,"type":"length"},{"min":0,"field":"name","max":100,"type":"length"},{"min":0,"field":"fieldType","max":45,"type":"length"},{"min":0,"field":"columnAlias","max":100,"type":"length"}]
         });
     };
     
@@ -98,7 +77,7 @@ function RoleExtModel(){
             
 <script>
 
-function UserExtStore(){
+function LeadTableExtStore(){
     
     var Instance = this;
     
@@ -124,10 +103,10 @@ function UserExtStore(){
                     destroy: 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/user/find.htm',
-                    create: Ext.context+'/rest/user/create.htm',
-                    update: Ext.context+'/rest/user/update.htm',
-                    destroy: Ext.context+'/rest/user/delete.htm'
+                    read: Ext.context+'/rest/leadTable/find.htm',
+                    create: Ext.context+'/rest/leadTable/create.htm',
+                    update: Ext.context+'/rest/leadTable/update.htm',
+                    destroy: Ext.context+'/rest/leadTable/delete.htm'
                 },
                 reader: {
                     type: 'json',
@@ -188,7 +167,7 @@ function UserExtStore(){
 
     Instance.find= function(filter, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/user/find.htm",
+            url: Ext.context+"/rest/leadTable/find.htm",
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
@@ -214,7 +193,7 @@ function UserExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/user/"+operation+".htm",
+            url: Ext.context+"/rest/leadTable/"+operation+".htm",
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -235,7 +214,7 @@ function UserExtStore(){
     
     Instance.load= function(idEntity, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/user/load.htm",
+            url: Ext.context+"/rest/leadTable/load.htm",
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
@@ -255,13 +234,42 @@ function UserExtStore(){
     
     Instance.upload= function(form, idEntity, func){
         form.submit({
-            url: Ext.context+"/rest/user/diskupload/"+idEntity+".htm",
+            url: Ext.context+"/rest/leadTable/diskupload/"+idEntity+".htm",
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
             },
             failure: function(response){
                 console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
+            }
+        });
+    };
+    
+    Instance.doProcess= function(mainProcessRef, processName, data, func){
+        Ext.MessageBox.show({
+            msg: 'Ejecutando...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/"+mainProcessRef+"/doProcess.htm",
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
+            success: function(response){
+                Ext.MessageBox.hide();
+                func(response.responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
                 if(response.status===403){
                     showErrorMessage(error403);
                 }else{
@@ -279,7 +287,7 @@ function UserExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/user/delete/byfilter.htm",
+            url: Ext.context+"/rest/leadTable/delete/byfilter.htm",
             method: "POST",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
@@ -313,7 +321,7 @@ function UserExtStore(){
             
 <script>
 
-function UserRoleExtStore(){
+function TableColumnExtStore(){
     
     var Instance = this;
     
@@ -339,10 +347,10 @@ function UserRoleExtStore(){
                     destroy: 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/userRole/find.htm',
-                    create: Ext.context+'/rest/userRole/create.htm',
-                    update: Ext.context+'/rest/userRole/update.htm',
-                    destroy: Ext.context+'/rest/userRole/delete.htm'
+                    read: Ext.context+'/rest/tableColumn/find.htm',
+                    create: Ext.context+'/rest/tableColumn/create.htm',
+                    update: Ext.context+'/rest/tableColumn/update.htm',
+                    destroy: Ext.context+'/rest/tableColumn/delete.htm'
                 },
                 reader: {
                     type: 'json',
@@ -403,7 +411,7 @@ function UserRoleExtStore(){
 
     Instance.find= function(filter, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/userRole/find.htm",
+            url: Ext.context+"/rest/tableColumn/find.htm",
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
@@ -429,7 +437,7 @@ function UserRoleExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/userRole/"+operation+".htm",
+            url: Ext.context+"/rest/tableColumn/"+operation+".htm",
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -450,7 +458,7 @@ function UserRoleExtStore(){
     
     Instance.load= function(idEntity, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/userRole/load.htm",
+            url: Ext.context+"/rest/tableColumn/load.htm",
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
@@ -470,13 +478,42 @@ function UserRoleExtStore(){
     
     Instance.upload= function(form, idEntity, func){
         form.submit({
-            url: Ext.context+"/rest/userRole/diskupload/"+idEntity+".htm",
+            url: Ext.context+"/rest/tableColumn/diskupload/"+idEntity+".htm",
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
             },
             failure: function(response){
                 console.log(response);
+                if(response.status===403){
+                    showErrorMessage(error403);
+                }else{
+                    showErrorMessage(errorGeneral);
+                }
+            }
+        });
+    };
+    
+    Instance.doProcess= function(mainProcessRef, processName, data, func){
+        Ext.MessageBox.show({
+            msg: 'Ejecutando...',
+            width:200,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+        Ext.Ajax.request({
+            url: Ext.context+"/rest/"+mainProcessRef+"/doProcess.htm",
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
+            success: function(response){
+                Ext.MessageBox.hide();
+                func(response.responseText);
+            },
+            failure: function(response){
+                console.log(response.responseText);
                 if(response.status===403){
                     showErrorMessage(error403);
                 }else{
@@ -494,222 +531,7 @@ function UserRoleExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/userRole/delete/byfilter.htm",
-            method: "POST",
-            params: "filter="+encodeURIComponent(filter),
-            success: function(response){
-                var responseText= Ext.decode(response.responseText);
-                func(responseText);
-                Ext.MessageBox.hide();
-            },
-            failure: function(response){
-                console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    function showErrorMessage(errorMsg){
-        Ext.MessageBox.show({
-            title: 'REMOTE EXCEPTION',
-            msg: errorMsg,
-            icon: Ext.MessageBox.ERROR,
-            buttons: Ext.Msg.OK
-        });
-    }
-
-}
-</script>
-        
-            
-<script>
-
-function RoleExtStore(){
-    
-    var Instance = this;
-    
-    var errorGeneral= "Error de servidor";
-    var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
-    
-    
-    Instance.getStore= function(modelName){
-        var store = Ext.create('Ext.data.Store', {
-            model: modelName,
-            autoLoad: false,
-            autoSync: true,
-            pageSize: 50,
-            remoteSort: true,
-            proxy: {
-                type: 'ajax',
-                batchActions: false,
-                simpleSortMode: true,
-                actionMethods : {
-                    create : 'POST',
-                    read   : 'GET',
-                    update : 'POST',
-                    destroy: 'GET'
-                },
-                api: {
-                    read: Ext.context+'/rest/role/find.htm',
-                    create: Ext.context+'/rest/role/create.htm',
-                    update: Ext.context+'/rest/role/update.htm',
-                    destroy: Ext.context+'/rest/role/delete.htm'
-                },
-                reader: {
-                    type: 'json',
-                    successProperty: 'success',
-                    root: 'data',
-                    totalProperty: 'totalCount',
-                    messageProperty: 'message'
-                },
-                writer: {
-                    type: 'json',
-                    encode: true,
-                    writeAllFields: false,
-                    root: 'data'
-                },
-                extraParams: {
-                    filter: null
-                },
-                listeners: {
-                    exception: function(proxy, response, operation){
-                        var errorMsg= operation.getError();
-                        if(typeof errorMsg === "object"){
-                            if(errorMsg.status===403){
-                                errorMsg= error403;
-                            }else{
-                                errorMsg= errorGeneral;
-                            }
-                        }
-                        showErrorMessage(errorMsg);
-                    }
-                }
-            },
-            listeners: {
-                load: function() {
-                    var gridComponent= null;
-                    if(this.gridContainer){
-                        gridComponent= this.gridContainer.child('#grid'+modelName);
-                        gridComponent.getSelectionModel().deselectAll();
-                    }
-                },
-                write: function(proxy, operation){
-                    if (operation.action === 'destroy') {
-                        Ext.MessageBox.alert('Status', operation.resultSet.message);
-                    }
-                }
-            },
-            sorters: [{
-                property: 'id',
-                direction: 'DESC'
-            }],
-            formContainer:null,
-            gridContainer:null
-        });
-        
-        return store;
-    };
-    
-    
-
-    Instance.find= function(filter, func){
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/role/find.htm",
-            method: "GET",
-            params: "filter="+encodeURIComponent(filter),
-            success: function(response){
-                var responseText= Ext.decode(response.responseText);
-                func(responseText);
-            },
-            failure: function(response){
-                console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.save= function(operation, data, func){
-        Ext.MessageBox.show({
-            msg: 'Guardando...',
-            width:200,
-            wait:true,
-            waitConfig: {interval:200}
-        });
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/role/"+operation+".htm",
-            method: "POST",
-            params: "data="+encodeURIComponent(data),
-            success: function(response){
-                Ext.MessageBox.hide();
-                var responseText= Ext.decode(response.responseText);
-                func(responseText);
-            },
-            failure: function(response){
-                console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.load= function(idEntity, func){
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/role/load.htm",
-            method: "GET",
-            params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
-            success: function(response){
-                var responseText= Ext.decode(response.responseText);
-                func(responseText.data);
-            },
-            failure: function(response){
-                console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.upload= function(form, idEntity, func){
-        form.submit({
-            url: Ext.context+"/rest/role/diskupload/"+idEntity+".htm",
-            waitMsg: 'Subiendo archivo...',
-            success: function(form, action) {
-                func(action.result);
-            },
-            failure: function(response){
-                console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.deleteByFilter= function(filter, func){
-        Ext.MessageBox.show({
-            msg: 'Eliminando...',
-            width:200,
-            wait:true,
-            waitConfig: {interval:200}
-        });
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/role/delete/byfilter.htm",
+            url: Ext.context+"/rest/tableColumn/delete/byfilter.htm",
             method: "POST",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
@@ -749,34 +571,34 @@ function RoleExtStore(){
 
 <script>
 
-function UserExtView(parentExtController, parentExtView){
+function LeadTableExtView(parentExtController, parentExtView){
     
     var Instance= this;
     
-    Instance.id= "/user";
+    Instance.id= "/leadTable";
     
-    Instance.modelName="UserModel";
+    Instance.modelName="LeadTableModel";
     
     var util= new Util();
     
     // MODELS **********************************************
     
-    Instance.entityExtModel= new UserExtModel();
+    Instance.entityExtModel= new LeadTableExtModel();
     
     // STORES **********************************************
     
-    Instance.entityExtStore= new UserExtStore();
+    Instance.entityExtStore= new LeadTableExtStore();
     
     // COMPONENTS *******************************************
     
-    Instance.commonExtView= new CommonExtView(parentExtController, Instance, 'User');
+    Instance.commonExtView= new CommonExtView(parentExtController, Instance, 'LeadTable');
     
     //*******************************************************
     
     
     Instance.init= function(){
         Instance.typeView= "Parent";
-        Instance.pluralEntityTitle= 'Usuarios';
+        Instance.pluralEntityTitle= 'Tablas Lead';
         Instance.entityExtModel.defineModel(Instance.modelName);
         Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         
@@ -801,7 +623,7 @@ function UserExtView(parentExtController, parentExtView){
     
     
     function getFormContainer(modelName, store, childExtControllers){
-        var formFields= [{"xtype":"numberfield","fieldLabel":"Id","name":"id","readOnly":true},{"allowBlank":false,"fieldLabel":"Nombre","name":"name"},{"allowBlank":false,"vtype":"email","fieldLabel":"Correo","name":"email"},{"fieldLabel":"Usuario","name":"username"},{"fieldLabel":"Contrase&ntilde;a","name":"password","readOnly":true,"inputType":"password"},Instance.commonExtView.getSimpleCombobox('gender','Genero','form',['F','M']),{"xtype":"datefield","fieldLabel":"Fecha Nacimieto","name":"birthday","format":"d/m/Y","tooltip":"Seleccione la fecha"},{"xtype":"datefield","fieldLabel":"Ultimo login","name":"lastLogin","format":"d/m/Y","tooltip":"Seleccione la fecha","readOnly":true},{"fieldLabel":"P&aacute;gina","name":"link"},{"xtype":"numberfield","fieldLabel":"Intentos fallidos","name":"failedAttempts"},{"xtype":"datefield","fieldLabel":"Expiraci&oacute;n contrase&ntilde;a","name":"passwordExpiration","format":"d/m/Y","tooltip":"Seleccione la fecha"},Instance.commonExtView.getSimpleCombobox('status','Estado','form',['Active','Inactive','Locked','Deleted']),{"renderer":Instance.commonExtView.imageRender,"xtype":"displayfield","fieldLabel":"Foto perfil","name":"urlPhoto"},{"xtype":"filefield","emptyText":"Seleccione una imagen","fieldLabel":"&nbsp;","name":"urlPhoto"},{"xtype":"checkbox","uncheckedValue":"false","fieldLabel":"Verificado","name":"verified","inputValue":"true"}];
+        var formFields= [{"xtype":"numberfield","fieldLabel":"Id","name":"id","readOnly":true},{"allowBlank":false,"fieldLabel":"Nombre","name":"name"},{"allowBlank":false,"fieldLabel":"Alias","name":"tableAlias"},{"xtype":"textarea","fieldLabel":"Descripci&oacute;n","name":"description","height":200},Instance.commonExtView.getSimpleCombobox('status','Estado','form',['Active','Inactive'])];
 
         var renderReplacements= [];
 
@@ -842,7 +664,7 @@ function UserExtView(parentExtController, parentExtView){
     
     function getChildsExtViewTabs(childExtControllers){
         var items=[];
-        var jsonTypeChildExtViews= {"userRole":"tcv-n-n-multicheck"};
+        var jsonTypeChildExtViews= {"tableColumn":"tcv_standard"};
         childExtControllers.forEach(function(childExtController) {
             var itemTab= null;
             if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv_standard"){
@@ -1042,189 +864,15 @@ function UserExtView(parentExtController, parentExtView){
     
     function getGridContainer(modelName, store, formContainer){
         var idGrid= 'grid'+modelName;
-        var gridColumns= [
-        {
-          "dataIndex": "id",
-          "width": 100,
-          "header": "Id",
-          "sortable": true
-        },
-        {
-          "renderer": nameEntityRender,
-          "field": {
-            "type": "textfield"
-          },
-          "dataIndex": "name",
-          "width": 200,
-          "header": "Nombre",
-          "sortable": true
-        },
-        {
-          "editor": {
-            "allowBlank": false,
-            "vtype": "email"
-          },
-          "dataIndex": "email",
-          "width": 200,
-          "header": "Correo",
-          "sortable": true
-        },
-        {
-          "field": {
-            "type": "textfield"
-          },
-          "dataIndex": "username",
-          "width": 200,
-          "header": "Usuario",
-          "sortable": true
-        },
-        {
-          "editor": Instance.commonExtView.getSimpleCombobox('gender',
-          'Genero',
-          'grid',
-          [
-            'F',
-            'M'
-          ]),
-          "dataIndex": "gender",
-          "width": 200,
-          "header": "Genero",
-          "sortable": true
-        },
-        {
-          "editor": {
-            "xtype": "datefield",
-            "format": "d/m/Y"
-          },
-          "xtype": "datecolumn",
-          "dataIndex": "birthday",
-          "width": 200,
-          "format": "d/m/Y",
-          "header": "Fecha Nacimieto",
-          "sortable": true
-        },
-        {
-          "xtype": "datecolumn",
-          "dataIndex": "lastLogin",
-          "width": 200,
-          "format": "d/m/Y",
-          "header": "Ultimo login",
-          "sortable": true
-        },
-        {
-          "renderer": Instance.commonExtView.urlRender,
-          "field": {
-            "type": "textfield"
-          },
-          "dataIndex": "link",
-          "width": 200,
-          "header": "P&aacute;gina",
-          "sortable": true
-        },
-        {
-          "editor": {
-            "xtype": "numberfield"
-          },
-          "dataIndex": "failedAttempts",
-          "width": 200,
-          "header": "Intentos fallidos",
-          "sortable": true
-        },
-        {
-          "editor": {
-            "xtype": "datefield",
-            "format": "d/m/Y"
-          },
-          "xtype": "datecolumn",
-          "dataIndex": "passwordExpiration",
-          "width": 200,
-          "format": "d/m/Y",
-          "header": "Expiraci&oacute;n contrase&ntilde;a",
-          "sortable": true
-        },
-        {
-          "editor": Instance.commonExtView.getSimpleCombobox('status',
-          'Estado',
-          'grid',
-          [
-            'Active',
-            'Inactive',
-            'Locked',
-            'Deleted'
-          ]),
-          "dataIndex": "status",
-          "width": 200,
-          "header": "Estado",
-          "sortable": true
-        },
-        {
-          "field": {
-            "type": "textfield"
-          },
-          "dataIndex": "tokenUser",
-          "width": 200,
-          "header": "Token Usuario",
-          "sortable": true
-        },
-        {
-          "renderer": Instance.commonExtView.imageGridRender,
-          "field": {
-            "type": "textfield"
-          },
-          "dataIndex": "urlPhoto",
-          "width": 200,
-          "header": "Foto perfil",
-          "sortable": true
-        },
-        {
-          "editor": {
-            "xtype": "checkbox",
-            "cls": "x-grid-checkheader-editor"
-          },
-          "dataIndex": "verified",
-          "width": 200,
-          "header": "Verificado",
-          "sortable": true
-        },{
-            xtype: 'actioncolumn',
-            width: 100,
-            sortable: false,
-            menuDisabled: true,
-            items: [{
-                icon: 'https://cdn3.iconfinder.com/data/icons/cosmo-color-player-1/40/button_minus_1-128.png',
-                tooltip: 'Delete Plant',
-                scope: this,
-                handler: function (grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    alert("Delete Plant " + rec.get('id'));
-                }
-            },'-',{
-                icon: 'https://cdn4.iconfinder.com/data/icons/ui-3d-01-of-3/100/UI_2-128.png',
-                tooltip: 'Add Plant',
-                scope: this,
-                handler: function (grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    alert("Add Plant " + rec.get('id'));
-                }
-            },'-',{
-                icon: 'http://findicons.com/files/icons/1620/crystal_project/128/graphic_design.png',
-                tooltip: 'Change Plant',
-                scope: this,
-                handler: function (grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    alert("Change Plant " + rec.get('id'));
-                }
-            }]
-        }
-      ];
+        var gridColumns= [{"dataIndex":"id","width":100,"header":"Id","sortable":true},{"renderer":nameEntityRender,"field":{"type":"textfield"},"dataIndex":"name","width":200,"header":"Nombre","sortable":true},{"field":{"type":"textfield"},"dataIndex":"tableAlias","width":200,"header":"Alias","sortable":true},{"field":{"type":"textfield"},"dataIndex":"description","width":200,"header":"Descripci&oacute;n","sortable":true},{"editor":Instance.commonExtView.getSimpleCombobox('status','Estado','grid',['Active','Inactive']),"dataIndex":"status","width":200,"header":"Estado","sortable":true}];
         
         var getEmptyRec= function(){
-            return new UserModel({"birthday":"","lastLogin":"","passwordExpiration":"","gender":"","failedAttempts":"","link":"","verified":"","tokenUser":"","urlPhoto":"","password":"","name":"","email":"","username":"","status":""});
+            return new LeadTableModel({"name":"","description":"","tableAlias":"","status":""});
         };
         
         
 
-        Instance.defineWriterGrid(modelName, 'Usuarios', gridColumns, getEmptyRec, Instance.typeView);
+        Instance.defineWriterGrid(modelName, 'Tablas Lead', gridColumns, getEmptyRec, Instance.typeView);
         
         return Ext.create('Ext.container.Container', {
             id: 'gridContainer'+modelName,
@@ -1285,7 +933,7 @@ function UserExtView(parentExtController, parentExtView){
     Instance.setGridEmptyRec= function(obj){
         var gridComponent= Instance.gridContainer.child('#grid'+Instance.modelName);
         gridComponent.getEmptyRec= function(){
-            return new UserModel(obj);
+            return new LeadTableModel(obj);
         };
     };
     
@@ -1305,7 +953,7 @@ function UserExtView(parentExtController, parentExtView){
     }
     
     function getComboboxOrderBy(store){
-        var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ["id:Id","name:Nombre","email:Correo","username:Usuario","gender:Genero","birthday:Fecha Nacimieto","lastLogin:Ultimo login","link:P&aacute;gina","failedAttempts:Intentos fallidos","passwordExpiration:Expiraci&oacute;n contrase&ntilde;a","status:Estado","tokenUser:Token Usuario","urlPhoto:Foto perfil","verified:Verificado"]);
+        var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ["id:Id","name:Nombre","tableAlias:Alias","description:Descripci&oacute;n","status:Estado"]);
         combobox.addListener('change',function(record){
             if(record.getValue()!=="" && store.sorters.items[0].property!==record.getValue()){
                 store.sorters.items[0].property=record.getValue();
@@ -1434,14 +1082,6 @@ function UserExtView(parentExtController, parentExtView){
                 this.callParent();
                 this.getSelectionModel().on('selectionchange', this.onSelectChange, this);
             },
-            
-            onProcessOne: function(grid, rowIndex){
-                alert("One "+rowIndex);
-            },
-            
-            onProcessTwo: function(grid, rowIndex){
-                alert("Two "+rowIndex);
-            },
 
             onSelectChange: function(selModel, selections){
                 if(this.down('#delete')!==null){
@@ -1488,7 +1128,7 @@ function UserExtView(parentExtController, parentExtView){
             exportTo: function(type){
                 this.fireEvent('export', type);
             }
-            
+
         });
     };
     
@@ -1500,7 +1140,7 @@ function UserExtView(parentExtController, parentExtView){
             
         }
         var pg= Ext.create('Ext.grid.property.Grid', {
-            id: 'propertyGridUser',
+            id: 'propertyGridLeadTable',
             region: 'north',
             hideHeaders: true,
             resizable: false,
@@ -1520,6 +1160,31 @@ function UserExtView(parentExtController, parentExtView){
         pg.getStore().sorters.items= [];
         
         return pg;
+    };
+    
+    
+    
+    Instance.showProcessForm= function(processName, sourceByDestinationFields, rowIndex){
+        var initData={};
+        if(rowIndex!==-1){
+            var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=rec.get(source);
+            }
+            
+        }else{
+            var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=formData[source];
+            }
+            
+        }
+        Instance.processForms[processName].show(null, function() {});
+        var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
+        processForm.getForm().reset();
+        processForm.getForm().setValues(initData);
     };
     
     function nameEntityRender(value, p, record){
@@ -1563,9 +1228,9 @@ function UserExtView(parentExtController, parentExtView){
         if(Instance.typeView==="Parent"){
         
             
-            var userRoleExtController= new UserRoleExtController(parentExtController, Instance);
-            userRoleExtController.entityExtView.hideParentField("user");
-            Instance.childExtControllers.push(userRoleExtController);
+            var tableColumnExtController= new TableColumnExtController(parentExtController, Instance);
+            tableColumnExtController.entityExtView.hideParentField("leadTable");
+            Instance.childExtControllers.push(tableColumnExtController);
         
         }
         
@@ -1580,6 +1245,9 @@ function UserExtView(parentExtController, parentExtView){
         Instance.store.gridContainer= Instance.gridContainer;
         
             
+        
+        
+        Instance.processForms={};
         
         
         Instance.propertyGrid= getPropertyGrid();
@@ -1610,7 +1278,7 @@ function UserExtView(parentExtController, parentExtView){
         
         Instance.mainView= {
             id: Instance.id,
-            title: 'Gestionar Usuarios',
+            title: 'Gestionar Tablas Lead',
             frame: false,
             layout: 'border',
             items: [
@@ -1635,34 +1303,34 @@ function UserExtView(parentExtController, parentExtView){
 
 <script>
 
-function UserRoleExtView(parentExtController, parentExtView){
+function TableColumnExtView(parentExtController, parentExtView){
     
     var Instance= this;
     
-    Instance.id= "/userRole";
+    Instance.id= "/tableColumn";
     
-    Instance.modelName="UserRoleModel";
+    Instance.modelName="TableColumnModel";
     
     var util= new Util();
     
     // MODELS **********************************************
     
-    Instance.entityExtModel= new UserRoleExtModel();
+    Instance.entityExtModel= new TableColumnExtModel();
     
     // STORES **********************************************
     
-    Instance.entityExtStore= new UserRoleExtStore();
+    Instance.entityExtStore= new TableColumnExtStore();
     
     // COMPONENTS *******************************************
     
-    Instance.commonExtView= new CommonExtView(parentExtController, Instance, 'UserRole');
+    Instance.commonExtView= new CommonExtView(parentExtController, Instance, 'TableColumn');
     
     //*******************************************************
     
     
     Instance.init= function(){
         Instance.typeView= "Child";
-        Instance.pluralEntityTitle= 'Roles de Usuario';
+        Instance.pluralEntityTitle= 'Columnas de la tabla';
         Instance.entityExtModel.defineModel(Instance.modelName);
         Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         
@@ -1684,37 +1352,12 @@ function UserRoleExtView(parentExtController, parentExtView){
     };
     
     
-    Instance.clearNNMultichecks= function(){
-        var checkboxGroup=Ext.getCmp('checkboxGrouproleInUserRole');
-        if(checkboxGroup.items.length > 0 && checkboxGroup.items.items.length > 0){
-            checkboxGroup.items.items.forEach(function(checkbox){
-                checkbox.activeChange=false;
-                checkbox.setValue(false);
-                checkbox.activeChange=true;
-            });
-        }
-    }
-    
-    Instance.findAndLoadNNMultichecks= function(filter){
-        Instance.entityExtStore.find(filter, function(responseText){
-            if(responseText.success){
-                responseText.data.forEach(function(item){
-                    var itemCheckValue= item.role.id;
-                    var checkbox= Ext.getCmp('checkNNrole'+itemCheckValue);
-                    checkbox.activeChange=false;
-                    checkbox.setValue(true);
-                    checkbox.activeChange=true;
-                });
-            }
-        });
-    };
-    
     
     
     function getFormContainer(modelName, store, childExtControllers){
-        var formFields= [{"xtype":"numberfield","fieldLabel":"Id","name":"id"},Instance.formComboboxUser,Instance.formComboboxRole];
+        var formFields= [{"xtype":"numberfield","fieldLabel":"Id","name":"id","readOnly":true},{"allowBlank":false,"fieldLabel":"Nombre","name":"name"},{"allowBlank":false,"fieldLabel":"Alias","name":"columnAlias"},Instance.commonExtView.getSimpleCombobox('dataType','Tipo Dato','form',['String','int','java.util.Date','java.sql.Time','boolean']),Instance.commonExtView.getSimpleCombobox('fieldType','Tipo Campo','form',['EMAIL','PASSWORD','TEXT_AREA','LIST','URL','HTML_EDITOR','FILE_UPLOAD','IMAGE_FILE_UPLOAD','VIDEO_YOUTUBE','VIDEO_FILE_UPLOAD','AUDIO_FILE_UPLOAD','GOOGLE_MAP','MULTI_FILE_TYPE']),{"xtype":"numberfield","fieldLabel":"Tama&ntilde;o","name":"columnSize"},{"xtype":"numberfield","fieldLabel":"Ancho","name":"width","value":45},{"xtype":"numberfield","fieldLabel":"Orden","name":"columnOrder","value":1},{"fieldLabel":"Valor por defecto","name":"defaultValue"},{"fieldLabel":"Opciones","name":"options"},Instance.formComboboxLeadTable];
 
-        var renderReplacements= [{"component":Instance.formComboboxUser,"replace":{"field":"user","attribute":"id"}},{"component":Instance.formComboboxRole,"replace":{"field":"role","attribute":"id"}}];
+        var renderReplacements= [{"component":Instance.formComboboxLeadTable,"replace":{"field":"leadTable","attribute":"id"}}];
 
         var additionalButtons= [];
 
@@ -1953,15 +1596,15 @@ function UserRoleExtView(parentExtController, parentExtView){
     
     function getGridContainer(modelName, store, formContainer){
         var idGrid= 'grid'+modelName;
-        var gridColumns= [{"editor":{"xtype":"numberfield"},"renderer":idEntityRender,"dataIndex":"id","width":100,"header":"Id","sortable":true},{"editor":Instance.gridComboboxUser,"renderer":Instance.comboboxUserRender,"dataIndex":"user","width":200,"header":"Usuario"},{"editor":Instance.gridComboboxRole,"renderer":Instance.comboboxRoleRender,"dataIndex":"role","width":200,"header":"Rol"}];
+        var gridColumns= [{"dataIndex":"id","width":100,"header":"Id","sortable":true},{"renderer":nameEntityRender,"field":{"type":"textfield"},"dataIndex":"name","width":200,"header":"Nombre","sortable":true},{"field":{"type":"textfield"},"dataIndex":"columnAlias","width":200,"header":"Alias","sortable":true},{"editor":Instance.commonExtView.getSimpleCombobox('dataType','Tipo Dato','grid',['String','int','java.util.Date','java.sql.Time','boolean']),"dataIndex":"dataType","width":150,"header":"Tipo Dato","sortable":true},{"editor":Instance.commonExtView.getSimpleCombobox('fieldType','Tipo Campo','grid',['EMAIL','PASSWORD','TEXT_AREA','LIST','URL','HTML_EDITOR','FILE_UPLOAD','IMAGE_FILE_UPLOAD','VIDEO_YOUTUBE','VIDEO_FILE_UPLOAD','AUDIO_FILE_UPLOAD','GOOGLE_MAP','MULTI_FILE_TYPE']),"dataIndex":"fieldType","width":200,"header":"Tipo Campo","sortable":true},{"editor":{"xtype":"numberfield"},"dataIndex":"columnSize","width":100,"header":"Tama&ntilde;o","sortable":true},{"editor":{"xtype":"numberfield"},"dataIndex":"width","width":100,"header":"Ancho","sortable":true},{"editor":{"xtype":"numberfield"},"dataIndex":"columnOrder","width":100,"header":"Orden","sortable":true},{"field":{"type":"textfield"},"dataIndex":"defaultValue","width":200,"header":"Valor por defecto","sortable":true},{"field":{"type":"textfield"},"dataIndex":"options","width":200,"header":"Opciones","sortable":true},{"editor":Instance.gridComboboxLeadTable,"renderer":Instance.comboboxLeadTableRender,"dataIndex":"leadTable","width":200,"header":"Tabla Lead"}];
         
         var getEmptyRec= function(){
-            return new UserRoleModel({"role":"","user":""});
+            return new TableColumnModel({"leadTable":"","columnOrder":1,"defaultValue":"","dataType":"","columnSize":"","name":"","width":45,"options":"","fieldType":"","columnAlias":""});
         };
         
         
 
-        Instance.defineWriterGrid(modelName, 'Roles de Usuario', gridColumns, getEmptyRec, Instance.typeView);
+        Instance.defineWriterGrid(modelName, 'Columnas de la tabla', gridColumns, getEmptyRec, Instance.typeView);
         
         return Ext.create('Ext.container.Container', {
             id: 'gridContainer'+modelName,
@@ -2022,7 +1665,7 @@ function UserRoleExtView(parentExtController, parentExtView){
     Instance.setGridEmptyRec= function(obj){
         var gridComponent= Instance.gridContainer.child('#grid'+Instance.modelName);
         gridComponent.getEmptyRec= function(){
-            return new UserRoleModel(obj);
+            return new TableColumnModel(obj);
         };
     };
     
@@ -2042,7 +1685,7 @@ function UserRoleExtView(parentExtController, parentExtView){
     }
     
     function getComboboxOrderBy(store){
-        var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ["id:Id","user:Usuario","role:Rol"]);
+        var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ["id:Id","name:Nombre","columnAlias:Alias","dataType:Tipo Dato","fieldType:Tipo Campo","columnSize:Tama&ntilde;o","width:Ancho","columnOrder:Orden","defaultValue:Valor por defecto","options:Opciones","leadTable:Tabla Lead"]);
         combobox.addListener('change',function(record){
             if(record.getValue()!=="" && store.sorters.items[0].property!==record.getValue()){
                 store.sorters.items[0].property=record.getValue();
@@ -2217,69 +1860,25 @@ function UserRoleExtView(parentExtController, parentExtView){
             exportTo: function(type){
                 this.fireEvent('export', type);
             }
-            
+
         });
     };
     
 
-    
-    function getCheckboxGroupContainer(){
-        var checkboxGroupContainer= Ext.create('Ext.container.Container', {
-            title: 'Lista '+Instance.roleExtInterfaces.pluralEntityTitle,
-            style: 'background-color:#dfe8f6; padding:10px;',
-            layout: 'anchor',
-            defaults: {
-                anchor: '100%'
-            },
-            items: [
-                Instance.roleExtInterfaces.getCheckboxGroup('UserRole', 'role',
-                function (checkbox, isChecked) {
-                    if(checkbox.activeChange){
-                        var record= Ext.create(Instance.modelName);
-                        if(Object.keys(parentExtController.filter.eq).length !== 0){
-                            for (var key in parentExtController.filter.eq) {
-                                record.data[key]= parentExtController.filter.eq[key];
-                            }
-                        }
-                        record.data[checkbox.name]= checkbox.inputValue;
-                        if(isChecked){
-                            Instance.entityExtStore.save('create', JSON.stringify(record.data), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }else{
-                            var filter= record.data;
-                            delete filter["id"];
-                            Instance.entityExtStore.deleteByFilter(JSON.stringify({"eq":filter}), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }
-                    }
-                })
-            ]
-        });
-        
-        return checkboxGroupContainer;
-    }
     
     
     function getPropertyGrid(){
         var renderers= {
             
                 
-            Role: function(entity){
+            LeadTable: function(entity){
                 var res = entity.split("__");
-                return '<a href="/vista/role/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
-            },
-            
-                
-            User: function(entity){
-                var res = entity.split("__");
-                return '<a href="/vista/user/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
+                return '<a href="/vista/leadTable/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
             },
             
         }
         var pg= Ext.create('Ext.grid.property.Grid', {
-            id: 'propertyGridUserRole',
+            id: 'propertyGridTableColumn',
             region: 'north',
             hideHeaders: true,
             resizable: false,
@@ -2301,7 +1900,32 @@ function UserRoleExtView(parentExtController, parentExtView){
         return pg;
     };
     
-    function idEntityRender(value, p, record){
+    
+    
+    Instance.showProcessForm= function(processName, sourceByDestinationFields, rowIndex){
+        var initData={};
+        if(rowIndex!==-1){
+            var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=rec.get(source);
+            }
+            
+        }else{
+            var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
+            for (var source in sourceByDestinationFields) {
+                var destination = sourceByDestinationFields[source];
+                initData[destination]=formData[source];
+            }
+            
+        }
+        Instance.processForms[processName].show(null, function() {});
+        var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
+        processForm.getForm().reset();
+        processForm.getForm().setValues(initData);
+    };
+    
+    function nameEntityRender(value, p, record){
         if(record){
             if(Instance.typeView==="Parent"){
                 return "<a style='font-size: 15px;' href='#?id="+record.data.id+"&tab=1'>"+value+"</a>";
@@ -2336,19 +1960,11 @@ function UserRoleExtView(parentExtController, parentExtView){
         
             
             
-        Instance.roleExtInterfaces= new RoleExtInterfaces(parentExtController, Instance);
-        Instance.formComboboxRole= Instance.roleExtInterfaces.getCombobox('form', 'UserRole', 'role', 'Rol');
-        Instance.gridComboboxRole= Instance.roleExtInterfaces.getCombobox('grid', 'UserRole', 'role', 'Rol');
-        Instance.filterComboboxRole= Instance.roleExtInterfaces.getCombobox('filter', 'UserRole', 'role', 'Rol');
-        Instance.comboboxRoleRender= Instance.roleExtInterfaces.getComboboxRender('grid');
-        
-            
-            
-        Instance.userExtInterfaces= new UserExtInterfaces(parentExtController, Instance);
-        Instance.formComboboxUser= Instance.userExtInterfaces.getCombobox('form', 'UserRole', 'user', 'Usuario');
-        Instance.gridComboboxUser= Instance.userExtInterfaces.getCombobox('grid', 'UserRole', 'user', 'Usuario');
-        Instance.filterComboboxUser= Instance.userExtInterfaces.getCombobox('filter', 'UserRole', 'user', 'Usuario');
-        Instance.comboboxUserRender= Instance.userExtInterfaces.getComboboxRender('grid');
+        Instance.leadTableExtInterfaces= new LeadTableExtInterfaces(parentExtController, Instance);
+        Instance.formComboboxLeadTable= Instance.leadTableExtInterfaces.getCombobox('form', 'TableColumn', 'leadTable', 'Tabla Lead');
+        Instance.gridComboboxLeadTable= Instance.leadTableExtInterfaces.getCombobox('grid', 'TableColumn', 'leadTable', 'Tabla Lead');
+        Instance.filterComboboxLeadTable= Instance.leadTableExtInterfaces.getCombobox('filter', 'TableColumn', 'leadTable', 'Tabla Lead');
+        Instance.comboboxLeadTableRender= Instance.leadTableExtInterfaces.getComboboxRender('grid');
         
             
         
@@ -2371,7 +1987,8 @@ function UserRoleExtView(parentExtController, parentExtView){
         
             
         
-        Instance.checkboxGroupContainer= getCheckboxGroupContainer();
+        
+        Instance.processForms={};
         
         
         Instance.propertyGrid= getPropertyGrid();
@@ -2402,7 +2019,7 @@ function UserRoleExtView(parentExtController, parentExtView){
         
         Instance.mainView= {
             id: Instance.id,
-            title: 'Gestionar Roles de Usuario',
+            title: 'Gestionar Columnas de la tabla',
             frame: false,
             layout: 'border',
             items: [
@@ -2430,13 +2047,13 @@ function UserRoleExtView(parentExtController, parentExtView){
 
 <script>
 
-function UserExtController(parentExtController, parentExtView){
+function LeadTableExtController(parentExtController, parentExtView){
     
     var Instance= this;
     
-    Instance.id= "/user";
+    Instance.id= "/leadTable";
     
-    Instance.modelName="UserModel";
+    Instance.modelName="LeadTableModel";
     
     Instance.services= {};
     
@@ -2444,13 +2061,13 @@ function UserExtController(parentExtController, parentExtView){
     
     // VIEWS *******************************************
     
-    Instance.entityExtView= new UserExtView(Instance, null);
+    Instance.entityExtView= new LeadTableExtView(Instance, null);
     
     //*******************************************************
     
     
     Instance.init= function(){
-        Instance.entityRef= "user";
+        Instance.entityRef= "leadTable";
         Instance.typeController= "Parent";
         mvcExt.mappingController(Instance.id, Instance);
         Instance.initFilter();
@@ -2534,9 +2151,9 @@ function UserExtController(parentExtController, parentExtView){
     
     Instance.loadChildExtControllers= function(idEntitySelected){
         if(Instance.typeController==="Parent"){
-            var jsonTypeChildExtViews= {"userRole":"tcv-n-n-multicheck"};
+            var jsonTypeChildExtViews= {"tableColumn":"tcv_standard"};
             Instance.entityExtView.childExtControllers.forEach(function(childExtController) {
-                childExtController.filter= {"eq":{"user":idEntitySelected}};
+                childExtController.filter= {"eq":{"leadTable":idEntitySelected}};
                 if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv_standard"){
                     childExtController.loadGridData();
                     childExtController.loadFormData("");
@@ -2551,17 +2168,13 @@ function UserExtController(parentExtController, parentExtView){
         if(responseText.success){
             var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
             
-            Instance.entityExtView.entityExtStore.upload(formComponent, responseText.data.id, function(responseUpload){
-                Ext.MessageBox.alert('Status', responseText.message+"<br>"+responseUpload.message);
-                if(responseUpload.success){
-                    var record= Ext.create(Instance.modelName);
-                    record.data= responseUpload.data;
-                    formComponent.setActiveRecord(record || null);
-                    
-                    Instance.loadChildExtControllers(record.data.id);
-                }
-            });
             
+            var record= Ext.create(Instance.modelName);
+            record.data= responseText.data;
+            formComponent.setActiveRecord(record || null);
+            Ext.MessageBox.alert('Status', responseText.message);
+            
+            Instance.loadChildExtControllers(record.data.id);
             
         }else{
             Ext.MessageBox.alert('Status', responseText.message);
@@ -2577,7 +2190,7 @@ function UserExtController(parentExtController, parentExtView){
     Instance.viewInternalPage= function(path){
         var urlAction= path;
         if(Instance.idEntitySelected!==""){
-            urlAction+='#?filter={"eq":{"user":'+Instance.idEntitySelected+'}}';
+            urlAction+='#?filter={"eq":{"leadTable":'+Instance.idEntitySelected+'}}';
         }
         mvcExt.redirect(urlAction);
     };
@@ -2592,13 +2205,13 @@ function UserExtController(parentExtController, parentExtView){
 
 <script>
 
-function UserRoleExtController(parentExtController, parentExtView){
+function TableColumnExtController(parentExtController, parentExtView){
     
     var Instance= this;
     
-    Instance.id= "/userRole";
+    Instance.id= "/tableColumn";
     
-    Instance.modelName="UserRoleModel";
+    Instance.modelName="TableColumnModel";
     
     Instance.services= {};
     
@@ -2606,13 +2219,13 @@ function UserRoleExtController(parentExtController, parentExtView){
     
     // VIEWS *******************************************
     
-    Instance.entityExtView= new UserRoleExtView(Instance, null);
+    Instance.entityExtView= new TableColumnExtView(Instance, null);
     
     //*******************************************************
     
     
     Instance.init= function(){
-        Instance.entityRef= "userRole";
+        Instance.entityRef= "tableColumn";
         Instance.typeController= "Child";
         mvcExt.mappingController(Instance.id, Instance);
         Instance.initFilter();
@@ -2647,17 +2260,10 @@ function UserRoleExtController(parentExtController, parentExtView){
         
         
             
-        if(Instance.filter.eq.role!==undefined && Instance.filter.eq.role!==''){
-            Instance.entityExtView.roleExtInterfaces.entityExtStore.cargarRole(Instance.filter.eq.role, Instance.entityExtView.roleExtInterfaces.addLevel);
+        if(Instance.filter.eq.leadTable!==undefined && Instance.filter.eq.leadTable!==''){
+            Instance.entityExtView.leadTableExtInterfaces.entityExtStore.load(Instance.filter.eq.leadTable, Instance.entityExtView.leadTableExtInterfaces.addLevel);
         }else{
-            Instance.entityExtView.roleExtInterfaces.addLevel(null);
-        }
-        
-            
-        if(Instance.filter.eq.user!==undefined && Instance.filter.eq.user!==''){
-            Instance.entityExtView.userExtInterfaces.entityExtStore.cargarUser(Instance.filter.eq.user, Instance.entityExtView.userExtInterfaces.addLevel);
-        }else{
-            Instance.entityExtView.userExtInterfaces.addLevel(null);
+            Instance.entityExtView.leadTableExtInterfaces.addLevel(null);
         }
         
         
@@ -2712,7 +2318,7 @@ function UserRoleExtController(parentExtController, parentExtView){
         if(Instance.typeController==="Parent"){
             var jsonTypeChildExtViews= {};
             Instance.entityExtView.childExtControllers.forEach(function(childExtController) {
-                childExtController.filter= {"eq":{"userRole":idEntitySelected}};
+                childExtController.filter= {"eq":{"tableColumn":idEntitySelected}};
                 if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv_standard"){
                     childExtController.loadGridData();
                     childExtController.loadFormData("");
@@ -2749,7 +2355,7 @@ function UserRoleExtController(parentExtController, parentExtView){
     Instance.viewInternalPage= function(path){
         var urlAction= path;
         if(Instance.idEntitySelected!==""){
-            urlAction+='#?filter={"eq":{"userRole":'+Instance.idEntitySelected+'}}';
+            urlAction+='#?filter={"eq":{"tableColumn":'+Instance.idEntitySelected+'}}';
         }
         mvcExt.redirect(urlAction);
     };
@@ -2768,19 +2374,19 @@ function UserRoleExtController(parentExtController, parentExtView){
 
 <script>
 
-function RoleExtInterfaces(parentExtController, parentExtView){
+function LeadTableExtInterfaces(parentExtController, parentExtView){
     
     var Instance= this;
     
-    Instance.modelName="RoleModel";
+    Instance.modelName="LeadTableModel";
     
     // MODELS **********************************************
     
-    Instance.entityExtModel= new RoleExtModel();
+    Instance.entityExtModel= new LeadTableExtModel();
     
     // STORES **********************************************
     
-    Instance.entityExtStore= new RoleExtStore();
+    Instance.entityExtStore= new LeadTableExtStore();
     
     //*******************************************************
     
@@ -2788,7 +2394,7 @@ function RoleExtInterfaces(parentExtController, parentExtView){
     
     
     Instance.init= function(){
-        Instance.pluralEntityTitle= 'Roles';
+        Instance.pluralEntityTitle= 'Tablas Lead';
         Instance.entityExtModel.defineModel(Instance.modelName);
         Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
         Instance.combobox={};
@@ -2799,9 +2405,9 @@ function RoleExtInterfaces(parentExtController, parentExtView){
         var source= parentExtView.propertyGrid.getSource();
         
         if(entity!==null && typeof(entity)!=='undefined'){
-            source['Role']= entity.id+"__"+entity.name;
+            source['LeadTable']= entity.id+"__"+entity.name;
         }else{
-            delete source['Role'];
+            delete source['LeadTable'];
         }
             
         parentExtView.propertyGrid.setSource(source);
@@ -2835,189 +2441,7 @@ function RoleExtInterfaces(parentExtController, parentExtView){
                     }
                     
                     this.comboboxDependent.forEach(function(combobox) {
-                        var filter= {"eq":{"role":record.getValue()}};
-                        combobox.store.getProxy().extraParams.filter= JSON.stringify(filter);
-                        combobox.reloadData= true;
-                        if(!combobox.listenerLoad){
-                            combobox.store.addListener('load',function(){
-                                combobox.reloadData=false;
-                            }, this);
-                            combobox.listenerLoad= true;
-                        }
-                    });
-                },
-                el: {
-                    click: function() {
-                        if(this.combobox[component].reloadData){
-                            this.combobox[component].store.loadPage(1);
-                        }
-                    },
-                    scope: this
-                }
-            }/*,
-            getDisplayValue: function() {
-                var me = this,
-                value = me.value,
-                record = null;
-                if(value) {
-                    record = me.getStore().findRecord(me.valueField, value);
-                }
-                if(record) {
-                    console.log(record.get(me.displayField));
-                    return util.htmlEntitiesDecode(record.get(me.displayField));
-                }
-                return value;
-            }*/
-        });
-        
-        if(component!=='grid'){
-            Instance.combobox[component].fieldLabel= fieldTitle;
-        }
-        
-        if(component==='filter'){
-            Instance.store.addListener('load', function(){
-                var rec = { id: 0, name: '-' };
-                Instance.store.insert(0,rec);
-            });
-        }
-        
-        return Instance.combobox[component];
-    };
-    
-    Instance.getComboboxRender= function(component){
-        Instance.comboboxRender[component]= function (value, p, record){
-            var displayField= Instance.combobox[component].displayField;
-            var valueField= Instance.combobox[component].valueField;
-
-            if (typeof value === "object" && Object.getOwnPropertyNames(value).length === 0){
-                return "";
-            }else if(typeof(value[displayField]) !== 'undefined'){
-                return value[displayField];
-            }else{
-                if(typeof(value[valueField]) !== 'undefined'){
-                    value= value[valueField];
-                }
-                var record = Instance.combobox[component].findRecord(valueField, value);
-                if(record){
-                    return record.get(Instance.combobox[component].displayField);
-                }else{
-                    return value;
-                }
-            }
-        };
-        
-        return Instance.comboboxRender[component];
-    };
-    
-    Instance.getCheckboxGroup= function(entityDestination, fieldName, callback){
-        
-        Instance.checkboxGroup=  new Ext.form.CheckboxGroup({
-            id: 'checkboxGroup'+fieldName+'In'+entityDestination,
-            fieldLabel: 'Listado '+Instance.pluralEntityTitle,
-            allowBlank: true,
-            columns: 3,
-            vertical: true,
-            items: []
-        });
-        
-        Instance.entityExtStore.find("", function(responseText){
-            if(responseText.success){
-                responseText.data.forEach(function(item){
-                    var cb = Ext.create('Ext.form.field.Checkbox', {
-                        id: 'checkNN'+fieldName+item.id,
-                        boxLabel: item.name,
-                        name: fieldName,
-                        inputValue: item.id,
-                        checked: false,
-                        activeChange: true,
-                        listeners: {
-                            change: callback
-                        }
-                    });
-                    Instance.checkboxGroup.add(cb);
-                });
-            }
-        });
-        
-        return Instance.checkboxGroup;
-    };
-
-    Instance.init();
-}
-</script>
-        
-            
-
-<script>
-
-function UserExtInterfaces(parentExtController, parentExtView){
-    
-    var Instance= this;
-    
-    Instance.modelName="UserModel";
-    
-    // MODELS **********************************************
-    
-    Instance.entityExtModel= new UserExtModel();
-    
-    // STORES **********************************************
-    
-    Instance.entityExtStore= new UserExtStore();
-    
-    //*******************************************************
-    
-    var util= new Util();
-    
-    
-    Instance.init= function(){
-        Instance.pluralEntityTitle= 'Usuarios';
-        Instance.entityExtModel.defineModel(Instance.modelName);
-        Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
-        Instance.combobox={};
-        Instance.comboboxRender={};
-    };
-    
-    Instance.addLevel= function(entity){
-        var source= parentExtView.propertyGrid.getSource();
-        
-        if(entity!==null && typeof(entity)!=='undefined'){
-            source['User']= entity.id+"__"+entity.name;
-        }else{
-            delete source['User'];
-        }
-            
-        parentExtView.propertyGrid.setSource(source);
-    };
-    
-    Instance.getCombobox= function(component, entityDestination, fieldName, fieldTitle){
-        Instance.store.pageSize= 1000;
-        Instance.store.sorters.items[0].property='name';
-        Instance.store.sorters.items[0].direction='ASC';
-        Instance.combobox[component]= new Ext.form.ComboBox({
-            id: component+'Combobox'+fieldName+'In'+entityDestination,
-            name: fieldName,
-            allowBlank: true,
-            editable: true,
-            store: Instance.store,
-            displayField: 'name',
-            valueField: 'id',
-            queryMode: 'remote',
-            optionAll: true,
-            comboboxDependent: [],
-            reloadData: false,
-            listenerLoad: false,
-            listeners: {
-                change: function(record){
-                    if(component==='filter'){
-                        if(record.getValue()!==0){
-                            parentExtController.filter.eq[fieldName]= record.getValue();
-                        }else{
-                            delete parentExtController.filter.eq[fieldName];
-                        }
-                    }
-                    
-                    this.comboboxDependent.forEach(function(combobox) {
-                        var filter= {"eq":{"user":record.getValue()}};
+                        var filter= {"eq":{"leadTable":record.getValue()}};
                         combobox.store.getProxy().extraParams.filter= JSON.stringify(filter);
                         combobox.reloadData= true;
                         if(!combobox.listenerLoad){
@@ -3134,7 +2558,7 @@ function UserExtInterfaces(parentExtController, parentExtView){
         
 <script>
 
-function UserViewportExtView(){
+function LeadTableViewportExtView(){
     
     Ext.context= "";
     
@@ -3142,7 +2566,7 @@ function UserViewportExtView(){
     
     var util= new Util();
     
-    Instance.entityExtController= new UserExtController(null, Instance);
+    Instance.entityExtController= new LeadTableExtController(null, Instance);
     
     
     Instance.init= function(){
@@ -3200,7 +2624,7 @@ function UserViewportExtView(){
                 align: 'stretch'  // Child items are stretched to full width
             },
 
-            items: [{"xtype":"numberfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.eq.id= this.getValue();   }else{       delete Instance.entityExtController.filter.eq.id;   }}},"fieldLabel":"Id","name":"id"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.name= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.name;   }}},"fieldLabel":"Nombre","name":"name"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.email= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.email;   }}},"fieldLabel":"Correo","name":"email"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.username= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.username;   }}},"fieldLabel":"Usuario","name":"username"},Instance.entityExtController.entityExtView.commonExtView.getSimpleCombobox('gender','Genero','filter',['F','M']),{"layout":"column","xtype":"panel","bodyStyle":"padding-bottom: 5px;","items":[{"columnWidth":0.34,"html":"Fecha Nacimieto:&nbsp;","style":"text-align: right"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.birthday === undefined){           Instance.entityExtController.filter.btw.birthday= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.birthday[0]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.birthday[0]= null;   }   if(Instance.entityExtController.filter.btw.birthday[0]===null && Instance.entityExtController.filter.btw.birthday[1]===null){       delete Instance.entityExtController.filter.btw.birthday;   }}},"name":"birthday_start","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31},{"columnWidth":0.04,"html":"&nbsp;-&nbsp;"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.birthday === undefined){           Instance.entityExtController.filter.btw.birthday= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.birthday[1]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.birthday[1]= null;   }   if(Instance.entityExtController.filter.btw.birthday[0]===null && Instance.entityExtController.filter.btw.birthday[1]===null){       delete Instance.entityExtController.filter.btw.birthday;   }}},"name":"birthday_end","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31}]},{"layout":"column","xtype":"panel","bodyStyle":"padding-bottom: 5px;","items":[{"columnWidth":0.34,"html":"Ultimo login:&nbsp;","style":"text-align: right"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.lastLogin === undefined){           Instance.entityExtController.filter.btw.lastLogin= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.lastLogin[0]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.lastLogin[0]= null;   }   if(Instance.entityExtController.filter.btw.lastLogin[0]===null && Instance.entityExtController.filter.btw.lastLogin[1]===null){       delete Instance.entityExtController.filter.btw.lastLogin;   }}},"name":"lastLogin_start","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31},{"columnWidth":0.04,"html":"&nbsp;-&nbsp;"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.lastLogin === undefined){           Instance.entityExtController.filter.btw.lastLogin= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.lastLogin[1]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.lastLogin[1]= null;   }   if(Instance.entityExtController.filter.btw.lastLogin[0]===null && Instance.entityExtController.filter.btw.lastLogin[1]===null){       delete Instance.entityExtController.filter.btw.lastLogin;   }}},"name":"lastLogin_end","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31}]},{"layout":"column","xtype":"panel","bodyStyle":"padding-bottom: 5px;","items":[{"columnWidth":0.34,"html":"Intentos fallidos:&nbsp;","style":"text-align: right"},{"xtype":"numberfield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.failedAttempts === undefined){           Instance.entityExtController.filter.btw.failedAttempts= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.failedAttempts[0]= this.getValue();   }else{       Instance.entityExtController.filter.btw.failedAttempts[0]= null;   }   if(Instance.entityExtController.filter.btw.failedAttempts[0]===null && Instance.entityExtController.filter.btw.failedAttempts[1]===null){       delete Instance.entityExtController.filter.btw.failedAttempts;   }}},"name":"failedAttempts_start","columnWidth":0.31},{"columnWidth":0.04,"html":"&nbsp;-&nbsp;"},{"xtype":"numberfield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.failedAttempts === undefined){           Instance.entityExtController.filter.btw.failedAttempts= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.failedAttempts[1]= this.getValue();   }else{       Instance.entityExtController.filter.btw.failedAttempts[1]= null;   }   if(Instance.entityExtController.filter.btw.failedAttempts[0]===null && Instance.entityExtController.filter.btw.failedAttempts[1]===null){       delete Instance.entityExtController.filter.btw.failedAttempts;   }}},"name":"failedAttempts_end","columnWidth":0.31}]},{"layout":"column","xtype":"panel","bodyStyle":"padding-bottom: 5px;","items":[{"columnWidth":0.34,"html":"Expiraci&oacute;n contrase&ntilde;a:&nbsp;","style":"text-align: right"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.passwordExpiration === undefined){           Instance.entityExtController.filter.btw.passwordExpiration= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.passwordExpiration[0]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.passwordExpiration[0]= null;   }   if(Instance.entityExtController.filter.btw.passwordExpiration[0]===null && Instance.entityExtController.filter.btw.passwordExpiration[1]===null){       delete Instance.entityExtController.filter.btw.passwordExpiration;   }}},"name":"passwordExpiration_start","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31},{"columnWidth":0.04,"html":"&nbsp;-&nbsp;"},{"xtype":"datefield","listeners":{"change":function(){   if( Instance.entityExtController.filter.btw.passwordExpiration === undefined){           Instance.entityExtController.filter.btw.passwordExpiration= [null,null];   }   if(this.getValue()!==null){       Instance.entityExtController.filter.btw.passwordExpiration[1]= Ext.Date.format(this.getValue(), 'd/m/Y');   }else{       Instance.entityExtController.filter.btw.passwordExpiration[1]= null;   }   if(Instance.entityExtController.filter.btw.passwordExpiration[0]===null && Instance.entityExtController.filter.btw.passwordExpiration[1]===null){       delete Instance.entityExtController.filter.btw.passwordExpiration;   }}},"name":"passwordExpiration_end","format":"d/m/Y","tooltip":"Seleccione la fecha","columnWidth":0.31}]},Instance.entityExtController.entityExtView.commonExtView.getSimpleCombobox('status','Estado','filter',['Active','Inactive','Locked','Deleted']),{"xtype":"checkbox","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.eq.verified= this.getValue();   }else{       delete Instance.entityExtController.filter.eq.verified;   }}},"fieldLabel":"Verificado","name":"verified"}],
+            items: [{"xtype":"numberfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.eq.id= this.getValue();   }else{       delete Instance.entityExtController.filter.eq.id;   }}},"fieldLabel":"Id","name":"id"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.name= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.name;   }}},"fieldLabel":"Nombre","name":"name"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.tableAlias= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.tableAlias;   }}},"fieldLabel":"Alias","name":"tableAlias"},{"xtype":"textfield","listeners":{"change":function(){   if(this.getValue()!==null && this.getValue()!==''){       Instance.entityExtController.filter.lk.description= this.getValue();   }else{       delete Instance.entityExtController.filter.lk.description;   }}},"fieldLabel":"Descripci&oacute;n","name":"description"},Instance.entityExtController.entityExtView.commonExtView.getSimpleCombobox('status','Estado','filter',['Active','Inactive'])],
             
             dockedItems: [{
                 xtype: 'toolbar',
@@ -3228,7 +2652,7 @@ function UserViewportExtView(){
         
         Instance.menuBar= Ext.create('Ext.toolbar.Toolbar', {
             region: 'north',
-            items: [{"text":"Seguridad","menu":{"items":[{"text":"Gestionar Roles","href":"/vista/role/table.htm"},{"text":"Gestionar Usuarios","href":"/vista/user/table.htm"},{"text":"Gestionar Autorizaciones","href":"/vista/authorization/table.htm"},{"text":"Gestionar Roles de Usuario","href":"/vista/userRole/table.htm"},{"text":"Gestionar Recursos Web","href":"/vista/webResource/table.htm"}]}},{"text":"Configuraci&oacute;n","menu":{"items":[{"text":"Gestionar Propiedades","href":"/vista/property/table.htm"}]}},{"text":"Gestor de Contenidos","menu":{"items":[{"text":"Explorador de Archivos","href":"/vista/webFile/fileExplorer.htm"}]}},{"text":"Procesos","menu":{"items":[{"text":"Gestionar Servicios Externos","href":"/vista/externalService/process.htm"},{"text":"Gestionar Proceso Main Location","href":"/vista/processMainLocation/process.htm"},{"text":"Gestionar Procesos de Usuario","href":"/vista/processUser/process.htm"}]}},{"text":"Correos","menu":{"items":[{"text":"Gestionar Plantillas de Correo","href":"/vista/mailTemplate/table.htm"},{"text":"Gestionar Correos","href":"/vista/mail/table.htm"}]}},{"text":"Comercios","menu":{"items":[{"text":"Gestionar Comercios","href":"/vista/commerce/table.htm"},{"text":"Gestionar Ubicaciones Principales","href":"/vista/mainLocation/table.htm"}]}},{"text":"Productos","menu":{"items":[{"text":"Gestionar Productos","href":"/vista/product/table.htm"},{"text":"Reporte de Productos","href":"/vista/product/report/reporteProductos.htm"},{"text":"Gestionar Categorias","href":"/vista/category/table.htm"}]}},{"text":"Pedidos","menu":{"items":[{"text":"Gestionar Ordenes de Inventario","href":"/vista/inventoryOrder/table.htm"},{"text":"Gestionar Proveedores","href":"/vista/supplier/table.htm"}]}},{"text":"Ordenes de Compra","menu":{"items":[{"text":"Gestionar Ordenes de Compra","href":"/vista/purchaseOrder/table.htm"}]}},{"text":"Pagos","menu":{"items":[{"text":"Gestionar Pagos","href":"/vista/payment/table.htm"}]}}]
+            items: [{"text":"Seguridad","menu":{"items":[{"text":"Gestionar Roles","href":"/vista/role/table.htm"},{"text":"Gestionar Usuarios","href":"/vista/user/table.htm"},{"text":"Gestionar Autorizaciones","href":"/vista/authorization/table.htm"},{"text":"Gestionar Roles de Usuario","href":"/vista/userRole/table.htm"},{"text":"Gestionar Recursos Web","href":"/vista/webResource/table.htm"}]}},{"text":"Configuraci&oacute;n","menu":{"items":[{"text":"Gestionar Propiedades","href":"/vista/property/table.htm"}]}},{"text":"Gestor de Contenidos","menu":{"items":[{"text":"Explorador de Archivos","href":"/vista/webFile/fileExplorer.htm"}]}},{"text":"Procesos","menu":{"items":[{"text":"Gestionar Servicios Externos","href":"/vista/externalService/process.htm"},{"text":"Gestionar Proceso Main Location","href":"/vista/processMainLocation/process.htm"},{"text":"Gestionar Procesos de Producto","href":"/vista/processProduct/process.htm"},{"text":"Gestionar Procesos de Usuario","href":"/vista/processUser/process.htm"}]}},{"text":"Correos","menu":{"items":[{"text":"Gestionar Plantillas de Correo","href":"/vista/mailTemplate/table.htm"},{"text":"Gestionar Correos","href":"/vista/mail/table.htm"}]}},{"text":"Comercios","menu":{"items":[{"text":"Gestionar Comercios","href":"/vista/commerce/table.htm"},{"text":"Gestionar Ubicaciones Principales","href":"/vista/mainLocation/table.htm"}]}},{"text":"Productos","menu":{"items":[{"text":"Gestionar Productos","href":"/vista/product/table.htm"},{"text":"Reporte de Productos","href":"/vista/product/report/reporteProductos.htm"},{"text":"Gestionar Categorias","href":"/vista/category/table.htm"}]}},{"text":"Pedidos","menu":{"items":[{"text":"Gestionar Ordenes de Inventario","href":"/vista/inventoryOrder/table.htm"},{"text":"Gestionar Proveedores","href":"/vista/supplier/table.htm"}]}},{"text":"Ordenes de Compra","menu":{"items":[{"text":"Gestionar Ordenes de Compra","href":"/vista/purchaseOrder/table.htm"}]}},{"text":"Pagos","menu":{"items":[{"text":"Gestionar Pagos","href":"/vista/payment/table.htm"}]}},{"text":"Tablas Lead","menu":{"items":[{"text":"Gestionar Tablas Lead","href":"/vista/leadTable/table.htm"}]}}]
         });
         
         
@@ -3314,12 +2738,12 @@ function EntityExtInit(){
 
             Ext.History.init();
 
-            var homeViewportExtView= new UserViewportExtView();
+            var homeViewportExtView= new LeadTableViewportExtView();
 
             homeViewportExtView.renderViewport();
 
             //Debe ser siempre la ultima linea**************************
-            mvcExt.setHomeRequest("/user");
+            mvcExt.setHomeRequest("/leadTable");
             mvcExt.processFirtsRequest();
         });
     };

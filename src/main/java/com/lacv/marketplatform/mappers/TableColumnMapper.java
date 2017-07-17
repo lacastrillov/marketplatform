@@ -6,10 +6,12 @@ package com.lacv.marketplatform.mappers;
 
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.mapper.BasicEntityMapper;
+import com.lacv.marketplatform.dtos.LeadTableDto;
 import com.lacv.marketplatform.dtos.TableColumnDto;
 import com.lacv.marketplatform.entities.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Component;
 @Component("tableColumnMapper")
 public class TableColumnMapper implements BasicEntityMapper {
 
+    @Autowired
+    LeadTableMapper leadTableMapper;
     
     @Override
     public BaseEntity entityToDto(BaseEntity baseEntity) {
@@ -35,6 +39,7 @@ public class TableColumnMapper implements BasicEntityMapper {
             dto.setName(entity.getName());
             dto.setOptions(entity.getOptions());
             dto.setWidth(entity.getWidth());
+            dto.setLeadTable((LeadTableDto) leadTableMapper.entityToDto(entity.getLeadTable()));
         }
         return dto;
     }

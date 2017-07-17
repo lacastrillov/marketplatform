@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.DefaultValue;
 import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
@@ -43,13 +44,13 @@ public class TableColumnDto implements BaseEntity {
     @Size(max=45)
     @Order(4)
     @NotNull
-    @TypeFormField(value = FieldType.LIST, data = {"String", "int", "java.util.Date", "java.sql.Time", "boolean"})
+    @ColumnWidth(150)
+    @TypeFormField(value = FieldType.LIST, data = {"java.lang.String", "char", "int", "long", "double", "float", "boolean", "java.util.Date", "java.sql.Time"})
     @TextField("Tipo Dato")
     private String dataType;
     
     @Size(max=45)
     @Order(5)
-    @NotNull
     @TypeFormField(value = FieldType.LIST, data = {
         "EMAIL", "PASSWORD", "TEXT_AREA", "LIST", "URL", "HTML_EDITOR", "FILE_UPLOAD", "IMAGE_FILE_UPLOAD",
         "VIDEO_YOUTUBE", "VIDEO_FILE_UPLOAD", "AUDIO_FILE_UPLOAD", "GOOGLE_MAP", "MULTI_FILE_TYPE"
@@ -58,14 +59,20 @@ public class TableColumnDto implements BaseEntity {
     private String fieldType;
     
     @Order(6)
-    @TextField("Tama&ntilde;o")
+    @ColumnWidth(100)
+    @DefaultValue("45")
+    @TextField("Longitud")
     private Integer columnSize;
     
     @Order(7)
+    @ColumnWidth(100)
+    @DefaultValue("200")
     @TextField("Ancho")
     private Integer width;
     
     @Order(8)
+    @ColumnWidth(100)
+    @DefaultValue("1")
     @TextField("Orden")
     private Integer columnOrder;
     

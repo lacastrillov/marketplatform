@@ -311,7 +311,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                             
                         }
                         if(typeof(value) !== 'undefined'){
-                            //value= util.htmlEntitiesDecode(value);
                             renderReplace.component.setValue(value);
                         }
                     }
@@ -330,8 +329,9 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         var idGrid= 'grid'+modelName;
         var gridColumns= ${jsonGridColumns};
         
-        var getEmptyRec= function(){
-            return new ${entityName}Model(${jsonEmptyModel});
+        Instance.emptyModel= ${jsonEmptyModel};
+        Instance.getEmptyRec= function(){
+            return new ${entityName}Model(Instance.emptyModel);
         };
         
         <c:if test="${viewConfig.activeGridTemplate}">
@@ -339,7 +339,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         store= Instance.gridStore;
         </c:if>
 
-        Instance.defineWriterGrid(modelName, '${viewConfig.pluralEntityTitle}', gridColumns, getEmptyRec, Instance.typeView);
+        Instance.defineWriterGrid(modelName, '${viewConfig.pluralEntityTitle}', gridColumns, Instance.typeView);
         
         return Ext.create('Ext.container.Container', {
             id: 'gridContainer'+modelName,
@@ -399,10 +399,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         });
     };
     
-    Instance.setGridEmptyRec= function(obj){
-        var gridComponent= Instance.gridContainer.child('#grid'+Instance.modelName);
-        gridComponent.getEmptyRec= function(){
-            return new ${entityName}Model(obj);
+    Instance.setValueInEmptyModel= function(fieldName, value){
+        Instance.emptyModel[fieldName]= value;
+        Instance.getEmptyRec= function(){
+            return new ${entityName}Model(Instance.emptyModel);
         };
     };
     
@@ -451,7 +451,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         return combobox;
     }
     
-    Instance.defineWriterGrid= function(modelName, modelText, columns, getEmptyRec, typeView){
+    Instance.defineWriterGrid= function(modelName, modelText, columns, typeView){
         Ext.define('WriterGrid'+modelName, {
             extend: 'Ext.grid.Panel',
             alias: 'widget.writergrid'+modelName,
@@ -485,7 +485,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                             //iconCls: 'icon-add',
                             text: 'Agregar',
                             scope: this,
-                            hidden: (typeView==="Child"),
                             handler: this.onAddClick
                         },
                         </c:if>
@@ -505,7 +504,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         <c:if test="${viewConfig.visibleExportButton}">
                         {
                             text: 'Exportar',
-                            hidden: (typeView==="Child"),
                             //iconCls: 'add16',
                             menu: [
                                 {text: 'A xls', handler: function(){this.exportTo('xls');}, scope: this},
@@ -517,7 +515,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         {
                             text: 'Auto-Guardar',
                             enableToggle: ${viewConfig.defaultAutoSave},
-                            hidden: (typeView==="Child"),
                             pressed: true,
                             tooltip: 'When enabled, Store will execute Ajax requests as soon as a Record becomes dirty.',
                             scope: this,
@@ -545,8 +542,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         displayMsg: modelText+' {0} - {1} de {2}',
                         emptyMsg: "No hay "+modelText
                     }],
-                    columns: columns,
-                    getEmptyRec: getEmptyRec
+                    columns: columns
                 });
                 this.callParent();
                 this.getSelectionModel().on('selectionchange', this.onSelectChange, this);
@@ -577,7 +573,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     }
                     if(filter.in.id.length>0){
                         Instance.entityExtStore.deleteByFilter(JSON.stringify(filter), function(responseText){
-                            console.log(responseText.data);
                             Instance.reloadPageStore(Instance.store.currentPage);
                         });
                     }
@@ -585,7 +580,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             },
 
             onAddClick: function(){
-                var rec = this.getEmptyRec(), edit = this.editing;
+                var rec = Instance.getEmptyRec(), edit = this.editing;
                 edit.cancelEdit();
                 this.store.insert(0, rec);
                 edit.startEditByPosition({

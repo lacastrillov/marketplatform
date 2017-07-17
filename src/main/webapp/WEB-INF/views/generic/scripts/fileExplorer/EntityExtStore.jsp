@@ -291,7 +291,7 @@ function ${entityName}ExtStore(){
         });
         Ext.Ajax.request({
             url: Ext.context+"/rest/${entityRef}/delete/byfilter.htm",
-            method: "POST",
+            method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
                 var responseText= Ext.decode(response.responseText);

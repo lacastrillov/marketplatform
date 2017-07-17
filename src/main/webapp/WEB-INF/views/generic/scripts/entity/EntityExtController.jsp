@@ -116,6 +116,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
             var jsonTypeChildExtViews= ${jsonTypeChildExtViews};
             Instance.entityExtView.childExtControllers.forEach(function(childExtController) {
                 childExtController.filter= {"eq":{"${entityRef}":idEntitySelected}};
+                childExtController.entityExtView.setValueInEmptyModel("${entityRef}", idEntitySelected);
                 if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv_standard"){
                     childExtController.loadGridData();
                     childExtController.loadFormData("");
