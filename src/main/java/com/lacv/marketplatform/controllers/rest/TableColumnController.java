@@ -57,18 +57,32 @@ public class TableColumnController extends RestController {
     @ResponseBody
     @Override
     public byte[] create(@RequestParam(required= false) String data, HttpServletRequest request) {
-        byte[] result= super.create(data, request);
+        JSONObject jsonObject=null;
+        try {
+            String jsonData= data;
+            if(jsonData==null){
+                jsonData = IOUtils.toString(request.getInputStream());
+            }
+            jsonObject= new JSONObject(jsonData);
+            String columnAlias= formatColumnAlias(jsonObject.getString("columnAlias"));
+            jsonObject.put("columnAlias", columnAlias);
+        } catch (Exception e) {
+            LOGGER.error("update " + entityRef, e);
+        }
+        
+        byte[] result= super.create(jsonObject.toString(), request);
         
         try{
             JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
             if(jsonResult.getBoolean("success")){
                 JSONObject jsonColumn= jsonResult.getJSONObject("data");
                 TableColumn tableColumn= tableColumnService.findById(jsonColumn.getInt("id"));
-                String tableName= getLeadTableName(tableColumn.getLeadTable().getTableAlias());
+                String tableName= tableColumn.getLeadTable().getTableAlias();
                 
                 TableColumnDB column= new TableColumnDB();
                 column.setColumnName(jsonColumn.getString("columnAlias"));
-                column.setDataType(Formats.getDatabaseType(jsonColumn.getString("dataType")));
+                column.setDataType(jsonColumn.getString("dataType"));
+                column.setDataTypeDB(Formats.getDatabaseType(jsonColumn.getString("dataType")));
                 if(jsonColumn.getString("dataType").equals("java.lang.String")){
                     column.setColumnSize(jsonColumn.getInt("columnSize"));
                 }
@@ -88,21 +102,25 @@ public class TableColumnController extends RestController {
     public byte[] update(@RequestParam(required= false) String data, HttpServletRequest request) {
         String oldColumnAlias="";
         String tableName="";
+        JSONObject jsonObject=null;
         try {
             String jsonData= data;
             if(jsonData==null){
                 jsonData = IOUtils.toString(request.getInputStream());
             }
-            JSONObject jsonObject= new JSONObject(jsonData);
-            
+            jsonObject= new JSONObject(jsonData);
+            if(jsonObject.has("columnAlias")){
+                String columnAlias= formatColumnAlias(jsonObject.getString("columnAlias"));
+                jsonObject.put("columnAlias", columnAlias);
+            }
             TableColumn tableColumn= tableColumnService.findById(jsonObject.getInt("id"));
             oldColumnAlias= tableColumn.getColumnAlias();
-            tableName= getLeadTableName(tableColumn.getLeadTable().getTableAlias());
+            tableName= tableColumn.getLeadTable().getTableAlias();
         } catch (Exception e) {
             LOGGER.error("update " + entityRef, e);
         }
         
-        byte[] result= super.update(data, request);
+        byte[] result= super.update(jsonObject.toString(), request);
         
         try{
             JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
@@ -111,7 +129,7 @@ public class TableColumnController extends RestController {
                 
                 TableColumnDB column= new TableColumnDB();
                 column.setColumnName(jsonColumn.getString("columnAlias"));
-                column.setDataType(Formats.getDatabaseType(jsonColumn.getString("dataType")));
+                column.setDataTypeDB(Formats.getDatabaseType(jsonColumn.getString("dataType")));
                 if(jsonColumn.getString("dataType").equals("java.lang.String")){
                     column.setColumnSize(jsonColumn.getInt("columnSize"));
                 }
@@ -129,16 +147,25 @@ public class TableColumnController extends RestController {
     @ResponseBody
     @Override
     public String delete(@RequestParam String data) {
+        String tableName="";
+        String columnAlias= "";
+        JSONObject jsonObject=null;
+        try {
+            String jsonData= data;
+            jsonObject= new JSONObject(jsonData);
+            TableColumn tableColumn= tableColumnService.findById(jsonObject.getInt("id"));
+            columnAlias= tableColumn.getColumnAlias();
+            tableName= tableColumn.getLeadTable().getTableAlias();
+        } catch (Exception e) {
+            LOGGER.error("update " + entityRef, e);
+        }
+        
         String result= super.delete(data);
         
         try{
             JSONObject jsonResult= new JSONObject(result);
             if(jsonResult.getBoolean("success")){
-                JSONObject jsonColumn= jsonResult.getJSONObject("data");
-                TableColumn tableColumn= tableColumnService.findById(jsonColumn.getInt("id"));
-                String tableName= getLeadTableName(tableColumn.getLeadTable().getTableAlias());
-
-                jdbcDirectService.dropTableColumn(tableName, jsonColumn.getString("columnAlias"));
+                jdbcDirectService.dropTableColumn(tableName, columnAlias);
             }
         }catch(Exception e){
             LOGGER.error("update " + entityRef, e);
@@ -147,8 +174,8 @@ public class TableColumnController extends RestController {
         return result;
     }
     
-    private String getLeadTableName(String originalName){
-        return "lt_"+originalName.toLowerCase().replaceAll(" ", "_");
+    private String formatColumnAlias(String originalName){
+        return Formats.stripAccents(originalName).toLowerCase().replaceAll(" ", "_");
     }
     
 }

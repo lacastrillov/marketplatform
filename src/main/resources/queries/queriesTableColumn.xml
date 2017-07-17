@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <bean id="queriesTableColumn" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="columsConfig">
+                    <value>
+                        SELECT lt.table_alias as tableName,
+                        tc.column_alias as columnName,
+                        tc.data_type as dataType,
+                        tc.column_size as columnSize
+                        FROM table_column tc
+                        join lead_table lt on tc.lead_table_id= lt.id
+                    </value>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+    
+</beans>

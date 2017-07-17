@@ -5,7 +5,7 @@
  */
 package com.lacv.marketplatform.entities;
 
-import com.dot.gcpbasedot.dto.LogProcesInterface;
+import com.dot.gcpbasedot.interfaces.LogProcesInterface;
 import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Basic;

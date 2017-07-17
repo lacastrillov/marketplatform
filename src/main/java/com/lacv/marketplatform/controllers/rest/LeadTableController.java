@@ -13,7 +13,10 @@ import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dto.TableColumnDB;
 import com.dot.gcpbasedot.service.JdbcDirectService;
 import com.dot.gcpbasedot.service.gcp.StorageService;
+import com.dot.gcpbasedot.util.Formats;
 import com.lacv.marketplatform.entities.LeadTable;
+import com.lacv.marketplatform.entities.TableColumn;
+import com.lacv.marketplatform.services.TableColumnService;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,9 @@ public class LeadTableController extends RestController {
     LeadTableService leadTableService;
     
     @Autowired
+    TableColumnService tableColumnService;
+    
+    @Autowired
     JdbcDirectService jdbcDirectService;
     
     @Autowired
@@ -58,21 +64,44 @@ public class LeadTableController extends RestController {
     @ResponseBody
     @Override
     public byte[] create(@RequestParam(required= false) String data, HttpServletRequest request) {
-        byte[] result= super.create(data, request);
+        JSONObject jsonObject=null;
+        try {
+            String jsonData= data;
+            if(jsonData==null){
+                jsonData = IOUtils.toString(request.getInputStream());
+            }
+            jsonObject= new JSONObject(jsonData);
+            String tableAlias= formatTableAlias(jsonObject.getString("tableAlias"));
+            jsonObject.put("tableAlias", tableAlias);
+        } catch (Exception e) {
+            LOGGER.error("update " + entityRef, e);
+        }
+        
+        byte[] result= super.create(jsonObject.toString(), request);
         
         try{
             JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
             if(jsonResult.getBoolean("success")){
+                TableColumn tableColumn= new TableColumn();
+                tableColumn.setColumnAlias("id");
+                tableColumn.setName("Id");
+                tableColumn.setWidth(100);
+                tableColumn.setColumnOrder(1);
+                tableColumn.setDataType("int");
+                tableColumn.setLeadTable(new LeadTable(jsonResult.getJSONObject("data").getInt("id")));
+                
+                tableColumnService.create(tableColumn);
+                
                 List<TableColumnDB> columns= new ArrayList<>();
                 TableColumnDB idColumn= new TableColumnDB();
                 idColumn.setColumnName("id");
-                idColumn.setDataType("INT");
+                idColumn.setDataTypeDB("INT");
                 idColumn.setIsAutoIncrement(true);
                 idColumn.setIsNotNull(true);
                 idColumn.setIsPrimaryKey(true);
                 columns.add(idColumn);
 
-                String tableName= getLeadTableName(jsonResult.getJSONObject("data").getString("tableAlias"));
+                String tableName= jsonResult.getJSONObject("data").getString("tableAlias");
 
                 jdbcDirectService.createTable(tableName, columns);
             }
@@ -88,27 +117,30 @@ public class LeadTableController extends RestController {
     @Override
     public byte[] update(@RequestParam(required= false) String data, HttpServletRequest request) {
         String oldTableAlias="";
-        
+        JSONObject jsonObject=null;
         try {
             String jsonData= data;
             if(jsonData==null){
                 jsonData = IOUtils.toString(request.getInputStream());
             }
-            JSONObject jsonObject= new JSONObject(jsonData);
-            
-            LeadTable leadTable= leadTableService.findById(Integer.parseInt(jsonObject.get("id").toString()));
+            jsonObject= new JSONObject(jsonData);
+            if(jsonObject.has("tableAlias")){
+                String tableAlias= formatTableAlias(jsonObject.getString("tableAlias"));
+                jsonObject.put("tableAlias", tableAlias);
+            }
+            LeadTable leadTable= leadTableService.findById(jsonObject.getInt("id"));
             oldTableAlias= leadTable.getTableAlias();
         } catch (Exception e) {
             LOGGER.error("update " + entityRef, e);
         }
         
-        byte[] result= super.update(data, request);
+        byte[] result= super.update(jsonObject.toString(), request);
         
         try{
             JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
             if(jsonResult.getBoolean("success") && !jsonResult.getJSONObject("data").getString("tableAlias").equals(oldTableAlias)){
-                String tableName= getLeadTableName(oldTableAlias);
-                String newTableName= getLeadTableName(jsonResult.getJSONObject("data").getString("tableAlias"));
+                String tableName= oldTableAlias;
+                String newTableName= jsonResult.getJSONObject("data").getString("tableAlias");
                 jdbcDirectService.changeTableName(tableName, newTableName);
             }
         }catch(Exception e){
@@ -127,7 +159,7 @@ public class LeadTableController extends RestController {
         try{
             JSONObject jsonResult= new JSONObject(result);
             if(jsonResult.getBoolean("success")){
-                String tableName= getLeadTableName(jsonResult.getJSONObject("data").getString("tableAlias"));
+                String tableName= jsonResult.getJSONObject("data").getString("tableAlias");
 
                 jdbcDirectService.dropTable(tableName);
             }
@@ -138,8 +170,12 @@ public class LeadTableController extends RestController {
         return result;
     }
     
-    private String getLeadTableName(String originalName){
-        return "lt_"+originalName.toLowerCase().replaceAll(" ", "_");
+    private String formatTableAlias(String originalName){
+        if(originalName.startsWith("lt_")){
+            return Formats.stripAccents(originalName).toLowerCase().replaceAll(" ", "_");
+        }else{
+            return "lt_"+Formats.stripAccents(originalName).toLowerCase().replaceAll(" ", "_");
+        }
     }
     
 }
