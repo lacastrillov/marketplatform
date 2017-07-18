@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.PaymentDto;
 import com.lacv.marketplatform.mappers.PaymentMapper;
 import com.lacv.marketplatform.services.PaymentService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/payment")
-public class PaymentViewController extends ExtViewController {
+public class PaymentViewController extends ExtEntityController {
     
     @Autowired
     PaymentService paymentService;

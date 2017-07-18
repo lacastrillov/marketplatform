@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.AuthorizationDto;
 import com.lacv.marketplatform.mappers.AuthorizationMapper;
 import com.lacv.marketplatform.services.AuthorizationService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/authorization")
-public class AuthorizationViewController extends ExtViewController {
+public class AuthorizationViewController extends ExtEntityController {
     
     @Autowired
     AuthorizationService authorizationService;

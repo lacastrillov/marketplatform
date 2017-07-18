@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.ProductImageDto;
 import com.lacv.marketplatform.mappers.ProductImageMapper;
 import com.lacv.marketplatform.services.ProductImageService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.ReportConfig;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.dtos.reports.ProductImageReportDto;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/productImage")
-public class ProductImageViewController extends ExtViewController {
+public class ProductImageViewController extends ExtEntityController {
     
     @Autowired
     ProductImageService productImageService;

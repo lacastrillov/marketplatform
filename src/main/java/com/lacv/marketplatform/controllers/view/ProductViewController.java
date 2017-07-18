@@ -8,8 +8,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.ProductDto;
 import com.lacv.marketplatform.mappers.ProductMapper;
 import com.lacv.marketplatform.services.ProductService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessButton;
@@ -43,7 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping(value = "/vista/product")
-public class ProductViewController extends ExtViewController {
+public class ProductViewController extends ExtEntityController {
 
     @Autowired
     ProductService productService;

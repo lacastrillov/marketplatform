@@ -12,7 +12,7 @@ import com.lacv.marketplatform.dtos.process.ProductoPDto;
 import com.lacv.marketplatform.dtos.process.ResultadoPDto;
 import com.lacv.marketplatform.dtos.process.UsuarioPDto;
 import com.dot.gcpbasedot.controller.ExtProcessController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;

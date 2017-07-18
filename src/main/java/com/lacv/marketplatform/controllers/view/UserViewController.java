@@ -10,8 +10,8 @@ import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessButton;
 import com.dot.gcpbasedot.dto.ViewConfig;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/user")
-public class UserViewController extends ExtViewController {
+public class UserViewController extends ExtEntityController {
     
     @Autowired
     UserService userService;

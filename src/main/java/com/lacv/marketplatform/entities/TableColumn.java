@@ -56,6 +56,8 @@ public class TableColumn implements BaseEntity {
     private String fieldType;
     @Column(name = "column_size")
     private Integer columnSize;
+    @Column(name = "not_null")
+    private Boolean notNull;
     @Column(name = "width")
     private Integer width;
     @Column(name = "column_order")
@@ -132,6 +134,14 @@ public class TableColumn implements BaseEntity {
 
     public void setColumnSize(Integer columnSize) {
         this.columnSize = columnSize;
+    }
+    
+    public Boolean getNotNull() {
+        return notNull;
+    }
+
+    public void setNotNull(Boolean notNull) {
+        this.notNull = notNull;
     }
 
     public Integer getWidth() {

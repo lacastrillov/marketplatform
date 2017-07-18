@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.WebResourceDto;
 import com.lacv.marketplatform.mappers.WebResourceMapper;
 import com.lacv.marketplatform.services.WebResourceService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.WebresourceAuthorization;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/webResource")
-public class WebResourceViewController extends ExtViewController {
+public class WebResourceViewController extends ExtEntityController {
     
     @Autowired
     WebResourceService webResourceService;

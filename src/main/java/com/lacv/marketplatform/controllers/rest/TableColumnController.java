@@ -7,10 +7,11 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
+import com.dot.gcpbasedot.components.TableColumnsConfig;
 import com.lacv.marketplatform.mappers.TableColumnMapper;
 import com.lacv.marketplatform.services.TableColumnService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.dot.gcpbasedot.dto.TableColumnDB;
+import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
 import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.Formats;
@@ -40,6 +41,9 @@ public class TableColumnController extends RestController {
     
     @Autowired
     JdbcDirectService jdbcDirectService;
+    
+    @Autowired
+    private TableColumnsConfig tableColumnsConfig;
     
     @Autowired
     TableColumnMapper tableColumnMapper;
@@ -79,15 +83,20 @@ public class TableColumnController extends RestController {
                 TableColumn tableColumn= tableColumnService.findById(jsonColumn.getInt("id"));
                 String tableName= tableColumn.getLeadTable().getTableAlias();
                 
-                TableColumnDB column= new TableColumnDB();
-                column.setColumnName(jsonColumn.getString("columnAlias"));
+                GenericTableColumn column= new GenericTableColumn();
+                column.setColumnAlias(jsonColumn.getString("columnAlias"));
                 column.setDataType(jsonColumn.getString("dataType"));
                 column.setDataTypeDB(Formats.getDatabaseType(jsonColumn.getString("dataType")));
                 if(jsonColumn.getString("dataType").equals("java.lang.String")){
                     column.setColumnSize(jsonColumn.getInt("columnSize"));
                 }
+                if(jsonColumn.has("notNull")){
+                    column.setNotNull(jsonColumn.getBoolean("notNull"));
+                }
 
                 jdbcDirectService.addTableColumn(tableName, column);
+                
+                tableColumnsConfig.updateColumnsConfig(tableName);
             }
         }catch(Exception e){
             LOGGER.error("create " + entityRef, e);
@@ -127,14 +136,19 @@ public class TableColumnController extends RestController {
             if(jsonResult.getBoolean("success")){
                 JSONObject jsonColumn= jsonResult.getJSONObject("data");
                 
-                TableColumnDB column= new TableColumnDB();
-                column.setColumnName(jsonColumn.getString("columnAlias"));
+                GenericTableColumn column= new GenericTableColumn();
+                column.setColumnAlias(jsonColumn.getString("columnAlias"));
                 column.setDataTypeDB(Formats.getDatabaseType(jsonColumn.getString("dataType")));
                 if(jsonColumn.getString("dataType").equals("java.lang.String")){
                     column.setColumnSize(jsonColumn.getInt("columnSize"));
                 }
+                if(jsonColumn.has("notNull")){
+                    column.setNotNull(jsonColumn.getBoolean("notNull"));
+                }
                 
                 jdbcDirectService.changeTableColumn(tableName, oldColumnAlias, column);
+                
+                tableColumnsConfig.updateColumnsConfig(tableName);
             }
         }catch(Exception e){
             LOGGER.error("update " + entityRef, e);
@@ -166,6 +180,8 @@ public class TableColumnController extends RestController {
             JSONObject jsonResult= new JSONObject(result);
             if(jsonResult.getBoolean("success")){
                 jdbcDirectService.dropTableColumn(tableName, columnAlias);
+                
+                tableColumnsConfig.updateColumnsConfig(tableName);
             }
         }catch(Exception e){
             LOGGER.error("update " + entityRef, e);

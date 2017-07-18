@@ -7,10 +7,11 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
+import com.dot.gcpbasedot.components.TableColumnsConfig;
 import com.lacv.marketplatform.mappers.LeadTableMapper;
 import com.lacv.marketplatform.services.LeadTableService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.dot.gcpbasedot.dto.TableColumnDB;
+import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
 import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.Formats;
@@ -87,18 +88,19 @@ public class LeadTableController extends RestController {
                 tableColumn.setName("Id");
                 tableColumn.setWidth(100);
                 tableColumn.setColumnOrder(1);
+                tableColumn.setNotNull(true);
                 tableColumn.setDataType("int");
                 tableColumn.setLeadTable(new LeadTable(jsonResult.getJSONObject("data").getInt("id")));
                 
                 tableColumnService.create(tableColumn);
                 
-                List<TableColumnDB> columns= new ArrayList<>();
-                TableColumnDB idColumn= new TableColumnDB();
-                idColumn.setColumnName("id");
+                List<GenericTableColumn> columns= new ArrayList<>();
+                GenericTableColumn idColumn= new GenericTableColumn();
+                idColumn.setColumnAlias("id");
                 idColumn.setDataTypeDB("INT");
-                idColumn.setIsAutoIncrement(true);
-                idColumn.setIsNotNull(true);
-                idColumn.setIsPrimaryKey(true);
+                idColumn.setAutoIncrement(true);
+                idColumn.setNotNull(true);
+                idColumn.setPrimaryKey(true);
                 columns.add(idColumn);
 
                 String tableName= jsonResult.getJSONObject("data").getString("tableAlias");

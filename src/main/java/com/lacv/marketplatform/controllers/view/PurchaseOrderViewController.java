@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.PurchaseOrderDto;
 import com.lacv.marketplatform.mappers.PurchaseOrderMapper;
 import com.lacv.marketplatform.services.PurchaseOrderService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.PurchaseorderDetail;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/purchaseOrder")
-public class PurchaseOrderViewController extends ExtViewController {
+public class PurchaseOrderViewController extends ExtEntityController {
     
     @Autowired
     PurchaseOrderService purchaseOrderService;

@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.RoleAuthorizationDto;
 import com.lacv.marketplatform.mappers.RoleAuthorizationMapper;
 import com.lacv.marketplatform.services.RoleAuthorizationService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/roleAuthorization")
-public class RoleAuthorizationViewController extends ExtViewController {
+public class RoleAuthorizationViewController extends ExtEntityController {
     
     @Autowired
     RoleAuthorizationService roleAuthorizationService;

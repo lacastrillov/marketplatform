@@ -29,8 +29,12 @@
     <context:component-scan base-package="com.dot.gcpbasedot.service.gcp" />
     <context:component-scan base-package="com.dot.gcpbasedot.components" />
     
-    <bean id="menuComponent" class="com.dot.gcpbasedot.controller.MenuComponent">
+    <bean id="menuComponent" class="com.dot.gcpbasedot.components.MenuComponent">
         <property name="basePath" value="/vista" />
+    </bean>
+    
+    <bean id="tableColumnsConfig" class="com.dot.gcpbasedot.components.TableColumnsConfig">
+        <property name="columsConfigNameQuery" value="queriesTableColumn.columsConfig" />
     </bean>
 
 </beans>

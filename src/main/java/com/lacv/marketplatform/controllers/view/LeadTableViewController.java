@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.LeadTableDto;
 import com.lacv.marketplatform.mappers.LeadTableMapper;
 import com.lacv.marketplatform.services.LeadTableService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.TableColumn;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/leadTable")
-public class LeadTableViewController extends ExtViewController {
+public class LeadTableViewController extends ExtEntityController {
     
     @Autowired
     LeadTableService leadTableService;

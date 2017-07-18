@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.CategoryDto;
 import com.lacv.marketplatform.mappers.CategoryMapper;
 import com.lacv.marketplatform.services.CategoryService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.Category;
@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping(value="/vista/category")
-public class CategoryViewController extends ExtViewController {
+public class CategoryViewController extends ExtEntityController {
     
     @Autowired
     CategoryService categoryService;

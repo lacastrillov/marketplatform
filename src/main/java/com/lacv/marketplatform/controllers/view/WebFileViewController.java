@@ -10,7 +10,7 @@ import com.lacv.marketplatform.dtos.WebFileDto;
 import com.lacv.marketplatform.mappers.WebFileMapper;
 import com.lacv.marketplatform.services.WebFileService;
 import com.dot.gcpbasedot.controller.ExtFileExplorerController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.GridTemplate;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.FileExplorerConfig;

@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.MainLocationDto;
 import com.lacv.marketplatform.mappers.MainLocationMapper;
 import com.lacv.marketplatform.services.MainLocationService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/mainLocation")
-public class MainLocationViewController extends ExtViewController {
+public class MainLocationViewController extends ExtEntityController {
     
     @Autowired
     MainLocationService mainLocationService;

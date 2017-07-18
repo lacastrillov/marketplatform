@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.RoleDto;
 import com.lacv.marketplatform.mappers.RoleMapper;
 import com.lacv.marketplatform.services.RoleService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.entities.RoleAuthorization;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/role")
-public class RoleViewController extends ExtViewController {
+public class RoleViewController extends ExtEntityController {
     
     @Autowired
     RoleService roleService;

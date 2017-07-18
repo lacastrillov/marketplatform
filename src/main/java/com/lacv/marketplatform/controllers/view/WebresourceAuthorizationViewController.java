@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.WebresourceAuthorizationDto;
 import com.lacv.marketplatform.mappers.WebresourceAuthorizationMapper;
 import com.lacv.marketplatform.services.WebresourceAuthorizationService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import javax.annotation.PostConstruct;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/webresourceAuthorization")
-public class WebresourceAuthorizationViewController extends ExtViewController {
+public class WebresourceAuthorizationViewController extends ExtEntityController {
     
     @Autowired
     WebresourceAuthorizationService webresourceAuthorizationService;

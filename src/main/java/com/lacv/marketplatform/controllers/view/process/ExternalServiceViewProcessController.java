@@ -9,7 +9,7 @@ package com.lacv.marketplatform.controllers.view.process;
 import com.lacv.marketplatform.dtos.LogProcessDto;
 import com.lacv.marketplatform.dtos.process.BasicResultDto;
 import com.dot.gcpbasedot.controller.ExtProcessController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;

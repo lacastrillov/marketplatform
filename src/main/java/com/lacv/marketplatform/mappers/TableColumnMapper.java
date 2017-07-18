@@ -33,6 +33,7 @@ public class TableColumnMapper implements BasicEntityMapper {
             dto.setColumnAlias(entity.getColumnAlias());
             dto.setColumnOrder(entity.getColumnOrder());
             dto.setColumnSize(entity.getColumnSize());
+            dto.setNotNull(entity.getNotNull());
             dto.setDataType(entity.getDataType());
             dto.setDefaultValue(entity.getDefaultValue());
             dto.setFieldType(entity.getFieldType());

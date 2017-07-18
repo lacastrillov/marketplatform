@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.InventoryorderDetailDto;
 import com.lacv.marketplatform.mappers.InventoryorderDetailMapper;
 import com.lacv.marketplatform.services.InventoryorderDetailService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/inventoryorderDetail")
-public class InventoryorderDetailViewController extends ExtViewController {
+public class InventoryorderDetailViewController extends ExtEntityController {
     
     @Autowired
     InventoryorderDetailService inventoryorderDetailService;

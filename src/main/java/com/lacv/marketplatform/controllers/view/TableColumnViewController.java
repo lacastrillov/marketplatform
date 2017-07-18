@@ -9,8 +9,8 @@ package com.lacv.marketplatform.controllers.view;
 import com.lacv.marketplatform.dtos.TableColumnDto;
 import com.lacv.marketplatform.mappers.TableColumnMapper;
 import com.lacv.marketplatform.services.TableColumnService;
-import com.dot.gcpbasedot.controller.ExtViewController;
-import com.dot.gcpbasedot.controller.MenuComponent;
+import com.dot.gcpbasedot.controller.ExtEntityController;
+import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ViewConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/vista/tableColumn")
-public class TableColumnViewController extends ExtViewController {
+public class TableColumnViewController extends ExtEntityController {
     
     @Autowired
     TableColumnService tableColumnService;
@@ -46,6 +46,7 @@ public class TableColumnViewController extends ExtViewController {
         ViewConfig view= new ViewConfig("tableColumn", "name", tableColumnService, TableColumnDto.class);
         view.setSingularEntityTitle("Columna de la tabla");
         view.setPluralEntityTitle("Columnas de la tabla");
+        view.setDefaultOrder("columnOrder", "ASC");
         super.addControlMapping(view);
     }
     
