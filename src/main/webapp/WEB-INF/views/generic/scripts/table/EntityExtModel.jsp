@@ -14,14 +14,5 @@ function ${entityName}ExtModel(){
         });
     };
     
-    <c:if test="${viewConfig.activeGridTemplateAsParent || viewConfig.activeGridTemplateAsChild}">
-    Instance.defineTemplateModel= function(modelName){
-        Ext.define(modelName, {
-            extend: 'Ext.data.Model',
-            fields: ${jsonTemplateModel}
-        });
-    };
-    </c:if>
-    
 }
 </script>

@@ -27,10 +27,10 @@ function ${entityName}ExtStore(){
                     destroy: 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm',
-                    create: Ext.context+'/rest/${entityRef}/create.htm',
-                    update: Ext.context+'/rest/${entityRef}/update.htm',
-                    destroy: Ext.context+'/rest/${entityRef}/delete.htm'
+                    read: Ext.context+'/rest/${entityRef}/${tableName}/find.htm',
+                    create: Ext.context+'/rest/${entityRef}/${tableName}/create.htm',
+                    update: Ext.context+'/rest/${entityRef}/${tableName}/update.htm',
+                    destroy: Ext.context+'/rest/${entityRef}/${tableName}/delete.htm'
                 },
                 reader: {
                     type: 'json',
@@ -86,74 +86,10 @@ function ${entityName}ExtStore(){
         
         return store;
     };
-    
-    <c:if test="${viewConfig.activeGridTemplateAsParent || viewConfig.activeGridTemplateAsChild}">
-    Instance.getTemplateStore= function(modelName){
-        var store = Ext.create('Ext.data.Store', {
-            model: modelName,
-            autoLoad: false,
-            pageSize: ${viewConfig.maxResultsPerPage},
-            remoteSort: true,
-            proxy: {
-                type: 'ajax',
-                batchActions: false,
-                simpleSortMode: true,
-                actionMethods : {
-                    read   : 'GET'
-                },
-                api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm'
-                },
-                reader: {
-                    type: 'json',
-                    successProperty: 'success',
-                    root: 'data',
-                    totalProperty: 'totalCount',
-                    messageProperty: 'message'
-                },
-                extraParams: {
-                    filter: null,
-                    templateName: '${viewConfig.gridTemplate.templateName}',
-                    numColumns: ${viewConfig.gridTemplate.numColumns}
-                },
-                listeners: {
-                    exception: function(proxy, response, operation){
-                        var errorMsg= operation.getError();
-                        if(typeof errorMsg === "object"){
-                            if(errorMsg.status===403){
-                                errorMsg= error403;
-                            }else{
-                                errorMsg= errorGeneral;
-                            }
-                        }
-                        showErrorMessage(errorMsg);
-                    }
-                }
-            },
-            listeners: {
-                load: function() {
-                    var gridComponent= null;
-                    if(this.gridContainer){
-                        gridComponent= this.gridContainer.child('#grid'+modelName);
-                        gridComponent.getSelectionModel().deselectAll();
-                    }
-                }
-            },
-            sorters: [{
-                property: '${viewConfig.defaultOrderBy}',
-                direction: '${viewConfig.defaultOrderDir}'
-            }],
-            formContainer:null,
-            gridContainer:null
-        });
-        
-        return store;
-    };
-    </c:if>
 
     Instance.find= function(filter, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/find.htm",
+            url: Ext.context+"/rest/${entityRef}/${tableName}/find.htm",
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
@@ -179,7 +115,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/"+operation+".htm",
+            url: Ext.context+"/rest/${entityRef}/${tableName}/"+operation+".htm",
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -200,7 +136,7 @@ function ${entityName}ExtStore(){
     
     Instance.load= function(idEntity, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/load.htm",
+            url: Ext.context+"/rest/${entityRef}/${tableName}/load.htm",
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
@@ -220,42 +156,13 @@ function ${entityName}ExtStore(){
     
     Instance.upload= function(form, idEntity, func){
         form.submit({
-            url: Ext.context+"/rest/${entityRef}/diskupload/"+idEntity+".htm",
+            url: Ext.context+"/rest/${entityRef}/${tableName}/diskupload/"+idEntity+".htm",
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
             },
             failure: function(response){
                 console.log(response);
-                if(response.status===403){
-                    showErrorMessage(error403);
-                }else{
-                    showErrorMessage(errorGeneral);
-                }
-            }
-        });
-    };
-    
-    Instance.doProcess= function(mainProcessRef, processName, data, func){
-        Ext.MessageBox.show({
-            msg: 'Ejecutando...',
-            width:200,
-            wait:true,
-            waitConfig: {interval:200}
-        });
-        Ext.Ajax.request({
-            url: Ext.context+"/rest/"+mainProcessRef+"/doProcess.htm",
-            method: "POST",
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
-            success: function(response){
-                Ext.MessageBox.hide();
-                func(response.responseText);
-            },
-            failure: function(response){
-                console.log(response.responseText);
                 if(response.status===403){
                     showErrorMessage(error403);
                 }else{
@@ -273,7 +180,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/delete/byfilter.htm",
+            url: Ext.context+"/rest/${entityRef}/${tableName}/delete/byfilter.htm",
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){

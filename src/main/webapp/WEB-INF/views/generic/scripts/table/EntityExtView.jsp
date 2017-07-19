@@ -32,68 +32,26 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.pluralEntityTitle= '${viewConfig.pluralEntityTitle}';
         Instance.entityExtModel.defineModel(Instance.modelName);
         Instance.store= Instance.entityExtStore.getStore(Instance.modelName);
-        <c:if test="${viewConfig.activeGridTemplate}">
-        Instance.gridModelName= "${entityName}TemplateModel";
-        Instance.entityExtModel.defineTemplateModel(Instance.gridModelName);
-        Instance.gridStore= Instance.entityExtStore.getTemplateStore(Instance.gridModelName);
-        </c:if>
         Instance.createMainView();
     };
     
     Instance.setFilterStore= function(filter){
-        <c:if test="${not viewConfig.activeGridTemplate}">
-            Instance.store.getProxy().extraParams.filter= filter;
-        </c:if>
-        <c:if test="${viewConfig.activeGridTemplate}">
-            Instance.gridStore.getProxy().extraParams.filter= filter;
-        </c:if>
+        Instance.store.getProxy().extraParams.filter= filter;
     };
     
     Instance.reloadPageStore= function(page){
-        <c:if test="${not viewConfig.activeGridTemplate}">
-            Instance.store.loadPage(page);
-        </c:if>
-        <c:if test="${viewConfig.activeGridTemplate}">
-            Instance.gridStore.loadPage(page);
-        </c:if>
+        Instance.store.loadPage(page);
     };
-    
-    <c:if test="${viewConfig.activeNNMulticheckChild}">
-    Instance.clearNNMultichecks= function(){
-        var checkboxGroup=Ext.getCmp('checkboxGroup${viewConfig.entityRefNNMulticheckChild}In${entityName}');
-        if(checkboxGroup.items.length > 0 && checkboxGroup.items.items.length > 0){
-            checkboxGroup.items.items.forEach(function(checkbox){
-                checkbox.activeChange=false;
-                checkbox.setValue(false);
-                checkbox.activeChange=true;
-            });
-        }
-    }
-    
-    Instance.findAndLoadNNMultichecks= function(filter){
-        Instance.entityExtStore.find(filter, function(responseText){
-            if(responseText.success){
-                responseText.data.forEach(function(item){
-                    var itemCheckValue= item.${viewConfig.entityRefNNMulticheckChild}.id;
-                    var checkbox= Ext.getCmp('checkNN${viewConfig.entityRefNNMulticheckChild}'+itemCheckValue);
-                    checkbox.activeChange=false;
-                    checkbox.setValue(true);
-                    checkbox.activeChange=true;
-                });
-            }
-        });
-    };
-    </c:if>
     
     <c:if test="${viewConfig.visibleForm}">
-    function getFormContainer(modelName, store, childExtControllers){
+    function getFormContainer(modelName, store){
         var formFields= ${jsonFormFields};
 
-        var renderReplacements= ${jsonRenderReplacements};
+        var renderReplacements= [];
 
-        var additionalButtons= ${jsonInternalViewButtons};
+        var additionalButtons= [];
 
-        Instance.defineWriterForm(Instance.modelName, formFields, renderReplacements, additionalButtons, childExtControllers, Instance.typeView);
+        Instance.defineWriterForm(Instance.modelName, formFields, renderReplacements, additionalButtons);
         
         var itemsForm= [{
             itemId: 'form'+modelName,
@@ -113,10 +71,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             }
         }];
         
-        if(Instance.typeView==="Parent"){
-            itemsForm.push(getChildsExtViewTabs(childExtControllers));
-        }
-        
         return Ext.create('Ext.container.Container', {
             id: 'formContainer'+modelName,
             title: 'Formulario',
@@ -124,44 +78,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             align: 'stretch',
             items: itemsForm
         });
-    };
-    
-    function getChildsExtViewTabs(childExtControllers){
-        var items=[];
-        var jsonTypeChildExtViews= ${jsonTypeChildExtViews};
-        childExtControllers.forEach(function(childExtController) {
-            var itemTab= null;
-            if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv_standard"){
-                itemTab= {
-                    xtype:'tabpanel',
-                    title: childExtController.entityExtView.pluralEntityTitle,
-                    plain:true,
-                    activeTab: 0,
-                    style: 'background-color:#dfe8f6; padding:10px;',
-                    defaults: {bodyStyle: 'padding:15px', autoScroll:true},
-                    items:[
-                        childExtController.entityExtView.gridContainer,
-
-                        childExtController.entityExtView.formContainer
-
-                    ]
-                };
-            }else if(jsonTypeChildExtViews[childExtController.entityRef]==="tcv-n-n-multicheck"){
-                itemTab= childExtController.entityExtView.checkboxGroupContainer;
-            }
-            
-            items.push(itemTab);
-        });
-        
-        var tabObect= {
-            xtype:'tabpanel',
-            plain:true,
-            activeTab: 0,
-            style: 'padding:25px 15px 45px 15px;',
-            items:items
-        };
-        
-        return tabObect;
     };
     
     Instance.setFormActiveRecord= function(record){
@@ -333,20 +249,12 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.getEmptyRec= function(){
             return new ${entityName}Model(Instance.emptyModel);
         };
-        
-        <c:if test="${viewConfig.activeGridTemplate}">
-        modelName= Instance.gridModelName;
-        store= Instance.gridStore;
-        </c:if>
 
-        Instance.defineWriterGrid(modelName, '${viewConfig.pluralEntityTitle}', gridColumns, Instance.typeView);
+        Instance.defineWriterGrid(modelName, '${viewConfig.pluralEntityTitle}', gridColumns);
         
         return Ext.create('Ext.container.Container', {
             id: 'gridContainer'+modelName,
             title: 'Listado',
-            <c:if test="${viewConfig.gridHeightChildView != 0}">
-            height: ${viewConfig.gridHeightChildView},
-            </c:if>
             layout: {
                 type: 'vbox',
                 align: 'stretch'
@@ -357,13 +265,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 style: 'border: 0px',
                 flex: 1,
                 store: store,
-                disableSelection: ${viewConfig.activeGridTemplate},
-                trackMouseOver: !${viewConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        /*if(selected[0]){
-                            parentExtController.loadFormData(selected[0].data.id)
-                        }*/
                         if(formContainer!==null && selected[0]){
                             formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
                         }
@@ -451,7 +354,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         return combobox;
     }
     
-    Instance.defineWriterGrid= function(modelName, modelText, columns, typeView){
+    Instance.defineWriterGrid= function(modelName, modelText, columns){
         Ext.define('WriterGrid'+modelName, {
             extend: 'Ext.grid.Panel',
             alias: 'widget.writergrid'+modelName,
@@ -492,9 +395,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         {
                             //iconCls: 'icon-delete',
                             text: 'Eliminar',
-                            <c:if test="${not viewConfig.activeGridTemplate}">
                             disabled: true,
-                            </c:if>
                             itemId: 'delete',
                             scope: this,
                             handler: this.onDeleteClick
@@ -596,244 +497,20 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         });
     };
     </c:if>
-
-    <c:if test="${viewConfig.activeNNMulticheckChild}">
-    function getCheckboxGroupContainer(){
-        var checkboxGroupContainer= Ext.create('Ext.container.Container', {
-            title: 'Lista '+Instance.${viewConfig.entityRefNNMulticheckChild}ExtInterfaces.pluralEntityTitle,
-            style: 'background-color:#dfe8f6; padding:10px;',
-            layout: 'anchor',
-            defaults: {
-                anchor: '100%'
-            },
-            items: [
-                Instance.${viewConfig.entityRefNNMulticheckChild}ExtInterfaces.getCheckboxGroup('${entityName}', '${viewConfig.entityRefNNMulticheckChild}',
-                function (checkbox, isChecked) {
-                    if(checkbox.activeChange){
-                        var record= Ext.create(Instance.modelName);
-                        if(Object.keys(parentExtController.filter.eq).length !== 0){
-                            for (var key in parentExtController.filter.eq) {
-                                record.data[key]= parentExtController.filter.eq[key];
-                            }
-                        }
-                        record.data[checkbox.name]= checkbox.inputValue;
-                        if(isChecked){
-                            Instance.entityExtStore.save('create', JSON.stringify(record.data), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }else{
-                            var filter= record.data;
-                            delete filter["id"];
-                            Instance.entityExtStore.deleteByFilter(JSON.stringify({"eq":filter}), function(responseText){
-                                console.log(responseText.data);
-                            });
-                        }
-                    }
-                })
-            ]
-        });
-        
-        return checkboxGroupContainer;
-    }
-    </c:if>
     
-    function getPropertyGrid(){
-        var renderers= {
-            <c:forEach var="associatedER" items="${interfacesEntityRef}">
-                <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-            ${associatedEntityName}: function(entity){
-                var res = entity.split("__");
-                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
-            },
-            </c:forEach>
-        }
-        var pg= Ext.create('Ext.grid.property.Grid', {
-            id: 'propertyGrid${entityName}',
-            region: 'north',
-            hideHeaders: true,
-            resizable: false,
-            defaults: {
-                sortable: false
-            },
-            customRenderers: renderers,
-            disableSelection:true,
-            listeners: {
-                'beforeedit':{
-                    fn:function(){
-                        return false;
-                    }
-                }
-            }
-        });
-        pg.getStore().sorters.items= [];
-        
-        return pg;
-    };
-    
-    <c:forEach var="processButton" items="${viewConfig.processButtons}">
-    function getForm${processButton.processName}Process(){
-        
-        var processForm = Ext.create('Ext.form.Panel', {
-            itemId: 'form${processButton.processName}Process',
-            defaultType: 'textfield',
-            border: false,
-            bodyPadding: 15,
-            autoScroll: true,
-            fieldDefaults: {
-                minWidth: 300,
-                anchor: '100%',
-                labelAlign: 'right'
-            },
-
-            items: ${jsonFormFieldsProcessMap[processButton.processName]}
-        });
-
-        var win = Ext.create('Ext.window.Window', {
-            autoShow: false,
-            title: '${processButton.processTitle}',
-            closable: true,
-            closeAction: 'hide',
-            width: '50%',
-            height: 300,
-            minWidth: 300,
-            minHeight: 200,
-            layout: 'fit',
-            plain:true,
-            maximizable: true,
-            minimizable: true,
-            items: processForm,
-
-            buttons: [{
-                text: 'Ejecutar',
-                handler: function(){
-                    var jsonData= JSON.stringify(processForm.getForm().getValues());
-                    Instance.entityExtStore.doProcess('${processButton.mainProcessRef}', '${processButton.processName}', jsonData, function(responseText){
-                        Ext.MessageBox.alert('Status', responseText);
-                        win.hide();
-                    });
-                }
-            },{
-                text: 'Cancelar',
-                handler: function(){
-                    win.hide();
-                }
-            }],
-            listeners: {
-                "minimize": function (window, opts) {
-                    window.collapse();
-                    window.setWidth(150);
-                    window.alignTo(Ext.getBody(), 'bl-bl')
-                }
-            },
-            tools: [{
-                type: 'restore',
-                handler: function (evt, toolEl, owner, tool) {
-                    var window = owner.up('window');
-                    window.setWidth(600);
-                    window.setHeight(300);
-                    window.expand('', false);
-                    window.center();
-                }
-            }]
-        });
-        
-        return win;
-    }
-    </c:forEach>
-    
-    Instance.showProcessForm= function(processName, sourceByDestinationFields, rowIndex){
-        var initData={};
-        if(rowIndex!==-1){
-            var rec = Instance.gridContainer.child('#grid'+Instance.modelName).getStore().getAt(rowIndex);
-            for (var source in sourceByDestinationFields) {
-                var destination = sourceByDestinationFields[source];
-                initData[destination]=rec.get(source);
-            }
-            
-        }else{
-            var formData= Instance.formContainer.child('#form'+Instance.modelName).getForm().getValues();
-            for (var source in sourceByDestinationFields) {
-                var destination = sourceByDestinationFields[source];
-                initData[destination]=formData[source];
-            }
-            
-        }
-        Instance.processForms[processName].show(null, function() {});
-        var processForm= Instance.processForms[processName].child('#form'+processName+'Process');
-        processForm.getForm().reset();
-        processForm.getForm().setValues(initData);
-    };
-    
-    function ${labelField}EntityRender(value, p, record){
+    function idEntityRender(value, p, record){
         if(record){
-            if(Instance.typeView==="Parent"){
-                return "<a style='font-size: 15px;' href='#?id="+record.data.id+"&tab=1'>"+value+"</a>";
-            }else{
-                return value;
-            }
+            return "<a style='font-size: 15px;' href='#?id="+record.data.id+"&tab=1'>"+value+"</a>";
         }else{
             return value;
         }
     };
     
-    Instance.hideParentField= function(entityRef){
-        if(Instance.formContainer!==null){
-            var fieldsForm= Instance.formContainer.child('#form'+Instance.modelName).items.items;
-            fieldsForm.forEach(function(field) {
-                if(field.name===entityRef){
-                    field.hidden= true;
-                }
-            });
-        }
-        if(Instance.gridContainer!==null){
-            var columnsGrid= Instance.gridContainer.child('#grid'+Instance.modelName).columns;
-            columnsGrid.forEach(function(column) {
-                if(column.dataIndex===entityRef){
-                    column.hidden= true;
-                }
-            });
-        }
-    };
-    
     Instance.createMainView= function(){
-        <c:forEach var="associatedER" items="${interfacesEntityRef}">
-            <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
-            <c:set var="associatedEntityTitle" value="${titledFieldsMap[associatedER]}"></c:set>
-        Instance.${associatedER}ExtInterfaces= new ${associatedEntityName}ExtInterfaces(parentExtController, Instance);
-        Instance.formCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('form', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.gridCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('grid', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.filterCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('filter', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
-        Instance.combobox${associatedEntityName}Render= Instance.${associatedER}ExtInterfaces.getComboboxRender('grid');
-        </c:forEach>
-            
-        <c:forEach var="entry" items="${viewConfig.comboboxChildDependent}">
-            <c:set var="parentEntityName" value="${fn:toUpperCase(fn:substring(entry.key, 0, 1))}${fn:substring(entry.key, 1,fn:length(entry.key))}"></c:set>
-            <c:forEach var="childEntityRef" items="${entry.value}">
-                <c:set var="childEntityName" value="${fn:toUpperCase(fn:substring(childEntityRef, 0, 1))}${fn:substring(childEntityRef, 1,fn:length(childEntityRef))}"></c:set>
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.filterCombobox${parentEntityName}.comboboxDependent.push(Instance.filterCombobox${childEntityName});
-            </c:forEach>
-        </c:forEach>
-        
-        Instance.childExtControllers= [];
-        
-        if(Instance.typeView==="Parent"){
-        <c:forEach var="childExtViewER" items="${viewsChildEntityRef}">
-            <c:set var="childExtViewEN" value="${fn:toUpperCase(fn:substring(childExtViewER, 0, 1))}${fn:substring(childExtViewER, 1,fn:length(childExtViewER))}"></c:set>
-            var ${childExtViewER}ExtController= new ${childExtViewEN}ExtController(parentExtController, Instance);
-            ${childExtViewER}ExtController.entityExtView.hideParentField("${entityRef}");
-            Instance.childExtControllers.push(${childExtViewER}ExtController);
-        </c:forEach>
-        }
         
         Instance.formContainer= null;
         <c:if test="${viewConfig.visibleForm}">
-        Instance.formContainer = getFormContainer(Instance.modelName, Instance.store, Instance.childExtControllers);
+        Instance.formContainer = getFormContainer(Instance.modelName, Instance.store);
         Instance.store.formContainer= Instance.formContainer;
         </c:if>
         
@@ -841,17 +518,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, Instance.formContainer);
         Instance.store.gridContainer= Instance.gridContainer;
         </c:if>
-            
-        <c:if test="${viewConfig.activeNNMulticheckChild}">
-        Instance.checkboxGroupContainer= getCheckboxGroupContainer();
-        </c:if>
-        
-        Instance.processForms={};
-        <c:forEach var="processButton" items="${viewConfig.processButtons}">
-        Instance.processForms["${processButton.processName}"]= getForm${processButton.processName}Process();
-        </c:forEach>
-        
-        Instance.propertyGrid= getPropertyGrid();
 
         Instance.tabsContainer= Ext.widget('tabpanel', {
             region: 'center',
@@ -883,7 +549,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             frame: false,
             layout: 'border',
             items: [
-                Instance.propertyGrid,
                 Instance.tabsContainer
             ]
         };

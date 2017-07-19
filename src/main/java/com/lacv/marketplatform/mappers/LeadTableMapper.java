@@ -30,6 +30,7 @@ public class LeadTableMapper implements BasicEntityMapper {
             dto.setName(entity.getName());
             dto.setStatus(entity.getStatus());
             dto.setTableAlias(entity.getTableAlias());
+            dto.setLink(entity.getLink());
         }
         return dto;
     }

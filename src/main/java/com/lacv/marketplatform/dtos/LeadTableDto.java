@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
@@ -14,6 +15,7 @@ import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import com.dot.gcpbasedot.enums.FieldType;
+import com.dot.gcpbasedot.enums.HideView;
 import java.util.List;
 
 /**
@@ -48,9 +50,15 @@ public class LeadTableDto implements BaseEntity {
     private String description;
     
     @Size(max=45)
+    @Order(5)
     @TypeFormField(value = FieldType.LIST, data = {"Active", "Inactive"})
     @TextField("Estado")
     private String status;
+    
+    @TextField("Ingresar")
+    @ReadOnly
+    @HideField({HideView.FILTER, HideView.FORM})
+    private String link;
     
     private List<TableColumnDto> tableColumnList;
 
@@ -107,6 +115,14 @@ public class LeadTableDto implements BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public List<TableColumnDto> getTableColumnList() {

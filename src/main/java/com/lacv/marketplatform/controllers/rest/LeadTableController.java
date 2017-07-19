@@ -6,8 +6,6 @@
 
 package com.lacv.marketplatform.controllers.rest;
 
-
-import com.dot.gcpbasedot.components.TableColumnsConfig;
 import com.lacv.marketplatform.mappers.LeadTableMapper;
 import com.lacv.marketplatform.services.LeadTableService;
 import com.dot.gcpbasedot.controller.RestController;
@@ -88,7 +86,7 @@ public class LeadTableController extends RestController {
                 tableColumn.setName("Id");
                 tableColumn.setWidth(100);
                 tableColumn.setColumnOrder(1);
-                tableColumn.setNotNull(true);
+                tableColumn.setNotNull(false);
                 tableColumn.setDataType("int");
                 tableColumn.setLeadTable(new LeadTable(jsonResult.getJSONObject("data").getInt("id")));
                 

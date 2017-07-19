@@ -110,6 +110,10 @@ public class LeadTable implements BaseEntity {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public String getLink() {
+        return "<a href='/vista/direct/"+getTableAlias()+"/table.htm'>Ver registros</a>";
+    }
 
     public List<TableColumn> getTableColumnList() {
         return tableColumnList;
