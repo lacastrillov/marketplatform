@@ -136,6 +136,16 @@ function CommonExtView(parentExtController, parentExtView, model){
         }
     };
     
+    Instance.audioGridRender= function(value, p, record){
+        if(value){
+            return '<audio style="width:100%" src="'+value+'" preload="auto" controls>'+
+                   '    Your browser does not support the video tag.'+
+                   '</audio>';
+        }else{
+            return value;
+        }
+    };
+    
     Instance.fileRender= function(value, field){
         if(value){
             return "<a target='_blank' href='"+value+"'>"+value+"</a>";

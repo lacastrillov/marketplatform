@@ -30,4 +30,6 @@ public interface WebFileService extends EntityService<WebFile> {
     
     WebFile createEmptyFile(WebFile parentWebFile, String fileName);
     
+    boolean deleteIfExist(WebFile parentWebFile, String fileName);
+    
 }

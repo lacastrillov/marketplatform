@@ -50,6 +50,8 @@ public class LeadTable implements BaseEntity {
     @Size(max = 200)
     @Column(name = "description")
     private String description;
+    @Column(name = "file_upload")
+    private Boolean fileUpload;
     @Size(max = 45)
     @Column(name = "status")
     private String status;
@@ -101,6 +103,14 @@ public class LeadTable implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public Boolean getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(Boolean fileUpload) {
+        this.fileUpload = fileUpload;
     }
 
     public String getStatus() {

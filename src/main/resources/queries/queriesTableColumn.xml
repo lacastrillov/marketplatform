@@ -10,11 +10,11 @@
                 <entry key="columsConfig">
                     <value>
                         SELECT 
-                        lt.table_alias as tableAlias, lt.name as tableName,
-                        tc.name as columnName, tc.column_alias as columnAlias,
-                        tc.data_type as dataType, tc.column_size as columnSize,
-                        tc.not_null as notNull, tc.column_order as columnOrder,
-                        tc.field_type as fieldType, tc.width, tc.default_value, tc.options
+                        lt.table_alias as tableAlias, lt.name as tableName, lt.file_upload as fileUpload,
+                        tc.name as columnName, tc.column_alias as columnAlias, tc.data_type as dataType,
+                        tc.column_size as columnSize, tc.not_null as notNull,
+                        tc.column_order as columnOrder, tc.field_type as fieldType, tc.width,
+                        tc.default_value as defaultValue, tc.options
                         FROM table_column tc
                         join lead_table lt on tc.lead_table_id= lt.id
                     </value>

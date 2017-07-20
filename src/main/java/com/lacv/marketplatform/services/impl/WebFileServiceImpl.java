@@ -21,6 +21,7 @@ import com.lacv.marketplatform.constants.WebConstants;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
             webFile.setCreationDate(new Date());
             webFile.setModificationDate(new Date());
 
+            deleteIfExist(parentWebFile, fileName);
             create(webFile);
 
             FileService.deleteFile(location + fileName);
@@ -162,6 +164,22 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         FileService.createFile(location + webFile.getName());
         
         return webFile;
+    }
+    
+    @Override
+    @Transactional(value = TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
+    public boolean deleteIfExist(WebFile parentWebFile, String fileName){
+        Parameters p= new Parameters();
+        p.whereEqual("webFile", parentWebFile);
+        p.whereEqual("name", fileName);
+        List<WebFile> webFileInFolder= super.findByParameters(p);
+        if(webFileInFolder.size()>0){
+            for(WebFile WebFile: webFileInFolder){
+                super.remove(WebFile);
+            }
+            return true;
+        }
+        return false;
     }
     
     

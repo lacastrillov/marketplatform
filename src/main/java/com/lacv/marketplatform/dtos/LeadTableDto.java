@@ -55,6 +55,10 @@ public class LeadTableDto implements BaseEntity {
     @TextField("Estado")
     private String status;
     
+    @Order(5)
+    @TextField("Subir Archivos")
+    private Boolean fileUpload;
+    
     @TextField("Ingresar")
     @ReadOnly
     @HideField({HideView.FILTER, HideView.FORM})
@@ -107,6 +111,14 @@ public class LeadTableDto implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public Boolean getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(Boolean fileUpload) {
+        this.fileUpload = fileUpload;
     }
 
     public String getStatus() {
