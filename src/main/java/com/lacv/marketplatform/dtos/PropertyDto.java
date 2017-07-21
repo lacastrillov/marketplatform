@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
@@ -26,16 +27,22 @@ public class PropertyDto implements BaseEntity {
     @ReadOnly
     private Integer id;
     
+    @Order(2)
     @TextField("Llave")
+    @NotNull
     private String key;
     
+    @Order(3)
     @TextField("Valor")
+    @NotNull
     private String value;
     
+    @Order(4)
     @TextField("Tipo")
     @TypeFormField(value=FieldType.LIST, data={"String","Number","Date","Time","Boolean","Character"})
     private String type;
     
+    @Order(5)
     @TextField("Estado")
     @TypeFormField(value = FieldType.LIST, data = {"Activa", "Inactiva", "Bloqueada", "Eliminada"})
     private String status;
