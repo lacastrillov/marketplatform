@@ -52,7 +52,7 @@
                                 <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
                             </c:if>
                             <c:if test="${numImages==0}">
-                                <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
+                                <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>
                             </c:if>
                         </a>
                         <div class="caption">
@@ -61,7 +61,7 @@
                                 ${fn:substring(product.description,0,60)}...
                             </p>
                             <h4 style="text-align:center">
-                                <a class="btn" href="/tienda/detalle-producto?code=${product.code}">
+                                <a class="btn" href="/tienda/detalle-producto/${product.code}">
                                     <i class="icon-zoom-in"></i>
                                 </a>
                                 <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>

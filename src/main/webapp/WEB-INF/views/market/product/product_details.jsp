@@ -30,7 +30,7 @@
                                     </a>
                                 </c:if>
                                 <c:if test="${numImages==0}">
-                                    <img src="/image/imagen_no_disponible.png" alt="Imagen no disponible"/>
+                                    <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>
                                 </c:if>
                                 <div id="differentview" class="moreOptopm carousel slide">
                                     <div class="carousel-inner">

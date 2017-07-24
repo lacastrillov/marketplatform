@@ -252,7 +252,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h4>Latest Products </h4>
+                        <h4>&Uacute;ltimos productos </h4>
                         <ul class="thumbnails">
                             <li class="span3">
                                 <div class="thumbnail">

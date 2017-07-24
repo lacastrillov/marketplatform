@@ -8,8 +8,10 @@
         <title>Mercando - ${title}</title>
         <link href="/css/products.css" rel="stylesheet" type="text/css">
         <script src="/js/web/Products.js"></script>
+        <script src="/js/web/ShoppingCart.js"></script>
         <script>
             var products= new Products();
+            var shoppingCart= new ShoppingCart();
         </script>
     </head>
     <body>

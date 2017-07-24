@@ -13,13 +13,17 @@
                 <div class="span6">Welcome!<strong> User</strong></div>
                 <div class="span6">
                     <div class="pull-right">
-                        <a href="product_summary.html"><span class="">Fr</span></a>
+                        <!--<a href="product_summary.html"><span class="">Fr</span></a>
                         <a href="product_summary.html"><span class="">Es</span></a>
                         <span class="btn btn-mini">En</span>
-                        <a href="product_summary.html"><span>&pound;</span></a>
+                        <a href="product_summary.html"><span>&pound;</span></a>-->
                         <span class="btn btn-mini">$155.00</span>
-                        <a href="product_summary.html"><span class="">$</span></a>
-                        <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart </span> </a> 
+                        <a href="/tienda/carrito-de-compras"><span class="">$</span></a>
+                        <a href="/tienda/carrito-de-compras">
+                            <span class="btn btn-mini btn-primary">
+                                <i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart
+                            </span>
+                        </a> 
                     </div>
                 </div>
             </div>
@@ -31,7 +35,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-inner">
-                    <a class="brand" href="index.html"><img src="/themes/images/logo.png" alt="Bootsshop"/></a>
+                    <a class="brand" href="/tienda/"><img src="/themes/images/logo.png" alt="Bootsshop"/></a>
                     <form class="form-inline navbar-search" method="post" action="products.html" >
                         <input id="srchFld" class="srchTxt" type="text" value="     " />
                         <select class="srchTxt">
