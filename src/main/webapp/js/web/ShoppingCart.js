@@ -50,6 +50,7 @@ function ShoppingCart() {
             productExtStore.find('{"eq":{"code":"'+productCode+'"}}', function(responseText){
                 if(responseText.success && responseText.totalCount===1){
                     var product= responseText.data[0];
+                    cart.items[productCode]={};
                     cart.items[productCode].product= product;
                     cart.items[productCode].quantity=1;
                     cart.items[productCode].totalProduct= product.buyUnitPrice;
@@ -74,9 +75,14 @@ function ShoppingCart() {
                 cart.items[productCode].quantity-= 1;
                 cart.items[productCode].totalProduct-= product.buyUnitPrice;
                 cart.items[productCode].discount-= (product.buyUnitPrice*product.discount)/100;
+                
                 cart.total-= product.buyUnitPrice;
                 cart.discount-= (product.buyUnitPrice*product.discount)/100;
                 cart.finalPrice= cart.total - cart.discount;
+                
+                if(cart.items[productCode].quantity===0){
+                    delete cart.items[productCode];
+                }
             }
             Instance.setCart(cart);
             
@@ -93,10 +99,7 @@ function ShoppingCart() {
             cart.discount-= ((product.buyUnitPrice*product.discount)/100)*cart.items[productCode].quantity;
             cart.finalPrice= cart.total - cart.discount;
             
-            cart.items[productCode].quantity= 0;
-            cart.items[productCode].totalProduct= 0;
-            cart.items[productCode].discount= 0;
-            
+            delete cart.items[productCode];
             
             Instance.setCart(cart);
             

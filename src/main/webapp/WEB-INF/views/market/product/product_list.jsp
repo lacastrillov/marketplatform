@@ -64,7 +64,7 @@
                                 <a class="btn" href="/tienda/detalle-producto/${product.code}">
                                     <i class="icon-zoom-in"></i>
                                 </a>
-                                <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
+                                <a class="btn" href="javascript:void(0)" onclick="shoppingCart.addToCart('${product.code}')">Add to <i class="icon-shopping-cart"></i></a>
                                 <a class="btn btn-primary" href="#">$ <fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></a></h4>
                         </div>
                     </div>
