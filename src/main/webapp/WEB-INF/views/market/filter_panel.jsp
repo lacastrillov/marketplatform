@@ -11,7 +11,9 @@
 <div id="sidebar" class="span3">
     <div class="well well-small">
         <a id="myCart" href="/tienda/carrito-de-compras">
-            <img src="/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span>
+            <img src="/themes/images/ico-cart.png" alt="cart">
+            <span id="numItemsFP">0 Items</span>
+            <span id="totalOrderFP" class="badge badge-warning pull-right">$0.00</span>
         </a>
     </div>
 

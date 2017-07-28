@@ -38,8 +38,9 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         return propertyJpa;
     }
     
+    @Override
     public String getString(String propertyName){
-        Property property= super.findUniqueByParameter("property_key", propertyName);
+        Property property= super.findUniqueByParameter("key", propertyName);
         if(property!=null && property.getStatus().equals("Activa")){
             return property.getValue();
         }else{
@@ -47,6 +48,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Character getCharacter(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -56,6 +58,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Integer getInteger(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -65,6 +68,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Long getLong(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -74,6 +78,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Double getDouble(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -83,6 +88,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Float getFloat(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -92,6 +98,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public BigInteger getBigInteger(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -101,6 +108,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Boolean getBoolean(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -110,6 +118,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Date getDate(String propertyName){
         String value= getString(propertyName);
         if(value!=null){
@@ -119,6 +128,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
         }
     }
     
+    @Override
     public Time getTime(String propertyName){
         String value= getString(propertyName);
         if(value!=null){

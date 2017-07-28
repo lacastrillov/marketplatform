@@ -235,6 +235,10 @@ function Util() {
         }
     };
     
+    this.priceFormat= function(n){
+        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+    };
+    
     this.createForm= function(config){
         var form = document.createElement("form");
         if ('id' in config) {

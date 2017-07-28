@@ -29,7 +29,7 @@ public class ProductDto implements BaseEntity {
     private Integer id;
     
     @Order(2)
-    @TextField("C&oacute;odigo")
+    @TextField("C&oacute;digo")
     private String code;
     
     @Order(3)

@@ -4,12 +4,21 @@
     Author     : lacastrillov
 --%>
 
+<%@page import="com.lacv.marketplatform.services.PropertyService"%>
+<%@page import="org.springframework.web.servlet.support.RequestContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="webFunctions" class="com.dot.gcpbasedot.util.WebFunctions"/>
 
+<%
+    ApplicationContext ac = RequestContextUtils.findWebApplicationContext(request);
+    PropertyService propertyService= (PropertyService) ac.getBean("propertyService");
+%>
+
+<input type="hidden" id="iva" value="<%=propertyService.getInteger("IVA")%>" />
 <ul class="breadcrumb">
     <li><a href="/tienda/">Home</a> <span class="divider">/</span></li>
     <li class="active">${title}</li>
@@ -65,7 +74,8 @@
                                     <i class="icon-zoom-in"></i>
                                 </a>
                                 <a class="btn" href="javascript:void(0)" onclick="shoppingCart.addToCart('${product.code}')">Add to <i class="icon-shopping-cart"></i></a>
-                                <a class="btn btn-primary" href="#">$ <fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></a></h4>
+                                <a class="btn btn-primary" href="#">$ <fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></a>
+                            </h4>
                         </div>
                     </div>
                 </li>

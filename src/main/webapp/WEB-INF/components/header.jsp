@@ -16,14 +16,14 @@
                         <!--<a href="product_summary.html"><span class="">Fr</span></a>
                         <a href="product_summary.html"><span class="">Es</span></a>
                         <span class="btn btn-mini">En</span>
-                        <a href="product_summary.html"><span>&pound;</span></a>-->
+                        <a href="product_summary.html"><span>&pound;</span></a>
                         <span class="btn btn-mini">$155.00</span>
-                        <a href="/tienda/carrito-de-compras"><span class="">$</span></a>
+                        <a href="/tienda/carrito-de-compras"><span class="">$</span></a>-->
                         <a href="/tienda/carrito-de-compras">
                             <span class="btn btn-mini btn-primary">
-                                <i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart
+                                <i class="icon-shopping-cart icon-white"></i> Entrar a mi cuenta
                             </span>
-                        </a> 
+                        </a>
                     </div>
                 </div>
             </div>

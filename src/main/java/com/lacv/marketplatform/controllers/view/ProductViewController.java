@@ -121,10 +121,12 @@ public class ProductViewController extends ExtEntityController {
         if (filter != null && !filter.equals("")) {
             p = FilterQueryJSON.processFilters(filter, Product.class);
         }
+        p.whereEqual("status", "Publicado");
         
         p.setPage((page != null) ? page : 1L);
         p.setMaxResults((limit != null) ? limit : 9L);
         p.orderBy((sort != null) ? sort : "registerDate", (dir != null) ? dir : "DESC");
+        p.orderBy("orderLevel", "ASC");
         
         List<Product> products = productService.findByParameters(p);
         for(Product product: products){
