@@ -38,6 +38,12 @@ public class PurchaseorderDetail implements BaseEntity {
     private Integer quantity;
     @Column(name = "unit_price")
     private Integer unitPrice;
+    @Column(name = "sub_total")
+    private Integer subTotal;
+    @Column(name = "discount")
+    private Integer discount;
+    @Column(name = "total")
+    private Integer total;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne
     private Product product;
@@ -76,6 +82,30 @@ public class PurchaseorderDetail implements BaseEntity {
 
     public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
+    }
+    
+    public Integer getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Integer subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public Product getProduct() {
@@ -118,5 +148,5 @@ public class PurchaseorderDetail implements BaseEntity {
     public String toString() {
         return "com.lacv.marketplatform.entities.PurchaseorderDetail[ id=" + id + " ]";
     }
-    
+
 }

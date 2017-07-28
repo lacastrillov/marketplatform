@@ -29,22 +29,37 @@ public class PurchaseOrderDto implements BaseEntity {
     @ReadOnly
     private Integer id;
     
+    @Order(2)
     @TextField("N&uacute;mero")
+    @ReadOnly
     private Long number;
     
+    @Order(3)
     @TextField("Fecha Registro")
     private Date registrationDate;
     
+    @Order(4)
     @TextField("Hora Registro")
     private Time recordTime;
     
-    @TextField("Total")
-    private String total;
+    @Order(5)
+    @TextField("Sub total")
+    private Integer subTotal;
     
+    @Order(6)
+    @TextField("Descuento")
+    private Integer discount;
+    
+    @Order(7)
+    @TextField("Total")
+    private Integer total;
+    
+    @Order(8)
     @TextField("Estado")
     @TypeFormField(value = FieldType.LIST, data = {"Pendiente", "Cancelada", "Pagada", "Rechazada"})
     private String status;
     
+    @Order(9)
     @TextField("Usuario")
     private UserDto user;
     
@@ -97,12 +112,28 @@ public class PurchaseOrderDto implements BaseEntity {
     public void setRecordTime(Time recordTime) {
         this.recordTime = recordTime;
     }
+    
+    public Integer getSubTotal() {
+        return subTotal;
+    }
 
-    public String getTotal() {
+    public void setSubTotal(Integer subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 

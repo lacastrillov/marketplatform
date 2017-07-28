@@ -35,6 +35,8 @@ public class PurchaseOrderMapper implements BasicEntityMapper {
             dto.setRecordTime(entity.getRecordTime());
             dto.setRegistrationDate(entity.getRegistrationDate());
             dto.setStatus(entity.getStatus());
+            dto.setSubTotal(entity.getSubTotal());
+            dto.setDiscount(entity.getDiscount());
             dto.setTotal(entity.getTotal());
             dto.setUser((UserDto) userMapper.entityToDto(entity.getUser()));
         }

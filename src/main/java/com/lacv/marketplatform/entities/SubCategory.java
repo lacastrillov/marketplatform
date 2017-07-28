@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.entities;
 
 import com.dot.gcpbasedot.domain.BaseEntity;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -50,6 +52,8 @@ public class SubCategory implements BaseEntity {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category category;
+    @OneToMany(mappedBy = "subCategory")
+    private List<Product> productList;
 
     public SubCategory() {
     }
@@ -104,6 +108,14 @@ public class SubCategory implements BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
 
     @Override
     public int hashCode() {
@@ -129,5 +141,5 @@ public class SubCategory implements BaseEntity {
     public String toString() {
         return "com.lacv.marketplatform.entities.SubCategory[ id=" + id + " ]";
     }
-    
+
 }

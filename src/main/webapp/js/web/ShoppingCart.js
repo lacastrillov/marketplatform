@@ -19,29 +19,32 @@ function ShoppingCart() {
     
     Instance.getCart= function(){
         var scart= localStorage.getItem("scart");
+        console.log("GET: "+scart);
         if(scart!==null){
             return JSON.parse(scart);
         }else{
-            return {"items":{}, "total":0, "discount":0, "finalPrice":0};
+            return {"items":[], "subTotal":0, "discount":0, "total":0};
         }
     };
     
     Instance.setCart= function(scart){
-        console.log(scart);
+        console.log("SET: "+JSON.stringify(scart));
         localStorage.setItem("scart", JSON.stringify(scart));
     };
     
     
     Instance.addToCart = function (productCode) {
         var cart= Instance.getCart();
-        if (productCode in cart.items){
-            var product= cart.items[productCode].product;
-            cart.items[productCode].quantity+= 1;
-            cart.items[productCode].totalProduct+= product.buyUnitPrice;
-            cart.items[productCode].discount+= (product.buyUnitPrice*product.discount)/100;
-            cart.total+= product.buyUnitPrice;
-            cart.discount+= (product.buyUnitPrice*product.discount)/100;
-            cart.finalPrice= cart.total - cart.discount;
+        var index= Instance.getProductIndex(productCode, cart);
+        console.log(index);
+        if (index!==-1){
+            cart.items[index].quantity+= 1;
+            cart.items[index].subTotal+= cart.items[index].buyUnitPrice;
+            cart.items[index].discount+= (cart.items[index].buyUnitPrice * cart.items[index].productDiscount)/100;
+            cart.items[index].total= cart.items[index].subTotal - cart.items[index].discount;
+            cart.subTotal+= cart.items[index].buyUnitPrice;
+            cart.discount+= (cart.items[index].buyUnitPrice * cart.items[index].productDiscount)/100;
+            cart.total= cart.subTotal - cart.discount;
             
             Instance.setCart(cart);
             
@@ -50,14 +53,19 @@ function ShoppingCart() {
             productExtStore.find('{"eq":{"code":"'+productCode+'"}}', function(responseText){
                 if(responseText.success && responseText.totalCount===1){
                     var product= responseText.data[0];
-                    cart.items[productCode]={};
-                    cart.items[productCode].product= product;
-                    cart.items[productCode].quantity=1;
-                    cart.items[productCode].totalProduct= product.buyUnitPrice;
-                    cart.items[productCode].discount= (product.buyUnitPrice*product.discount)/100;
-                    cart.total+= product.buyUnitPrice;
-                    cart.discount+= (product.buyUnitPrice*product.discount)/100;
-                    cart.finalPrice= cart.total - cart.discount;
+                    var index= cart.items.length;
+                    cart.items[index]={};
+                    cart.items[index].productCode= product.code;
+                    cart.items[index].buyUnitPrice= product.buyUnitPrice;
+                    cart.items[index].productDiscount= product.discount;
+                    
+                    cart.items[index].quantity=1;
+                    cart.items[index].subTotal= product.buyUnitPrice;
+                    cart.items[index].discount= (product.buyUnitPrice * cart.items[index].productDiscount)/100;
+                    cart.items[index].total= cart.items[index].subTotal - cart.items[index].discount;
+                    cart.subTotal+= product.buyUnitPrice;
+                    cart.discount+= (product.buyUnitPrice * product.discount)/100;
+                    cart.total= cart.subTotal - cart.discount;
                     
                     Instance.setCart(cart);
                     
@@ -69,19 +77,19 @@ function ShoppingCart() {
     
     Instance.lessFromCart = function (productCode) {
         var cart= Instance.getCart();
-        if (productCode in cart.items){
-            if(cart.items[productCode].quantity>=1){
-                var product= cart.items[productCode].product;
-                cart.items[productCode].quantity-= 1;
-                cart.items[productCode].totalProduct-= product.buyUnitPrice;
-                cart.items[productCode].discount-= (product.buyUnitPrice*product.discount)/100;
+        var index= Instance.getProductIndex(productCode, cart);
+        if (index!==-1){
+            if(cart.items[index].quantity>=1){
+                cart.items[index].quantity-= 1;
+                cart.items[index].totalProduct-= cart.items[index].buyUnitPrice;
+                cart.items[index].discount-= (cart.items[index].buyUnitPrice * cart.items[index].productDiscount)/100;
                 
-                cart.total-= product.buyUnitPrice;
-                cart.discount-= (product.buyUnitPrice*product.discount)/100;
-                cart.finalPrice= cart.total - cart.discount;
+                cart.subTotal-= cart.items[index].buyUnitPrice;
+                cart.discount-= (cart.items[index].buyUnitPrice * cart.items[index].productDiscount)/100;
+                cart.total= cart.subTotal - cart.discount;
                 
-                if(cart.items[productCode].quantity===0){
-                    delete cart.items[productCode];
+                if(cart.items[index].quantity===0){
+                    delete cart.items[index];
                 }
             }
             Instance.setCart(cart);
@@ -92,19 +100,28 @@ function ShoppingCart() {
     
     Instance.removeFromCart= function(productCode){
         var cart= Instance.getCart();
-        if (productCode in cart.items){
-            var product= cart.items[productCode].product;
+        var index= Instance.getProductIndex(productCode, cart);
+        if (index!==-1){
+            cart.subTotal-= cart.items[index].buyUnitPrice * cart.items[index].quantity;
+            cart.discount-= ((cart.items[index].buyUnitPrice * cart.items[index].productDiscount)/100) * cart.items[index].quantity;
+            cart.total= cart.subTotal - cart.discount;
             
-            cart.total-= product.buyUnitPrice*cart.items[productCode].quantity;
-            cart.discount-= ((product.buyUnitPrice*product.discount)/100)*cart.items[productCode].quantity;
-            cart.finalPrice= cart.total - cart.discount;
-            
-            delete cart.items[productCode];
+            delete cart.items[index];
             
             Instance.setCart(cart);
             
             Instance.updateProductSummary();
         }
+    };
+    
+    Instance.getProductIndex= function(productCode, cart){
+        for(var i=0; i<cart.items.length; i++){
+            var product= cart.items[i];
+            if(product.productCode===productCode){
+                return i;
+            }
+        };
+        return -1;
     };
     
     Instance.updateProductSummary= function(){

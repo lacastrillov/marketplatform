@@ -328,5 +328,5 @@ public class Product implements BaseEntity {
     public String toString() {
         return "com.lacv.marketplatform.entities.Product[ id=" + id + " ]";
     }
-    
-}
+
+    }

@@ -24,17 +24,33 @@ public class PurchaseorderDetailDto implements BaseEntity {
     @ReadOnly
     private Integer id;
     
-    @TextField("Cantidad")
-    private Integer quantity;
-    
-    @TextField("Precio Unitario")
-    private Integer unitPrice;
-    
+    @Order(2)
     @TextField("Producto")
     private ProductDto product;
     
+    @Order(3)
+    @TextField("Cantidad")
+    private Integer quantity;
+    
+    @Order(4)
+    @TextField("Precio Unitario")
+    private Integer unitPrice;
+    
+    @Order(5)
+    @TextField("Sub total")
+    private Integer subTotal;
+    
+    @Order(6)
+    @TextField("Descuento")
+    private Integer discount;
+    
+    @Order(7)
+    @TextField("Total")
+    private Integer total;
+    
     @TextField("Orden de Compra")
     private PurchaseOrderDto purchaseOrder;
+    
 
     public PurchaseorderDetailDto() {
     }
@@ -67,6 +83,30 @@ public class PurchaseorderDetailDto implements BaseEntity {
 
     public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
+    }
+    
+    public Integer getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Integer subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public ProductDto getProduct() {

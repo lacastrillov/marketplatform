@@ -51,9 +51,12 @@ public class PurchaseOrder implements BaseEntity {
     private Date registrationDate;
     @Column(name = "record_time")
     private Time recordTime;
-    @Size(max = 45)
+    @Column(name = "sub_total")
+    private Integer subTotal;
+    @Column(name = "discount")
+    private Integer discount;
     @Column(name = "total")
-    private String total;
+    private Integer total;
     @Size(max = 45)
     @Column(name = "status")
     private String status;
@@ -87,7 +90,7 @@ public class PurchaseOrder implements BaseEntity {
         this.id = (Integer) id;
     }
 
-    public Long getNumber() {
+     public Long getNumber() {
         return number;
     }
 
@@ -102,7 +105,7 @@ public class PurchaseOrder implements BaseEntity {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
-
+    
     public Time getRecordTime() {
         return recordTime;
     }
@@ -111,14 +114,30 @@ public class PurchaseOrder implements BaseEntity {
         this.recordTime = recordTime;
     }
 
-    public String getTotal() {
+    public Integer getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Integer subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
-
+    
     public String getStatus() {
         return status;
     }
