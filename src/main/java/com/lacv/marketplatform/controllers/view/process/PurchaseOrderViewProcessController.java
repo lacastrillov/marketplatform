@@ -40,7 +40,7 @@ public class PurchaseOrderViewProcessController extends ExtProcessController {
     public void init(){
         ProcessConfig process= new ProcessConfig("processPurchaseOrder", "logProcess", LogProcessDto.class);
         process.setMainProcessTitle("Gestionar Procesos de Ordenes de Compra");
-        process.addControlProcessView("crearOrdenCompra", "Crear Orden Compra", ShoppingCartPDto.class, BasicResultDto.class);
+        process.addControlProcessView("generarOrdenCompra", "Generar Orden Compra", ShoppingCartPDto.class, BasicResultDto.class);
         
         super.addControlMapping(process);
         

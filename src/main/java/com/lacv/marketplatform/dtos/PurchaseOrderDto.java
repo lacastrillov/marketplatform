@@ -43,24 +43,28 @@ public class PurchaseOrderDto implements BaseEntity {
     private Time recordTime;
     
     @Order(5)
+    @ColumnWidth(150)
     @TextField("Sub total")
     private Integer subTotal;
     
     @Order(6)
+    @ColumnWidth(150)
     @TextField("Descuento")
     private Integer discount;
     
     @Order(7)
+    @ColumnWidth(150)
     @TextField("IVA")
     private Integer iva;
     
     @Order(8)
+    @ColumnWidth(150)
     @TextField("Total")
     private Integer total;
     
     @Order(9)
     @TextField("Estado")
-    @TypeFormField(value = FieldType.LIST, data = {"Pendiente", "Cancelada", "Pagada", "Rechazada"})
+    @TypeFormField(value = FieldType.LIST, data = {"Pendiente", "Pagada", "Con Saldo", "Impagable", "Cancelada", "Rechazada"})
     private String status;
     
     @Order(10)

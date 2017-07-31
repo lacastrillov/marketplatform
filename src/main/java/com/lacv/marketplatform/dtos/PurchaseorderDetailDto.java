@@ -29,26 +29,32 @@ public class PurchaseorderDetailDto implements BaseEntity {
     private ProductDto product;
     
     @Order(3)
+    @ColumnWidth(100)
     @TextField("Cantidad")
     private Integer quantity;
     
     @Order(4)
+    @ColumnWidth(150)
     @TextField("Precio Unitario")
     private Integer unitPrice;
     
     @Order(5)
+    @ColumnWidth(150)
     @TextField("Sub total")
     private Integer subTotal;
     
     @Order(6)
+    @ColumnWidth(150)
     @TextField("Descuento")
     private Integer discount;
     
     @Order(7)
+    @ColumnWidth(150)
     @TextField("IVA")
     private Integer iva;
     
     @Order(8)
+    @ColumnWidth(150)
     @TextField("Total")
     private Integer total;
     
