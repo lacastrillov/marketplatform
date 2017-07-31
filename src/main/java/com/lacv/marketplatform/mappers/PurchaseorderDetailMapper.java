@@ -41,6 +41,7 @@ public class PurchaseorderDetailMapper implements BasicEntityMapper {
             dto.setUnitPrice(entity.getUnitPrice());
             dto.setSubTotal(entity.getSubTotal());
             dto.setDiscount(entity.getDiscount());
+            dto.setIva(entity.getIva());
             dto.setTotal(entity.getTotal());
         }
         return dto;

@@ -5,6 +5,8 @@
  */
 util.importJS('/js/web/stores/ProductExtStore.js');
 util.importJS('/js/web/stores/ProductImageExtStore.js');
+util.importJS('/js/web/stores/PropertyExtStore.js');
+util.importJS('/js/web/usuario/AutenticacionUsuario.js');
 
 function ShoppingCart() {
 
@@ -13,14 +15,50 @@ function ShoppingCart() {
     var productExtStore;
     
     var productImageExtStore;
+    
+    var propertyExtStore;
+    
+    var autenticacionUsuario;
 
     Instance.init = function () {
+        console.log("INIT");
         Instance.productSummaryTemplate= null;
         Instance.generalSummaryTemplate= null;
         $(document).ready(function () {
             productExtStore= new ProductExtStore();
             productImageExtStore= new ProductImageExtStore();
+            propertyExtStore= new PropertyExtStore();
+            autenticacionUsuario= new AutenticacionUsuario();
+            
+            Instance.setIVA();
             Instance.updateProductSummary();
+            
+            $("#ajaxLoginBtn").click(function (e) {
+                Instance.login();
+            });
+        });
+    };
+    
+    Instance.setIVA= function(){
+        propertyExtStore.find('{"eq":{"key":"IVA"}}',function(responseText){
+            if(responseText.success && responseText.totalCount===1){
+                Instance.IVA= Number(responseText.data[0].value);
+            }else{
+                Instance.IVA= 0;
+            }
+        });
+    };
+    
+    Instance.login= function(){
+        autenticacionUsuario.authenticate(function(data){
+            if(data.success){
+                $("#userNameData").html(data.user.username+" - "+data.user.name);
+                $("#userEmail").html(data.user.email);
+                $("#loginUserTable").hide();
+                $("#userInSessionTable").show();
+            }else{
+                Instance.showMessage("Iniciar Sesi&oacute;n", data.message);
+            }
         });
     };
     
@@ -34,7 +72,7 @@ function ShoppingCart() {
     };
     
     Instance.setCart= function(scart){
-        console.log("SET: "+JSON.stringify(scart));
+        console.log(JSON.stringify(scart));
         localStorage.setItem("scart", JSON.stringify(scart));
     };
     
@@ -47,12 +85,14 @@ function ShoppingCart() {
             cart.items[index].quantity+= 1;
             cart.items[index].subTotal+= cart.items[index].product.buyUnitPrice;
             cart.items[index].discount+= (cart.items[index].product.buyUnitPrice * cart.items[index].product.discount)/100;
+            cart.items[index].iva= (cart.items[index].subTotal - cart.items[index].discount) * Instance.IVA / 100;
             cart.items[index].total= cart.items[index].subTotal - cart.items[index].discount;
             cart.subTotal+= cart.items[index].product.buyUnitPrice;
             cart.discount+= (cart.items[index].product.buyUnitPrice * cart.items[index].product.discount)/100;
             cart.total= cart.subTotal - cart.discount;
             
             Instance.setCart(cart);
+            Instance.showMessage("Agregar al carrito", "Se agrego el producto "+cart.items[index].product.name);
             Instance.updateProductSummary();
         }else{
             productExtStore.find('{"eq":{"code":"'+productCode+'"}}', function(responseText){
@@ -61,11 +101,12 @@ function ShoppingCart() {
                     var index= cart.items.length;
                     cart.items[index]={};
                     cart.items[index].product= product;
+                    cart.items[index].productId= product.id;
                     
                     cart.items[index].quantity=1;
                     cart.items[index].subTotal= product.buyUnitPrice;
                     cart.items[index].discount= (product.buyUnitPrice * cart.items[index].product.discount)/100;
-                    cart.items[index].iva= 0;
+                    cart.items[index].iva= (cart.items[index].subTotal - cart.items[index].discount) * Instance.IVA / 100;
                     cart.items[index].total= cart.items[index].subTotal - cart.items[index].discount;
                     cart.subTotal+= product.buyUnitPrice;
                     cart.discount+= (product.buyUnitPrice * product.discount)/100;
@@ -80,6 +121,7 @@ function ShoppingCart() {
                         }
                         
                         Instance.setCart(cart);
+                        Instance.showMessage("Agregar al carrito", "Se agrego el producto "+cart.items[index].product.name);
                         Instance.updateProductSummary();
                     });
                 }
@@ -93,15 +135,20 @@ function ShoppingCart() {
         if (index!==-1){
             if(cart.items[index].quantity>=1){
                 cart.items[index].quantity-= 1;
-                cart.items[index].totalProduct-= cart.items[index].product.buyUnitPrice;
+                cart.items[index].subTotal-= cart.items[index].product.buyUnitPrice;
                 cart.items[index].discount-= (cart.items[index].product.buyUnitPrice * cart.items[index].product.discount)/100;
+                cart.items[index].iva= (cart.items[index].subTotal - cart.items[index].discount) * Instance.IVA / 100;
                 
                 cart.subTotal-= cart.items[index].product.buyUnitPrice;
                 cart.discount-= (cart.items[index].product.buyUnitPrice * cart.items[index].product.discount)/100;
                 cart.total= cart.subTotal - cart.discount;
                 
+                Instance.showMessage("Quitar del carrito", "Se resto el producto "+cart.items[index].product.name);
                 if(cart.items[index].quantity===0){
                     delete cart.items[index];
+                    cart.items = cart.items.filter(function(n){
+                        return n !== undefined;
+                    });
                 }
             }
             Instance.setCart(cart);
@@ -115,9 +162,14 @@ function ShoppingCart() {
         if (index!==-1){
             cart.subTotal-= cart.items[index].subTotal;
             cart.discount-= cart.items[index].discount;
+            cart.iva-= cart.items[index].iva;
             cart.total= cart.subTotal - cart.discount;
             
+            Instance.showMessage("Quitar del carrito", "Se elimino el producto "+cart.items[index].product.name);
             delete cart.items[index];
+            cart.items = cart.items.filter(function(n){
+                return n !== undefined;
+            });
             
             Instance.setCart(cart);
             Instance.updateProductSummary();
@@ -139,26 +191,35 @@ function ShoppingCart() {
         $("#numItemsFP").html(cart.items.length+" Item(s)");
         $("#numItemsSC").html(cart.items.length+" Item(s)");
         $("#totalOrderFP").html("$"+util.priceFormat(cart.total));
-        Instance.generateTemplateTag("productSummaryTemplate", "tr");
-        Instance.generateTemplate("productSummaryTemplate", "tr");
+        if(Instance.productSummaryTemplate===null){
+            Instance.productSummaryTemplate= "<tr>"+util.getHtml("productSummaryTemplate")+"</tr>";
+            $("#productSummaryTemplate").remove();
+        }
+        if(Instance.generalSummaryTemplate===null){
+            Instance.generalSummaryTemplate= util.getHtml("generalSummaryTemplate");
+        }
+        $("#generalSummaryTemplate").html("");
+        if(Instance.productSummaryTemplate!==null){
+            cart.items.forEach(function(item){
+                if(item!==null){
+                    var result= util.processTemplate(Instance.productSummaryTemplate, item);
+                    $("#generalSummaryTemplate").append(result);
+                }
+            });
+        }
+        if(Instance.generalSummaryTemplate!==null){
+            var result= util.processTemplate(Instance.generalSummaryTemplate, cart);
+            $("#generalSummaryTemplate").append(result);
+        }
     };
     
-    Instance.generateTemplateTag= function(id, tag){
-        if($("#"+id).val()!==undefined){
-            var template="<"+tag+">"+$("#"+id).html()+"</"+tag+">";
-            
-            return template;
-        }
-        return null;
-    };
-    
-    Instance.generateTemplate= function(id, tag){
-        if($("#"+id).val()!==undefined){
-            var template="<"+tag+">"+$("#"+id).html()+"</"+tag+">";
-            
-            return template;
-        }
-        return null;
+    Instance.showMessage= function(title, message){
+        Ext.MessageBox.show({
+            title: title,
+            msg: message,
+            icon: Ext.MessageBox.INFO,
+            buttons: Ext.Msg.OK
+        });
     };
 
     Instance.init();

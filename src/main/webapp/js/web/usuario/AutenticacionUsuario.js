@@ -28,6 +28,23 @@ function AutenticacionUsuario() {
             }
         });
     };
+    
+    Instance.authenticate = function (callback) {
+        $.ajax({
+            url: $("#ajaxFormLogin").attr("action"),
+            timeout: 20000,
+            type: "POST",
+            data: $("#ajaxFormLogin").serialize(),
+            cache: false,
+            dataType: "json",
+            error: function (xhr, status) {
+                console.log(xhr.status);
+            },
+            success: function (data, status) {
+                callback(data);
+            }
+        });
+    };
 
     Instance.changePassword = function () {
         $("#message").html("Enviando...");

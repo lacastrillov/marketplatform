@@ -176,7 +176,7 @@ function Util() {
         if (s !== null) {
             return s.innerHTML;
         }
-        return "";
+        return null;
     };
 
     this.addUrlParameter = function (url, parameter, value) {
@@ -327,6 +327,55 @@ function Util() {
         string = string.replace(/&quot;/g, '"');
         string = string.replace(/&amp;/g, '&');
         return string;
+    };
+    
+    this.processTemplate= function(template, item){
+        var result= template;
+        var totalParams=0;
+        var params= [];
+        var found= false;
+        for(var i=0; i<template.length; i++){
+            if(found && template.charAt(i)!=="}"){
+                params[totalParams]+=template.charAt(i);
+            }
+            if(template.charAt(i)==="{" && template.charAt(i-1)==="="){
+                found=true;
+                params[totalParams]="";
+            }else if(template.charAt(i)==="}" && found){
+                found=false;
+                totalParams++;
+            }
+        }
+        params.forEach(function(param){
+            var toReplace= "={"+param+"}";
+            var parts= param.split(".");
+            var value;
+            try{
+                switch(parts.length){
+                    case 1:
+                        value= item[param];
+                        break;
+                    case 2:
+                        value= item[parts[0]][parts[1]];
+                        break;
+                    case 3:
+                        value= item[parts[0]][parts[1]][parts[2]];
+                        break;
+                    case 4:
+                        value= item[parts[0]][parts[1]][parts[2]][parts[3]];
+                        break;
+                    case 5:
+                        value= item[parts[0]][parts[1]][parts[2]][parts[3]][parts[4]];
+                        break;
+                }
+            }catch(e){
+            }
+            if(value!==undefined){
+                result= Instance.replaceAll(result, toReplace, value);
+            }
+        });
+        
+        return result;
     };
     
     this.objectToJSONMenu= function(object, expanded){

@@ -20,5 +20,7 @@ public interface WebConstants {
 
     public static final String SECURITY_SEED_PASSW = "=12GJHG#$%467ryf";
     public static final String SECURITY_SALT = "38684329";
+    
+    public static final String CLIENT_ROLE= "Cliente";
 
 }

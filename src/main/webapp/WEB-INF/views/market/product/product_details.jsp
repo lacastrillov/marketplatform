@@ -7,6 +7,10 @@
 <html lang="en">
     <head>
         <title>Detalle Producto - ${product.name} - ${product.brand}</title>
+        <script src="/js/web/ShoppingCart.js"></script>
+        <script>
+            var shoppingCart= new ShoppingCart();
+        </script>
     </head>
     <body>
         <div id="mainBody">
@@ -71,7 +75,7 @@
                                         <label class="control-label"><span>$<fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></span></label>
                                         <div class="controls">
                                             <input type="number" class="span1" placeholder="Qty."/>
-                                            <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                                            <button type="button" class="btn btn-large btn-primary pull-right" onclick="shoppingCart.addToCart('${product.code}')"> Add to cart <i class=" icon-shopping-cart"></i></button>
                                         </div>
                                     </div>
                                 </form>

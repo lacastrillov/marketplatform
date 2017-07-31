@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.dtos;
 
 import com.dot.gcpbasedot.annotation.ColumnWidth;
+import com.dot.gcpbasedot.annotation.NotNull;
 import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.TextField;
@@ -32,14 +33,17 @@ public class WebResourceDto implements BaseEntity {
     private String category;
     
     @Order(3)
+    @NotNull
     @TextField("Nombre")
     private String name;
     
     @Order(4)
+    @NotNull
     @TextField("Path")
     private String path;
     
     @Order(5)
+    @NotNull
     @TextField("Tipo")
     @TypeFormField(value = FieldType.LIST, data = {"general", "specific"})
     private String type;

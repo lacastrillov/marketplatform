@@ -42,6 +42,8 @@ public class PurchaseorderDetail implements BaseEntity {
     private Integer subTotal;
     @Column(name = "discount")
     private Integer discount;
+    @Column(name = "iva")
+    private Integer iva;
     @Column(name = "total")
     private Integer total;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -98,6 +100,14 @@ public class PurchaseorderDetail implements BaseEntity {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+    
+    public Integer getIva() {
+        return iva;
+    }
+
+    public void setIva(Integer iva) {
+        this.iva = iva;
     }
 
     public Integer getTotal() {

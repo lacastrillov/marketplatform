@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,30 +23,31 @@
                         </ul>
                         <h3> CARRITO DE COMPRAS [ <small id="numItemsSC">0 Item(s)</small> ]
                             <a href="/tienda/productos" class="btn btn-large pull-right">
-                                <i class="icon-arrow-left"></i> Continuar Comprando
+                                <i class="icon-arrow-left"></i> Seguir Comprando
                             </a>
                         </h3>	
                         <hr class="soft"/>
-                        <table class="table table-bordered">
+                        <table id="loginUserTable" class="table table-bordered" <sec:authorize access="isAuthenticated()">style="display: none;"</sec:authorize>>
                             <tr><th> YA ESTOY REGISTRADO </th></tr>
                             <tr> 
                                 <td>
-                                    <form class="form-horizontal">
+                                    <form id="ajaxFormLogin" class="form-horizontal" action="<c:url value='/ajax/authenticate'/>">
                                         <div class="control-group">
                                             <label class="control-label" for="username">Usuario</label>
                                             <div class="controls">
-                                                <input type="text" id="username" placeholder="usuario">
+                                                <input type="text" id="username" name="j_username" placeholder="usuario">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label" for="password">Contrase&ntilde;a</label>
                                             <div class="controls">
-                                                <input type="password" id="password" placeholder="contrase&ntilde;a">
+                                                <input type="password" id="password" name="j_password" placeholder="contrase&ntilde;a">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <div class="controls">
-                                                <button type="submit" class="btn">Ingresar</button> O <a href="/tienda/registro" class="btn">Registrarme ahora!</a>
+                                                <button id="ajaxLoginBtn" type="button" class="btn">Ingresar</button> O
+                                                <a href="/tienda/registro" class="btn">Registrarme ahora!</a>
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -55,13 +58,43 @@
                                     </form>
                                 </td>
                             </tr>
-                        </table>		
+                        </table>
+                        <table id="userInSessionTable" class="table table-bordered" <sec:authorize access="!isAuthenticated()">style="display: none;"</sec:authorize>>
+                            <sec:authentication var="userSession" property="principal" />
+                            <tr><th> USUARIO EN SESI&Oacute;N </th></tr>
+                            <tr> 
+                                <td class="form-horizontal">
+                                    <div class="control-group">
+                                        <label class="control-label">Usuario: </label>
+                                        <label id="userNameData" class="control-label" style="color: #167231">
+                                            <sec:authorize access="isAuthenticated()">
+                                                ${userSession.username} - ${userSession.nombre} ${userSession.apellidos}
+                                            </sec:authorize>
+                                        </label>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Correo: </label>
+                                        <label id="userEmail" class="control-label" style="color: #167231">
+                                            <sec:authorize access="isAuthenticated()">
+                                                ${userSession.user.email}
+                                            </sec:authorize>
+                                        </label>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <a href="<%=request.getContextPath()%>/security_logout" class="btn">Cerrar Sesi&oacute;n</a>
+                                            <a href="/home?redirect=user" class="btn">Entrar a mi cuenta</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Producto</th>
-                                    <th>Descripci&oacute;n</th>
+                                    <th>Nombre</th>
                                     <th>Cantidad/Actualizar</th>
                                     <th>Precio</th>
                                     <th>Descuento</th>
@@ -70,49 +103,49 @@
                                 </tr>
                             </thead>
                             <tbody id="generalSummaryTemplate">
-                                <tr id="productSummaryTemplate" style="display:none">
-                                    <td><img width="60" src="[item.productImage]" alt=""/></td>
-                                    <td>[item.product.name]<br/>[item.product.description]</td>
+                                <tr id="productSummaryTemplate">
+                                    <td><img width="60" src="={productImage}" alt=""/></td>
+                                    <td>={product.name}</td>
                                     <td>
                                         <div class="input-append">
-                                            <input class="span1" style="max-width:34px" placeholder="1" value="[item.quantity]" size="16" type="text">
-                                            <button class="btn" type="button">
+                                            <input class="span1" style="max-width:34px" placeholder="1" value="={quantity}" size="16" type="text">
+                                            <button class="btn" type="button" onclick="shoppingCart.lessFromCart('={product.code}')">
                                                 <i class="icon-minus"></i>
                                             </button>
-                                            <button class="btn" type="button">
+                                            <button class="btn" type="button" onclick="shoppingCart.addToCart('={product.code}')">
                                                 <i class="icon-plus"></i>
                                             </button>
-                                            <button class="btn btn-danger" type="button">
+                                            <button class="btn btn-danger" type="button" onclick="shoppingCart.removeFromCart('={product.code}')">
                                                 <i class="icon-remove icon-white"></i>
                                             </button>
                                         </div>
                                     </td>
-                                    <td>[item.subTotal]</td>
-                                    <td>[item.discount]</td>
-                                    <td>[item.iva]</td>
-                                    <td>[item.total]</td>
+                                    <td>={subTotal}</td>
+                                    <td>={discount}</td>
+                                    <td>={iva}</td>
+                                    <td>={total}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="text-align:right">Total Price:	</td>
-                                    <td> $228.00</td>
+                                    <td colspan="6" style="text-align:right">Precio Total:	</td>
+                                    <td> $={subTotal}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="text-align:right">Total Discount:	</td>
-                                    <td> $50.00</td>
+                                    <td colspan="6" style="text-align:right">Descuento Total:	</td>
+                                    <td> $={discount}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="text-align:right">Total Tax:	</td>
-                                    <td> $31.00</td>
+                                    <td colspan="6" style="text-align:right">IVA Total:	</td>
+                                    <td> $={iva}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="text-align:right"><strong>TOTAL ($228 - $50 + $31) =</strong></td>
-                                    <td class="label label-important" style="display:block"> <strong> $155.00 </strong></td>
+                                    <td colspan="6" style="text-align:right"><strong>TOTAL ($ ={subTotal} - $ ={discount} + $ ={iva}) =</strong></td>
+                                    <td class="label label-important" style="display:block"> <strong> $ ={total} </strong></td>
                                 </tr>
                             </tbody>
                         </table>
 
 
-                        <table class="table table-bordered">
+                        <!--<table class="table table-bordered">
                             <tbody>
                                 <tr>
                                     <td> 
@@ -156,9 +189,9 @@
                                     </form>				  
                                 </td>
                             </tr>
-                        </table>		
-                        <a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-                        <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+                        </table>-->
+                        <a href="/tienda/productos" class="btn btn-large"><i class="icon-arrow-left"></i> Seguir Comprando </a>
+                        <a href="javascript:void(0)" class="btn btn-large pull-right">Enviar Orden <i class="icon-arrow-right"></i></a>
 
                     </div>
                 </div>

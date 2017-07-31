@@ -2,6 +2,10 @@
 <html lang="en">
     <head>
         <title>Market Platform</title>
+        <script src="/js/web/ShoppingCart.js"></script>
+        <script>
+            var shoppingCart= new ShoppingCart();
+        </script>
     </head>
     <body>
         <div id="carouselBlk">

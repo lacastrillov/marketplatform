@@ -51,15 +51,19 @@ public class PurchaseOrderDto implements BaseEntity {
     private Integer discount;
     
     @Order(7)
+    @TextField("IVA")
+    private Integer iva;
+    
+    @Order(8)
     @TextField("Total")
     private Integer total;
     
-    @Order(8)
+    @Order(9)
     @TextField("Estado")
     @TypeFormField(value = FieldType.LIST, data = {"Pendiente", "Cancelada", "Pagada", "Rechazada"})
     private String status;
     
-    @Order(9)
+    @Order(10)
     @TextField("Usuario")
     private UserDto user;
     
@@ -127,6 +131,14 @@ public class PurchaseOrderDto implements BaseEntity {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+    
+    public Integer getIva() {
+        return iva;
+    }
+
+    public void setIva(Integer iva) {
+        this.iva = iva;
     }
 
     public Integer getTotal() {

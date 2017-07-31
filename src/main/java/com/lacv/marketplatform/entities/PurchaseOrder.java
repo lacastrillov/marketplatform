@@ -55,6 +55,8 @@ public class PurchaseOrder implements BaseEntity {
     private Integer subTotal;
     @Column(name = "discount")
     private Integer discount;
+    @Column(name = "iva")
+    private Integer iva;
     @Column(name = "total")
     private Integer total;
     @Size(max = 45)
@@ -129,6 +131,14 @@ public class PurchaseOrder implements BaseEntity {
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
+    
+    public Integer getIva() {
+        return iva;
+    }
+
+    public void setIva(Integer iva) {
+        this.iva = iva;
+    }
 
     public Integer getTotal() {
         return total;
@@ -194,5 +204,5 @@ public class PurchaseOrder implements BaseEntity {
     public String toString() {
         return "com.lacv.marketplatform.entities.PurchaseOrder[ id=" + id + " ]";
     }
-    
-}
+
+    }

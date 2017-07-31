@@ -5,12 +5,19 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
     <div id="header">
         <div class="container">
             <div id="welcomeLine" class="row">
-                <div class="span6">Welcome!<strong> User</strong></div>
+                <div class="span6">
+                    Bienvenido!
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication var="userSession" property="principal" />
+                        <strong> ${userSession.nombre} ${userSession.apellidos}</strong>
+                    </sec:authorize>
+                </div>
                 <div class="span6">
                     <div class="pull-right">
                         <!--<a href="product_summary.html"><span class="">Fr</span></a>
@@ -19,7 +26,7 @@
                         <a href="product_summary.html"><span>&pound;</span></a>
                         <span class="btn btn-mini">$155.00</span>
                         <a href="/tienda/carrito-de-compras"><span class="">$</span></a>-->
-                        <a href="/tienda/carrito-de-compras">
+                        <a href="/home?redirect=user">
                             <span class="btn btn-mini btn-primary">
                                 <i class="icon-shopping-cart icon-white"></i> Entrar a mi cuenta
                             </span>

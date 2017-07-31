@@ -45,6 +45,10 @@ public class PurchaseorderDetailDto implements BaseEntity {
     private Integer discount;
     
     @Order(7)
+    @TextField("IVA")
+    private Integer iva;
+    
+    @Order(8)
     @TextField("Total")
     private Integer total;
     
@@ -99,6 +103,14 @@ public class PurchaseorderDetailDto implements BaseEntity {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+    
+    public Integer getIva() {
+        return iva;
+    }
+
+    public void setIva(Integer iva) {
+        this.iva = iva;
     }
 
     public Integer getTotal() {
