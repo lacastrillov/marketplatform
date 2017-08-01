@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.WebResourceService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.entities.WebresourceAuthorization;
 import com.lacv.marketplatform.entities.WebresourceRole;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -45,11 +45,11 @@ public class WebResourceViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("webResource", "name", webResourceService, WebResourceDto.class);
+        EntityConfig view= new EntityConfig("webResource", "name", webResourceService, WebResourceDto.class);
         view.setSingularEntityTitle("Recurso Web");
         view.setPluralEntityTitle("Recursos Web");
-        view.addChildExtView("webresourceRole", WebresourceRole.class, ViewConfig.TCV_N_N_MULTICHECK);
-        view.addChildExtView("webresourceAuthorization", WebresourceAuthorization.class, ViewConfig.TCV_N_N_MULTICHECK);
+        view.addChildExtView("webresourceRole", WebresourceRole.class, EntityConfig.TCV_N_N_MULTICHECK);
+        view.addChildExtView("webresourceAuthorization", WebresourceAuthorization.class, EntityConfig.TCV_N_N_MULTICHECK);
         view.setDefaultOrderBy("category");
         view.setDefaultOrderDir("ASC");
         super.addControlMapping(view);

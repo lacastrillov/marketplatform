@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.TableColumnService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class TableColumnViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("tableColumn", "name", tableColumnService, TableColumnDto.class);
+        EntityConfig view= new EntityConfig("tableColumn", "name", tableColumnService, TableColumnDto.class);
         view.setSingularEntityTitle("Columna de la tabla");
         view.setPluralEntityTitle("Columnas de la tabla");
         view.setDefaultOrder("columnOrder", "ASC");

@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.MailService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class MailViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("mail", "id", mailService, MailDto.class);
+        EntityConfig view= new EntityConfig("mail", "id", mailService, MailDto.class);
         view.setSingularEntityTitle("Correo");
         view.setPluralEntityTitle("Correos");
         view.setEditableForm(false);

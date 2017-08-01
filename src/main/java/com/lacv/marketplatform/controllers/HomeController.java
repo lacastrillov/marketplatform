@@ -81,7 +81,7 @@ public class HomeController {
                 if(homePage!=null){
                     return new ModelAndView("redirect:"+homePage);
                 } else {
-                    return new ModelAndView("redirect:/vista/product/table.htm");
+                    return new ModelAndView("redirect:/vista/product/entity.htm");
                 }
             }else{
                 return new ModelAndView("redirect:/login");

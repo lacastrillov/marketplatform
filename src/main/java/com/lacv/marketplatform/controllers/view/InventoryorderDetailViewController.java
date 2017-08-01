@@ -11,7 +11,7 @@ import com.lacv.marketplatform.mappers.InventoryorderDetailMapper;
 import com.lacv.marketplatform.services.InventoryorderDetailService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class InventoryorderDetailViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("inventoryorderDetail", "id", inventoryorderDetailService, InventoryorderDetailDto.class);
+        EntityConfig view= new EntityConfig("inventoryorderDetail", "id", inventoryorderDetailService, InventoryorderDetailDto.class);
         view.setSingularEntityTitle("Detalle Orden de Inventario");
         view.setPluralEntityTitle("Detalle Orden de Inventario");
         super.addControlMapping(view);

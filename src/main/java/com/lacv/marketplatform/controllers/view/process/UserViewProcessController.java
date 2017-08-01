@@ -12,7 +12,7 @@ import com.lacv.marketplatform.dtos.process.CreatePasswordDto;
 import com.dot.gcpbasedot.controller.ExtProcessController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ProcessConfig;
+import com.dot.gcpbasedot.dto.config.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
 import com.lacv.marketplatform.services.security.SecurityService;

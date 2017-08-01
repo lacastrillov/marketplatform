@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.RoleService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.entities.RoleAuthorization;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -44,11 +44,11 @@ public class RoleViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("role", "name", roleService, RoleDto.class);
+        EntityConfig view= new EntityConfig("role", "name", roleService, RoleDto.class);
         view.setSingularEntityTitle("Rol");
         view.setPluralEntityTitle("Roles");
         view.addInternalViewButton("userRole", "Ver Usuarios");
-        view.addChildExtView("roleAuthorization", RoleAuthorization.class, ViewConfig.TCV_N_N_MULTICHECK);
+        view.addChildExtView("roleAuthorization", RoleAuthorization.class, EntityConfig.TCV_N_N_MULTICHECK);
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Seguridad", "role", "Gestionar Roles");

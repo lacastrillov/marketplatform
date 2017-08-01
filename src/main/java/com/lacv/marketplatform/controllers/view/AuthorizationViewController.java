@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.AuthorizationService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class AuthorizationViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("authorization", "name", authorizationService, AuthorizationDto.class);
+        EntityConfig view= new EntityConfig("authorization", "name", authorizationService, AuthorizationDto.class);
         view.setSingularEntityTitle("Autorizaci&oacute;n");
         view.setPluralEntityTitle("Autorizaciones");
         super.addControlMapping(view);

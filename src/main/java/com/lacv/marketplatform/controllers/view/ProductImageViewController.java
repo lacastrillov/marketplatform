@@ -11,8 +11,8 @@ import com.lacv.marketplatform.mappers.ProductImageMapper;
 import com.lacv.marketplatform.services.ProductImageService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
-import com.dot.gcpbasedot.dto.ReportConfig;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.ReportConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.dtos.reports.ProductImageReportDto;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ProductImageViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("productImage", "id", productImageService, ProductImageDto.class);
+        EntityConfig view= new EntityConfig("productImage", "id", productImageService, ProductImageDto.class);
         view.setSingularEntityTitle("Imagen");
         view.setPluralEntityTitle("Imagenes");
         view.setMultipartFormData(true);

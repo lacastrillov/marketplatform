@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.MainLocationService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class MainLocationViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("mainLocation", "mlName", mainLocationService, MainLocationDto.class);
+        EntityConfig view= new EntityConfig("mainLocation", "mlName", mainLocationService, MainLocationDto.class);
         view.setSingularEntityTitle("Ubicaci&oacute;n Principal");
         view.setPluralEntityTitle("Ubicaciones Principales");
         super.addControlMapping(view);

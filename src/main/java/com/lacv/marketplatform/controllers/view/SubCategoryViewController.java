@@ -11,7 +11,7 @@ import com.lacv.marketplatform.mappers.SubCategoryMapper;
 import com.lacv.marketplatform.services.SubCategoryService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class SubCategoryViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("subCategory", "name", subCategoryService, SubCategoryDto.class);
+        EntityConfig view= new EntityConfig("subCategory", "name", subCategoryService, SubCategoryDto.class);
         view.setSingularEntityTitle("Sub Categoria");
         view.setPluralEntityTitle("Sub Categorias");
         view.setMultipartFormData(true);

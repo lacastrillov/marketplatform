@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.LeadTableService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.entities.TableColumn;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -44,10 +44,10 @@ public class LeadTableViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("leadTable", "name", leadTableService, LeadTableDto.class);
+        EntityConfig view= new EntityConfig("leadTable", "name", leadTableService, LeadTableDto.class);
         view.setSingularEntityTitle("Tabla Lead");
         view.setPluralEntityTitle("Tablas Lead");
-        view.addChildExtView("tableColumn", TableColumn.class, ViewConfig.TCV_STANDARD);
+        view.addChildExtView("tableColumn", TableColumn.class, EntityConfig.TCV_STANDARD);
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Tablas Lead", "leadTable", "Gestionar Tablas Lead");

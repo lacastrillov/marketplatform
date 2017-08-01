@@ -13,7 +13,7 @@ import com.dot.gcpbasedot.controller.ExtFileExplorerController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.GridTemplate;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.FileExplorerConfig;
+import com.dot.gcpbasedot.dto.config.FileExplorerConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;

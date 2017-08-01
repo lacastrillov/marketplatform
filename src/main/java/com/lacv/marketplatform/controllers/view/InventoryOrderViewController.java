@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.InventoryOrderService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.entities.InventoryorderDetail;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -44,10 +44,10 @@ public class InventoryOrderViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("inventoryOrder", "number", inventoryOrderService, InventoryOrderDto.class);
+        EntityConfig view= new EntityConfig("inventoryOrder", "number", inventoryOrderService, InventoryOrderDto.class);
         view.setSingularEntityTitle("Orden de Inventario");
         view.setPluralEntityTitle("Ordenes de Inventario");
-        view.addChildExtView("inventoryorderDetail", InventoryorderDetail.class, ViewConfig.TCV_STANDARD);
+        view.addChildExtView("inventoryorderDetail", InventoryorderDetail.class, EntityConfig.TCV_STANDARD);
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Pedidos", "inventoryOrder", "Gestionar Ordenes de Inventario");

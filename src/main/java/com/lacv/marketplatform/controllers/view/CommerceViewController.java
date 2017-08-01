@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.CommerceService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class CommerceViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("commerce", "commerceName", commerceService, CommerceDto.class);
+        EntityConfig view= new EntityConfig("commerce", "commerceName", commerceService, CommerceDto.class);
         view.setSingularEntityTitle("Comercio");
         view.setPluralEntityTitle("Comercios");
         view.setMultipartFormData(true);

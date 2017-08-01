@@ -33,19 +33,21 @@
         
         <!-- ############################ IMPORT MODELS ################################### -->
         
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityExtModel.htm"/>
         <c:forEach var="modelER" items="${modelsEntityRef}">
             <c:import url="${basePath}/${modelER}/entityExtModel.htm"/>
         </c:forEach>
         
         <!-- ############################ IMPORT STORES ################################### -->
         
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityExtStore.htm"/>
         <c:forEach var="modelER" items="${modelsEntityRef}">
             <c:import url="${basePath}/${modelER}/entityExtStore.htm"/>
         </c:forEach>
         
         <!-- ############################ IMPORT VIEWS ################################### -->
         
-        <c:import url="${basePath}/${entityRef}/entityExtView.htm">
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityExtView.htm">
              <c:param name="typeView" value="Parent"/>
         </c:import>
         <c:forEach var="viewsChildER" items="${viewsChildEntityRef}">
@@ -56,7 +58,7 @@
         
         <!-- ############################ IMPORT CONTROLLERS ################################### -->
         
-        <c:import url="${basePath}/${entityRef}/entityExtController.htm">
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityExtController.htm">
             <c:param name="typeController" value="Parent"/>
         </c:import>
         <c:forEach var="controllerChildER" items="${viewsChildEntityRef}">
@@ -77,9 +79,9 @@
         
         <!-- ############################ IMPORT BASE ELEMENTES ################################### -->
         
-        <c:import url="${basePath}/${entityRef}/entityViewportExtView.htm"/>
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityViewportExtView.htm"/>
         
-        <c:import url="${basePath}/${entityRef}/entityExtInit.htm"/>
+        <c:import url="${basePath}/${viewConfig.pathRef}/entityExtInit.htm"/>
         
         <!-- ############################ IMPORT COMPONENTS ################################### -->
         

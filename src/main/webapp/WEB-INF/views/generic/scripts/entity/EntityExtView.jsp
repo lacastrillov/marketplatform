@@ -105,7 +105,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     Instance.entityExtStore.save('create', JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 update: function(form, data){
-                    Instance.entityExtStore.save('update', JSON.stringify(data), parentExtController.formSavedResponse);
+                    var action="update";
+                    <c:if test="${viewConfig.preloadedForm}">
+                    action="sessionUpdate";
+                    </c:if>
+                    Instance.entityExtStore.save(action, JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();
@@ -188,7 +192,9 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     disabled: true,
                     scope: this,
                     handler: this.onSave
-                }, {
+                },
+                <c:if test="${not viewConfig.preloadedForm}">
+                {
                     //iconCls: 'icon-user-add',
                     text: 'Crear',
                     scope: this,
@@ -198,7 +204,9 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     text: 'Limpiar',
                     scope: this,
                     handler: this.onReset
-                },'|'];
+                },
+                </c:if>
+                '|'];
                 </c:if>
                 if(additionalButtons){
                     for(var i=0; i<additionalButtons.length; i++){
@@ -643,7 +651,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
             ${associatedEntityName}: function(entity){
                 var res = entity.split("__");
-                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/table.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
+                return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/entity.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
             },
             </c:forEach>
         }

@@ -14,7 +14,7 @@ import com.lacv.marketplatform.dtos.process.UsuarioPDto;
 import com.dot.gcpbasedot.controller.ExtProcessController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ProcessConfig;
+import com.dot.gcpbasedot.dto.config.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;

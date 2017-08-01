@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author lacastrillov
  */
 @Controller
-@RequestMapping(value="/vista/user")
-public class UserViewController extends ExtEntityController {
+@RequestMapping(value="/vista/myAccount")
+public class MyAccountViewController extends ExtEntityController {
     
     @Autowired
     UserService userService;
@@ -48,10 +48,12 @@ public class UserViewController extends ExtEntityController {
     @PostConstruct
     public void init(){
         EntityConfig view= new EntityConfig("user", "name", userService, UserDto.class);
-        view.setSingularEntityTitle("Usuario");
-        view.setPluralEntityTitle("Usuarios");
+        view.setPathRef("myAccount");
+        view.setSingularEntityTitle("Mi Cuenta");
+        view.setPluralEntityTitle("Mi cuenta");
         view.addChildExtView("userRole", UserRole.class, EntityConfig.TCV_N_N_MULTICHECK);
         view.setMultipartFormData(true);
+        view.setPreloadedForm(true);
         
         ProcessButton setPasswordButton= new ProcessButton();
         setPasswordButton.setMainProcessRef("processUser");
@@ -75,8 +77,7 @@ public class UserViewController extends ExtEntityController {
         
         super.addControlMapping(view);
         
-        MenuItem menuItem= new MenuItem("Seguridad", "user", "Gestionar Usuarios");
-        menuItem.setItemPosition(2);
+        MenuItem menuItem= new MenuItem("Configuraci&oacute;n", "myAccount", "Mi cuenta");
         menuComponent.addItemMenu(menuItem);
         
         super.addMenuComponent(menuComponent);
@@ -85,6 +86,11 @@ public class UserViewController extends ExtEntityController {
     @Override
     public List<MenuItem> configureVisibilityMenu(List<MenuItem> menuData){
         return securityService.configureVisibilityMenu(menuData);
+    }
+    
+    @Override
+    public Object getFormRecordId(){
+        return securityService.getCurrentUser().getId();
     }
     
 }

@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.WebresourceAuthorizationService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class WebresourceAuthorizationViewController extends ExtEntityController 
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("webresourceAuthorization", "id", webresourceAuthorizationService, WebresourceAuthorizationDto.class);
+        EntityConfig view= new EntityConfig("webresourceAuthorization", "id", webresourceAuthorizationService, WebresourceAuthorizationDto.class);
         view.setSingularEntityTitle("Autorizaci&oacute;n");
         view.setPluralEntityTitle("Autorizaciones");
         view.activateNNMulticheckChild("authorization");

@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.SupplierService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class SupplierViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("supplier", "companyName", supplierService, SupplierDto.class);
+        EntityConfig view= new EntityConfig("supplier", "companyName", supplierService, SupplierDto.class);
         view.setSingularEntityTitle("Proveedor");
         view.setPluralEntityTitle("Proveedores");
         super.addControlMapping(view);

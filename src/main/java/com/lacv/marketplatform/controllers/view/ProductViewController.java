@@ -13,8 +13,8 @@ import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessButton;
-import com.dot.gcpbasedot.dto.ReportConfig;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.ReportConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.dot.gcpbasedot.util.FilterQueryJSON;
 import com.lacv.marketplatform.dtos.process.ActivationProductPDto;
@@ -66,10 +66,10 @@ public class ProductViewController extends ExtEntityController {
     
     @PostConstruct
     public void init() {
-        ViewConfig view = new ViewConfig("product", "name", productService, ProductDto.class);
+        EntityConfig view = new EntityConfig("product", "name", productService, ProductDto.class);
         view.setSingularEntityTitle("Producto");
         view.setPluralEntityTitle("Productos");
-        view.addChildExtView("productImage", ProductImage.class, ViewConfig.TCV_STANDARD);
+        view.addChildExtView("productImage", ProductImage.class, EntityConfig.TCV_STANDARD);
         view.addComboboxChildDependent("category", "subCategory");
         super.addControlMapping(view);
 

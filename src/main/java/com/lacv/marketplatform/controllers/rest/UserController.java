@@ -15,6 +15,7 @@ import com.lacv.marketplatform.constants.WebConstants;
 import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
+import com.lacv.marketplatform.services.security.SecurityService;
 import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UserController extends RestController {
     UserMapper userMapper;
     
     @Autowired
+    SecurityService securityService;
+    
+    @Autowired
     WebFileService webFileService;
     
     
@@ -43,6 +47,11 @@ public class UserController extends RestController {
     public void init(){
         super.addControlMapping("user", userService, userMapper);
         super.setDtoClass(UserDto.class);
+    }
+    
+    @Override
+    public String getFormRecordId(){
+        return securityService.getCurrentUser().getId().toString();
     }
     
     @Override

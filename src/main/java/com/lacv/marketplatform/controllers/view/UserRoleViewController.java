@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.UserRoleService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class UserRoleViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("userRole", "id", userRoleService, UserRoleDto.class);
+        EntityConfig view= new EntityConfig("userRole", "id", userRoleService, UserRoleDto.class);
         view.setPluralEntityTitle("Roles de Usuario");
         view.setSingularEntityTitle("Roles de Usuario");
         view.activateNNMulticheckChild("role");

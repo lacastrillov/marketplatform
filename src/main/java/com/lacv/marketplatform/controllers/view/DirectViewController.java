@@ -9,7 +9,7 @@ package com.lacv.marketplatform.controllers.view;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.controller.ExtTableController;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.TableConfig;
+import com.dot.gcpbasedot.dto.config.TableConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;

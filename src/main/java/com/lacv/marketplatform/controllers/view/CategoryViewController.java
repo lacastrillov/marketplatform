@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.CategoryService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.services.SubCategoryService;
@@ -53,11 +53,11 @@ public class CategoryViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("category", "name", categoryService, CategoryDto.class);
+        EntityConfig view= new EntityConfig("category", "name", categoryService, CategoryDto.class);
         view.setSingularEntityTitle("Categoria");
         view.setPluralEntityTitle("Categorias");
         view.setMultipartFormData(true);
-        view.addChildExtView("subCategory", SubCategory.class, ViewConfig.TCV_STANDARD);
+        view.addChildExtView("subCategory", SubCategory.class, EntityConfig.TCV_STANDARD);
         view.addInternalViewButton("product", "Ver productos");
         super.addControlMapping(view);
         

@@ -11,7 +11,7 @@ import com.lacv.marketplatform.mappers.RoleAuthorizationMapper;
 import com.lacv.marketplatform.services.RoleAuthorizationService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class RoleAuthorizationViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("roleAuthorization", "id", roleAuthorizationService, RoleAuthorizationDto.class);
+        EntityConfig view= new EntityConfig("roleAuthorization", "id", roleAuthorizationService, RoleAuthorizationDto.class);
         view.setSingularEntityTitle("Comercio");
         view.setPluralEntityTitle("Comercios");
         view.activateNNMulticheckChild("authorization");

@@ -12,7 +12,7 @@ import com.lacv.marketplatform.services.PaymentService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.dot.gcpbasedot.dto.ViewConfig;
+import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class PaymentViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        ViewConfig view= new ViewConfig("payment", "referenceNumber", paymentService, PaymentDto.class);
+        EntityConfig view= new EntityConfig("payment", "referenceNumber", paymentService, PaymentDto.class);
         view.setSingularEntityTitle("Pago");
         view.setPluralEntityTitle("Pagos");
         super.addControlMapping(view);
