@@ -80,7 +80,7 @@ public class PurchaseOrderProcessController extends RestController  {
         
         result.setSuccess(true);
         result.setUsername(buyerUser.getUsername());
-        result.setMessage("Orden creada #"+number);
+        result.setMessage("La Orden de Compra n&uacute;mero "+number+" fue creada");
         
         return result;
     }

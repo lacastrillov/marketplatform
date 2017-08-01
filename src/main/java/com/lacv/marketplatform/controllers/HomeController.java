@@ -106,7 +106,7 @@ public class HomeController {
             data.put("success", true);
             data.put("user", userDto);
             data.put("roles", roles);
-            securityService.connect(j_username, j_password);
+            
             return Util.objectToJson(data);
         }catch(AuthenticationException ex){
             data.put("success", false);

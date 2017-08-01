@@ -38,29 +38,6 @@ function ShoppingCart() {
         });
     };
     
-    Instance.setIVA= function(){
-        propertyExtStore.find('{"eq":{"key":"IVA"}}',function(responseText){
-            if(responseText.success && responseText.totalCount===1){
-                Instance.IVA= Number(responseText.data[0].value);
-            }else{
-                Instance.IVA= 0;
-            }
-        });
-    };
-    
-    Instance.login= function(){
-        autenticacionUsuario.authenticate(function(data){
-            if(data.success){
-                $("#userNameData").html(data.user.username+" - "+data.user.name);
-                $("#userEmail").html(data.user.email);
-                $("#loginUserTable").hide();
-                $("#userInSessionTable").show();
-            }else{
-                Instance.showMessage("Iniciar Sesi&oacute;n", data.message);
-            }
-        });
-    };
-    
     Instance.getCart= function(){
         var scart= localStorage.getItem("scart");
         if(scart!==null){
@@ -222,6 +199,44 @@ function ShoppingCart() {
             var result= util.processTemplate(Instance.generalSummaryTemplate, cart);
             $("#generalSummaryTemplate").append(result);
         }
+    };
+    
+    Instance.generatePurchaseOrder= function(){
+        var idUserInSession= $("#idUserInSession").val();
+        if(idUserInSession!==""){
+            var cart= Instance.getCart();
+            productExtStore.doProcess("processPurchaseOrder", "generarOrdenCompra", JSON.stringify(cart),function(responseText){
+                Instance.showMessage("Generar orden de compra", JSON.parse(responseText).message);
+                Instance.setCart({"items":[], "subTotal":0, "discount":0, "iva":0, "total":0});
+                Instance.updateProductSummary();
+            });
+        }else{
+            Instance.showMessage("Acci&oacute;n inv&aacute;lida", "No se puede realizar la operaci&oacute;n si no se ha autenticado!!!");
+        }
+    };
+    
+    Instance.setIVA= function(){
+        propertyExtStore.find('{"eq":{"key":"IVA"}}',function(responseText){
+            if(responseText.success && responseText.totalCount===1){
+                Instance.IVA= Number(responseText.data[0].value);
+            }else{
+                Instance.IVA= 0;
+            }
+        });
+    };
+    
+    Instance.login= function(){
+        autenticacionUsuario.authenticate(function(data){
+            if(data.success){
+                $("#idUserInSession").val(data.user.id);
+                $("#userNameData").html(data.user.username+" - "+data.user.name);
+                $("#userEmail").html(data.user.email);
+                $("#loginUserTable").hide();
+                $("#userInSessionTable").show();
+            }else{
+                Instance.showMessage("Iniciar Sesi&oacute;n", data.message);
+            }
+        });
     };
     
     Instance.showMessage= function(title, message){

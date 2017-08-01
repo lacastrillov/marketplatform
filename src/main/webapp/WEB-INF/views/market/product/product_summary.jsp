@@ -61,11 +61,12 @@
                         </table>
                         <table id="userInSessionTable" class="table table-bordered" <sec:authorize access="!isAuthenticated()">style="display: none;"</sec:authorize>>
                             <sec:authentication var="userSession" property="principal" />
+                            <input type="hidden" id="idUserInSession" value="<sec:authorize access="isAuthenticated()">${userSession.user.id}</sec:authorize>" />
                             <tr><th> USUARIO EN SESI&Oacute;N </th></tr>
                             <tr> 
                                 <td class="form-horizontal">
                                     <div class="control-group">
-                                        <label class="control-label">Usuario: </label>
+                                        <label class="control-label">Usuario:&nbsp;</label>
                                         <label id="userNameData" class="control-label" style="color: #167231">
                                             <sec:authorize access="isAuthenticated()">
                                                 ${userSession.username} - ${userSession.nombre} ${userSession.apellidos}
@@ -73,7 +74,7 @@
                                         </label>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">Correo: </label>
+                                        <label class="control-label">Correo:&nbsp;&nbsp;</label>
                                         <label id="userEmail" class="control-label" style="color: #167231">
                                             <sec:authorize access="isAuthenticated()">
                                                 ${userSession.user.email}
@@ -103,7 +104,7 @@
                                 </tr>
                             </thead>
                             <tbody id="generalSummaryTemplate">
-                                <tr id="productSummaryTemplate">
+                                <tr id="productSummaryTemplate" style="display:none;">
                                     <td><img width="60" src="={productImage}" alt=""/></td>
                                     <td>={product.name}</td>
                                     <td>
@@ -191,7 +192,7 @@
                             </tr>
                         </table>-->
                         <a href="/tienda/productos" class="btn btn-large"><i class="icon-arrow-left"></i> Seguir Comprando </a>
-                        <a href="javascript:void(0)" class="btn btn-large pull-right">Enviar Orden <i class="icon-arrow-right"></i></a>
+                        <a href="javascript:void(0)" onclick="shoppingCart.generatePurchaseOrder()" class="btn btn-large pull-right">Enviar Orden <i class="icon-arrow-right"></i></a>
 
                     </div>
                 </div>
