@@ -6,7 +6,7 @@
 util.importJS('/js/web/stores/ProductExtStore.js');
 util.importJS('/js/web/stores/ProductImageExtStore.js');
 util.importJS('/js/web/stores/PropertyExtStore.js');
-util.importJS('/js/web/usuario/AutenticacionUsuario.js');
+util.importJS('/js/web/usuario/UserAuthentication.js');
 
 function ShoppingCart() {
 
@@ -18,7 +18,7 @@ function ShoppingCart() {
     
     var propertyExtStore;
     
-    var autenticacionUsuario;
+    var userAuthentication;
 
     Instance.init = function () {
         Instance.productSummaryTemplate= null;
@@ -27,7 +27,7 @@ function ShoppingCart() {
             productExtStore= new ProductExtStore();
             productImageExtStore= new ProductImageExtStore();
             propertyExtStore= new PropertyExtStore();
-            autenticacionUsuario= new AutenticacionUsuario();
+            userAuthentication= new UserAuthentication();
             
             Instance.setIVA();
             Instance.updateProductSummary();
@@ -226,7 +226,7 @@ function ShoppingCart() {
     };
     
     Instance.login= function(){
-        autenticacionUsuario.authenticate(function(data){
+        userAuthentication.authenticate(function(data){
             if(data.success){
                 $("#idUserInSession").val(data.user.id);
                 $("#userNameData").html(data.user.username+" - "+data.user.name);

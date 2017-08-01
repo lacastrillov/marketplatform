@@ -5,7 +5,7 @@
  */
 
 
-function AutenticacionUsuario() {
+function UserAuthentication() {
 
     var Instance = this;
 

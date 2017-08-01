@@ -9,10 +9,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Iniciar Sesion - Mercando</title>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/web/usuario/AutenticacionUsuario.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/js/web/usuario/UserAuthentication.js"></script>
         
         <script>
-            var autenticacionUsuario = new AutenticacionUsuario();
+            var userAuthentication = new UserAuthentication();
         </script>
     </head>
     <body>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <a id="linkIngresar" href="#" class="btn-ingreso">Ingresar</a>
-                        <a class="link-pass" onclick="autenticacionUsuario.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
+                        <a class="link-pass" onclick="userAuthentication.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
                     </form>
                 </div>
                 <div id="changePasswordDiv" style="display:none;" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
@@ -51,8 +51,8 @@
                                 <input id="correoElectronico" name="correoElectronico" type="text" class="validate" placeholder="Correo electr&oacute;nico" />
                             </div>
                         </div>
-                        <a href="javascript:autenticacionUsuario.resetPassword();" class="btn-ingreso">Enviar</a>
-                        <a class="link-pass" onclick="autenticacionUsuario.changeForm('loginDiv')" href="javascript:void(0);">Volver</a>
+                        <a onclick="userAuthentication.resetPassword();" href="javascript:void(0)" class="btn-ingreso">Enviar</a>
+                        <a class="link-pass" onclick="userAuthentication.changeForm('loginDiv')" href="javascript:void(0);">Volver</a>
                     </form>
                 </div>
             </div>
