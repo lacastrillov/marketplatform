@@ -199,8 +199,12 @@ function ${entityName}ExtStore(){
     };
     
     Instance.load= function(idEntity, func){
+        var action= "load";
+        <c:if test="${viewConfig.preloadedForm}">
+        action="sessionLoad";
+        </c:if>
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/load.htm",
+            url: Ext.context+"/rest/${entityRef}/"+action+".htm",
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
