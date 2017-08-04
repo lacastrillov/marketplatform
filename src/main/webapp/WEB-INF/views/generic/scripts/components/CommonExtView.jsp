@@ -174,8 +174,8 @@ function CommonExtView(parentExtController, parentExtView, model){
     
     Instance.imageRender= function(value, field) {
         if(value){
-            return '<a id="linkFile" href="'+value+'" target="_blank">'+value+'</a>'+
-                   '<img style="max-width:150%" src="'+value+'" />';
+            return '<a id="linkFile" href="'+value+'" target="_blank">'+value+'</a><br>'+
+                   '<img style="max-width:150%" src="'+value+'">';
         }else{
             return "";
         }
