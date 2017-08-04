@@ -8,7 +8,7 @@
         </script>
     </head>
     <body>
-        <div id="carouselBlk">
+        <!--<div id="carouselBlk">
             <div id="myCarousel" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="item active">
@@ -71,7 +71,7 @@
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
                 <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
             </div> 
-        </div>
+        </div>-->
         <div id="mainBody">
             <div class="container">
                 <div class="row">
@@ -80,7 +80,7 @@
                     
                     <div class="span9">		
                         <div class="well well-small">
-                            <h4>Featured Products <small class="pull-right">200+ featured products</small></h4>
+                            <h4>Productos destacados <small class="pull-right">200+ featured products</small></h4>
                             <div class="row-fluid">
                                 <div id="featured" class="carousel slide">
                                     <div class="carousel-inner">
