@@ -137,7 +137,7 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
             items: []
         });
         
-        Instance.entityExtStore.find("", function(responseText){
+        Instance.entityExtStore.find("", "", function(responseText){
             if(responseText.success){
                 responseText.data.forEach(function(item){
                     var cb = Ext.create('Ext.form.field.Checkbox', {

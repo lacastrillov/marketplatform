@@ -93,7 +93,7 @@ function ShoppingCart() {
             Instance.showMessage("Agregar al carrito", "Se agrego el producto "+cart.items[index].product.name);
             Instance.updateProductSummary();
         }else{
-            productExtStore.find('{"eq":{"code":"'+productCode+'"}}', function(responseText){
+            productExtStore.find('{"eq":{"code":"'+productCode+'"}}', "", function(responseText){
                 if(responseText.success && responseText.totalCount===1){
                     var product= responseText.data[0];
                     var index= cart.items.length;
@@ -216,7 +216,7 @@ function ShoppingCart() {
     };
     
     Instance.setIVA= function(){
-        propertyExtStore.find('{"eq":{"key":"IVA"}}',function(responseText){
+        propertyExtStore.find('{"eq":{"key":"IVA"}}',"",function(responseText){
             if(responseText.success && responseText.totalCount===1){
                 Instance.IVA= Number(responseText.data[0].value);
             }else{

@@ -89,11 +89,11 @@ function ${entityName}ExtStore(){
         return store;
     };
 
-    Instance.find= function(filter, func){
+    Instance.find= function(filter, params, func){
         Ext.Ajax.request({
             url: Ext.context+"/rest/${entityRefLogProcess}/find.htm",
             method: "GET",
-            params: "filter="+encodeURIComponent(filter),
+            params: "filter="+encodeURIComponent(filter) + params,
             success: function(response){
                 var responseText= Ext.decode(response.responseText);
                 func(responseText);

@@ -71,7 +71,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     }
     
     Instance.findAndLoadNNMultichecks= function(filter){
-        Instance.entityExtStore.find(filter, function(responseText){
+        Instance.entityExtStore.find(filter, "", function(responseText){
             if(responseText.success){
                 responseText.data.forEach(function(item){
                     var itemCheckValue= item.${viewConfig.entityRefNNMulticheckChild}.id;
