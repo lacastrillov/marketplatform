@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Registro</title>
+        <title>Registrarse</title>
     </head>
     <body>
         <div id="mainBody">
@@ -13,9 +13,9 @@
                     <div class="span9">
                         <ul class="breadcrumb">
                             <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                            <li class="active">Registration</li>
+                            <li class="active">Registrarse</li>
                         </ul>
-                        <h3> Registration</h3>	
+                        <h3> Registrarse</h3>	
                         <div class="well">
                             <!--
                             <div class="alert alert-info fade in">
@@ -31,8 +31,8 @@
                                     <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
                              </div> -->
                             <form class="form-horizontal" >
-                                <h4>Your personal information</h4>
-                                <div class="control-group">
+                                <h4>Informaci&oacute;n personal</h4>
+                                <!--<div class="control-group">
                                     <label class="control-label">Title <sup>*</sup></label>
                                     <div class="controls">
                                         <select class="span1" name="days">
@@ -42,15 +42,15 @@
                                             <option value="3">Miss</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="control-group">
-                                    <label class="control-label" for="inputFname1">First name <sup>*</sup></label>
+                                    <label class="control-label" for="inputFname1">Nombres <sup>*</sup></label>
                                     <div class="controls">
                                         <input type="text" id="inputFname1" placeholder="First Name">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="inputLnam">Last name <sup>*</sup></label>
+                                    <label class="control-label" for="inputLnam">Apellidos <sup>*</sup></label>
                                     <div class="controls">
                                         <input type="text" id="inputLnam" placeholder="Last Name">
                                     </div>
