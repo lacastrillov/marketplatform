@@ -7,7 +7,7 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestSessionController;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/user")
-public class UserController extends RestController {
+public class UserController extends RestSessionController {
     
     @Autowired
     UserService userService;
@@ -50,8 +50,13 @@ public class UserController extends RestController {
     }
     
     @Override
-    public String getFormRecordId(){
-        return securityService.getCurrentUser().getId().toString();
+    public boolean canLoad(Object id){
+        return securityService.getCurrentUser().getId().equals(id);
+    }
+    
+    @Override
+    public boolean canUpdate(Object id){
+        return securityService.getCurrentUser().getId().equals(id);
     }
     
     @Override

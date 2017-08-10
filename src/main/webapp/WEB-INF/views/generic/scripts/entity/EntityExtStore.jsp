@@ -8,6 +8,11 @@ function ${entityName}ExtStore(){
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
     
+    var baseAction= "";
+    
+    Instance.enableRestSession= function(){
+        baseAction= "session_";
+    };
     
     Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -27,10 +32,10 @@ function ${entityName}ExtStore(){
                     destroy: 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm',
-                    create: Ext.context+'/rest/${entityRef}/create.htm',
-                    update: Ext.context+'/rest/${entityRef}/update.htm',
-                    destroy: Ext.context+'/rest/${entityRef}/delete.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm',
+                    create: Ext.context+'/rest/${entityRef}/'+baseAction+'create.htm',
+                    update: Ext.context+'/rest/${entityRef}/'+baseAction+'update.htm',
+                    destroy: Ext.context+'/rest/${entityRef}/'+baseAction+'delete.htm'
                 },
                 reader: {
                     type: 'json',
@@ -102,7 +107,7 @@ function ${entityName}ExtStore(){
                     read   : 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm'
                 },
                 reader: {
                     type: 'json',
@@ -153,7 +158,7 @@ function ${entityName}ExtStore(){
 
     Instance.find= function(filter, params, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/find.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm',
             method: "GET",
             params: "filter="+encodeURIComponent(filter) + params,
             success: function(response){
@@ -179,7 +184,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/"+operation+".htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+operation+'.htm',
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -199,12 +204,8 @@ function ${entityName}ExtStore(){
     };
     
     Instance.load= function(idEntity, func){
-        var action= "load";
-        <c:if test="${viewConfig.preloadedForm}">
-        action="sessionLoad";
-        </c:if>
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/"+action+".htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'load.htm',
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
@@ -224,7 +225,7 @@ function ${entityName}ExtStore(){
     
     Instance.upload= function(form, idEntity, func){
         form.submit({
-            url: Ext.context+"/rest/${entityRef}/diskupload/"+idEntity+".htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'diskupload/'+idEntity+'.htm',
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
@@ -277,7 +278,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/delete/byfilter.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'delete/byfilter.htm',
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){
