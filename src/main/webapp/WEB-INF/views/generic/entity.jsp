@@ -42,7 +42,9 @@
         
         <c:import url="${basePath}/${viewConfig.pathRef}/entityExtStore.htm"/>
         <c:forEach var="modelER" items="${modelsEntityRef}">
-            <c:import url="${basePath}/${modelER}/entityExtStore.htm"/>
+            <c:import url="${basePath}/${modelER}/entityExtStore.htm">
+                <c:param name="restSession" value="${viewConfig.restSession}"/>
+            </c:import>
         </c:forEach>
         
         <!-- ############################ IMPORT VIEWS ################################### -->

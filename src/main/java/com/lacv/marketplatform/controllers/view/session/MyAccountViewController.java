@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.lacv.marketplatform.controllers.view;
+package com.lacv.marketplatform.controllers.view.session;
 
 import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.entities.UserRole;
@@ -54,6 +54,7 @@ public class MyAccountViewController extends ExtEntityController {
         view.addChildExtView("userRole", UserRole.class, EntityConfig.TCV_N_N_MULTICHECK);
         view.setMultipartFormData(true);
         view.setPreloadedForm(true);
+        view.setRestSession(true);
         
         ProcessButton setPasswordButton= new ProcessButton();
         setPasswordButton.setMainProcessRef("processUser");

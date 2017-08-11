@@ -105,11 +105,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     Instance.entityExtStore.save('create', JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 update: function(form, data){
-                    var action="update";
-                    <c:if test="${viewConfig.preloadedForm}">
-                    action="sessionUpdate";
-                    </c:if>
-                    Instance.entityExtStore.save(action, JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.save("update", JSON.stringify(data), parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();

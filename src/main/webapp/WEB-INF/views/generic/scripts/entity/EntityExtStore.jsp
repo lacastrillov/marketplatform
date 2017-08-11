@@ -7,12 +7,10 @@ function ${entityName}ExtStore(){
     
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
-    
     var baseAction= "";
-    
-    Instance.enableRestSession= function(){
-        baseAction= "session_";
-    };
+    <c:if test="${restSession}">
+    baseAction= "session_";
+    </c:if>
     
     Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -160,7 +158,7 @@ function ${entityName}ExtStore(){
         Ext.Ajax.request({
             url: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm',
             method: "GET",
-            params: "filter="+encodeURIComponent(filter) + params,
+            params: ((filter!==null && filter!=="")?"filter="+encodeURIComponent(filter):"") + params,
             success: function(response){
                 var responseText= Ext.decode(response.responseText);
                 func(responseText);
@@ -280,7 +278,7 @@ function ${entityName}ExtStore(){
         Ext.Ajax.request({
             url: Ext.context+'/rest/${entityRef}/'+baseAction+'delete/byfilter.htm',
             method: "GET",
-            params: "filter="+encodeURIComponent(filter),
+            params: (filter!==null && filter!=="")?"filter="+encodeURIComponent(filter):"",
             success: function(response){
                 var responseText= Ext.decode(response.responseText);
                 func(responseText);

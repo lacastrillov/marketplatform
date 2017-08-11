@@ -9,9 +9,11 @@ package com.lacv.marketplatform.controllers.rest;
 
 import com.lacv.marketplatform.mappers.UserRoleMapper;
 import com.lacv.marketplatform.services.UserRoleService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestSessionController;
 import com.dot.gcpbasedot.service.gcp.StorageService;
+import com.lacv.marketplatform.services.security.SecurityService;
 import javax.annotation.PostConstruct;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/userRole")
-public class UserRoleController extends RestController {
+public class UserRoleController extends RestSessionController {
     
     @Autowired
     UserRoleService userRoleService;
@@ -33,11 +35,19 @@ public class UserRoleController extends RestController {
     @Autowired
     StorageService storageService;
     
+    @Autowired
+    SecurityService securityService;
+    
     
     @PostConstruct
     public void init(){
         super.addControlMapping("userRole", userRoleService, userRoleMapper);
     }
     
-    
+    @Override
+    public JSONObject addSessionSearchFilter(JSONObject jsonFilters){
+        jsonFilters.getJSONObject("eq").put("user", securityService.getCurrentUser().getId().toString());
+                
+        return jsonFilters;
+    }
 }

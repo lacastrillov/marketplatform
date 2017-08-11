@@ -67,7 +67,7 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         if(activeTab==="1"){
             Instance.loadFormData(id);
         }
-        <c:if test="${not viewConfig.preloadedForm}">
+        <c:if test="${viewConfig.visibleGrid}">
         if(activeTab==="" || activeTab==="0"){
             Instance.loadGridData();
         }
