@@ -361,11 +361,11 @@ function ${reportName}ExtView(parentExtController, parentExtView){
                                 window.open(urlFind+data,'_blank');
                                 break;
                             case "xml":
-                                var urlFind= store.proxy.api.read.replace("/report/","/report/xml/");
+                                var urlFind= store.proxy.api.read.replace("report/","report/xml/");
                                 window.open(urlFind+data,'_blank');
                                 break;
                             case "xls":
-                                var urlFind= store.proxy.api.read.replace("/report/","/report/xls/");
+                                var urlFind= store.proxy.api.read.replace("report/","report/xls/");
                                 window.open(urlFind+data,'_blank');
                                 break;
                         }

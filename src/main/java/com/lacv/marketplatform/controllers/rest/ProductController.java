@@ -10,7 +10,6 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.ProductMapper;
 import com.lacv.marketplatform.services.ProductService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.lacv.marketplatform.services.WebFileService;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,6 @@ public class ProductController extends RestController {
     
     @Autowired
     ProductMapper productMapper;
-    
-    @Autowired
-    WebFileService webFileService;
     
     
     @PostConstruct

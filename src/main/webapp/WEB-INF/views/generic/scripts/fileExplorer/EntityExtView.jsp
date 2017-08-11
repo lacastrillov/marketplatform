@@ -66,7 +66,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
 
         var renderReplacements= ${jsonRenderReplacements};
 
-        var additionalButtons= ${jsonInternalViewButtons};
+        var additionalButtons= [];
 
         Instance.defineWriterForm(Instance.modelName, formFields, renderReplacements, additionalButtons, childExtControllers, Instance.typeView);
         
@@ -229,7 +229,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     
     </c:if>
     
-    <c:if test="${viewConfig.visibleGrid}">
     function getGridContainer(modelName, store, formContainer){
         var idGrid= 'grid'+modelName;
         var gridColumns= ${jsonGridColumns};
@@ -405,24 +404,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                                 {text: 'A xml', handler: function(){this.exportTo('xml');}, scope: this}]
                         },
                         </c:if>
-                        <c:if test="${viewConfig.editableGrid}">
-                        {
-                            text: 'Auto-Guardar',
-                            enableToggle: ${viewConfig.defaultAutoSave},
-                            hidden: (typeView==="Child"),
-                            pressed: true,
-                            tooltip: 'When enabled, Store will execute Ajax requests as soon as a Record becomes dirty.',
-                            scope: this,
-                            toggleHandler: function(btn, pressed){
-                                this.store.autoSync = pressed;
-                            }
-                        }, {
-                            iconCls: 'icon-save',
-                            text: 'Guardar',
-                            scope: this,
-                            handler: this.onSync
-                        },
-                        </c:if>
                         getComboboxLimit(this.store),
                         getComboboxOrderBy(this.store),
                         getComboboxOrderDir(this.store),
@@ -595,7 +576,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             
         });
     };
-    </c:if>
 
     function getFormUpload(){
         var progressbar = Ext.widget('progressbar', {
@@ -782,25 +762,6 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         }
     };
     
-    Instance.hideParentField= function(entityRef){
-        if(Instance.formContainer!==null){
-            var fieldsForm= Instance.formContainer.child('#form'+Instance.modelName).items.items;
-            fieldsForm.forEach(function(field) {
-                if(field.name===entityRef){
-                    field.hidden= true;
-                }
-            });
-        }
-        if(Instance.gridContainer!==null){
-            var columnsGrid= Instance.gridContainer.child('#grid'+Instance.modelName).columns;
-            columnsGrid.forEach(function(column) {
-                if(column.dataIndex===entityRef){
-                    column.hidden= true;
-                }
-            });
-        }
-    };
-    
     Instance.createMainView= function(){
         <c:forEach var="associatedER" items="${interfacesEntityRef}">
             <c:set var="associatedEntityName" value="${fn:toUpperCase(fn:substring(associatedER, 0, 1))}${fn:substring(associatedER, 1,fn:length(associatedER))}"></c:set>
@@ -812,30 +773,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.combobox${associatedEntityName}Render= Instance.${associatedER}ExtInterfaces.getComboboxRender('grid');
         </c:forEach>
             
-        <c:forEach var="entry" items="${viewConfig.comboboxChildDependent}">
-            <c:set var="parentEntityName" value="${fn:toUpperCase(fn:substring(entry.key, 0, 1))}${fn:substring(entry.key, 1,fn:length(entry.key))}"></c:set>
-            <c:forEach var="childEntityRef" items="${entry.value}">
-                <c:set var="childEntityName" value="${fn:toUpperCase(fn:substring(childEntityRef, 0, 1))}${fn:substring(childEntityRef, 1,fn:length(childEntityRef))}"></c:set>
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
-        Instance.gridCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
-        
-        Instance.filterCombobox${parentEntityName}.comboboxDependent.push(Instance.filterCombobox${childEntityName});
-            </c:forEach>
-        </c:forEach>
-        
         Instance.childExtControllers= [];
-        
-        if(Instance.typeView==="Parent"){
-        <c:forEach var="childExtViewER" items="${viewsChildEntityRef}">
-            <c:set var="childExtViewEN" value="${fn:toUpperCase(fn:substring(childExtViewER, 0, 1))}${fn:substring(childExtViewER, 1,fn:length(childExtViewER))}"></c:set>
-            var ${childExtViewER}ExtController= new ${childExtViewEN}ExtController(parentExtController, Instance);
-            ${childExtViewER}ExtController.entityExtView.hideParentField("${entityRef}");
-            Instance.childExtControllers.push(${childExtViewER}ExtController);
-        </c:forEach>
-        }
         
         Instance.formContainer= null;
         <c:if test="${viewConfig.visibleForm}">
@@ -843,10 +781,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.store.formContainer= Instance.formContainer;
         </c:if>
         
-        <c:if test="${viewConfig.visibleGrid}">
         Instance.gridContainer = getGridContainer(Instance.modelName, Instance.store, Instance.formContainer);
         Instance.store.gridContainer= Instance.gridContainer;
-        </c:if>
         
         Instance.propertyGrid= getPropertyGrid();
         
@@ -860,9 +796,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             style: 'background-color:#dfe8f6; margin:0px',
             defaults: {bodyStyle: 'padding:15px', autoScroll:true},
             items:[
-                <c:if test="${viewConfig.visibleGrid}">
                 Instance.gridContainer,
-                </c:if>
                 <c:if test="${viewConfig.visibleForm}">
                 {
                     title: 'Detalle Archivo',

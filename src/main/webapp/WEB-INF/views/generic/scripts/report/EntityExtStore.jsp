@@ -7,6 +7,10 @@ function ${reportName}ExtStore(){
     
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
+    var baseAction= "";
+    <c:if test="${restSession}">
+    baseAction= "session_";
+    </c:if>
     
     Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -22,7 +26,7 @@ function ${reportName}ExtStore(){
                     read   : 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/report/${reportName}.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'report/${reportName}.htm'
                 },
                 reader: {
                     type: 'json',
@@ -78,7 +82,7 @@ function ${reportName}ExtStore(){
                     read   : 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/report/${reportName}.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'report/${reportName}.htm'
                 },
                 reader: {
                     type: 'json',
@@ -133,7 +137,7 @@ function ${reportName}ExtStore(){
 
     Instance.load= function(idRecord, func){
         Ext.Ajax.request({
-            url:  Ext.context+'/rest/${entityRef}/report/${reportName}.htm',
+            url:  Ext.context+'/rest/${entityRef}/'+baseAction+'report/${reportName}.htm',
             method: "GET",
             params: 'filter='+encodeURIComponent('{"${reportConfig.idColumnName}":'+idRecord+'}')+'&dtoName=${reportConfig.dtoName}',
             success: function(response){

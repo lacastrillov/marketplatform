@@ -8,6 +8,7 @@ package com.lacv.marketplatform.controllers.rest;
 
 
 import com.dot.gcpbasedot.controller.RestSessionController;
+import com.dot.gcpbasedot.domain.BaseEntity;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
@@ -18,6 +19,7 @@ import com.lacv.marketplatform.services.WebFileService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.io.InputStream;
 import javax.annotation.PostConstruct;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,16 +49,6 @@ public class UserController extends RestSessionController {
     public void init(){
         super.addControlMapping("user", userService, userMapper);
         super.setDtoClass(UserDto.class);
-    }
-    
-    @Override
-    public boolean canLoad(Object id){
-        return securityService.getCurrentUser().getId().equals(id);
-    }
-    
-    @Override
-    public boolean canUpdate(Object id){
-        return securityService.getCurrentUser().getId().equals(id);
     }
     
     @Override
@@ -92,6 +84,39 @@ public class UserController extends RestSessionController {
         } catch (Exception ex) {
             return ex.getMessage();
         }
+    }
+    
+    @Override
+    public JSONObject addSessionSearchFilter(JSONObject jsonFilters) {
+        jsonFilters.getJSONObject("eq").put("id", securityService.getCurrentUser().getId());
+        return jsonFilters;
+    }
+
+    @Override
+    public JSONObject addSessionReportFilter(String reportName, JSONObject jsonFilters) {
+        return jsonFilters;
+    }
+    
+    @Override
+    public boolean canLoad(BaseEntity entity){
+        User user= (User) entity;
+        return securityService.getCurrentUser().getId().equals(user.getId());
+    }
+    
+    @Override
+    public boolean canCreate(BaseEntity entity){
+        return false;
+    }
+    
+    @Override
+    public boolean canUpdate(BaseEntity entity){
+        User user= (User) entity;
+        return securityService.getCurrentUser().getId().equals(user.getId());
+    }
+
+    @Override
+    public boolean canDelete(BaseEntity entity) {
+        return false;
     }
     
 }

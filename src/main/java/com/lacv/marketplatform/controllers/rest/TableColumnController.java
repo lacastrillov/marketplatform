@@ -13,7 +13,6 @@ import com.lacv.marketplatform.services.TableColumnService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
-import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.Formats;
 import com.lacv.marketplatform.entities.TableColumn;
 import java.nio.charset.StandardCharsets;
@@ -43,13 +42,10 @@ public class TableColumnController extends RestController {
     JdbcDirectService jdbcDirectService;
     
     @Autowired
-    private TableColumnsConfig tableColumnsConfig;
+    TableColumnsConfig tableColumnsConfig;
     
     @Autowired
     TableColumnMapper tableColumnMapper;
-    
-    @Autowired
-    StorageService storageService;
     
     
     @PostConstruct

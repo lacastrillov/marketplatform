@@ -12,7 +12,6 @@ import com.lacv.marketplatform.services.WebFileService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.enums.WebFileType;
-import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.FileService;
 import com.dot.gcpbasedot.util.Util;
 import com.google.gson.Gson;
@@ -46,9 +45,7 @@ public class WebFileController extends RestController {
 
     @Autowired
     WebFileMapper webFileMapper;
-
-    @Autowired
-    StorageService storageService;
+    
 
     @PostConstruct
     public void init() {

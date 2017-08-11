@@ -10,7 +10,6 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.InventoryorderDetailMapper;
 import com.lacv.marketplatform.services.InventoryorderDetailService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.dot.gcpbasedot.service.gcp.StorageService;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,6 @@ public class InventoryorderDetailController extends RestController {
     
     @Autowired
     InventoryorderDetailMapper inventoryorderDetailMapper;
-    
-    @Autowired
-    StorageService storageService;
     
     
     @PostConstruct

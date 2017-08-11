@@ -7,7 +7,10 @@ function ${entityName}ExtStore(){
     
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
-    
+    var baseAction= "";    
+    <c:if test="${restSession}">
+    baseAction= "session_";
+    </c:if>
     
     Instance.getStore= function(modelName){
         var store = Ext.create('Ext.data.Store', {
@@ -27,10 +30,10 @@ function ${entityName}ExtStore(){
                     destroy: 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm',
-                    create: Ext.context+'/rest/${entityRef}/create.htm',
-                    update: Ext.context+'/rest/${entityRef}/update.htm',
-                    destroy: Ext.context+'/rest/${entityRef}/delete.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm',
+                    create: Ext.context+'/rest/${entityRef}/'+baseAction+'create.htm',
+                    update: Ext.context+'/rest/${entityRef}/'+baseAction+'update.htm',
+                    destroy: Ext.context+'/rest/${entityRef}/'+baseAction+'delete.htm'
                 },
                 reader: {
                     type: 'json',
@@ -102,7 +105,7 @@ function ${entityName}ExtStore(){
                     read   : 'GET'
                 },
                 api: {
-                    read: Ext.context+'/rest/${entityRef}/find.htm'
+                    read: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm'
                 },
                 reader: {
                     type: 'json',
@@ -153,7 +156,7 @@ function ${entityName}ExtStore(){
 
     Instance.find= function(filter, params, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/find.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'find.htm',
             method: "GET",
             params: "filter="+encodeURIComponent(filter) + params,
             success: function(response){
@@ -206,7 +209,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/"+operation+".htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+operation+'.htm',
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -233,7 +236,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/update/byfilter.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'update/byfilter.htm',
             method: "POST",
             params: "filter="+filter,
             success: function(response){
@@ -254,7 +257,7 @@ function ${entityName}ExtStore(){
     
     Instance.load= function(id${entityName}, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/load.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'load.htm',
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+id${entityName}+'}'),
             success: function(response){
@@ -274,7 +277,7 @@ function ${entityName}ExtStore(){
     
     Instance.upload= function(form, idParent, func){
         form.submit({
-            url: Ext.context+"/rest/${entityRef}/multiupload/"+idParent+".htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'multiupload/'+idParent+'.htm',
             //waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
@@ -290,7 +293,7 @@ function ${entityName}ExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/${entityRef}/delete/byfilter.htm",
+            url: Ext.context+'/rest/${entityRef}/'+baseAction+'delete/byfilter.htm',
             method: "GET",
             params: "filter="+encodeURIComponent(filter),
             success: function(response){

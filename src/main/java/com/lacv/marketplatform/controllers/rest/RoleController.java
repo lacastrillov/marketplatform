@@ -10,7 +10,7 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.RoleMapper;
 import com.lacv.marketplatform.services.RoleService;
 import com.dot.gcpbasedot.controller.RestSessionController;
-import com.dot.gcpbasedot.service.gcp.StorageService;
+import com.dot.gcpbasedot.domain.BaseEntity;
 import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.security.SecurityService;
@@ -40,9 +40,6 @@ public class RoleController extends RestSessionController {
     RoleMapper roleMapper;
     
     @Autowired
-    StorageService storageService;
-    
-    @Autowired
     SecurityService securityService;
     
     
@@ -53,14 +50,39 @@ public class RoleController extends RestSessionController {
     
     @Override
     public JSONObject addSessionSearchFilter(JSONObject jsonFilters){
-        JSONArray roles= new JSONArray();
+        JSONArray roleIds= new JSONArray();
         List<UserRole> userRoles= userRoleService.findByParameter("user", securityService.getCurrentUser());
         for(UserRole userRole: userRoles){
-            roles.put(userRole.getRole().getId());
+            roleIds.put(userRole.getRole().getId());
         }
-        jsonFilters.getJSONObject("in").put("id", roles);
+        jsonFilters.getJSONObject("in").put("id", roleIds);
                 
         return jsonFilters;
+    }
+
+    @Override
+    public JSONObject addSessionReportFilter(String reportName, JSONObject jsonFilters) {
+        return jsonFilters;
+    }
+
+    @Override
+    public boolean canLoad(BaseEntity entity) {
+        return true;
+    }
+
+    @Override
+    public boolean canUpdate(BaseEntity entity) {
+        return false;
+    }
+    
+    @Override
+    public boolean canCreate(BaseEntity entity){
+        return false;
+    }
+
+    @Override
+    public boolean canDelete(BaseEntity entity) {
+        return false;
     }
     
 }

@@ -10,7 +10,6 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.PropertyMapper;
 import com.lacv.marketplatform.services.PropertyService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.dot.gcpbasedot.service.gcp.StorageService;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,6 @@ public class PropertyController extends RestController {
     
     @Autowired
     PropertyMapper propertyMapper;
-    
-    @Autowired
-    StorageService storageService;
     
     
     @PostConstruct

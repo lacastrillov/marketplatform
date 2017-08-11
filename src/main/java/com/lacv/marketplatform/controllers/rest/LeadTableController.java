@@ -11,7 +11,6 @@ import com.lacv.marketplatform.services.LeadTableService;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
-import com.dot.gcpbasedot.service.gcp.StorageService;
 import com.dot.gcpbasedot.util.Formats;
 import com.lacv.marketplatform.entities.LeadTable;
 import com.lacv.marketplatform.entities.TableColumn;
@@ -49,9 +48,6 @@ public class LeadTableController extends RestController {
     
     @Autowired
     LeadTableMapper leadTableMapper;
-    
-    @Autowired
-    StorageService storageService;
     
     
     @PostConstruct

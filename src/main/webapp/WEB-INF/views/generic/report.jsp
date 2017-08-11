@@ -38,7 +38,9 @@
         
         <c:import url="${basePath}/${entityRef}/reportExtStore/${reportName}.htm"/>
         <c:forEach var="childExtReport" items="${reportConfig.childExtReports}">
-            <c:import url="${basePath}/${childExtReport.key}/reportExtStore/${childExtReport.value}.htm"/>
+            <c:import url="${basePath}/${childExtReport.key}/reportExtStore/${childExtReport.value}.htm">
+                <c:param name="restSession" value="${reportConfig.restSession}"/>
+            </c:import>
         </c:forEach>
         
         <!-- ############################ IMPORT VIEWS ################################### -->
