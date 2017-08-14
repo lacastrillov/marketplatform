@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -38,6 +39,30 @@ public class User implements BaseEntity {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 100)
+    @Column(name = "first_name")
+    private String firstName;
+    @Size(max = 100)
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "id_document")
+    private Long idDocument;
+    @Size(max = 10)
+    @Column(name = "document_type")
+    private String documentType;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 45)
+    @Column(name = "phone")
+    private String phone;
+    @Size(max = 45)
+    @Column(name = "cell")
+    private String cell;
+    @Size(max = 200)
+    @Column(name = "address")
+    private String address;
+    @Size(max = 100)
+    @Column(name = "city")
+    private String city;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
@@ -45,8 +70,6 @@ public class User implements BaseEntity {
     private String gender;
     @Column(name = "link")
     private String link;
-    @Column(name = "name")
-    private String name;
     @Column(name = "urlPhoto")
     private String urlPhoto;
     @Column(name = "birthday")
@@ -104,6 +127,70 @@ public class User implements BaseEntity {
     public void setId(Object id) {
         this.id = (Integer) id;
     }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Long getIdDocument() {
+        return idDocument;
+    }
+
+    public void setIdDocument(Long idDocument) {
+        this.idDocument = idDocument;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCell() {
+        return cell;
+    }
+
+    public void setCell(String cell) {
+        this.cell = cell;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getEmail() {
         return email;
@@ -127,14 +214,6 @@ public class User implements BaseEntity {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUrlPhoto() {
@@ -217,31 +296,6 @@ public class User implements BaseEntity {
         this.passwordExpiration = passwordExpiration;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.lacv.marketplatform.entities.User[ id=" + id + " ]";
-    }
-
     public List<Commerce> getCommerceList() {
         return commerceList;
     }
@@ -280,6 +334,31 @@ public class User implements BaseEntity {
 
     public void setPaymentList(List<Payment> paymentList) {
         this.paymentList = paymentList;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.lacv.marketplatform.entities.User[ id=" + id + " ]";
     }
     
 }

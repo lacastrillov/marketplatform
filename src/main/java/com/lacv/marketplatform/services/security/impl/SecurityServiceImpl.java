@@ -174,7 +174,8 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
         userDetails.setId(idUsuarioInt);
         userDetails.setUsername(user.getUsername());
         userDetails.setPassword(user.getPassword());
-        userDetails.setNombre(user.getName());
+        userDetails.setNombre(user.getFirstName());
+        userDetails.setApellidos(user.getLastName());
         userDetails.setImgPerfil(user.getUrlPhoto());
         userDetails.setUser(user);
         

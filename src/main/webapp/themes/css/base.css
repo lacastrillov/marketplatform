@@ -23,6 +23,7 @@
 /* Product page--- */
 .alignR{text-align:right;}
 .control-label.alignL, .alignL{text-align:left;}
+.basic-label {margin: 5px;}
 .loginFrm{ margin-bottom:8px;}
 .loginFrm .control-group{padding:8px 14px 0; margin-bottom:0 }
 /* Compair product page */

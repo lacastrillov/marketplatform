@@ -46,7 +46,7 @@ public class HomeController {
         Parameters p1= new Parameters();
         p1.whereEqual("status", "Publicado");
         p1.orderBy("registerDate", "DESC");
-        p1.setMaxResults(9L);
+        p1.setMaxResults(6L);
         
         List<Product> lastProducts = productService.findByParameters(p1);
         for(Product product: lastProducts){

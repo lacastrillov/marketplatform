@@ -47,7 +47,7 @@ public class UserViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        EntityConfig view= new EntityConfig("user", "name", userService, UserDto.class);
+        EntityConfig view= new EntityConfig("user", "firstName", userService, UserDto.class);
         view.setSingularEntityTitle("Usuario");
         view.setPluralEntityTitle("Usuarios");
         view.addChildExtView("userRole", UserRole.class, EntityConfig.TCV_N_N_MULTICHECK);

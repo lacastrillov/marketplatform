@@ -67,7 +67,7 @@
                                 <td class="form-horizontal">
                                     <div class="control-group">
                                         <label class="control-label">Usuario:&nbsp;</label>
-                                        <label id="userNameData" class="control-label" style="color: #167231">
+                                        <label id="userNameData" class="basic-label" style="color: #167231">
                                             <sec:authorize access="isAuthenticated()">
                                                 ${userSession.username} - ${userSession.nombre} ${userSession.apellidos}
                                             </sec:authorize>
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label">Correo:&nbsp;&nbsp;</label>
-                                        <label id="userEmail" class="control-label" style="color: #167231">
+                                        <label id="userEmail" class="basic-label" style="color: #167231">
                                             <sec:authorize access="isAuthenticated()">
                                                 ${userSession.user.email}
                                             </sec:authorize>

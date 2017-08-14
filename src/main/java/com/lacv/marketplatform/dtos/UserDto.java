@@ -27,36 +27,70 @@ public class UserDto implements BaseEntity {
 
     private static final long serialVersionUID = 1L;
     
-    @ColumnWidth(100)
     @Order(1)
+    @ColumnWidth(100)
     @ReadOnly
     private Integer id;
     
-    @Size(max=100)
     @Order(2)
+    @Size(max=100)
     @NotNull
     @TextField("Nombre")
-    private String name;
+    private String firstName;
     
+    @Order(3)
+    @Size(max=100)
+    @NotNull
+    @TextField("Apellidos")
+    private String lastName;
+    
+    @Order(4)
+    @TextField("Documento Id")
+    private Long idDocument;
+    
+    @Order(5)
+    @TypeFormField(value = FieldType.LIST, data = {"CC:C&eacute;dula de ciudadania","TI:Tarjeta de identidad","CE:C&eacute;dula de Extranjeria","NIT:NIT","PAS:Pasaporte"})
+    @TextField("Tipo Documento")
+    private String documentType;
+    
+    @Order(6)
+    @Size(max=100)
+    @TextField("Tel&eacute;fono")
+    private String phone;
+    
+    @Order(7)
+    @Size(max=100)
+    @TextField("Celular")
+    private String cell;
+    
+    @Order(8)
     @Size(max=100)
     @TypeFormField(FieldType.EMAIL)
-    @Order(3)
     @NotNull
     @TextField("Correo")
     private String email;
     
+    @Order(9)
     @Size(max=100)
-    @Order(4)
     @TextField("Usuario")
     private String username;
     
+    @Order(10)
     @Size(max=60)
     @TypeFormField(FieldType.PASSWORD)
     @HideField({HideView.FILTER, HideView.GRID})
-    @Order(5)
     @ReadOnly
     @TextField("Contrase&ntilde;a")
     private String password;
+    
+    @Order(11)
+    @HideField({HideView.FILTER, HideView.GRID})
+    @TextField("Direcci&oacute;n")
+    private String address;
+    
+    @Order(12)
+    @TextField("Ciudad")
+    private String city;
     
     @Size(max=1)
     @TypeFormField(value = FieldType.LIST, data = {"F", "M"})
@@ -72,7 +106,7 @@ public class UserDto implements BaseEntity {
     @Size(max=200)
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
     @ImageResize({"300,300", "500,500", "800,800"})
-    @HideField({HideView.FILTER})
+    @HideField({HideView.GRID, HideView.FILTER})
     @TextField("Foto perfil")
     private String urlPhoto;
     
@@ -149,12 +183,68 @@ public class UserDto implements BaseEntity {
         this.link = link;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Long getIdDocument() {
+        return idDocument;
+    }
+
+    public void setIdDocument(Long idDocument) {
+        this.idDocument = idDocument;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCell() {
+        return cell;
+    }
+
+    public void setCell(String cell) {
+        this.cell = cell;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
     
     public String getUrlPhoto() {

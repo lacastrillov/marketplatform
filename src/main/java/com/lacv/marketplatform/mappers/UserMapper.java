@@ -29,7 +29,14 @@ public class UserMapper implements BasicEntityMapper {
             dto.setEmail(entity.getEmail());
             dto.setGender(entity.getGender());
             dto.setLink(entity.getLink());
-            dto.setName(entity.getName());
+            dto.setFirstName(entity.getFirstName());
+            dto.setLastName(entity.getLastName());
+            dto.setIdDocument(entity.getIdDocument());
+            dto.setDocumentType(entity.getDocumentType());
+            dto.setPhone(entity.getPhone());
+            dto.setCell(entity.getCell());
+            dto.setAddress(entity.getAddress());
+            dto.setCity(entity.getCity());
             dto.setUsername(entity.getUsername());
             dto.setPassword(entity.getPassword());
             dto.setPasswordExpiration(entity.getPasswordExpiration());
