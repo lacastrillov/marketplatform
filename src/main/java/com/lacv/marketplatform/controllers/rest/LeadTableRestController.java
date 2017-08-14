@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value="/rest/leadTable")
-public class LeadTableController extends RestController {
+public class LeadTableRestController extends RestController {
     
     @Autowired
     LeadTableService leadTableService;

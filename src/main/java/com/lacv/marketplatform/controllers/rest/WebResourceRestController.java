@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.ProductMapper;
-import com.lacv.marketplatform.services.ProductService;
+import com.lacv.marketplatform.mappers.WebResourceMapper;
+import com.lacv.marketplatform.services.WebResourceService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/product")
-public class ProductController extends RestController {
+@RequestMapping(value="/rest/webResource")
+public class WebResourceRestController extends RestController {
     
     @Autowired
-    ProductService productService;
+    WebResourceService webResourceService;
     
     @Autowired
-    ProductMapper productMapper;
+    WebResourceMapper webResourceMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("product", productService, productMapper);
+        super.addControlMapping("webResource", webResourceService, webResourceMapper);
     }
+    
     
 }

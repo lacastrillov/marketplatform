@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.WebresourceAuthorizationMapper;
-import com.lacv.marketplatform.services.WebresourceAuthorizationService;
+import com.lacv.marketplatform.mappers.MailMapper;
+import com.lacv.marketplatform.services.MailService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/webresourceAuthorization")
-public class WebresourceAuthorizationController extends RestController {
+@RequestMapping(value="/rest/mail")
+public class MailRestController extends RestController {
     
     @Autowired
-    WebresourceAuthorizationService webresourceAuthorizationService;
+    MailService mailService;
     
     @Autowired
-    WebresourceAuthorizationMapper webresourceAuthorizationMapper;
+    MailMapper mailMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("webresourceAuthorization", webresourceAuthorizationService, webresourceAuthorizationMapper);
+        super.addControlMapping("mail", mailService, mailMapper);
     }
     
     

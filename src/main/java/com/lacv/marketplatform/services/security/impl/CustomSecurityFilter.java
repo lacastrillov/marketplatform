@@ -105,14 +105,14 @@ public class CustomSecurityFilter extends GenericFilterBean {
         if ("XMLHttpRequest".equals(ajaxHeader)) {
             resp.sendError(403, "Acceso denegado");
         } else if(userDetails!=null) {
-            resp.sendRedirect("/denied");
+            resp.sendRedirect("/account/denied");
         } else {
             String queryString= "";
             if(req.getQueryString()!=null){
                 queryString= "?" + URLDecoder.decode(req.getQueryString(), "UTF-8");
             }
             String redirectUrl= req.getRequestURI() + queryString;
-            resp.sendRedirect("/home?redirect="+Base64.encodeBase64String(redirectUrl.getBytes("UTF-8")));
+            resp.sendRedirect("/account/home?redirect="+Base64.encodeBase64String(redirectUrl.getBytes("UTF-8")));
         }
         
         return false;

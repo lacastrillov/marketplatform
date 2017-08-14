@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.MailTemplateMapper;
-import com.lacv.marketplatform.services.MailTemplateService;
+import com.lacv.marketplatform.mappers.ProductMapper;
+import com.lacv.marketplatform.services.ProductService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/mailTemplate")
-public class MailTemplateController extends RestController {
+@RequestMapping(value="/rest/product")
+public class ProductRestController extends RestController {
     
     @Autowired
-    MailTemplateService mailTemplateService;
+    ProductService productService;
     
     @Autowired
-    MailTemplateMapper mailTemplateMapper;
+    ProductMapper productMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("mailTemplate", mailTemplateService, mailTemplateMapper);
+        super.addControlMapping("product", productService, productMapper);
     }
-    
     
 }

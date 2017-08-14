@@ -6,8 +6,8 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <http use-expressions="true" auto-config="true">
-        <access-denied-handler error-page="/denied" />
-        <form-login login-page="/login" authentication-failure-url="/login?login_error=true" username-parameter="j_username" password-parameter="j_password" />
+        <access-denied-handler error-page="/account/denied" />
+        <form-login login-page="/account/login" authentication-failure-url="/account/login?login_error=true" username-parameter="j_username" password-parameter="j_password" />
         
         <intercept-url pattern="/vista/*/entity.htm" access="hasAnyRole('ROLE_Administrator','ROLE_Empleado')" />
         <intercept-url pattern="/vista/*/report/*" access="hasAnyRole('ROLE_Administrator','ROLE_Empleado')" />
@@ -15,7 +15,7 @@
         <intercept-url pattern="/*/delete.htm" access="hasRole('ROLE_Administrator')" />
         <intercept-url pattern="/*/update/*" access="hasRole('ROLE_Administrator')" />
         <intercept-url pattern="/*/update.htm" access="hasRole('ROLE_Administrator')" />
-        <intercept-url pattern="/home**" access="isAuthenticated()" />
+        <intercept-url pattern="/account/home**" access="isAuthenticated()" />
         <logout />
     </http>
     

@@ -28,10 +28,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         
         http.formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?login_error=true")
-                .loginProcessingUrl("/authenticate").usernameParameter("j_username").passwordParameter("j_password")
-                .defaultSuccessUrl("/home?redirect=user", false)
+                .loginPage("/account/login")
+                .failureUrl("/account/login?login_error=true")
+                .loginProcessingUrl("/account/authenticate").usernameParameter("j_username").passwordParameter("j_password")
+                .defaultSuccessUrl("/account/home?redirect=user", false)
                 .permitAll();
 
         http.logout()
@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .permitAll();
 
-        http.exceptionHandling().accessDeniedPage("/denied");
+        http.exceptionHandling().accessDeniedPage("/account/denied");
         
         http.csrf().disable();
         
@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         /***************************
          *    Fixed Permissions
          ***************************/
-        http.authorizeRequests().antMatchers("/home*").access("isAuthenticated()");
+        http.authorizeRequests().antMatchers("/account/home*").access("isAuthenticated()");
         
     }
 

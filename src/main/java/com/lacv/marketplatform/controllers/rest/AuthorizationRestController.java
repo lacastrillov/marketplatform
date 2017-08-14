@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.InventoryorderDetailMapper;
-import com.lacv.marketplatform.services.InventoryorderDetailService;
+import com.lacv.marketplatform.mappers.AuthorizationMapper;
+import com.lacv.marketplatform.services.AuthorizationService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/inventoryorderDetail")
-public class InventoryorderDetailController extends RestController {
+@RequestMapping(value="/rest/authorization")
+public class AuthorizationRestController extends RestController {
     
     @Autowired
-    InventoryorderDetailService inventoryorderDetailService;
+    AuthorizationService authorizationService;
     
     @Autowired
-    InventoryorderDetailMapper inventoryorderDetailMapper;
+    AuthorizationMapper authorizationMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("inventoryorderDetail", inventoryorderDetailService, inventoryorderDetailMapper);
+        super.addControlMapping("authorization", authorizationService, authorizationMapper);
     }
     
     

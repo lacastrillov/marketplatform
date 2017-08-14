@@ -7,8 +7,8 @@ and open the template in the editor.
 
 <sitemesh>
     
-    <mapping path="/*" decorator="/WEB-INF/decorators/defaultDecorator.jsp"/>
-    <mapping path="/tienda/**" decorator="/WEB-INF/decorators/publicDecorator.jsp"/>
+    <mapping path="/account/login*" decorator="/WEB-INF/decorators/defaultDecorator.jsp"/>
+    <mapping path="/**" decorator="/WEB-INF/decorators/publicDecorator.jsp"/>
     
     <mapping path="/rest/**" exclue="true"/>
     <mapping path="/vista/**.htm" exclue="true"/>

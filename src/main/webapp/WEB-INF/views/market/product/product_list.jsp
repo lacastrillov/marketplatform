@@ -11,7 +11,7 @@
 <jsp:useBean id="webFunctions" class="com.dot.gcpbasedot.util.WebFunctions"/>
 
 <ul class="breadcrumb">
-    <li><a href="/tienda/">Home</a> <span class="divider">/</span></li>
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li class="active">${title}</li>
 </ul>
 <h3> ${title} <small class="pull-right"> <p><strong>${parameters.firstResult+1}</strong> al <strong>${parameters.lastResult}</strong> de <strong>${parameters.totalResults} Resultados</strong></p>   </small></h3>	
@@ -47,7 +47,7 @@
                 <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="/tienda/detalle-producto/${product.code}" style="height: 200px;">
+                        <a href="/productos/detalle/${product.code}" style="height: 200px;">
                             <c:if test="${numImages>0}">
                                 <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
                             </c:if>
@@ -61,11 +61,11 @@
                                 ${fn:substring(product.description,0,60)}...
                             </p>
                             <h4 style="text-align:center">
-                                <a class="btn" href="/tienda/detalle-producto/${product.code}">
+                                <a class="btn" href="/productos/detalle/${product.code}">
                                     <i class="icon-zoom-in"></i>
                                 </a>
                                 <a class="btn" href="javascript:void(0)" onclick="shoppingCart.addToCart('${product.code}')">Add to <i class="icon-shopping-cart"></i></a>
-                                <a class="btn btn-primary" href="/tienda/detalle-producto/${product.code}">$ <fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></a>
+                                <a class="btn btn-primary" href="/productos/detalle/${product.code}">$ <fmt:formatNumber type="currency" value="${product.buyUnitPrice}" pattern="###,##0"/></a>
                             </h4>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
     <ul>
         <!-- ${queryString} -->
         <c:if test="${parameters.page>1}">
-            <li><a href="/tienda/productos?${webFunctions.addParameterToQueryString(queryString, "page", parameters.page-1)}">&lsaquo;</a></li>
+            <li><a href="/productos/listado?${webFunctions.addParameterToQueryString(queryString, "page", parameters.page-1)}">&lsaquo;</a></li>
         </c:if>
         <c:set var="startPage" value="1"></c:set>
         <!-- ${parameters.page} -->
@@ -97,11 +97,11 @@
                 <li class="active"><a href="javascript:void(0);"><b>${i}</b></a></li>
             </c:if>
             <c:if test="${i != parameters.page}">
-                <li><a href="/tienda/productos?${webFunctions.addParameterToQueryString(queryString, "page", i)}">${i}</a></li>
+                <li><a href="/productos/listado?${webFunctions.addParameterToQueryString(queryString, "page", i)}">${i}</a></li>
             </c:if>
         </c:forEach>
         <c:if test="${parameters.page<parameters.totalPages}">
-            <li><a href="/tienda/productos?${webFunctions.addParameterToQueryString(queryString, "page", parameters.page+1)}">&rsaquo;</a></li>
+            <li><a href="/productos/listado?${webFunctions.addParameterToQueryString(queryString, "page", parameters.page+1)}">&rsaquo;</a></li>
         </c:if>
     </ul>
 </div>

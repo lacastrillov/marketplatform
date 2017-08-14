@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/productImage")
-public class ProductImageController extends RestController {
+public class ProductImageRestController extends RestController {
     
     @Autowired
     ProductImageService productImageService;

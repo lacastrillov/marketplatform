@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/mainLocation")
-public class MainLocationController extends RestController {
+public class MainLocationRestController extends RestController {
     
     @Autowired
     MainLocationService mainLocationService;

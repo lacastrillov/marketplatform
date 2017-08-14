@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.WebResourceMapper;
-import com.lacv.marketplatform.services.WebResourceService;
+import com.lacv.marketplatform.mappers.InventoryOrderMapper;
+import com.lacv.marketplatform.services.InventoryOrderService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/webResource")
-public class WebResourceController extends RestController {
+@RequestMapping(value="/rest/inventoryOrder")
+public class InventoryOrderRestController extends RestController {
     
     @Autowired
-    WebResourceService webResourceService;
+    InventoryOrderService inventoryOrderService;
     
     @Autowired
-    WebResourceMapper webResourceMapper;
+    InventoryOrderMapper inventoryOrderMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("webResource", webResourceService, webResourceMapper);
+        super.addControlMapping("inventoryOrder", inventoryOrderService, inventoryOrderMapper);
     }
     
     

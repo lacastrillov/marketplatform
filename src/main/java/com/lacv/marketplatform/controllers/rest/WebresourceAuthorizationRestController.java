@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.WebresourceRoleMapper;
-import com.lacv.marketplatform.services.WebresourceRoleService;
+import com.lacv.marketplatform.mappers.WebresourceAuthorizationMapper;
+import com.lacv.marketplatform.services.WebresourceAuthorizationService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/webresourceRole")
-public class WebresourceRoleController extends RestController {
+@RequestMapping(value="/rest/webresourceAuthorization")
+public class WebresourceAuthorizationRestController extends RestController {
     
     @Autowired
-    WebresourceRoleService webresourceRoleService;
+    WebresourceAuthorizationService webresourceAuthorizationService;
     
     @Autowired
-    WebresourceRoleMapper webresourceRoleMapper;
+    WebresourceAuthorizationMapper webresourceAuthorizationMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("webresourceRole", webresourceRoleService, webresourceRoleMapper);
+        super.addControlMapping("webresourceAuthorization", webresourceAuthorizationService, webresourceAuthorizationMapper);
     }
     
     

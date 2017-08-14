@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -80,10 +83,11 @@
                     
                     <div class="span9">		
                         <div class="well well-small">
-                            <h4>Productos destacados <small class="pull-right">200+ featured products</small></h4>
+                            <h4>Productos destacados <small class="pull-right">${parametersFeatured.totalResults} productos destacados</small></h4>
                             <div class="row-fluid">
                                 <div id="featured" class="carousel slide">
                                     <div class="carousel-inner">
+                                        <fmt:formatNumber var="numPagesFeatured" minFractionDigits="0" maxFractionDigits="0" value= "${fn:length(lastFeatured)/4}" />
                                         <div class="item active">
                                             <ul class="thumbnails">
                                                 <li class="span3">

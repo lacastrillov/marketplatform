@@ -8,9 +8,9 @@ package com.lacv.marketplatform.controllers.rest;
 
 
 import com.dot.gcpbasedot.controller.RestController;
-import com.lacv.marketplatform.entities.SubCategory;
-import com.lacv.marketplatform.mappers.SubCategoryMapper;
-import com.lacv.marketplatform.services.SubCategoryService;
+import com.lacv.marketplatform.entities.Commerce;
+import com.lacv.marketplatform.mappers.CommerceMapper;
+import com.lacv.marketplatform.services.CommerceService;
 import com.lacv.marketplatform.constants.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/subCategory")
-public class SubCategoryController extends RestController {
+@RequestMapping(value="/rest/commerce")
+public class CommerceRestController extends RestController {
     
     @Autowired
-    SubCategoryService subCategoryService;
+    CommerceService commerceService;
     
     @Autowired
-    SubCategoryMapper subCategoryMapper;
+    CommerceMapper commerceMapper;
     
     @Autowired
     WebFileService webFileService;
@@ -40,19 +40,19 @@ public class SubCategoryController extends RestController {
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("subCategory", subCategoryService, subCategoryMapper);
+        super.addControlMapping("commerce", commerceService, commerceMapper);
     }
     
     @Override
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idEntity) {
-        String path= "imagenes/subcategoria/";
+        String path= "imagenes/comercio/";
         WebFile parentWebFile= webFileService.findByPath(path);
         
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
-            SubCategory subCategory = subCategoryService.findById(idEntity);
-            subCategory.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
-            subCategoryService.update(subCategory);
+            Commerce commerce = commerceService.findById(idEntity);
+            commerce.setCommerceImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            commerceService.update(commerce);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
             

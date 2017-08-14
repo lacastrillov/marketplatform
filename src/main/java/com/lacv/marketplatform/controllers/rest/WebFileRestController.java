@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/rest/webFile")
-public class WebFileController extends RestController {
+public class WebFileRestController extends RestController {
 
     @Autowired
     WebFileService webFileService;

@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.MailMapper;
-import com.lacv.marketplatform.services.MailService;
+import com.lacv.marketplatform.mappers.WebresourceRoleMapper;
+import com.lacv.marketplatform.services.WebresourceRoleService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/mail")
-public class MailController extends RestController {
+@RequestMapping(value="/rest/webresourceRole")
+public class WebresourceRoleRestController extends RestController {
     
     @Autowired
-    MailService mailService;
+    WebresourceRoleService webresourceRoleService;
     
     @Autowired
-    MailMapper mailMapper;
+    WebresourceRoleMapper webresourceRoleMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("mail", mailService, mailMapper);
+        super.addControlMapping("webresourceRole", webresourceRoleService, webresourceRoleMapper);
     }
     
     

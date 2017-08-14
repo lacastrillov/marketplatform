@@ -29,7 +29,7 @@
                 <td class="secureTableTd" width="100%" valign="top" colspan="10">
                     <h3>Se&ntilde;or usuario, usted no tiene acceso a &eacute;sta secci&oacute;n</h3><br />
                     
-                    <p><a href="<%=request.getContextPath()%>/home?redirect=user">Regresar al Home</a></p><br />
+                    <p><a href="<%=request.getContextPath()%>/account/home?redirect=user">Regresar al Home</a></p><br />
                     
                     <p><a href="<%=request.getContextPath()%>/security_logout">Cerrar sesi&oacute;n</a></p><br />
                 </td>

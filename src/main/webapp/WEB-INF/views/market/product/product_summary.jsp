@@ -18,11 +18,11 @@
                     
                     <div class="span9">
                         <ul class="breadcrumb">
-                            <li><a href="/tienda/">Home</a> <span class="divider">/</span></li>
+                            <li><a href="/">Home</a> <span class="divider">/</span></li>
                             <li class="active"> CARRITO DE COMPRAS</li>
                         </ul>
                         <h3> CARRITO DE COMPRAS [ <small id="numItemsSC">0 Item(s)</small> ]
-                            <a href="/tienda/productos" class="btn btn-large pull-right">
+                            <a href="/productos/listado" class="btn btn-large pull-right">
                                 <i class="icon-arrow-left"></i> Seguir Comprando
                             </a>
                         </h3>	
@@ -31,7 +31,7 @@
                             <tr><th> YA ESTOY REGISTRADO </th></tr>
                             <tr> 
                                 <td>
-                                    <form id="ajaxFormLogin" class="form-horizontal" action="<c:url value='/ajax/authenticate'/>">
+                                    <form id="ajaxFormLogin" class="form-horizontal" action="<c:url value='/account/ajax/authenticate'/>">
                                         <div class="control-group">
                                             <label class="control-label" for="username">Usuario</label>
                                             <div class="controls">
@@ -84,7 +84,7 @@
                                     <div class="control-group">
                                         <div class="controls">
                                             <a href="<%=request.getContextPath()%>/security_logout" class="btn">Cerrar Sesi&oacute;n</a>
-                                            <a href="/home?redirect=user" class="btn">Entrar a mi cuenta</a>
+                                            <a href="/account/home?redirect=user" class="btn">Entrar a mi cuenta</a>
                                         </div>
                                     </div>
                                 </td>
@@ -191,7 +191,7 @@
                                 </td>
                             </tr>
                         </table>-->
-                        <a href="/tienda/productos" class="btn btn-large"><i class="icon-arrow-left"></i> Seguir Comprando </a>
+                        <a href="/productos/listado" class="btn btn-large"><i class="icon-arrow-left"></i> Seguir Comprando </a>
                         <a href="javascript:void(0)" onclick="shoppingCart.generatePurchaseOrder()" class="btn btn-large pull-right">Enviar Orden <i class="icon-arrow-right"></i></a>
 
                     </div>

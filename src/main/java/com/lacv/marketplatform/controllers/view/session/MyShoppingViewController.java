@@ -13,6 +13,7 @@ import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.config.EntityConfig;
+import com.lacv.marketplatform.entities.Payment;
 import com.lacv.marketplatform.entities.PurchaseorderDetail;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -49,6 +50,9 @@ public class MyShoppingViewController extends ExtEntityController {
         view.setSingularEntityTitle("Mi Compra");
         view.setPluralEntityTitle("Mis Compras");
         view.addChildExtView("purchaseorderDetail", PurchaseorderDetail.class, EntityConfig.TCV_STANDARD);
+        view.addChildExtView("payment", Payment.class, EntityConfig.TCV_STANDARD);
+        view.setEditableForm(false);
+        view.setEditableGrid(false);
         view.setRestSession(true);
         super.addControlMapping(view);
         

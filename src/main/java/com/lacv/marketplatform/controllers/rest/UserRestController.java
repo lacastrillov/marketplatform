@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/user")
-public class UserController extends RestSessionController {
+public class UserRestController extends RestSessionController {
     
     @Autowired
     UserService userService;

@@ -22,7 +22,7 @@
                     <div class="span9">
                         <ul class="breadcrumb">
                             <li><a href="/">Home</a> <span class="divider">/</span></li>
-                            <li><a href="/tienda/productos?filter={eq:{subCategory:${product.subCategory.id}}}">${product.subCategory.name}</a> <span class="divider">/</span></li>
+                            <li><a href="/productos/listado?filter={eq:{subCategory:${product.subCategory.id}}}">${product.subCategory.name}</a> <span class="divider">/</span></li>
                             <li class="active">${product.name}</li>
                         </ul>	
                         <div class="row">

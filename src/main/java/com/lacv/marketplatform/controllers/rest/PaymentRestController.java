@@ -7,16 +7,11 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.RoleMapper;
-import com.lacv.marketplatform.services.RoleService;
 import com.dot.gcpbasedot.controller.RestSessionController;
 import com.dot.gcpbasedot.domain.BaseEntity;
-import com.lacv.marketplatform.entities.UserRole;
-import com.lacv.marketplatform.services.UserRoleService;
-import com.lacv.marketplatform.services.security.SecurityService;
-import java.util.List;
+import com.lacv.marketplatform.mappers.PaymentMapper;
+import com.lacv.marketplatform.services.PaymentService;
 import javax.annotation.PostConstruct;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,36 +22,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/role")
-public class RoleController extends RestSessionController {
+@RequestMapping(value="/rest/payment")
+public class PaymentRestController extends RestSessionController {
     
     @Autowired
-    RoleService roleService;
+    PaymentService paymentService;
     
     @Autowired
-    UserRoleService userRoleService;
-    
-    @Autowired
-    RoleMapper roleMapper;
-    
-    @Autowired
-    SecurityService securityService;
+    PaymentMapper paymentMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("role", roleService, roleMapper);
+        super.addControlMapping("payment", paymentService, paymentMapper);
     }
-    
+
     @Override
-    public JSONObject addSessionSearchFilter(JSONObject jsonFilters){
-        JSONArray roleIds= new JSONArray();
-        List<UserRole> userRoles= userRoleService.findByParameter("user", securityService.getCurrentUser());
-        for(UserRole userRole: userRoles){
-            roleIds.put(userRole.getRole().getId());
-        }
-        jsonFilters.getJSONObject("in").put("id", roleIds);
-                
+    public JSONObject addSessionSearchFilter(JSONObject jsonFilters) {
         return jsonFilters;
     }
 
@@ -71,12 +53,12 @@ public class RoleController extends RestSessionController {
     }
 
     @Override
-    public boolean canUpdate(BaseEntity entity) {
+    public boolean canCreate(BaseEntity entity) {
         return false;
     }
-    
+
     @Override
-    public boolean canCreate(BaseEntity entity){
+    public boolean canUpdate(BaseEntity entity) {
         return false;
     }
 
@@ -84,5 +66,6 @@ public class RoleController extends RestSessionController {
     public boolean canDelete(BaseEntity entity) {
         return false;
     }
+    
     
 }

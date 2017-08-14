@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.InventoryOrderMapper;
-import com.lacv.marketplatform.services.InventoryOrderService;
+import com.lacv.marketplatform.mappers.SupplierMapper;
+import com.lacv.marketplatform.services.SupplierService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/inventoryOrder")
-public class InventoryOrderController extends RestController {
+@RequestMapping(value="/rest/supplier")
+public class SupplierRestController extends RestController {
     
     @Autowired
-    InventoryOrderService inventoryOrderService;
+    SupplierService supplierService;
     
     @Autowired
-    InventoryOrderMapper inventoryOrderMapper;
+    SupplierMapper supplierMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("inventoryOrder", inventoryOrderService, inventoryOrderMapper);
+        super.addControlMapping("supplier", supplierService, supplierMapper);
     }
     
     

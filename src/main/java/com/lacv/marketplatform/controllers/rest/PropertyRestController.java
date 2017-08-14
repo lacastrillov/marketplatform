@@ -7,8 +7,8 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.RoleAuthorizationMapper;
-import com.lacv.marketplatform.services.RoleAuthorizationService;
+import com.lacv.marketplatform.mappers.PropertyMapper;
+import com.lacv.marketplatform.services.PropertyService;
 import com.dot.gcpbasedot.controller.RestController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/roleAuthorization")
-public class RoleAuthorizationController extends RestController {
+@RequestMapping(value="/rest/property")
+public class PropertyRestController extends RestController {
     
     @Autowired
-    RoleAuthorizationService roleAuthorizationService;
+    PropertyService propertyService;
     
     @Autowired
-    RoleAuthorizationMapper roleAuthorizationMapper;
+    PropertyMapper propertyMapper;
     
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("roleAuthorization", roleAuthorizationService, roleAuthorizationMapper);
+        super.addControlMapping("property", propertyService, propertyMapper);
     }
     
     

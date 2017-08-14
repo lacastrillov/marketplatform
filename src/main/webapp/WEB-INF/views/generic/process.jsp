@@ -103,17 +103,6 @@
         
     </head>
     <body>
-        <div id="headerHtml" style="display:none;">
-            <h1>Administraci&oacute;n MERCANDO</h1>
-            <a class="logout" href="<%=request.getContextPath()%>/security_logout">&nbsp;Cerrar sesi&oacute;n&nbsp;</a>
-            <a class="home" href="<%=request.getContextPath()%>/home?redirect=user">&nbsp;Inicio&nbsp;</a>
-            <sec:authentication var="user" property="principal" />
-            <sec:authorize access="isAuthenticated()">
-                <p class="userSession"><b>${user.username}</b> - ${user.nombre} ${user.apellidos}</p>
-            </sec:authorize>
-        </div>
-        <script type="text/javascript">
-            var navegadorExtInit= new EntityExtInit();
-        </script>
+        <jsp:include page="header.jsp"></jsp:include>
     </body>
 </html>

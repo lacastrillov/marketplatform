@@ -26,7 +26,7 @@
                         <a href="product_summary.html"><span>&pound;</span></a>
                         <span class="btn btn-mini">$155.00</span>
                         <a href="/tienda/carrito-de-compras"><span class="">$</span></a>-->
-                        <a href="/home?redirect=user">
+                        <a href="/account/home?redirect=user">
                             <span class="btn btn-mini btn-primary">
                                 <i class="icon-shopping-cart icon-white"></i> Entrar a mi cuenta
                             </span>
@@ -42,7 +42,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-inner">
-                    <a class="brand" href="/tienda/"><img src="/themes/images/logo.png" alt="Bootsshop"/></a>
+                    <a class="brand" href="/"><img src="/themes/images/logo.jpg" style="height: 40px;" alt="Bootsshop"/></a>
                     <form class="form-inline navbar-search" method="post" action="products.html" >
                         <input id="srchFld" class="srchTxt" type="text" value="     " />
                         <select class="srchTxt">
@@ -56,9 +56,9 @@
                         <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                     </form>
                     <ul id="topMenu" class="nav pull-right">
-                        <li class=""><a href="special_offer.html">Specials Offer</a></li>
-                        <li class=""><a href="normal.html">Delivery</a></li>
-                        <li class=""><a href="contact.html">Contact</a></li>
+                        <li class=""><a href="/productos/listado">Ofertas</a></li>
+                        <li class=""><a href="normal.html">Entrega</a></li>
+                        <li class=""><a href="/tienda/contactanos">Contactenos</a></li>
                         <li class="">
                             <a href="#login" role="button" data-toggle="modal" style="padding-right:0">
                                 <span class="btn btn-large btn-success">Login</span>
@@ -69,7 +69,7 @@
                                     <h3>Iniciar Sesi&oacute;n</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formLogin" action="<c:url value='/authenticate'/>" method="post" class="form-horizontal loginFrm">
+                                    <form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post" class="form-horizontal loginFrm">
                                         <div class="control-group">
                                             <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
                                             <!--<input type="text" id="inputEmail" placeholder="Email">-->

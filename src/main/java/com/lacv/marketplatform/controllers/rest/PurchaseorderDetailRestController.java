@@ -7,13 +7,17 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.lacv.marketplatform.mappers.UserRoleMapper;
-import com.lacv.marketplatform.services.UserRoleService;
+import com.lacv.marketplatform.mappers.PurchaseorderDetailMapper;
+import com.lacv.marketplatform.services.PurchaseorderDetailService;
 import com.dot.gcpbasedot.controller.RestSessionController;
 import com.dot.gcpbasedot.domain.BaseEntity;
-import com.lacv.marketplatform.entities.UserRole;
+import com.lacv.marketplatform.entities.PurchaseOrder;
+import com.lacv.marketplatform.entities.PurchaseorderDetail;
+import com.lacv.marketplatform.services.PurchaseOrderService;
 import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.List;
 import javax.annotation.PostConstruct;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +28,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nalvarez
  */
 @Controller
-@RequestMapping(value="/rest/userRole")
-public class UserRoleController extends RestSessionController {
+@RequestMapping(value="/rest/purchaseorderDetail")
+public class PurchaseorderDetailRestController extends RestSessionController {
     
     @Autowired
-    UserRoleService userRoleService;
+    PurchaseorderDetailService purchaseorderDetailService;
     
     @Autowired
-    UserRoleMapper userRoleMapper;
+    PurchaseOrderService purchaseOrderService;
+    
+    @Autowired
+    PurchaseorderDetailMapper purchaseorderDetailMapper;
     
     @Autowired
     SecurityService securityService;
@@ -39,12 +46,17 @@ public class UserRoleController extends RestSessionController {
     
     @PostConstruct
     public void init(){
-        super.addControlMapping("userRole", userRoleService, userRoleMapper);
+        super.addControlMapping("purchaseorderDetail", purchaseorderDetailService, purchaseorderDetailMapper);
     }
     
     @Override
     public JSONObject addSessionSearchFilter(JSONObject jsonFilters){
-        jsonFilters.getJSONObject("eq").put("user", securityService.getCurrentUser().getId().toString());
+        List<PurchaseOrder> purchaseOrders= purchaseOrderService.findByParameter("user", securityService.getCurrentUser());
+        JSONArray purchaseOrderIds= new JSONArray();
+        for(PurchaseOrder purchaseOrder: purchaseOrders){
+            purchaseOrderIds.put(purchaseOrder.getId());
+        }
+        jsonFilters.getJSONObject("in").put("purchaseOrder", purchaseOrderIds);
                 
         return jsonFilters;
     }
@@ -56,8 +68,8 @@ public class UserRoleController extends RestSessionController {
 
     @Override
     public boolean canLoad(BaseEntity entity) {
-        UserRole userRole= (UserRole) entity;
-        return userRole.getUser().getId().equals(securityService.getCurrentUser().getId());
+        PurchaseorderDetail purchaseorderDetail= (PurchaseorderDetail) entity;
+        return securityService.getCurrentUser().getId().equals(purchaseorderDetail.getPurchaseOrder().getUser().getId());
     }
     
     @Override
@@ -74,5 +86,6 @@ public class UserRoleController extends RestSessionController {
     public boolean canDelete(BaseEntity entity) {
         return false;
     }
-
+    
+    
 }

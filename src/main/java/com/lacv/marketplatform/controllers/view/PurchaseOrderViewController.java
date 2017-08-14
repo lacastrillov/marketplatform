@@ -13,6 +13,7 @@ import com.dot.gcpbasedot.controller.ExtEntityController;
 import com.dot.gcpbasedot.components.MenuComponent;
 import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.config.EntityConfig;
+import com.lacv.marketplatform.entities.Payment;
 import com.lacv.marketplatform.entities.PurchaseorderDetail;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
@@ -48,6 +49,7 @@ public class PurchaseOrderViewController extends ExtEntityController {
         view.setSingularEntityTitle("Orden de Compra");
         view.setPluralEntityTitle("Ordenes de Compra");
         view.addChildExtView("purchaseorderDetail", PurchaseorderDetail.class, EntityConfig.TCV_STANDARD);
+        view.addChildExtView("payment", Payment.class, EntityConfig.TCV_STANDARD);
         super.addControlMapping(view);
         
         MenuItem menuItem= new MenuItem("Ordenes de Compra", "purchaseOrder", "Gestionar Ordenes de Compra");

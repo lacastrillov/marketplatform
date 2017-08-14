@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value="/rest/tableColumn")
-public class TableColumnController extends RestController {
+public class TableColumnRestController extends RestController {
     
     @Autowired
     TableColumnService tableColumnService;
