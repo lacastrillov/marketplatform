@@ -61,7 +61,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         
     function getTreeMenuProcesses(){
         var store1 = {
-            model: 'Item',
+            //model: 'Item',
             root: {
                 text: 'Root 1',
                 expanded: true,
@@ -138,8 +138,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     
     function getResultTree(processName){
         var store = {
-            //id: 'store-result-'+processName,
-            model: 'Item',
+            id: 'store-result-'+processName,
+            //model: 'Item',
             root: {
                 text: 'Root',
                 expanded: true,
@@ -177,7 +177,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             requires: ['Ext.form.field.Text'],
 
             initComponent: function(){
-                this.addEvents('create');
+                //this.addEvents('create');
                 
                 var buttons= [];
                 <c:if test="${viewConfig.editableForm}">

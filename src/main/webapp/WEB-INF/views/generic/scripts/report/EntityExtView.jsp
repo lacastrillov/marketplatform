@@ -144,7 +144,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
             requires: ['Ext.form.field.Text'],
 
             initComponent: function(){
-                this.addEvents('create');
+                //this.addEvents('create');
                 
                 var buttons= [];
                 if(additionalButtons){

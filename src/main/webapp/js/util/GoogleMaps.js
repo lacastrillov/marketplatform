@@ -17,7 +17,7 @@ function GoogleMaps() {
         var mapId= fieldName+"Map";
         var latitude= Instance.DEFAULT_LAT;
         var longitude= Instance.DEFAULT_LON;
-        if(value!=="" && value.indexOf(",")!==-1){
+        if(value!==undefined && value.indexOf(",")!==-1){
             latitude= parseFloat(value.split(",")[0]);
             longitude= parseFloat(value.split(",")[1]);
         }

@@ -44,7 +44,7 @@ function ${entityName}ExtStore(){
                 },
                 writer: {
                     type: 'json',
-                    encode: true,
+                    //encode: true,
                     writeAllFields: false,
                     root: 'data'
                 },

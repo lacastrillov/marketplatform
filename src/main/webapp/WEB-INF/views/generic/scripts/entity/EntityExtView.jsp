@@ -177,7 +177,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             requires: ['Ext.form.field.Text'],
 
             initComponent: function(){
-                this.addEvents('create');
+                //this.addEvents('create');
                 
                 var buttons= [];
                 <c:if test="${viewConfig.editableForm}">
@@ -428,8 +428,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     function getComboboxOrderBy(store){
         var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ${sortColumns});
         combobox.addListener('change',function(record){
+            console.log(record.getValue())
             if(record.getValue()!=="" && store.sorters.items[0].property!==record.getValue()){
                 store.sorters.items[0].property=record.getValue();
+                console.log(store.sorters.items[0])
                 Instance.reloadPageStore(1);
             }
         }, this);
@@ -443,8 +445,10 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     function getComboboxOrderDir(store){
         var combobox= Instance.commonExtView.getSimpleCombobox('dir', 'Direcci&oacute;n', 'config', ["ASC", "DESC"]);
         combobox.addListener('change',function(record){
+            console.log(record.getValue())
             if(record.getValue()!=="" && store.sorters.items[0].direction!==record.getValue()){
                 store.sorters.items[0].direction=record.getValue();
+                console.log(store.sorters.items[0])
                 Instance.reloadPageStore(1);
             }
         }, this);

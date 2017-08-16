@@ -379,7 +379,7 @@ function Util() {
     };
     
     this.objectToJSONMenu= function(object, expanded){
-        var menuObj= {"text":"root","children":[]};
+        var menuObj= {"text":"root",expanded: true,"children":[]};
         
         Instance.addSubmenu(menuObj.children, object, expanded);
         

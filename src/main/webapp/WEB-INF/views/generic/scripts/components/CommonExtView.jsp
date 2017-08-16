@@ -38,7 +38,7 @@ function CommonExtView(parentExtController, parentExtView, model){
             data: data
         });
         Instance.combobox[component+'_'+fieldName]= new Ext.form.ComboBox({
-            id: component+'Combobox'+fieldName+'In'+model,
+            //id: component+'Combobox'+fieldName+'In'+model,
             name: fieldName,
             editable: false,
             store: store,

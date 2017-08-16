@@ -7,26 +7,18 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    String ExtJSLib="https://ext-js-4-dot-proven-signal-88616.appspot.com/ext";
-%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${viewConfig.mainProcessTitle} - Administracion MERCANDO</title>
         <link rel="icon" type="image/icon" href="/img/favicon.png" /> 
         
-        <script type="text/javascript">
-            var ExtJSLib="<%=ExtJSLib%>";
-        </script>
-        
-        <script src="<%=ExtJSLib%>/examples/shared/include-ext.js"></script>
-        <!--<script src="<%=ExtJSLib%>/examples/shared/options-toolbar.js"></script>-->
+        <jsp:include page="extjslib.jsp"></jsp:include>
         
         <style>
             .x-html-editor-input textarea{white-space: pre !important;}
             .x-tree-icon-leaf {background-image: url("http://jsonviewer.stack.hu/blue.gif") !important; }
-            .x-tree-icon-parent, .x-grid-tree-node-expanded  {background-image: url("http://jsonviewer.stack.hu/object.gif") !important;}
+            .x-tree-icon-parent, .x-tree-icon-parent-expanded {background-image: url("http://jsonviewer.stack.hu/object.gif") !important;background-repeat:no-repeat;}
         </style>
         
         <!-- ############################ IMPORT LAYOUTS ################################ -->
