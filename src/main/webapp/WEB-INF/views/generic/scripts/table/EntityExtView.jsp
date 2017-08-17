@@ -198,11 +198,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         var renderReplace= renderReplacements[i];
                         var replaceField= renderReplace.replace.field;
                         var replaceAttribute= renderReplace.replace.attribute;
-                        var value="ND";
+                        var value="";
                         
                         if (typeof record.data[replaceField] === "object" && Object.getOwnPropertyNames(record.data[replaceField]).length === 0){
                             value= "";
-                        }else if(replaceAttribute.indexOf(".")===-1){
+                        }else if(replaceAttribute.indexOf(".")===-1 && replaceField in record.data){
                             value= record.data[replaceField][replaceAttribute];
                         }else{
                             var niveles= replaceAttribute.split(".");

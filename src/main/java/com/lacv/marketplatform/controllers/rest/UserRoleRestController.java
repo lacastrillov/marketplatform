@@ -75,4 +75,14 @@ public class UserRoleRestController extends RestSessionController {
         return false;
     }
 
+    @Override
+    public boolean canUpdateByFilters(JSONObject jsonFilters) {
+        return false;
+    }
+
+    @Override
+    public boolean canDeleteByFilters(JSONObject jsonFilters) {
+        return false;
+    }
+
 }

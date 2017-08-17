@@ -29,6 +29,14 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
         Instance.comboboxRender={};
     };
     
+    Instance.setFilterStore= function(filter){
+        Instance.store.getProxy().extraParams.filter= filter;
+    };
+    
+    Instance.reloadPageStore= function(page){
+        Instance.store.loadPage(page);
+    };
+    
     Instance.addLevel= function(entity){
         var source= parentExtView.propertyGrid.getSource();
         
@@ -57,7 +65,6 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
             optionAll: true,
             comboboxDependent: [],
             reloadData: false,
-            listenerLoad: false,
             listeners: {
                 change: function(record){
                     if(component==='filter'){
@@ -71,19 +78,15 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
                     this.comboboxDependent.forEach(function(combobox) {
                         var filter= {"eq":{"${entityRef}":record.getValue()}};
                         combobox.store.getProxy().extraParams.filter= JSON.stringify(filter);
+                        console.log(combobox.store.getProxy().extraParams.filter);
                         combobox.reloadData= true;
-                        if(!combobox.listenerLoad){
-                            combobox.store.addListener('load',function(){
-                                combobox.reloadData=false;
-                            }, this);
-                            combobox.listenerLoad= true;
-                        }
                     });
                 },
                 el: {
                     click: function() {
                         if(this.combobox[component].reloadData){
                             this.combobox[component].store.loadPage(1);
+                            this.combobox[component].reloadData= false;
                         }
                     },
                     scope: this

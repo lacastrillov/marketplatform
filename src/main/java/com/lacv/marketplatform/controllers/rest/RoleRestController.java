@@ -84,5 +84,16 @@ public class RoleRestController extends RestSessionController {
     public boolean canDelete(BaseEntity entity) {
         return false;
     }
+
+    @Override
+    public boolean canUpdateByFilters(JSONObject jsonFilters) {
+        return false;
+    }
+
+    @Override
+    public boolean canDeleteByFilters(JSONObject jsonFilters) {
+        return false;
+    }
+    
     
 }

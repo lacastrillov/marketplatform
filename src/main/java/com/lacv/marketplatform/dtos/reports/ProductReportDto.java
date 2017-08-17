@@ -23,7 +23,7 @@ public class ProductReportDto {
     private Integer id;
     
     @Order(2)
-    @TextField("C&oacute;digo")
+    @TextField("Código")
     private String code;
     
     @Order(3)
@@ -71,7 +71,7 @@ public class ProductReportDto {
     private Integer order_level;
     
     @Order(15)
-    @TextField("Descripci&oacute;n")
+    @TextField("Descripción")
     @TypeFormField(FieldType.TEXT_AREA)
     private String description;
     
@@ -84,11 +84,11 @@ public class ProductReportDto {
     private String status;
     
     @Order(18)
-    @TextField("Categor&iacute;a")
+    @TextField("Categoría")
     private String category;
     
     @Order(19)
-    @TextField("Sub Categor&iacute;a")
+    @TextField("Sub Categoría")
     private String subcategory;
     
     @Order(20)

@@ -65,7 +65,10 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         </c:forEach>
         
         if(activeTab==="1"){
-            Instance.loadFormData(id);
+            if(id!==""){
+                Instance.idEntitySelected= id;
+            }
+            Instance.loadFormData(Instance.idEntitySelected);
         }
         <c:if test="${viewConfig.visibleGrid}">
         if(activeTab==="" || activeTab==="0"){
@@ -82,11 +85,18 @@ function ${entityName}ExtController(parentExtController, parentExtView){
         Instance.entityExtView.reloadPageStore(1);
     };
     
+    Instance.setFormData= function(record){
+        if(Instance.entityExtView.formContainer!==null){
+            var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
+            formComponent.setActiveRecord(record || null);
+            Instance.idEntitySelected= record.data.id;
+        }
+    };
+    
     Instance.loadFormData= function(id){
         if(Instance.entityExtView.formContainer!==null){
             var formComponent= Instance.entityExtView.formContainer.child('#form'+Instance.modelName);
             if(id!==""){
-                Instance.idEntitySelected= id;
                 var activeRecord= formComponent.getActiveRecord();
 
                 if(activeRecord===null){
@@ -94,9 +104,12 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                         var record= Ext.create(Instance.modelName);
                         record.data= data;
                         formComponent.setActiveRecord(record || null);
+                        Instance.findAssociatedEntities(data);
                     });
+                }else{
+                    Instance.findAssociatedEntities(activeRecord.data);
                 }
-                Instance.loadChildExtControllers(Instance.idEntitySelected);
+                Instance.loadChildExtControllers(id);
             }else{
                 Instance.idEntitySelected= "";
                 if(Object.keys(Instance.filter.eq).length !== 0){
@@ -108,6 +121,14 @@ function ${entityName}ExtController(parentExtController, parentExtView){
                 }
             }
         }
+    };
+    
+    Instance.findAssociatedEntities= function(data){
+        <c:forEach var="associatedER" items="${interfacesEntityRef}">
+        if("${associatedER}" in data && "id" in data["${associatedER}"]){
+            Instance.entityExtView.${associatedER}ExtInterfaces.reloadPageStore(1);
+        }
+        </c:forEach>
     };
     
     Instance.loadNNMulticheckData= function(){

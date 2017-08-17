@@ -287,11 +287,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         var renderReplace= renderReplacements[i];
                         var replaceField= renderReplace.replace.field;
                         var replaceAttribute= renderReplace.replace.attribute;
-                        var value="ND";
+                        var value="";
                         
                         if (typeof record.data[replaceField] === "object" && Object.getOwnPropertyNames(record.data[replaceField]).length === 0){
                             value= "";
-                        }else if(replaceAttribute.indexOf(".")===-1){
+                        }else if(replaceAttribute.indexOf(".")===-1 && replaceField in record.data){
                             value= record.data[replaceField][replaceAttribute];
                         }else{
                             var niveles= replaceAttribute.split(".");
@@ -366,11 +366,8 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 trackMouseOver: !${viewConfig.activeGridTemplate},
                 listeners: {
                     selectionchange: function(selModel, selected) {
-                        /*if(selected[0]){
-                            parentExtController.loadFormData(selected[0].data.id)
-                        }*/
-                        if(formContainer!==null && selected[0]){
-                            formContainer.child('#form'+modelName).setActiveRecord(selected[0]);
+                        if(selected[0]){
+                            parentExtController.setFormData(selected[0]);
                         }
                     },
                     export: function(typeReport){
@@ -816,11 +813,13 @@ function ${entityName}ExtView(parentExtController, parentExtView){
         Instance.filterCombobox${associatedEntityName}= Instance.${associatedER}ExtInterfaces.getCombobox('filter', '${entityName}', '${associatedER}', '${associatedEntityTitle}');
         Instance.combobox${associatedEntityName}Render= Instance.${associatedER}ExtInterfaces.getComboboxRender('grid');
         </c:forEach>
-            
+        
+        Instance.entityDependency= {};
         <c:forEach var="entry" items="${viewConfig.comboboxChildDependent}">
             <c:set var="parentEntityName" value="${fn:toUpperCase(fn:substring(entry.key, 0, 1))}${fn:substring(entry.key, 1,fn:length(entry.key))}"></c:set>
             <c:forEach var="childEntityRef" items="${entry.value}">
                 <c:set var="childEntityName" value="${fn:toUpperCase(fn:substring(childEntityRef, 0, 1))}${fn:substring(childEntityRef, 1,fn:length(childEntityRef))}"></c:set>
+        Instance.entityDependency["${childEntityRef}"]="${entry.key}";
         Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.formCombobox${childEntityName});
         Instance.formCombobox${parentEntityName}.comboboxDependent.push(Instance.gridCombobox${childEntityName});
         
@@ -881,6 +880,9 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 tabchange: function(tabPanel, tab){
                     var idx = tabPanel.items.indexOf(tab);
                     var url= util.addUrlParameter(parentExtController.request,"tab", idx);
+                    if(idx===0){
+                        url= "?tab=0";
+                    }
                     if(url!==""){
                         mvcExt.navigate(url);
                     }
