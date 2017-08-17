@@ -49,7 +49,7 @@ public class UserDto implements BaseEntity {
     private Long idDocument;
     
     @Order(5)
-    @TypeFormField(value = FieldType.LIST, data = {"CC:C&eacute;dula de ciudadania","TI:Tarjeta de identidad","CE:C&eacute;dula de Extranjeria","NIT:NIT","PAS:Pasaporte"})
+    @TypeFormField(value = FieldType.LIST, data = {"CC:Cédula de ciudadania","TI:Tarjeta de identidad","CE:Cédula de Extranjeria","NIT:NIT","PAS:Pasaporte"})
     @TextField("Tipo Documento")
     private String documentType;
     

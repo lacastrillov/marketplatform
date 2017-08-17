@@ -238,6 +238,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                         this.down('#save'+modelName).enable();
                     }
                     this.getForm().loadRecord(this.activeRecord);
+                    //this.getForm().setValues(this.activeRecord.data);
                     this.renderReplaceActiveRecord(this.activeRecord);
                 } else {
                     if(this.down('#save'+modelName)!==null){
@@ -375,7 +376,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     export: function(typeReport){
                         var data= "?filter="+JSON.stringify(parentExtController.filter);
                         data+="&limit="+store.pageSize+"&page="+store.currentPage;
-                        data+="&sort="+store.sorters.items[0].property+"&dir="+store.sorters.items[0].direction;
+                        data+="&sort="+store.getSorters().items[0]["_id"]+"&dir="+store.getSorters().items[0]["_direction"];
                         
                         switch(typeReport){
                             case "json":
@@ -428,10 +429,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     function getComboboxOrderBy(store){
         var combobox= Instance.commonExtView.getSimpleCombobox('sort', 'Ordenar por', 'config', ${sortColumns});
         combobox.addListener('change',function(record){
-            console.log(record.getValue())
-            if(record.getValue()!=="" && store.sorters.items[0].property!==record.getValue()){
-                store.sorters.items[0].property=record.getValue();
-                console.log(store.sorters.items[0])
+            if(record.getValue()!=="" && store.getSorters().items[0]["_id"]!==record.getValue()){
+                //store.getSorters().items[0]["_id"]=record.getValue();
+                var dir= store.getSorters().items[0]["_direction"];
+                store.getSorters().clear();
+                store.setSorters([{property:record.getValue(), direction:dir}]);
                 Instance.reloadPageStore(1);
             }
         }, this);
@@ -445,10 +447,11 @@ function ${entityName}ExtView(parentExtController, parentExtView){
     function getComboboxOrderDir(store){
         var combobox= Instance.commonExtView.getSimpleCombobox('dir', 'Direcci&oacute;n', 'config', ["ASC", "DESC"]);
         combobox.addListener('change',function(record){
-            console.log(record.getValue())
-            if(record.getValue()!=="" && store.sorters.items[0].direction!==record.getValue()){
-                store.sorters.items[0].direction=record.getValue();
-                console.log(store.sorters.items[0])
+            if(record.getValue()!=="" && store.getSorters().items[0]["_direction"]!==record.getValue()){
+                //store.getSorters().items[0]["_direction"]=record.getValue();
+                var prop= store.getSorters().items[0]["_id"];
+                store.getSorters().clear();
+                store.setSorters([{property:prop, direction:record.getValue()}]);
                 Instance.reloadPageStore(1);
             }
         }, this);
