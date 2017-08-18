@@ -239,6 +239,10 @@ function Util() {
         return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     };
     
+    this.isNumeric= function(text){
+        return /^\d+$/.test(text);
+    };
+    
     this.createForm= function(config){
         var form = document.createElement("form");
         if ('id' in config) {

@@ -63,6 +63,29 @@ function ${reportName}ExtStore(){
             ],
             gridContainer:null
         });
+        store.getOrderProperty= function(){
+            if(ExtJSVersion===4){
+                return store.sorters.items[0]["property"];
+            }else{
+                return store.getSorters().items[0]["_id"];
+            }
+        };
+        store.getOrderDir= function(){
+            if(ExtJSVersion===4){
+                return store.sorters.items[0]["direction"];
+            }else{
+                return store.getSorters().items[0]["_direction"];
+            }
+        };
+        store.sortBy= function(property, direction){
+            if(ExtJSVersion===4){
+                store.sorters.items[0]["property"]= property;
+                store.sorters.items[0]["direction"]= direction;
+            }else{
+                store.getSorters().clear();
+                store.setSorters([{property:property, direction:direction}]);
+            }
+        };
         
         return store;
     };
@@ -130,6 +153,29 @@ function ${reportName}ExtStore(){
             ],
             gridContainer:null
         });
+        store.getOrderProperty= function(){
+            if(ExtJSVersion===4){
+                return store.sorters.items[0]["property"];
+            }else{
+                return store.getSorters().items[0]["_id"];
+            }
+        };
+        store.getOrderDir= function(){
+            if(ExtJSVersion===4){
+                return store.sorters.items[0]["direction"];
+            }else{
+                return store.getSorters().items[0]["_direction"];
+            }
+        };
+        store.sortBy= function(property, direction){
+            if(ExtJSVersion===4){
+                store.sorters.items[0]["property"]= property;
+                store.sorters.items[0]["direction"]= direction;
+            }else{
+                store.getSorters().clear();
+                store.setSorters([{property:property, direction:direction}]);
+            }
+        };
         
         return store;
     };

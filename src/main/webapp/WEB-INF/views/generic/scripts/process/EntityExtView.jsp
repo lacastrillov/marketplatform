@@ -345,7 +345,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                     export: function(typeReport){
                         var data= "?filter="+JSON.stringify(parentExtController.filter);
                         data+="&limit="+store.pageSize+"&page="+store.currentPage;
-                        data+="&sort="+store.getSorters().items[0]["_id"]+"&dir="+store.getSorters().items[0]["_direction"];
+                        data+="&sort="+store.getOrderProperty()+"&dir="+store.getOrderDir();
                         
                         switch(typeReport){
                             case "json":

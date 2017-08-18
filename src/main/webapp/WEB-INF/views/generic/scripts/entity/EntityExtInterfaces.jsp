@@ -62,11 +62,23 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
             displayField: '${labelField}',
             valueField: 'id',
             queryMode: 'remote',
-            optionAll: true,
+            optionAll: false,
             comboboxDependent: [],
             reloadData: false,
+            realGridValue: null,
             listeners: {
                 change: function(record){
+                    /*console.log("CHANGE>>"+JSON.stringify(record.getValue()));
+                    console.log("component>>"+component);
+                    if(typeof record.getValue() === "object"){
+                       console.log("VALID>>"+JSON.stringify(record.getValue()));
+                       Instance.combobox["grid"].realGridValue=record.getValue();
+                    }else if(util.isNumeric(record.getValue())){
+                        console.log(record.getValue());
+                       Instance.combobox["grid"].realGridValue=record.getValue();
+                    }else{
+                        console.log("ERROR");
+                    }*/
                     if(component==='filter'){
                         if(record.getValue()!==0){
                             parentExtController.filter.eq[fieldName]= record.getValue();
@@ -78,7 +90,6 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
                     this.comboboxDependent.forEach(function(combobox) {
                         var filter= {"eq":{"${entityRef}":record.getValue()}};
                         combobox.store.getProxy().extraParams.filter= JSON.stringify(filter);
-                        console.log(combobox.store.getProxy().extraParams.filter);
                         combobox.reloadData= true;
                     });
                 },
@@ -88,6 +99,15 @@ function ${entityName}ExtInterfaces(parentExtController, parentExtView){
                             this.combobox[component].store.loadPage(1);
                             this.combobox[component].reloadData= false;
                         }
+                        /*if(component==="grid"){
+                            console.log("RG "+JSON.stringify(this.combobox[component].realGridValue));
+                            if(this.combobox[component].realGridValue!==null){
+                                console.log("IN SET");
+                                this.combobox[component].setValue(this.combobox[component].realGridValue);
+                            }
+                            console.log("CLICK>> "+JSON.stringify(this.combobox[component].getValue()));
+                        }
+                        console.log("end");*/
                     },
                     scope: this
                 }
