@@ -650,7 +650,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
                 return '<a href="<%=request.getContextPath()%>/vista/${associatedER}/entity.htm#?tab=1&id='+res[0]+'">'+res[1]+'</a>';
             },
             </c:forEach>
-        }
+        };
         var pg= Ext.create('Ext.grid.property.Grid', {
             id: 'propertyGrid${entityName}',
             region: 'north',
