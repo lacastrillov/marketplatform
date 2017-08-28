@@ -235,14 +235,6 @@ function Util() {
         }
     };
     
-    this.priceFormat= function(n){
-        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    };
-    
-    this.isNumeric= function(text){
-        return /^\d+$/.test(text);
-    };
-    
     this.createForm= function(config){
         var form = document.createElement("form");
         if ('id' in config) {
@@ -418,14 +410,14 @@ function Util() {
     };
     
     this.remakeJSONObject= function (json){
-        var source= JSON.parse(json);
+        var source= json;
         var finalObject= {};
         
         for (var key in source) {
             var value= source[key];
             Instance.assignValue(finalObject, key, value);
         }
-        return JSON.stringify(finalObject);
+        return finalObject;
     };
     
     this.assignValue= function(obj, key, value){
@@ -474,7 +466,7 @@ function Util() {
     };
     
     this.unremakeJSONObject= function (json){
-        var source= JSON.parse(json);
+        var source= json;
         var finalObject= {};
         
         for (var key in source) {

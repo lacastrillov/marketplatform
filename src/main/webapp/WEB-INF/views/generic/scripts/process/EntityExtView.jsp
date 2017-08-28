@@ -115,7 +115,7 @@ function ${entityName}ExtView(parentExtController, parentExtView){
             minWidth: 300,
             listeners: {
                 doProcess: function(form, data){
-                    Instance.entityExtStore.doProcess('${processName.key}',JSON.stringify(data), parentExtController.formSavedResponse);
+                    Instance.entityExtStore.doProcess('${processName.key}', data, parentExtController.formSavedResponse);
                 },
                 render: function(panel) {
                     Instance.commonExtView.enableManagementTabHTMLEditor();

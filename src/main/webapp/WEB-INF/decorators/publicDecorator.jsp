@@ -33,6 +33,8 @@
         <link href="/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
         <!-- Google-code-prettify -->	
         <link href="/themes/js/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="/css/styles.css">
         <!-- fav and touch icons -->
         <!--<link rel="shortcut icon" href="/themes/images/ico/favicon.ico">-->
         <link rel="icon" type="image/icon" href="/img/favicon.png" />
@@ -52,6 +54,7 @@
         <script src="/themes/js/bootshop.js"></script>
         <script src="/themes/js/jquery.lightbox-0.5.js"></script>
         <script src="/js/util/Util.js"></script>
+        <script src="/js/util/Validation.js"></script>
         <script>
             Ext.context= "";
         </script>

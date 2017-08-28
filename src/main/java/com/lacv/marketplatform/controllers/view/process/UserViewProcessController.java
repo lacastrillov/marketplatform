@@ -15,6 +15,7 @@ import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.config.ProcessConfig;
 import com.dot.gcpbasedot.enums.PageType;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
+import com.lacv.marketplatform.dtos.process.RegisterUserPDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,6 +44,7 @@ public class UserViewProcessController extends ExtProcessController {
         process.setMainProcessTitle("Gestionar Procesos de Usuario");
         process.addControlProcessView("createPassword", "Crear Password", CreatePasswordDto.class, BasicResultDto.class);
         process.addControlProcessView("contactUser", "Contacto de Usuario", ContactUserPDto.class, BasicResultDto.class);
+        process.addControlProcessView("registerUser", "Registro de Usuario", RegisterUserPDto.class, BasicResultDto.class);
         
         super.addControlMapping(process);
         

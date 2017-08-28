@@ -178,7 +178,7 @@ function ShoppingCart() {
         var cart= Instance.getCart();
         $("#numItemsFP").html(cart.items.length+" Item(s)");
         $("#numItemsSC").html(cart.items.length+" Item(s)");
-        $("#totalOrderFP").html("$"+util.priceFormat(cart.total));
+        $("#totalOrderFP").html("$"+validation.priceFormat(cart.total));
         if(Instance.productSummaryTemplate===null){
             Instance.productSummaryTemplate= "<tr>"+util.getHtml("productSummaryTemplate")+"</tr>";
             $("#productSummaryTemplate").remove();
@@ -205,7 +205,7 @@ function ShoppingCart() {
         var idUserInSession= $("#idUserInSession").val();
         if(idUserInSession!==""){
             var cart= Instance.getCart();
-            productExtStore.doProcess("processPurchaseOrder", "generarOrdenCompra", JSON.stringify(cart),function(responseText){
+            productExtStore.doProcess("processPurchaseOrder", "generarOrdenCompra", cart,function(responseText){
                 Instance.showMessage("Generar orden de compra", JSON.parse(responseText).message);
                 Instance.setCart({"items":[], "subTotal":0, "discount":0, "iva":0, "total":0});
                 Instance.updateProductSummary();

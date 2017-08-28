@@ -19,7 +19,13 @@ import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.util.AESEncrypt;
 import com.lacv.marketplatform.constants.WebConstants;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
+import com.lacv.marketplatform.dtos.process.RegisterUserPDto;
+import com.lacv.marketplatform.entities.Role;
+import com.lacv.marketplatform.entities.UserRole;
+import com.lacv.marketplatform.services.RoleService;
+import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.mail.MailingService;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -37,6 +43,12 @@ public class UserProcessController extends RestController {
     
     @Autowired
     UserService userService;
+    
+    @Autowired
+    RoleService roleService;
+    
+    @Autowired
+    UserRoleService userRoleService;
     
     @Autowired
     LogProcessService logProcessService;
@@ -102,6 +114,43 @@ public class UserProcessController extends RestController {
             result.setMessage("Correo enviado correctamente");
         }else{
             result.setMessage("Error al enviar el correo");
+        }
+        
+        return result;
+    }
+    
+    @DoProcess
+    public BasicResultDto registerUser(RegisterUserPDto registerUserPDto){
+        BasicResultDto result= new BasicResultDto();
+        
+        User user= userService.findUniqueByParameter("email", registerUserPDto.getEmail());
+        result.setUsername(registerUserPDto.getEmail());
+        if(user==null){
+            user= new User();
+            user.setFirstName(registerUserPDto.getFirstName());
+            user.setLastName(registerUserPDto.getLastName());
+            user.setCell(registerUserPDto.getCell());
+            user.setEmail(registerUserPDto.getEmail());
+            user.setPassword(myInstance.encrypt(registerUserPDto.getPassword(), WebConstants.SECURITY_SEED_PASSW));
+            user.setRegistrationDate(new Date());
+            user.setFailedAttempts(0);
+            user.setUsername(registerUserPDto.getEmail());
+            user.setVerified(false);
+            user.setStatus("Active");
+            
+            userService.create(user);
+            
+            Role role= roleService.findUniqueByParameter("name", WebConstants.CLIENT_ROLE);
+            UserRole userRole= new UserRole();
+            userRole.setUser(user);
+            userRole.setRole(role);
+            userRoleService.create(userRole);
+            
+            result.setSuccess(true);
+            result.setMessage("El usuario se ha registrado correctamente...");
+        }else{
+            result.setSuccess(false);
+            result.setMessage("El usuario no se puede crear porque ya existe otro con el mismo correo electr&oacute;nico!!!");
         }
         
         return result;

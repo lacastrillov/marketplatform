@@ -5,19 +5,20 @@
  */
 
 
-function ProductImageExtStore(){
+function UserExtStore(){
     
     var Instance = this;
     
     var errorGeneral= "Error de servidor";
     var error403= "Usted no tiene permisos para realizar esta operaci&oacute;n";
+    var baseAction= "";
     
     
     Instance.find= function(filter, params, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/productImage/find.htm",
+            url: Ext.context+'/rest/user/'+baseAction+'find.htm',
             method: "GET",
-            params: "filter="+encodeURIComponent(filter) + params,
+            params: ((filter!==null && filter!=="")?"filter="+encodeURIComponent(filter):"") + params,
             success: function(response){
                 var responseText= Ext.decode(response.responseText);
                 func(responseText);
@@ -41,7 +42,7 @@ function ProductImageExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/productImage/"+operation+".htm",
+            url: Ext.context+'/rest/user/'+baseAction+operation+'.htm',
             method: "POST",
             params: "data="+encodeURIComponent(data),
             success: function(response){
@@ -62,7 +63,7 @@ function ProductImageExtStore(){
     
     Instance.load= function(idEntity, func){
         Ext.Ajax.request({
-            url: Ext.context+"/rest/productImage/load.htm",
+            url: Ext.context+'/rest/user/'+baseAction+'load.htm',
             method: "GET",
             params: 'data='+encodeURIComponent('{"id":'+idEntity+'}'),
             success: function(response){
@@ -82,7 +83,7 @@ function ProductImageExtStore(){
     
     Instance.upload= function(form, idEntity, func){
         form.submit({
-            url: Ext.context+"/rest/productImage/diskupload/"+idEntity+".htm",
+            url: Ext.context+'/rest/user/'+baseAction+'diskupload/'+idEntity+'.htm',
             waitMsg: 'Subiendo archivo...',
             success: function(form, action) {
                 func(action.result);
@@ -135,9 +136,9 @@ function ProductImageExtStore(){
             waitConfig: {interval:200}
         });
         Ext.Ajax.request({
-            url: Ext.context+"/rest/productImage/delete/byfilter.htm",
+            url: Ext.context+'/rest/user/'+baseAction+'delete/byfilter.htm',
             method: "GET",
-            params: "filter="+encodeURIComponent(filter),
+            params: (filter!==null && filter!=="")?"filter="+encodeURIComponent(filter):"",
             success: function(response){
                 var responseText= Ext.decode(response.responseText);
                 func(responseText);

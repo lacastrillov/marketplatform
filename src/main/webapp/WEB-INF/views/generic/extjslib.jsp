@@ -1,7 +1,7 @@
 <%
 Integer ExtJSVersion=4;
 String ExtJSLib4="http://localhost/ext-4.2.1";
-String ExtJSLib6="http://localhost/ext-6.2.0/build"; 
+String ExtJSLib6="http://localhost/ext-6.2.0/build";
 if(ExtJSVersion==4){
 %>
     <script type="text/javascript">

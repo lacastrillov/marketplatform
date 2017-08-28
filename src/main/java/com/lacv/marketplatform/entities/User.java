@@ -93,6 +93,9 @@ public class User implements BaseEntity {
     @Column(name = "passwordExpiration")
     @Temporal(TemporalType.TIMESTAMP)
     private Date passwordExpiration;
+    @Column(name = "registration_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registrationDate;
     @OneToMany(mappedBy = "user")
     private List<Commerce> commerceList;
     @OneToMany(mappedBy = "user")
@@ -294,6 +297,14 @@ public class User implements BaseEntity {
 
     public void setPasswordExpiration(Date passwordExpiration) {
         this.passwordExpiration = passwordExpiration;
+    }
+    
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public List<Commerce> getCommerceList() {

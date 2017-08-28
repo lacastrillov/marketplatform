@@ -111,7 +111,7 @@ function PropertyExtStore(){
             headers: {
                 'Content-Type' : 'application/json'
             },
-            jsonData: {'processName': processName, 'data': Ext.decode(util.remakeJSONObject(data))},
+            jsonData: {'processName': processName, 'data': util.remakeJSONObject(data)},
             success: function(response){
                 Ext.MessageBox.hide();
                 func(response.responseText);

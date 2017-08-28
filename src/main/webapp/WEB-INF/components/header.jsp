@@ -56,12 +56,11 @@
                         <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                     </form>
                     <ul id="topMenu" class="nav pull-right">
-                        <li class=""><a href="/productos/listado">Ofertas</a></li>
-                        <li class=""><a href="normal.html">Entrega</a></li>
-                        <li class=""><a href="/tienda/contactanos">Contactenos</a></li>
+                        <li class=""><a href="/tienda/registro">Registrarse</a></li>
+                        <li class=""><a href="/tienda/contactanos">Cont&aacute;ctanos</a></li>
                         <li class="">
                             <a href="#login" role="button" data-toggle="modal" style="padding-right:0">
-                                <span class="btn btn-large btn-success">Login</span>
+                                <span class="btn btn-large btn-success">Iniciar Sesión</span>
                             </a>
                             <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
                                 <div class="modal-header">

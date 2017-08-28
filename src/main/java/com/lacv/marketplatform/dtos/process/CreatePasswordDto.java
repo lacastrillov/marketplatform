@@ -7,6 +7,7 @@ package com.lacv.marketplatform.dtos.process;
 
 import com.dot.gcpbasedot.annotation.HideField;
 import com.dot.gcpbasedot.annotation.Order;
+import com.dot.gcpbasedot.annotation.ReadOnly;
 import com.dot.gcpbasedot.annotation.Size;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
@@ -21,6 +22,7 @@ public class CreatePasswordDto {
     
     @Size(max=100)
     @Order(1)
+    @ReadOnly
     private String username;
     
     @Size(max=60)

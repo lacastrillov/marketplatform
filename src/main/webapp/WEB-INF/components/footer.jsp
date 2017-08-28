@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="span3">
-                    <h5>ACCOUNT</h5>
+                    <h5>CUENTA</h5>
                     <a href="login.html">YOUR ACCOUNT</a>
                     <a href="login.html">PERSONAL INFORMATION</a> 
                     <a href="login.html">ADDRESSES</a> 
@@ -19,9 +19,9 @@
                     <a href="login.html">ORDER HISTORY</a>
                 </div>
                 <div class="span3">
-                    <h5>INFORMATION</h5>
-                    <a href="contact.html">CONTACT</a>  
-                    <a href="register.html">REGISTRATION</a>  
+                    <h5>INFORMACI&Oacute;N</h5>
+                    <a href="/tienda/contactanos">CONT&Aacute;CTANOS</a>  
+                    <a href="/tienda/registro">REGISTRARSE</a>  
                     <a href="legal_notice.html">LEGAL NOTICE</a>  
                     <a href="tac.html">TERMS AND CONDITIONS</a> 
                     <a href="faq.html">FAQ</a>

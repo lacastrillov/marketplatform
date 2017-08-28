@@ -557,7 +557,7 @@ function ${reportName}ExtView(parentExtController, parentExtView){
             buttons: [{
                 text: 'Ejecutar',
                 handler: function(){
-                    var jsonData= JSON.stringify(processForm.getForm().getValues());
+                    var jsonData= processForm.getForm().getValues();
                     Instance.entityExtStore.doProcess('${processButton.mainProcessRef}', '${processButton.processName}', jsonData, function(responseText){
                         Ext.MessageBox.alert('Status', responseText);
                         win.hide();

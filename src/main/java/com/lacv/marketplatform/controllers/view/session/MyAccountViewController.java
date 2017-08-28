@@ -7,7 +7,6 @@
 package com.lacv.marketplatform.controllers.view.session;
 
 import com.lacv.marketplatform.dtos.UserDto;
-import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
 import com.dot.gcpbasedot.controller.ExtEntityController;
@@ -16,7 +15,6 @@ import com.dot.gcpbasedot.dto.MenuItem;
 import com.dot.gcpbasedot.dto.ProcessButton;
 import com.dot.gcpbasedot.dto.config.EntityConfig;
 import com.lacv.marketplatform.dtos.process.CreatePasswordDto;
-import com.lacv.marketplatform.dtos.process.MainLocationPDto;
 import com.lacv.marketplatform.services.security.SecurityService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -51,7 +49,6 @@ public class MyAccountViewController extends ExtEntityController {
         view.setPathRef("myAccount");
         view.setSingularEntityTitle("Mi Cuenta");
         view.setPluralEntityTitle("Mi cuenta");
-        view.addChildExtView("userRole", UserRole.class, EntityConfig.TCV_N_N_MULTICHECK);
         view.setMultipartFormData(true);
         view.setPreloadedForm(true);
         view.setRestSession(true);
@@ -64,17 +61,6 @@ public class MyAccountViewController extends ExtEntityController {
         setPasswordButton.setDtoClass(CreatePasswordDto.class);
         setPasswordButton.setIconUrl("/img/process_icons/password.png");
         view.addProcessButton(setPasswordButton);
-        
-        ProcessButton mainLocationButton= new ProcessButton();
-        mainLocationButton.setMainProcessRef("processMainLocation");
-        mainLocationButton.setProcessName("crearMainLocation");
-        mainLocationButton.setProcessTitle("Crear Main Location");
-        mainLocationButton.addSourceByDestinationField("email", "usuario.correo");
-        mainLocationButton.addSourceByDestinationField("name", "usuario.nombre");
-        mainLocationButton.addSourceByDestinationField("status", "usuario.estado");
-        mainLocationButton.setDtoClass(MainLocationPDto.class);
-        mainLocationButton.setIconUrl("/img/process_icons/ml-process.png");
-        view.addProcessButton(mainLocationButton);
         
         super.addControlMapping(view);
         

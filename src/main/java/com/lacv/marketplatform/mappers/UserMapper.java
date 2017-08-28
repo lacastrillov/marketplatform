@@ -40,6 +40,7 @@ public class UserMapper implements BasicEntityMapper {
             dto.setUsername(entity.getUsername());
             dto.setPassword(entity.getPassword());
             dto.setPasswordExpiration(entity.getPasswordExpiration());
+            dto.setRegistrationDate(entity.getRegistrationDate());
             dto.setStatus(entity.getStatus());
             dto.setFailedAttempts(entity.getFailedAttempts());
             dto.setLastLogin(entity.getLastLogin());

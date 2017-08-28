@@ -126,11 +126,15 @@ public class UserDto implements BaseEntity {
     @TextField("Verificado")
     private Boolean verified;
     
+    @ReadOnly
     @TextField("Intentos fallidos")
     private Integer failedAttempts;
     
     @TextField("Expiraci&oacute;n contrase&ntilde;a")
     private Date passwordExpiration;
+    
+    @TextField("Fecha Registro")
+    private Date registrationDate;
     
     @ReadOnly
     @TextField("Ultimo login")
@@ -317,6 +321,14 @@ public class UserDto implements BaseEntity {
 
     public void setPasswordExpiration(Date passwordExpiration) {
         this.passwordExpiration = passwordExpiration;
+    }
+    
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public Date getLastLogin() {
