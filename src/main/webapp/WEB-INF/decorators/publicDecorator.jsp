@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><sitemesh:write property='title'>Mercando</sitemesh:write></title>
+        <title><sitemesh:write property='title'>Habitares</sitemesh:write> - Habitares</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -37,7 +37,7 @@
         <link rel="stylesheet" type="text/css" href="/css/styles.css">
         <!-- fav and touch icons -->
         <!--<link rel="shortcut icon" href="/themes/images/ico/favicon.ico">-->
-        <link rel="icon" type="image/icon" href="/img/favicon.png" />
+        <link rel="icon" type="image/icon" href="/img/habitares.png" />
         
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/themes/images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/themes/images/ico/apple-touch-icon-114-precomposed.png">

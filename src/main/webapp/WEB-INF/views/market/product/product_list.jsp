@@ -79,7 +79,7 @@
         <hr class="soft"/>
     </div>
 </div>
-<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
+<a href="/tienda/comparar" class="btn btn-large pull-right">Comparar Productos</a>
 
 <div class="pagination">
     <ul>

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+util.importJS('/js/util/Message.js');
 util.importJS('/js/web/stores/ProductExtStore.js');
 util.importJS('/js/web/stores/ProductImageExtStore.js');
 util.importJS('/js/web/stores/PropertyExtStore.js');
@@ -11,6 +12,8 @@ util.importJS('/js/web/usuario/UserAuthentication.js');
 function ShoppingCart() {
 
     var Instance = this;
+    
+    var message;
     
     var productExtStore;
     
@@ -24,6 +27,7 @@ function ShoppingCart() {
         Instance.productSummaryTemplate= null;
         Instance.generalSummaryTemplate= null;
         $(document).ready(function () {
+            message= new Message();
             productExtStore= new ProductExtStore();
             productImageExtStore= new ProductImageExtStore();
             propertyExtStore= new PropertyExtStore();
@@ -48,7 +52,6 @@ function ShoppingCart() {
     };
     
     Instance.setCart= function(scart){
-        console.log(JSON.stringify(scart));
         localStorage.setItem("scart", JSON.stringify(scart));
     };
     
@@ -90,7 +93,7 @@ function ShoppingCart() {
             Instance.updateCartData(cart, index, "add", false);
             
             Instance.setCart(cart);
-            Instance.showMessage("Agregar al carrito", "Se agrego el producto "+cart.items[index].product.name);
+            message.showMessage("Agregar al carrito", "Se agrego el producto "+cart.items[index].product.name);
             Instance.updateProductSummary();
         }else{
             productExtStore.find('{"eq":{"code":"'+productCode+'"}}', "", function(responseText){
@@ -115,7 +118,7 @@ function ShoppingCart() {
                         }
                         
                         Instance.setCart(cart);
-                        Instance.showMessage("Agregar al carrito", "Se agrego el producto "+product.name);
+                        message.showMessage("Agregar al carrito", "Se agrego el producto "+product.name);
                         Instance.updateProductSummary();
                     });
                 }
@@ -134,7 +137,7 @@ function ShoppingCart() {
                 
                 Instance.updateCartData(cart, index, "remove", false);
                 
-                Instance.showMessage("Quitar del carrito", "Se resto el producto "+cart.items[index].product.name);
+                message.showMessage("Quitar del carrito", "Se resto el producto "+cart.items[index].product.name);
                 if(cart.items[index].quantity===0){
                     delete cart.items[index];
                     cart.items = cart.items.filter(function(n){
@@ -153,7 +156,7 @@ function ShoppingCart() {
         if (index!==-1){
             Instance.updateCartData(cart, index, "remove", true);
             
-            Instance.showMessage("Quitar del carrito", "Se elimino el producto "+cart.items[index].product.name);
+            message.showMessage("Quitar del carrito", "Se elimino el producto "+cart.items[index].product.name);
             delete cart.items[index];
             cart.items = cart.items.filter(function(n){
                 return n !== undefined;
@@ -206,12 +209,12 @@ function ShoppingCart() {
         if(idUserInSession!==""){
             var cart= Instance.getCart();
             productExtStore.doProcess("processPurchaseOrder", "generarOrdenCompra", cart,function(responseText){
-                Instance.showMessage("Generar orden de compra", JSON.parse(responseText).message);
+                message.showMessage("Generar orden de compra", JSON.parse(responseText).message);
                 Instance.setCart({"items":[], "subTotal":0, "discount":0, "iva":0, "total":0});
                 Instance.updateProductSummary();
             });
         }else{
-            Instance.showMessage("Acci&oacute;n inv&aacute;lida", "No se puede realizar la operaci&oacute;n si no se ha autenticado!!!");
+            message.showMessage("Acci&oacute;n inv&aacute;lida", "No se puede realizar la operaci&oacute;n si no se ha autenticado!!!");
         }
     };
     
@@ -234,17 +237,8 @@ function ShoppingCart() {
                 $("#loginUserTable").hide();
                 $("#userInSessionTable").show();
             }else{
-                Instance.showMessage("Iniciar Sesi&oacute;n", data.message);
+                message.showMessage("Iniciar Sesi&oacute;n", data.message);
             }
-        });
-    };
-    
-    Instance.showMessage= function(title, message){
-        Ext.MessageBox.show({
-            title: title,
-            msg: message,
-            icon: Ext.MessageBox.INFO,
-            buttons: Ext.Msg.OK
         });
     };
 
