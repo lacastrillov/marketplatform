@@ -39,7 +39,7 @@
                                 <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
                             </div>
                         </div>
-                        <a id="linkIngresar" href="#" class="btn-ingreso">Ingresar</a>
+                        <button type="submit" class="btn-ingreso">Ingresar</button>
                         <a class="link-pass" onclick="userAuthentication.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
                     </form>
                 </div>

@@ -20,18 +20,12 @@
                 </a>
                 <div>
                     <a class="brand" href="/"><img src="/themes/images/logo.jpg" style="height: 40px;" alt="Bootsshop"/></a>
-                    <form class="form-inline navbar-search" method="post" action="products.html" >
-                        <input id="srchFld" class="srchTxt" type="text" value="     " />
-                        <!--<select class="srchTxt">
-                            <option>All</option>
-                            <option>CLOTHES </option>
-                            <option>FOOD AND BEVERAGES </option>
-                            <option>HEALTH & BEAUTY </option>
-                            <option>SPORTS & LEISURE </option>
-                            <option>BOOKS & ENTERTAINMENTS </option>
-                        </select>-->
-                        <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
-                    </form>
+                    <div class="span6">
+                        <form class="form-inline form-search" method="post" action="products.html" >
+                            <input class="search-query" placeholder="Buscar" type="text">
+                            <button type="submit" id="submitButton" class="btn">Buscar</button>
+                        </form>
+                    </div>
                     <ul id="topMenu" class="nav pull-right">
                         <li class=""><a href="/tienda/registro">Registrarse</a></li>
                         <li class=""><a href="/tienda/contactanos">Cont&aacute;ctanos</a></li>

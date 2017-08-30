@@ -36,5 +36,9 @@
     <bean id="tableColumnsConfig" class="com.dot.gcpbasedot.components.TableColumnsConfig">
         <property name="columsConfigNameQuery" value="queriesTableColumn.columsConfig" />
     </bean>
+    
+    <bean id="extViewConfig" class="com.dot.gcpbasedot.components.ExtViewConfig">
+        <property name="appName" value="HABITARES" />
+    </bean>
 
 </beans>
