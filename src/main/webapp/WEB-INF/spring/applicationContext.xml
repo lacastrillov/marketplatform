@@ -39,6 +39,7 @@
     
     <bean id="extViewConfig" class="com.dot.gcpbasedot.components.ExtViewConfig">
         <property name="appName" value="HABITARES" />
+        <property name="favicon" value="/img/habitares.png" />
     </bean>
 
 </beans>

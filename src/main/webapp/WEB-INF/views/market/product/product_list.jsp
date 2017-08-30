@@ -11,7 +11,7 @@
 <jsp:useBean id="webFunctions" class="com.dot.gcpbasedot.util.WebFunctions"/>
 
 <ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="/">Inicio</a> <span class="divider">/</span></li>
     <li class="active">${title}</li>
 </ul>
 <h3> ${title} <small class="pull-right"> <p><strong>${parameters.firstResult+1}</strong> al <strong>${parameters.lastResult}</strong> de <strong>${parameters.totalResults} Resultados</strong></p>   </small></h3>	

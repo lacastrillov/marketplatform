@@ -12,35 +12,33 @@
             <div class="row">
                 <div class="span3">
                     <h5>CUENTA</h5>
-                    <a href="login.html">YOUR ACCOUNT</a>
-                    <a href="login.html">PERSONAL INFORMATION</a> 
-                    <a href="login.html">ADDRESSES</a> 
-                    <a href="login.html">DISCOUNT</a>  
-                    <a href="login.html">ORDER HISTORY</a>
+                    <a href="/account/home">MI CUENTA</a>
+                    <a href="/vista/myAccount/entity.htm">MIS DATOS</a> 
+                    <a href="/vista/myShopping/entity.htm">MIS COMPRAS</a>
+                    <a href="/tienda/carrito-de-compras">CARRITO DE COMPRAS</a>
                 </div>
                 <div class="span3">
                     <h5>INFORMACI&Oacute;N</h5>
                     <a href="/tienda/contactanos">CONT&Aacute;CTANOS</a>  
                     <a href="/tienda/registro">REGISTRARSE</a>  
-                    <a href="legal_notice.html">LEGAL NOTICE</a>  
-                    <a href="tac.html">TERMS AND CONDITIONS</a> 
-                    <a href="faq.html">FAQ</a>
+                    <a href="/tienda/politicas-de-privacidad">POLITICAS DE PRIVACIDAD</a>  
+                    <a href="/tienda/terminos-y-condiciones">TERMINOS Y CONDICIONES</a> 
+                    <a href="/tienda/foro">FORO</a>
                 </div>
                 <div class="span3">
-                    <h5>OUR OFFERS</h5>
-                    <a href="#">NEW PRODUCTS</a> 
-                    <a href="#">TOP SELLERS</a>  
-                    <a href="special_offer.html">SPECIAL OFFERS</a>  
-                    <a href="#">MANUFACTURERS</a> 
-                    <a href="#">SUPPLIERS</a> 
+                    <h5>NUESTRAS OFERTAS</h5>
+                    <a href="/productos/listado">TOP VENDIDOS</a>  
+                    <a href="/tienda/comparar">COMPARAR</a>  
+                    <a href="/tienda/promocion">OFERTA ESPECIAL</a>  
+                    <a href="#">PROVEEDORES</a> 
                 </div>
-                <div id="socialMedia" class="span3 pull-right">
+                <!--<div id="socialMedia" class="span3 pull-right">
                     <h5>SOCIAL MEDIA </h5>
                     <a href="#"><img width="60" height="60" src="/themes/images/facebook.png" title="facebook" alt="facebook"/></a>
                     <a href="#"><img width="60" height="60" src="/themes/images/twitter.png" title="twitter" alt="twitter"/></a>
                     <a href="#"><img width="60" height="60" src="/themes/images/youtube.png" title="youtube" alt="youtube"/></a>
-                </div> 
+                </div>-->
             </div>
-            <p class="pull-right">&copy; Bootshop</p>
+            <p class="pull-right">&copy;lacv</p>
         </div><!-- Container End -->
     </div>

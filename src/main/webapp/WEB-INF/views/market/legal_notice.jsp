@@ -8,14 +8,12 @@
             <div class="container">
                 <div class="row">
                     
-                    <jsp:include page="/WEB-INF/views/market/filter_panel.jsp"></jsp:include>
-                    
                     <div class="span9">
                         <ul class="breadcrumb">
-                            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                            <li class="active">Legal Notice</li>
+                            <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+                            <li class="active">Pol&iacute;ticas de privacidad</li>
                         </ul>
-                        <h3> Legal</h3>	
+                        <h3> Pol&iacute;ticas de privacidad</h3>	
                         <hr class="soft"/>
                         <div id="legalNotice">
                             <h5>Lorem ipsum dolor sit amet</h5><br/>

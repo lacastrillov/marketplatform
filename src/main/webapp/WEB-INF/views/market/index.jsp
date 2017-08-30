@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Market Platform</title>
+        <title>Inicio</title>
         <script src="/js/web/ShoppingCart.js"></script>
         <script>
             var shoppingCart= new ShoppingCart();

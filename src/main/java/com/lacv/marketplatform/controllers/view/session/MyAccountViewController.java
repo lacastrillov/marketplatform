@@ -47,8 +47,8 @@ public class MyAccountViewController extends ExtEntityController {
     public void init(){
         EntityConfig view= new EntityConfig("user", "name", userService, UserDto.class);
         view.setPathRef("myAccount");
-        view.setSingularEntityTitle("Mi Cuenta");
-        view.setPluralEntityTitle("Mi cuenta");
+        view.setSingularEntityTitle("Mis datos");
+        view.setPluralEntityTitle("Mis datos");
         view.setMultipartFormData(true);
         view.setPreloadedForm(true);
         view.setRestSession(true);
@@ -64,7 +64,7 @@ public class MyAccountViewController extends ExtEntityController {
         
         super.addControlMapping(view);
         
-        MenuItem menuItem= new MenuItem("Configuraci&oacute;n", "myAccount", "Mi cuenta");
+        MenuItem menuItem= new MenuItem("Configuraci&oacute;n", "myAccount", "Mis datos");
         menuComponent.addItemMenu(menuItem);
         
         super.addMenuComponent(menuComponent);

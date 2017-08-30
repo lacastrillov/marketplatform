@@ -17,14 +17,17 @@
     </head>
     <body>
         
-        <section id="login">
+        <section class="login">
             <div class="container">
                 <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                    <p id="message" style="padding-top: 15px; font-size: 20px;">
+                    <div style="height: 45px; padding-top: 35px;">
                         <c:if test="${!empty param.login_error}">
-                            <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                            <div class="alert alert-error">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                            </div>
                         </c:if>
-                    </p>
+                    </div>
                 </div>
                 <div id="loginDiv" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                     <form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post">

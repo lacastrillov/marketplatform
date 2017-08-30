@@ -20,57 +20,78 @@
                 </a>
                 <div>
                     <a class="brand" href="/"><img src="/themes/images/logo.jpg" style="height: 40px;" alt="Bootsshop"/></a>
-                    <div class="span6">
+                    <div class="span5">
                         <form class="form-inline form-search" method="post" action="products.html" >
                             <input class="search-query" placeholder="Buscar" type="text">
                             <button type="submit" id="submitButton" class="btn">Buscar</button>
                         </form>
                     </div>
-                    <ul id="topMenu" class="nav pull-right">
-                        <li class=""><a href="/tienda/registro">Registrarse</a></li>
-                        <li class=""><a href="/tienda/contactanos">Cont&aacute;ctanos</a></li>
+                    <ul id="topMenu" class="nav">
+                        <li class="item-menu"><a href="/tienda/registro">Registrarse</a></li>
+                        <li class="item-menu"><a href="/tienda/contactanos">Cont&aacute;ctanos</a></li>
                         <sec:authorize access="isAuthenticated()">
                             <sec:authentication var="userSession" property="principal" />
-                            <li class=""><a href="/account/home?redirect=user">${userSession.nombre} ${userSession.apellidos}</a></li>
-                            <li class="">
-                                <a href="/account/home?redirect=user" role="button" style="padding-right:0">
-                                    <span class="btn btn-large btn-success">Entrar a mi cuenta</span>
+                            <li class="item-menu dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                    ${userSession.nombre} ${userSession.apellidos}
+                                    <b class="caret"></b>
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/account/home">Entrar a mi cuenta</a></li>
+                                    <li><a href="/vista/myAccount/entity.htm">Mis datos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/security_logout">Cerrar sesi&oacute;n</a></li>
+                                </ul>
                             </li>
                         </sec:authorize>
                         <sec:authorize access="isAnonymous()">
-                            <li class="">
+                            <li class="item-menu">
                                 <a href="#login" role="button" data-toggle="modal" style="padding-right:0">
                                     <span class="btn btn-large btn-success">Iniciar Sesión</span>
                                 </a>
-                                <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h3>Iniciar Sesi&oacute;n</h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post" class="form-horizontal loginFrm">
-                                            <div class="control-group">
-                                                <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
-                                                <!--<input type="text" id="inputEmail" placeholder="Email">-->
-                                            </div>
-                                            <div class="control-group">
-                                                <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
-                                                <!--<input type="password" id="inputPassword" placeholder="Password">-->
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="checkbox">
-                                                    <input type="checkbox"> Recordarme
-                                                </label>
-                                            </div>
-                                            <input type="submit" class="btn btn-success" value="Iniciar Sesi&oacute;n" />
-                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                                        </form>
-                                    </div>
-                                </div>
                             </li>
                         </sec:authorize>
                     </ul>
+                </div>
+            </div>
+            <div id="login" class="login modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>Iniciar Sesi&oacute;n</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post">
+                        <div class="box-login">
+                            <div class="box-input">
+                                <img src="/img/email.png" width="40" />
+                                <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
+                            </div>
+
+                            <div class="box-input">
+                                <img src="/img/password.png" width="40">
+                                <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-ingreso">Ingresar</button>
+                        <a class="link-pass" onclick="userAuthentication.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
+                    </form>
+                        
+                        
+                    <!--<form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post" class="form-horizontal loginFrm">
+                        <div class="control-group">
+                            <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
+                        </div>
+                        <div class="control-group">
+                            <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
+                        </div>
+                        <div class="control-group">
+                            <label class="checkbox">
+                                <input type="checkbox"> Recordarme
+                            </label>
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Iniciar Sesi&oacute;n" />
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                    </form>-->
                 </div>
             </div>
         </div>

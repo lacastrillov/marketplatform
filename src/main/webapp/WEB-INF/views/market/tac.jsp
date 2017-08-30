@@ -8,14 +8,12 @@
             <div class="container">
                 <div class="row">
                     
-                    <jsp:include page="/WEB-INF/views/market/filter_panel.jsp"></jsp:include>
-                    
                     <div class="span9">
                         <ul class="breadcrumb">
-                            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                            <li class="active">Terms and Conditions</li>
+                            <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+                            <li class="active">T&eacute;rminos y condiciones</li>
                         </ul>
-                        <h3> Terms and Conditions</h3>	
+                        <h3> T&eacute;rminos y condiciones</h3>	
                         <hr class="soft"/>
                         <h5>Lorem ipsum dolor sit amet</h5><br/>
                         <p>

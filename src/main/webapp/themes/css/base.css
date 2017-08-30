@@ -5,7 +5,8 @@
 .clr{clear:both;}
 .cntr{text-align:center}
 .marginLess{margin:0}
-#logoArea, #logoArea a{line-height:49px;}
+#topMenu .item-menu{line-height:49px;}
+#topMenu {float: right;}
 #logoArea .btn, #logoArea .btn-group {margin-top: 0;}
 #logo {padding-right:28px;}
 #welcomeLine{padding: 8px 0 4px}
@@ -26,7 +27,7 @@
 .basic-label {margin: 5px;}
 .loginFrm{ margin-bottom:8px;}
 .loginFrm .control-group{padding:8px 14px 0; margin-bottom:0 }
-.form-search {margin: 10px 0;}
+.form-search {margin: 19px 0;}
 /* Compair product page */
 .checkbox input[type="checkbox"]{ margin:4px 0 8px -20px }
 #sm{text-align:right}

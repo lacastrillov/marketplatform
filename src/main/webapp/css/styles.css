@@ -30,14 +30,14 @@ header a.registro{
     padding-top: 20px;
 }
 
-section#login{
+/*.login{
     height: calc(100vh - 130px);
-}
+}*/
 
-section#login .box-login{
+.login .box-login{
     background: #FFF;
     border-radius: 6px;
-    margin-top: 20vh;
+    margin-top: 10px;
     min-height: 1px;
     padding: 0 10px;
 
@@ -47,46 +47,46 @@ section#login .box-login{
     box-shadow: 0px 3px 4px rgba(0,0,0,.2);
 }
 
-section#login .box-input input{
+.login .box-input input{
     border: none;
     padding: 20px 0;
     width: calc(100% - 50px);
     color: #15252f;
 }
 
-section#login .box-input input:hover{
+.login .box-input input:hover{
     outline: none;
 }
 
-section#login .box-input input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+section.login .box-input input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     background-color: rgb(250, 255, 255);
     background-image: none;
     color: #15252f;
 }
 
-section#login .box-input:first-child{
+.login .box-input:first-child{
     border-bottom: 1px solid #747474;
 }
 
-section#login .btn-ingreso{
+.login .btn-ingreso{
     display: block;
     width: 100%;
     background: #f9671e;
     text-align: center;
     height: 40px;
     line-height: 40px;
-    margin: 20px 0;
+    margin: 10px 0;
     border-radius: 6px;
     color: white;
 }
 
-section#login a.link-pass{
+.login a.link-pass{
     text-align: center;
     width: 100%;
     display: block;
 }
 
-section#login .container{
+.login .container{
     width: 500px;
 }
 
