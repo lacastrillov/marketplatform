@@ -26,6 +26,8 @@
         <property name="suffix" value=".jsp"></property>        
     </bean>
     
+    <mvc:resources mapping="/views/**" location="classpath:/WEB-INF/views/" />
+    
     <context:property-placeholder location="classpath*:config/*.properties" ignore-unresolvable="true"/>
     
     <bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
