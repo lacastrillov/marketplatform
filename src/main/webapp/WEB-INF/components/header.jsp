@@ -75,23 +75,6 @@
                         <button type="submit" class="btn-ingreso">Ingresar</button>
                         <a class="link-pass" onclick="userAuthentication.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
                     </form>
-                        
-                        
-                    <!--<form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post" class="form-horizontal loginFrm">
-                        <div class="control-group">
-                            <input placeholder="Correo electr&oacute;nico" id="j_username" type="text" class="validate" name="j_username" value="" maxlength="50" minlength="3" />
-                        </div>
-                        <div class="control-group">
-                            <input placeholder="* * * * * *" id="j_password" type="password" class="validate" name="j_password" value="" maxlength="50" minlength="3" />
-                        </div>
-                        <div class="control-group">
-                            <label class="checkbox">
-                                <input type="checkbox"> Recordarme
-                            </label>
-                        </div>
-                        <input type="submit" class="btn btn-success" value="Iniciar Sesi&oacute;n" />
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                    </form>-->
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="alert alert-block alert-info fade in">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
-                                    Al registrarte, aceptas nuestras <strong>Condiciones</strong> y la <strong>Política de privacidad</strong>.
+                                    Al registrarte, aceptas nuestras <strong><a href="/tienda/terminos-y-condiciones">Condiciones</a></strong> y la <strong><a href="/tienda/politicas-de-privacidad">Pol&iacute;tica de privacidad</a></strong>.
                                 </div>	
                             </form>
                         </div>

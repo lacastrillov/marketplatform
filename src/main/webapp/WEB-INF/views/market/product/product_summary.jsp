@@ -83,8 +83,8 @@
                                     </div>
                                     <div class="control-group">
                                         <div class="controls">
-                                            <a href="<%=request.getContextPath()%>/security_logout" class="btn">Cerrar Sesi&oacute;n</a>
                                             <a href="/account/home?redirect=user" class="btn">Entrar a mi cuenta</a>
+                                            <a href="<%=request.getContextPath()%>/security_logout" class="btn">Cerrar Sesi&oacute;n</a>
                                         </div>
                                     </div>
                                 </td>

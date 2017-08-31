@@ -5,6 +5,7 @@ import com.dot.gcpbasedot.util.Util;
 import com.lacv.marketplatform.dtos.RoleDto;
 import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.dtos.UserRoleDto;
+import com.lacv.marketplatform.dtos.security.UserAndRolesDto;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.entities.UserRole;
 import com.lacv.marketplatform.mappers.UserMapper;
@@ -59,16 +60,12 @@ public class AccountController {
             }
             return null;
         }else{
-            User user= securityService.getCurrentUser();
-            if(user!=null){
-                Parameters p= new Parameters();
-                p.whereEqual("user", user);
-                p.orderBy("role.priorityCheck", "ASC");
-                List<UserRole> userRoles= userRoleService.findByParameters(p);
+            UserAndRolesDto userAndRoles= getUserAndRoles();
+            if(userAndRoles!=null){
                 String homePage=null;
-                for(UserRole userRole: userRoles){
-                    if(userRole.getRole().getHomePage()!=null){
-                        homePage= userRole.getRole().getHomePage();
+                for(RoleDto role: userAndRoles.getRoles()){
+                    if(role.getHomePage()!=null){
+                        homePage= role.getHomePage();
                         break;
                     }
                 }
@@ -89,22 +86,33 @@ public class AccountController {
         Map data= new HashMap();
         try{
             securityService.connect(j_username, j_password);
-            User user= securityService.getCurrentUser();
-            UserDto userDto= (UserDto) userMapper.entityToDto(user);
-            List<UserRole> userRoles= userRoleService.findByParameter("user", user);
-            List<UserRoleDto> userRolesDto= (List<UserRoleDto>) userRoleMapper.listEntitiesToListDtos(userRoles);
-            List<RoleDto> roles= new ArrayList<>();
-            for(UserRoleDto userRole: userRolesDto){
-                roles.add(userRole.getRole());
-            }
+            UserAndRolesDto userAndRoles= getUserAndRoles();
             data.put("success", true);
-            data.put("user", userDto);
-            data.put("roles", roles);
+            data.put("user", userAndRoles.getUser());
+            data.put("roles", userAndRoles.getRoles());
             
             return Util.objectToJson(data);
         }catch(AuthenticationException ex){
             data.put("success", false);
             data.put("message", "Usuario y/o contraseña incorrectos");
+        }
+        return Util.objectToJson(data);
+    }
+    
+    @RequestMapping(value = "/ajax/userInSession", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String userInSession() {
+        Map data= new HashMap();
+        UserAndRolesDto userAndRoles= getUserAndRoles();
+        if(userAndRoles!=null){
+            data.put("session", true);
+            data.put("user", userAndRoles.getUser());
+            data.put("roles", userAndRoles.getRoles());
+            
+            return Util.objectToJson(data);
+        }else{
+            data.put("session", false);
+            data.put("message", "No hay usuario en sesion");
         }
         return Util.objectToJson(data);
     }
@@ -122,6 +130,29 @@ public class AccountController {
     public ModelAndView getDenied() {
         ModelAndView mav = new ModelAndView("denied");
         return mav;
+    }
+    
+    private UserAndRolesDto getUserAndRoles(){
+        UserAndRolesDto userAndRoles= new UserAndRolesDto();
+        User user= securityService.getCurrentUser();
+        if(user!=null){
+            UserDto userDto= (UserDto) userMapper.entityToDto(user);
+            Parameters p= new Parameters();
+            p.whereEqual("user", user);
+            p.orderBy("role.priorityCheck", "ASC");
+            List<UserRole> userRoles= userRoleService.findByParameters(p);
+            List<UserRoleDto> userRolesDto= (List<UserRoleDto>) userRoleMapper.listEntitiesToListDtos(userRoles);
+            List<RoleDto> roles= new ArrayList<>();
+            for(UserRoleDto userRole: userRolesDto){
+                roles.add(userRole.getRole());
+            }
+            userAndRoles.setUser(userDto);
+            userAndRoles.setRoles(roles);
+            
+            return userAndRoles;
+        }else{
+            return null;
+        }
     }
     
 }
