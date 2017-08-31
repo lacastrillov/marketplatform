@@ -36,7 +36,7 @@ public class RoleDto implements BaseEntity {
     @TextField("P&aacute;gina de Inicio")
     private String homePage;
     
-    @TextField("Prioridad de validaci&oacute;n")
+    @TextField("Prioridad de verificaci&oacute;n")
     private Integer priorityCheck;
     
     private List<UserRoleDto> userRoleList;
