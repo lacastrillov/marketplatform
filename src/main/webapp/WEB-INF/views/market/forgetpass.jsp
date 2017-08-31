@@ -12,26 +12,25 @@
                     
                     <div class="span9">
                         <ul class="breadcrumb">
-                            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                            <li class="active">Forget password?</li>
+                            <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+                            <li class="active">Recuperar Contrase&ntilde;a</li>
                         </ul>
-                        <h3> FORGET YOUR PASSWORD?</h3>	
+                        <h3> Recuperar Contrase&ntilde;a</h3>	
                         <hr class="soft"/>
 
                         <div class="row">
-                            <div class="span9" style="min-height:900px">
+                            <div class="span9">
                                 <div class="well">
-                                    <h5>Reset your password</h5><br/>
-                                    Please enter the email address for your account. A verification code will be sent to you. Once you have received the verification code, you will be able to choose a new password for your account.<br/><br/><br/>
+                                    <h5>Reestablecer la contrase&ntilde;a</h5><br/>
+                                    Por favor, ingresa la direcci&oacute;n de correo electr&oacute;nico para su cuenta. Se le enviar&aacute; un c&oacute;digo de verificaci&oacute;n. Una vez que haya recibido el c&oacute;digo de verificaci&oacute;n, podr&aacute; elegir una nueva contrase&ntilde;a para su cuenta.<br/><br/><br/>
                                     <form>
                                         <div class="control-group">
-                                            <label class="control-label" for="inputEmail1">E-mail address</label>
                                             <div class="controls">
-                                                <input class="span3"  type="text" id="inputEmail1" placeholder="Email">
+                                                <input class="span3"  type="text" id="inputEmail1" placeholder="Correo electr&oacute;nico">
                                             </div>
                                         </div>
                                         <div class="controls">
-                                            <button type="submit" class="btn block">Submit</button>
+                                            <button type="submit" class="btn block">Enviar</button>
                                         </div>
                                     </form>
                                 </div>

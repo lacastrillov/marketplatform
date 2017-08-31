@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="control-group">
                                             <div class="controls">
-                                                <a href="/tienda/recuperar-clave" style="text-decoration:underline">Recuperar clave</a>
+                                                <a href="/tienda/recuperar-clave" style="text-decoration:underline">Recuperar contrase&ntilde;a</a>
                                             </div>
                                         </div>
                                     </form>
