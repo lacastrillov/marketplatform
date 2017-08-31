@@ -57,7 +57,10 @@ public class ProductController {
         
         List<Product> products = productService.findByParameters(p);
         for(Product product: products){
-            product.setProductImageList(productImageService.findByParameter("product", product));
+            Parameters p1= new Parameters();
+            p1.whereEqual("product", product);
+            p1.orderBy("order", "ASC");
+            product.setProductImageList(productImageService.findByParameters(p1));
         }
         
         mav.addObject("title", getTitle(filter));
@@ -73,7 +76,10 @@ public class ProductController {
         ModelAndView mav = new ModelAndView("market/product/product_details");
         
         Product product= productService.findUniqueByParameter("code", code);
-        product.setProductImageList(productImageService.findByParameter("product", product));
+        Parameters p1= new Parameters();
+        p1.whereEqual("product", product);
+        p1.orderBy("order", "ASC");
+        product.setProductImageList(productImageService.findByParameters(p1));
         
         mav.addObject("product", product);
         

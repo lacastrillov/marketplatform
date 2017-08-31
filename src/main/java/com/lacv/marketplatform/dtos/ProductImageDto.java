@@ -32,7 +32,7 @@ public class ProductImageDto implements BaseEntity {
     @Order(2)
     @TextField("Imagen")
     @TypeFormField(FieldType.IMAGE_FILE_UPLOAD)
-    @ImageResize({"200,200", "500,500", "800,800"})
+    @ImageResize({"300,300", "600,600", "800,800"})
     @HideField({HideView.FILTER})
     @ColumnWidth(300)
     private String image;

@@ -43,6 +43,7 @@ public class ProductImageViewController extends ExtEntityController {
         view.setSingularEntityTitle("Imagen");
         view.setPluralEntityTitle("Imagenes");
         view.setMultipartFormData(true);
+        view.setDefaultOrder("order", "ASC");
         super.addControlMapping(view);
         
         ReportConfig report = new ReportConfig("productImage", "reporteImagenesProducto", productImageService, ProductImageReportDto.class);

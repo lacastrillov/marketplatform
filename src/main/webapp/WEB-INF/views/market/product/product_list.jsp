@@ -49,7 +49,7 @@
                     <div class="thumbnail">
                         <a href="/productos/detalle/${product.code}" style="height: 200px;">
                             <c:if test="${numImages>0}">
-                                <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
+                                <img src="${webFunctions.getImageLinkByDimensions(product.productImageList[0].image, "300x300")}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
                             </c:if>
                             <c:if test="${numImages==0}">
                                 <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>
@@ -58,7 +58,7 @@
                         <div class="caption">
                             <h5 style="height: 40px;">${product.name}</h5>
                             <p style="height: 40px;"> 
-                                ${fn:substring(product.description,0,60)}...
+                                ${fn:substring(product.description,0,35)}...
                             </p>
                             <h4 style="text-align:center">
                                 <a class="btn" href="/productos/detalle/${product.code}">

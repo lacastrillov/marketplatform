@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="webFunctions" class="com.dot.gcpbasedot.util.WebFunctions"/>
 
 <html lang="en">
     <head>
@@ -16,10 +17,7 @@
         <div id="mainBody">
             <div class="container">
                 <div class="row">
-                    
-                    <jsp:include page="/WEB-INF/views/market/filter_panel.jsp"></jsp:include>
-                    
-                    <div class="span9">
+                    <div class="span12">
                         <ul class="breadcrumb">
                             <li><a href="/">Home</a> <span class="divider">/</span></li>
                             <li><a href="/productos/listado?filter={eq:{subCategory:${product.subCategory.id}}}">${product.subCategory.name}</a> <span class="divider">/</span></li>
@@ -27,33 +25,37 @@
                         </ul>	
                         <div class="row">
                             <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
-                            <div id="gallery" class="span3">
+                            <div id="gallery" class="span6">
                                 <c:if test="${numImages>0}">
                                     <a href="${product.productImageList[0].image}" title="${product.name}">
-                                        <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
+                                        <img src="${webFunctions.getImageLinkByDimensions(product.productImageList[0].image, "600x600")}" alt="${product.name}" style="max-width: 585px; max-height: 600px;"/>
                                     </a>
                                 </c:if>
                                 <c:if test="${numImages==0}">
                                     <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>
                                 </c:if>
-                                <div id="differentview" class="moreOptopm carousel slide">
-                                    <div class="carousel-inner">
-                                        <div class="item active">
-                                            <a href="/themes/images/products/large/f1.jpg"> <img style="width:29%" src="/themes/images/products/large/f1.jpg" alt=""/></a>
-                                            <a href="/themes/images/products/large/f2.jpg"> <img style="width:29%" src="/themes/images/products/large/f2.jpg" alt=""/></a>
-                                            <a href="/themes/images/products/large/f3.jpg" > <img style="width:29%" src="/themes/images/products/large/f3.jpg" alt=""/></a>
+                                <c:if test="${numImages>0}">
+                                    <div id="imageCarousel" class="carousel slide">
+                                        <div class="carousel-inner">
+                                            <fmt:formatNumber var="numPagesImages" minFractionDigits="0" maxFractionDigits="0" value= "${fn:length(product.productImageList)/3}" />
+                                            <c:set var="index" value="0"></c:set>
+                                            <c:forEach var="i" begin="0" end="${numPagesImages-1}">
+                                                <div class="item <c:if test="${i==0}">active</c:if>">
+                                                    <c:forEach var="j" begin="0" end="3">
+                                                        <c:if test="${product.productImageList[index]!=null}">
+                                                            <a href="${webFunctions.getImageLinkByDimensions(product.productImageList[index].image, "800x800")}">
+                                                                <img style="width:29%" src="${webFunctions.getImageLinkByDimensions(product.productImageList[index].image, "300x300")}" alt=""/>
+                                                            </a>
+                                                            <c:set var="index" value="${index+1}"></c:set>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:forEach>
                                         </div>
-                                        <!--<div class="item">
-                                            <a href="/themes/images/products/large/f3.jpg" > <img style="width:29%" src="/themes/images/products/large/f3.jpg" alt=""/></a>
-                                            <a href="/themes/images/products/large/f1.jpg"> <img style="width:29%" src="/themes/images/products/large/f1.jpg" alt=""/></a>
-                                            <a href="/themes/images/products/large/f2.jpg"> <img style="width:29%" src="/themes/images/products/large/f2.jpg" alt=""/></a>
-                                        </div>-->
+                                        <!--<a class="left carousel-control" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
+                                        <a class="right carousel-control" href="#imageCarousel" data-slide="next">&rsaquo;</a>-->
                                     </div>
-                                    <!--  
-                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">â¹</a>
-                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">âº</a> 
-                                    -->
-                                </div>
+                                </c:if>
 
                                 <div class="btn-toolbar">
                                     <div class="btn-group">
@@ -92,7 +94,7 @@
                                 <hr class="soft"/>
                             </div>
 
-                            <div class="span9">
+                            <div class="span12">
                                 <ul id="productDetail" class="nav nav-tabs">
                                     <li class="active"><a href="#home" data-toggle="tab">Detalle Producto</a></li>
                                     <li><a href="#profile" data-toggle="tab">Productos Relacionados</a></li>

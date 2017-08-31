@@ -156,21 +156,18 @@ public class TableColumnRestController extends RestController {
     @RequestMapping(value = "/delete.htm", method = {RequestMethod.DELETE, RequestMethod.GET})
     @ResponseBody
     @Override
-    public String delete(@RequestParam String data) {
+    public String delete(@RequestParam String idEntity) {
         String tableName="";
         String columnAlias= "";
-        JSONObject jsonObject=null;
         try {
-            String jsonData= data;
-            jsonObject= new JSONObject(jsonData);
-            TableColumn tableColumn= tableColumnService.findById(jsonObject.getInt("id"));
+            TableColumn tableColumn= tableColumnService.findById(new Integer(idEntity));
             columnAlias= tableColumn.getColumnAlias();
             tableName= tableColumn.getLeadTable().getTableAlias();
         } catch (Exception e) {
             LOGGER.error("update " + entityRef, e);
         }
         
-        String result= super.delete(data);
+        String result= super.delete(idEntity);
         
         try{
             JSONObject jsonResult= new JSONObject(result);

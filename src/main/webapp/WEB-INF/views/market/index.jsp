@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -126,8 +126,8 @@
                                             </div>
                                         </c:forEach>
                                     </div>
-                                    <a class="left carousel-control" href="#featured" data-slide="prev"><</a>
-                                    <a class="right carousel-control" href="#featured" data-slide="next">></a>
+                                    <a class="left carousel-control" href="#featured" data-slide="prev">&lsaquo;</a>
+                                    <a class="right carousel-control" href="#featured" data-slide="next">&rsaquo;</a>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                                         <div class="caption">
                                             <h5>${product.name}</h5>
                                             <p> 
-                                                ${fn:substring(product.description,0,60)}...
+                                                ${fn:substring(product.description,0,35)}...
                                             </p>
                                             <h4 style="text-align:center">
                                                 <a class="btn" href="/productos/detalle/${product.code}">
