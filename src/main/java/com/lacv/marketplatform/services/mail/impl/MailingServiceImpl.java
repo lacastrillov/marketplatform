@@ -156,7 +156,9 @@ public class MailingServiceImpl implements MailingService {
         if(mailTemplate!=null && mailTemplate.getStatus().equals("Active")){
             String message = mailTemplate.getContent();
             for (Map.Entry<String, String> entry : data.entrySet()) {
-                message= message.replace("%%" + entry.getKey() + "%%" , entry.getValue());
+                if(entry.getValue()!=null){
+                    message= message.replace("%%" + entry.getKey() + "%%" , entry.getValue());
+                }
             }
             boolean result= sendMail(mail, message, subject);
             if(result){

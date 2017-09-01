@@ -96,3 +96,13 @@ footer{
     background: #f6f7f9;
     color: #15252f;
 }
+.x-window-header-default-top, .x-window-header-default .x-tool-img, .x-window-default {background-color:#d44413 !important; border-color: #d44413 !important;}
+.x-toolbar-footer {background: #fce2d9 none repeat scroll 0 0 !important;}
+.x-btn-default-small {
+    background-color: #e86537 !important;
+    background-image: linear-gradient(to bottom, #ef784e, #dd4814) !important;
+    background-repeat: repeat-x !important;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+}

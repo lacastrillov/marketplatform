@@ -6,7 +6,7 @@
     <body>
         <div id="mainBody">
             <div class="container">
-                <h1>FAQ</h1>
+                <h1>Preguntas frecuentes</h1>
                 <hr class="soften"/>	
                 <div class="accordion" id="accordion2">
                     <div class="accordion-group">

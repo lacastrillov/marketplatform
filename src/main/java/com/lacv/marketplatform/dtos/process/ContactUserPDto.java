@@ -10,7 +10,6 @@ import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.enums.FieldType;
-import java.util.List;
 
 /**
  *
@@ -37,10 +36,6 @@ public class ContactUserPDto {
     @TextField("Comentarios")
     @TypeFormField(FieldType.TEXT_AREA)
     private String comments;
-    
-    @Order(4)
-    @TextField("Destinatarios")
-    private List<String> recipients;
     
     
     public ContactUserPDto(){
@@ -76,20 +71,6 @@ public class ContactUserPDto {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    /**
-     * @return the recipients
-     */
-    public List<String> getRecipients() {
-        return recipients;
-    }
-
-    /**
-     * @param recipients the recipients to set
-     */
-    public void setRecipients(List<String> recipients) {
-        this.recipients = recipients;
     }
     
 }

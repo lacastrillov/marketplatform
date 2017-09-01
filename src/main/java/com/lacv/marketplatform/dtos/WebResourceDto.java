@@ -39,6 +39,7 @@ public class WebResourceDto implements BaseEntity {
     
     @Order(4)
     @NotNull
+    @ColumnWidth(300)
     @TextField("Path")
     private String path;
     

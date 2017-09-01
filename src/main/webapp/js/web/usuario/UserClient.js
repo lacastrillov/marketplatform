@@ -6,7 +6,7 @@
 util.importJS('/js/util/Message.js');
 util.importJS('/js/web/stores/UserExtStore.js');
 
-function UserRegistration() {
+function UserClient() {
 
     var Instance = this;
     
@@ -18,26 +18,37 @@ function UserRegistration() {
         $(document).ready(function () {
             message= new Message();
             userExtStore= new UserExtStore();
-            
-            $("#linkIngresar").click(function (e) {
-                e.preventDefault();
-                $("#formLogin").submit();
-            });
         });
     };
     
-    Instance.validate= function(){
+    Instance.registerValidate= function(){
         
         return true;
     };
     
-    Instance.sendData= function(){
-        if(Instance.validate()){
+    Instance.contactValidate= function(){
+        
+        return true;
+    };
+    
+    Instance.registerUser= function(){
+        if(Instance.registerValidate()){
             var data = {};
             $("#userRegistrationForm").serializeArray().map(function(x){data[x.name] = x.value;});
             userExtStore.doProcess("processUser", "registerUser", data, function(responseText){
                 message.showMessage("Registro de usuario", JSON.parse(responseText).message);
                 $('#userRegistrationForm').trigger("reset");
+            });
+        }
+    };
+    
+    Instance.contactUser= function(){
+        if(Instance.contactValidate()){
+            var data = {};
+            $("#userContactForm").serializeArray().map(function(x){data[x.name] = x.value;});
+            userExtStore.doProcess("processUser", "contactUser", data, function(responseText){
+                message.showMessage("Contacto de usuario", JSON.parse(responseText).message);
+                $('#userContactForm').trigger("reset");
             });
         }
     };

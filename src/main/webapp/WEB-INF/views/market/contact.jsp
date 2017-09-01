@@ -2,6 +2,10 @@
 <html lang="en">
     <head>
         <title>Contactanos</title>
+        <script src="/js/web/usuario/UserClient.js"></script>
+        <script>
+            var userClient= new UserClient();
+        </script>
     </head>
     <body>
         <div id="mainBody">
@@ -12,32 +16,32 @@
                             <li><a href="/">Inicio</a> <span class="divider">/</span></li>
                             <li class="active">Contactanos</li>
                         </ul>
-                        <h3> Cont&aacute;ctenos, Quejas y Reclamaciones</h3>	
+                        <h3> Cont&aacute;ctenos, Quejas y Reclamaciones</h3>
                         <div class="well">
-                            <form id="userRegistrationForm" class="form-horizontal">
+                            <form id="userContactForm" class="form-horizontal">
                                 <div class="control-group">
                                     <div class="controls form-inline">
-                                        <input type="text" id="firstName" name="firstName" placeholder="Nombres" class="input-xlarge" onKeyPress="return validation.isAbcText(event)"/>
+                                        <input type="text" id="userName" name="userName" placeholder="Nombres" class="input-xlarge" onKeyPress="return validation.isAbcText(event)"/>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" id="cell" name="cell" placeholder="Tel&eacute;fono celular" class="input-xlarge" onKeyPress="return validation.isNumValue(event)"/> 
+                                        <input type="text" id="cellPhone" name="cellPhone" placeholder="Tel&eacute;fono celular" class="input-xlarge" onKeyPress="return validation.isNumValue(event)"/> 
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" id="email" name="email" placeholder="Correo electr&oacute;nico" class="input-xlarge"/>
+                                        <input type="text" id="mail" name="mail" placeholder="Correo electr&oacute;nico" class="input-xlarge"/>
                                     </div>
                                 </div>	  
                                 <div class="control-group">
                                     <div class="controls">
-                                        <textarea rows="3" id="textarea" class="input-xlarge" placeholder="Comentarios"></textarea>
+                                        <textarea rows="3" id="comments" name="comments" class="input-xlarge" placeholder="Comentarios"></textarea>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="btn btn-large btn-success" type="button" value="Enviar" onclick="userRegistration.sendData()" />
+                                        <input class="btn btn-large btn-success" type="button" value="Enviar" onclick="userClient.contactUser()" />
                                     </div>
                                 </div>
                                 <div class="alert alert-block alert-info fade in">

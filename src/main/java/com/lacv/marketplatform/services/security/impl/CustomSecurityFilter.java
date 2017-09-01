@@ -47,9 +47,11 @@ public class CustomSecurityFilter extends GenericFilterBean {
         "/rest/webresourceRole/create.htm",
         "/rest/webresourceRole/update.htm",
         "/rest/webresourceRole/delete.htm",
+        "/rest/webresourceRole/delete/byfilter.htm",
         "/rest/webresourceAuthorization/create.htm",
         "/rest/webresourceAuthorization/update.htm",
-        "/rest/webresourceAuthorization/delete.htm"
+        "/rest/webresourceAuthorization/delete.htm",
+        "/rest/webresourceAuthorization/delete/byfilter.htm"
     };
     
     private final List accessControlModifiersList= Arrays.asList(accessControlModifiers);

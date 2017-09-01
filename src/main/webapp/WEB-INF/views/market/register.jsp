@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         <title>Registrarse</title>
-        <script src="/js/web/usuario/UserRegistration.js"></script>
+        <script src="/js/web/usuario/UserClient.js"></script>
         <script>
-            var userRegistration= new UserRegistration();
+            var userClient= new UserClient();
         </script>
     </head>
     <body>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="btn btn-large btn-success" type="button" value="Crear cuenta" onclick="userRegistration.sendData()" />
+                                        <input class="btn btn-large btn-success" type="button" value="Crear cuenta" onclick="userClient.registerUser()" />
                                     </div>
                                 </div>
                                 <div class="alert alert-block alert-info fade in">

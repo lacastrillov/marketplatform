@@ -22,6 +22,7 @@ import com.lacv.marketplatform.dtos.process.ContactUserPDto;
 import com.lacv.marketplatform.dtos.process.RegisterUserPDto;
 import com.lacv.marketplatform.entities.Role;
 import com.lacv.marketplatform.entities.UserRole;
+import com.lacv.marketplatform.services.PropertyService;
 import com.lacv.marketplatform.services.RoleService;
 import com.lacv.marketplatform.services.UserRoleService;
 import com.lacv.marketplatform.services.mail.MailingService;
@@ -58,6 +59,9 @@ public class UserProcessController extends RestController {
     
     @Autowired
     MailingService mailingService;
+    
+    @Autowired
+    PropertyService propertyService;
     
     AESEncrypt myInstance= AESEncrypt.getDefault(WebConstants.SECURITY_SALT);
     
@@ -106,12 +110,13 @@ public class UserProcessController extends RestController {
         data.put("numeroCelular", contactUserPDto.getCellPhone());
         data.put("comentarios", contactUserPDto.getComments());
         
-        boolean sent= mailingService.sendTemplateMail(contactUserPDto.getMail(), "contact_user", "Contacto de Usuario", data);
+        String contactRecipient= propertyService.getString("CONTACT_RECIPIENT");
+        boolean sent= mailingService.sendTemplateMail(contactRecipient, "contact_user", "Contacto de Usuario", data);
         
         result.setUsername(contactUserPDto.getMail());
         result.setSuccess(sent);
         if(sent){
-            result.setMessage("Correo enviado correctamente");
+            result.setMessage("Tu mensaje ha sido enviado, pronto nos pondremos en contacto");
         }else{
             result.setMessage("Error al enviar el correo");
         }
@@ -147,7 +152,7 @@ public class UserProcessController extends RestController {
             userRoleService.create(userRole);
             
             result.setSuccess(true);
-            result.setMessage("El usuario se ha registrado correctamente...");
+            result.setMessage("Te has registrado correctamente, ahora puedes iniciar sesi&oacute;n en tu cuenta...");
         }else{
             result.setSuccess(false);
             result.setMessage("El usuario no se puede crear porque ya existe otro con el mismo correo electr&oacute;nico!!!");

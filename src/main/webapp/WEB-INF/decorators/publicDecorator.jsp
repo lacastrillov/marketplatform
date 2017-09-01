@@ -46,7 +46,7 @@
         <style type="text/css" id="enject"></style>
         
         <!-- Placed at the end of the document so the pages load faster ============================================= -->
-        <script src="https://ext-js-4-dot-proven-signal-88616.appspot.com/ext/examples/shared/include-ext.js"></script>
+        <script src="http://localhost/ext-4.2.1/examples/shared/include-ext.js"></script>
         <script src="/themes/js/jquery.js" type="text/javascript"></script>
         <script src="/themes/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="/themes/js/google-code-prettify/prettify.js"></script>
