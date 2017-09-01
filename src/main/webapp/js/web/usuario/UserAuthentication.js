@@ -11,10 +11,6 @@ function UserAuthentication() {
 
     Instance.init = function () {
         $(document).ready(function () {
-            $("#linkIngresar").click(function (e) {
-                e.preventDefault();
-                $("#formLogin").submit();
-            });
             
             $("#j_username, #j_password").keypress(function(e) {
                 if(e.which === 13) {
@@ -37,11 +33,11 @@ function UserAuthentication() {
             data: $("#ajaxFormLogin").serialize(),
             cache: false,
             dataType: "json",
-            error: function (xhr, status) {
-                console.log(xhr.status);
-            },
             success: function (data, status) {
                 callback(data);
+            },
+            error: function (xhr, status) {
+                console.log(xhr.status);
             }
         });
     };
@@ -58,11 +54,11 @@ function UserAuthentication() {
                 data: $("#changePasswordForm").serialize(),
                 cache: false,
                 dataType: "html",
-                error: function (xhr, status) {
-                    console.log(xhr.status);
-                },
                 success: function (data, status) {
                     $("#message").html(data);
+                },
+                error: function (xhr, status) {
+                    console.log(xhr.status);
                 }
             });
         } else {
@@ -74,9 +70,7 @@ function UserAuthentication() {
     Instance.resetPassword = function () {
         $("#message").html("Enviando...");
         var correoElectronico = $("#correoElectronico").val();
-        console.log(correoElectronico);
         if (correoElectronico !== "") {
-            console.log("diferente");
             $.ajax({
                 url: $("#changePasswordForm").attr("action"),
                 timeout: 20000,
@@ -84,13 +78,11 @@ function UserAuthentication() {
                 data: $("#changePasswordForm").serialize(),
                 cache: false,
                 dataType: "html",
-                error: function (xhr, status) {
-                    console.log(xhr.status);
-                    console.log("error");
-                },
                 success: function (data, status) {
                     $("#message").html(data);
-                    console.log(data);
+                },
+                error: function (xhr, status) {
+                    console.log(xhr.status);
                 }
             });
         } else {
@@ -99,10 +91,10 @@ function UserAuthentication() {
         }
     };
 
-    Instance.changeForm = function (idForm) {
-        $("#loginDiv").hide();
-        $("#changePasswordDiv").hide();
-        $("#" + idForm).show();
+    Instance.changeForm = function (classForm) {
+        $(".loginDiv").hide();
+        $(".changePasswordDiv").hide();
+        $("." + classForm).show();
     };
 
     Instance.init();

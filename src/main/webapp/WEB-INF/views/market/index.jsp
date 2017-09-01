@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="webFunctions" class="com.dot.gcpbasedot.util.WebFunctions"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,68 +13,38 @@
     </head>
     <body>
         <div id="carouselBlk">
+            <hr class="soften">
             <div id="myCarousel" class="carousel slide">
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="container">
-                            <a href="register.html"><img style="width:100%" src="/themes/images/carousel/1.png" alt="special offers"/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    <c:set var="index" value="0"></c:set>
+                    <c:forEach items="${lastFeatured}" var="product">
+                        <c:set var="numImages" value="${fn:length(product.productImageList)}"/>
+                        <div class="item <c:if test="${index == 0}">active</c:if>">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="span6">
+                                        <a href="/productos/detalle/${product.code}">
+                                            <c:if test="${numImages>0}">
+                                                <img src="${webFunctions.getImageLinkByDimensions(product.productImageList[0].image, "600x600")}" alt="${product.name}"/>
+                                            </c:if>
+                                            <c:if test="${numImages==0}">
+                                                <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>
+                                            </c:if>
+                                        </a>
+                                    </div>
+                                    <div class="span6">
+                                        <h1><a href="/productos/detalle/${product.code}">${product.name}</a></h1>
+                                        <h4>${product.description}</h4>
+                                    </div>
+                                </div>    
                             </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="container">
-                            <a href="register.html"><img style="width:100%" src="/themes/images/carousel/2.png" alt=""/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="container">
-                            <a href="register.html"><img src="/themes/images/carousel/3.png" alt=""/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="container">
-                            <a href="register.html"><img src="/themes/images/carousel/4.png" alt=""/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="container">
-                            <a href="register.html"><img src="/themes/images/carousel/5.png" alt=""/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="container">
-                            <a href="register.html"><img src="/themes/images/carousel/6.png" alt=""/></a>
-                            <div class="carousel-caption">
-                                <h4>Second Thumbnail label</h4>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            </div>
-                        </div>
-                    </div>
+                        <c:set var="index" value="${index+1}"></c:set>
+                    </c:forEach>
                 </div>
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
                 <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-            </div> 
+            </div>
         </div>
         <div id="mainBody">
             <div class="container">
@@ -102,7 +73,7 @@
                                                                 <i class="tag"></i>
                                                                 <a href="/productos/detalle/${product.code}">
                                                                     <c:if test="${numImages>0}">
-                                                                        <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 250px; max-height: 200px;"/>
+                                                                        <img src="${product.productImageList[0].image}" alt="${product.name}" style="max-width: 190px; max-height: 200px;"/>
                                                                     </c:if>
                                                                     <c:if test="${numImages==0}">
                                                                         <img src="/img/imagen_no_disponible.png" alt="Imagen no disponible"/>

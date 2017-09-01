@@ -156,7 +156,7 @@ function ShoppingCart() {
         if (index!==-1){
             Instance.updateCartData(cart, index, "remove", true);
             
-            message.showMessage("Quitar del carrito", "Se elimino el producto "+cart.items[index].product.name);
+            message.showMessage("Quitar del carrito", "Se quit&oacute; el producto "+cart.items[index].product.name);
             delete cart.items[index];
             cart.items = cart.items.filter(function(n){
                 return n !== undefined;
@@ -232,7 +232,7 @@ function ShoppingCart() {
         userAuthentication.authenticate(function(data){
             if(data.success){
                 $("#idUserInSession").val(data.user.id);
-                $("#userNameData").html(data.user.username+" - "+data.user.name);
+                $("#userNameData").html(data.user.username+" - "+data.user.firstName+" "+data.user.lastName);
                 $("#userEmail").html(data.user.email);
                 $("#loginUserTable").hide();
                 $("#userInSessionTable").show();

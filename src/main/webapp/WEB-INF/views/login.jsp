@@ -9,11 +9,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Iniciar Sesion - Mercando</title>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/web/usuario/UserAuthentication.js"></script>
-        
-        <script>
-            var userAuthentication = new UserAuthentication();
-        </script>
     </head>
     <body>
         
@@ -29,7 +24,8 @@
                         </c:if>
                     </div>
                 </div>
-                <div id="loginDiv" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div class="loginDiv col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <h3>Iniciar Sesi&oacute;n</h3>
                     <form id="formLogin" action="<c:url value='/account/authenticate'/>" method="post">
                         <div class="box-login">
                             <div class="box-input">
@@ -46,7 +42,8 @@
                         <a class="link-pass" onclick="userAuthentication.changeForm('changePasswordDiv')" href="javascript:void(0);">&iquest;Olvidaste tu clave?</a>
                     </form>
                 </div>
-                <div id="changePasswordDiv" style="display:none;" class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div class="changePasswordDiv col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4" style="display:none;">
+                    <h3>Recuperar Contrase&ntilde;a</h3>
                     <form id="changePasswordForm" action="<%=request.getContextPath()%>/web/usuario/ajax/recuperarContrasena" method="post">
                         <div class="box-login">
                             <div class="box-input">

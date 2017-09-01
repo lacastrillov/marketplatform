@@ -89,13 +89,22 @@ public class ProductController {
     private String getTitle(String filter){
         if(filter!=null){
             JSONObject jsonFilter= new JSONObject(filter);
-            JSONObject eq= jsonFilter.getJSONObject("eq");
-            Integer subCategoryId= eq.getInt("subCategory");
-
-            SubCategory subCategory= subCategoryService.findById(subCategoryId);
-            if(subCategory!=null){
-                return subCategory.getName();
+            if(jsonFilter.has("eq")){
+                JSONObject eq= jsonFilter.getJSONObject("eq");
+                if(eq.has("subCategory")){
+                    Integer subCategoryId= eq.getInt("subCategory");
+                    SubCategory subCategory= subCategoryService.findById(subCategoryId);
+                    if(subCategory!=null){
+                        return subCategory.getName();
+                    }
+                }
+            }else if(jsonFilter.has("lk")){
+                JSONObject lk= jsonFilter.getJSONObject("lk");
+                if(lk.has("name")){
+                    return lk.getString("name");
+                }
             }
+                
         }
         return "Listado de productos";
     }

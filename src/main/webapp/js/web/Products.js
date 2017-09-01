@@ -8,7 +8,6 @@ function Products() {
 
     var Instance = this;
     
-    var util= new Util();
 
     Instance.init = function () {
         $(document).ready(function () {
