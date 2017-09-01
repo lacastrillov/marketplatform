@@ -99,7 +99,7 @@ public class MailingServiceImpl implements MailingService {
             return "";
         }
     }
-
+    
     /**
      * @param mailTo
      * @param text
@@ -108,6 +108,18 @@ public class MailingServiceImpl implements MailingService {
      */
     @Override
     public boolean sendMail(String mailTo, String text, String subject) {
+        return this.sendMail(mailTo, text, subject, null);
+    }
+
+    /**
+     * 
+     * @param mailTo
+     * @param text
+     * @param subject
+     * @param mailTemplate
+     * @return 
+     */
+    private boolean sendMail(String mailTo, String text, String subject, MailTemplate mailTemplate) {
         boolean sent;
         String from = userlabel + " <" + username + ">";
         MimeMultipart multipart = new MimeMultipart("related");
@@ -118,6 +130,9 @@ public class MailingServiceImpl implements MailingService {
         mail.setSendDate(new Date());
         mail.setMessage(text);
         mail.setMailFrom(from);
+        if(mailTemplate!=null){
+            mail.setMailTemplate(mailTemplate);
+        }
         try {
             messageBodyPart.setContent(text, "text/html");
             multipart.addBodyPart(messageBodyPart);
@@ -160,7 +175,7 @@ public class MailingServiceImpl implements MailingService {
                     message= message.replace("%%" + entry.getKey() + "%%" , entry.getValue());
                 }
             }
-            boolean result= sendMail(mail, message, subject);
+            boolean result= sendMail(mail, message, subject, mailTemplate);
             if(result){
                 mailTemplate.setTotalSent(mailTemplate.getTotalSent()+1);
                 mailTemplateService.update(mailTemplate);
@@ -183,7 +198,7 @@ public class MailingServiceImpl implements MailingService {
     public boolean sendVelocityMail(String mail, String velocityFileName, String subject, VelocityContext context, boolean withHeaderAndFooter) {
         context.put("domainUrl", domainUrl);
         String message = processTemplate(velocityFileName, context, withHeaderAndFooter);
-        return sendMail(mail, message, subject);
+        return sendMail(mail, message, subject, null);
     }
     
 }

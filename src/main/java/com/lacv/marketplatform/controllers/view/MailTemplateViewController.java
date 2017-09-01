@@ -43,7 +43,7 @@ public class MailTemplateViewController extends ExtEntityController {
     
     @PostConstruct
     public void init(){
-        EntityConfig view= new EntityConfig("mailTemplate", "alias", mailTemplateService, MailTemplateDto.class);
+        EntityConfig view= new EntityConfig("mailTemplate", "name", mailTemplateService, MailTemplateDto.class);
         view.setSingularEntityTitle("Plantilla de Correo");
         view.setPluralEntityTitle("Plantillas de Correo");
         super.addControlMapping(view);

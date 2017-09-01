@@ -116,7 +116,7 @@ public class UserProcessController extends RestController {
         result.setUsername(contactUserPDto.getMail());
         result.setSuccess(sent);
         if(sent){
-            result.setMessage("Tu mensaje ha sido enviado, pronto nos pondremos en contacto");
+            result.setMessage("Tu mensaje ha sido enviado, pronto nos pondremos en contacto contigo");
         }else{
             result.setMessage("Error al enviar el correo");
         }
