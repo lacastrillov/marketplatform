@@ -252,7 +252,7 @@
       
     <build>
         <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory> 
-        <finalName>marketplatform</finalName>
+        <finalName>ROOT</finalName>
         <resources>
             
             <!-- Para que los resources sean procesados -->
@@ -297,13 +297,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.3</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
@@ -311,7 +311,7 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
@@ -328,11 +328,11 @@
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password>dot54321</jdbc.password>
+                <jdbc.password>calsatrilievlo</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
                 <mail.username>enviocorreodot1@gmail.com</mail.username>
-                <mail.userlabel>Market Platform</mail.userlabel>
+                <mail.userlabel>Habitares</mail.userlabel>
                 <mail.password>dot12345</mail.password>
             </properties>
         </profile>
