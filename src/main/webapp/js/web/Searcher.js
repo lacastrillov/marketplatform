@@ -18,7 +18,7 @@ function Searcher(){
 
     Instance.search = function (query) {
         if(query!==""){
-            location.href='/productos/listado?filter={"lk":{"name":"'+query+'"}}';
+            location.href='/productos/listado?filter='+encodeURIComponent('{"lk":{"name":"'+query+'"}}');
         }
     };
 
