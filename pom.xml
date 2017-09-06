@@ -337,27 +337,6 @@
             </properties>
         </profile>
         <profile>
-            <id>build</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>build</value>
-                </property>
-            </activation>
-            <properties>
-                <domain.url>http://localhost:8880</domain.url>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://173.194.250.95:3306/beacons_test_db?zeroDateTimeBehavior=convertToNull</jdbc.url>
-                <jdbc.username>developerbeacons</jdbc.username>
-                <jdbc.password>DotBeacon321</jdbc.password>
-                <mail.host>smtp.gmail.com</mail.host>
-                <mail.port>587</mail.port>
-                <mail.username>enviocorreodot1@gmail.com</mail.username>
-                <mail.userlabel>Beacon Platform</mail.userlabel>
-                <mail.password>dot12345</mail.password>
-            </properties>
-        </profile>
-        <profile>
             <id>test</id>
             <activation>
                 <property>
