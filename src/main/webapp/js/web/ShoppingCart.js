@@ -25,7 +25,9 @@ function ShoppingCart() {
 
     Instance.init = function () {
         Instance.productSummaryTemplate= null;
+        Instance.simpleProductTemplate= null;
         Instance.generalSummaryTemplate= null;
+        Instance.simpleTotalTemplate= null;
         $(document).ready(function () {
             message= new Message();
             productExtStore= new ProductExtStore();
@@ -182,26 +184,45 @@ function ShoppingCart() {
         $("#numItemsFP").html(cart.items.length+" Item(s)");
         $("#numItemsSC").html(cart.items.length+" Item(s)");
         $("#totalOrderFP").html("$"+validation.priceFormat(cart.total));
-        if(Instance.productSummaryTemplate===null){
-            Instance.productSummaryTemplate= "<tr>"+util.getHtml("productSummaryTemplate")+"</tr>";
-            $("#productSummaryTemplate").remove();
+        var currentPage= document.URL;
+        if(currentPage.indexOf("carrito-de-compras")!==-1){
+            if(Instance.productSummaryTemplate===null){
+                Instance.productSummaryTemplate= "<tr>"+util.getHtml("productSummaryTemplate")+"</tr>";
+                $("#productSummaryTemplate").remove();
+            }
+            if(Instance.generalSummaryTemplate===null){
+                Instance.generalSummaryTemplate= util.getHtml("generalSummaryTemplate");
+            }
+            $("#generalSummaryTemplate").html("");
+            if(Instance.productSummaryTemplate!==null){
+                cart.items.forEach(function(item){
+                    if(item!==null){
+                        var result= util.processTemplate(Instance.productSummaryTemplate, item);
+                        $("#generalSummaryTemplate").append(result);
+                    }
+                });
+            }
+            if(Instance.generalSummaryTemplate!==null){
+                var result= util.processTemplate(Instance.generalSummaryTemplate, cart);
+                $("#generalSummaryTemplate").append(result);
+            }
+        }else{
+            $("#simpleSummary").show();
+            if(Instance.simpleProductTemplate===null){
+                Instance.simpleProductTemplate= "<tr>"+util.getHtml("simpleProductTemplate")+"</tr>";
+                $("#simpleProductTemplate").remove();
+            }
+            $("#currentItems").html("");
+            if(Instance.simpleProductTemplate!==null){
+                cart.items.forEach(function(item){
+                    if(item!==null){
+                        var result= util.processTemplate(Instance.simpleProductTemplate, item);
+                        $("#currentItems").append(result);
+                    }
+                });
+            }
         }
-        if(Instance.generalSummaryTemplate===null){
-            Instance.generalSummaryTemplate= util.getHtml("generalSummaryTemplate");
-        }
-        $("#generalSummaryTemplate").html("");
-        if(Instance.productSummaryTemplate!==null){
-            cart.items.forEach(function(item){
-                if(item!==null){
-                    var result= util.processTemplate(Instance.productSummaryTemplate, item);
-                    $("#generalSummaryTemplate").append(result);
-                }
-            });
-        }
-        if(Instance.generalSummaryTemplate!==null){
-            var result= util.processTemplate(Instance.generalSummaryTemplate, cart);
-            $("#generalSummaryTemplate").append(result);
-        }
+            
     };
     
     Instance.generatePurchaseOrder= function(){

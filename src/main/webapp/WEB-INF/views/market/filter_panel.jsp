@@ -9,6 +9,28 @@
 
 <!-- Sidebar ================================================== -->
 <div id="sidebar" class="span3">
+    
+    <c:import url="/vista/category/component/menu-categories-subcategories"></c:import>
+    
+    <br/>
+    
+    <table id="simpleSummary" class="table table-bordered" style="display:none">
+        <thead>
+            <tr>
+                <th colspan="3">CARRITO DE COMPRAS</th>
+            </tr>
+        </thead>
+        <tbody id="currentItems">
+            <tr id="simpleProductTemplate" style="display:none;">
+                <td>
+                    <a class="btn btn-danger small-close-btn" onclick="shoppingCart.removeFromCart('={product.code}')" href="javascript:void(0)">x</a>
+                    <img src="={productImage}" alt="" width="60">
+                </td>
+                <td>={product.name}<br><span class="badge badge-warning">={quantity}</span></td>
+                <td>={total}</td>
+            </tr>
+        </tbody>
+    </table>
     <div class="well well-small">
         <a id="myCart" href="/tienda/carrito-de-compras">
             <img src="/themes/images/ico-cart.png" alt="cart">
@@ -16,10 +38,7 @@
             <span id="totalOrderFP" class="badge badge-warning pull-right">$0.00</span>
         </a>
     </div>
-
-    <c:import url="/vista/category/component/menu-categories-subcategories"></c:import>
-
-    <br/>
+    
     <!--<div class="thumbnail">
         <img src="/themes/images/products/panasonic.jpg" alt="Bootshop panasonoc New camera"/>
         <div class="caption">

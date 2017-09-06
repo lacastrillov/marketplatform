@@ -14,10 +14,7 @@
             <ul style="display:none">
                 <c:forEach items="${category.subCategoryList}" var="subCategory">
                     <li>
-                        <c:url value="/productos/listado" var="url">
-                            <c:param name="filter" value="{eq:{subCategory:${subCategory.id}}}" />
-                        </c:url>
-                        <a href='${url}'>
+                        <a href='/productos/listado?filter={eq:{subCategory:${subCategory.id}}}'>
                             <i class="icon-chevron-right"></i>
                             ${subCategory.name} (${countProductsBySubcategories[subCategory.id]})
                         </a>

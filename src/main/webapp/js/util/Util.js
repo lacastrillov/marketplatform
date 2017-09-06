@@ -151,10 +151,11 @@ function Util() {
 
     this.importJS = function (jsLib) {
         if (!(jsLib in Instance.jssImported)) {
-            $.holdReady(true);
-            $.getScript(jsLib, function () {
-                $.holdReady(false);
-            });
+            document.write('<script type="text/javascript" src="' + jsLib + '"></script>');
+            //$.holdReady(true);
+            //$.getScript(jsLib, function () {
+            //    $.holdReady(false);
+            //});
             Instance.jssImported[jsLib] = "1";
         }
     };
