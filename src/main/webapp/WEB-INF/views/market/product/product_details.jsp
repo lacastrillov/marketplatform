@@ -20,10 +20,7 @@
                     <div class="span12">
                         <ul class="breadcrumb">
                             <li><a href="/">Inicio</a> <span class="divider">/</span></li>
-                            <c:url value="/productos/listado" var="url">
-                                <c:param name="filter" value="{eq:{subCategory:${product.subCategory.id}}}" />
-                            </c:url>
-                            <li><a href="${url}">${product.subCategory.name}</a> <span class="divider">/</span></li>
+                            <li><a href="/productos/listado?filter=eq:{subCategory:${product.subCategory.id}}}">${product.subCategory.name}</a> <span class="divider">/</span></li>
                             <li class="active">${product.name}</li>
                         </ul>	
                         <div class="row">
