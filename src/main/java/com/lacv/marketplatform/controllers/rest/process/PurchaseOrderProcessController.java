@@ -7,7 +7,7 @@ package com.lacv.marketplatform.controllers.rest.process;
 
 import com.dot.gcpbasedot.annotation.DoProcess;
 import com.dot.gcpbasedot.controller.RestController;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.process.BasicResultDto;
 import com.lacv.marketplatform.dtos.process.ShoppingCartPDto;
 import com.lacv.marketplatform.entities.LogProcess;

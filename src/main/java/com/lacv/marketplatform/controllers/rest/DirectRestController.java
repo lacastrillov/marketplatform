@@ -9,7 +9,7 @@ package com.lacv.marketplatform.controllers.rest;
 
 import com.dot.gcpbasedot.controller.RestDirectController;
 import com.dot.gcpbasedot.service.JdbcDirectService;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
 import java.io.InputStream;
@@ -33,6 +33,9 @@ public class DirectRestController extends RestDirectController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     private WebFile getParentWebFile(String tableName){
         String folder= tableName.replaceFirst("lt_", "");
@@ -53,7 +56,7 @@ public class DirectRestController extends RestDirectController {
             Map<String,Object> entity = jdbcDirectService.findUniqueByParameter(tableName, "id", idEntity);
             WebFile parentWebFile= getParentWebFile(tableName);
             
-            entity.put(fieldName, WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + newFileName);
+            entity.put(fieldName, webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + newFileName);
             jdbcDirectService.updateByParameter(tableName, entity, "id", idEntity);
             
             webFileService.createByFileData(parentWebFile, 0, newFileName, fileType, fileSize, is);

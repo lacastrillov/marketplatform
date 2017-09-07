@@ -17,7 +17,7 @@ import com.dot.gcpbasedot.service.EntityServiceImpl1;
 import com.dot.gcpbasedot.util.FileService;
 import com.dot.gcpbasedot.util.Util;
 import com.google.api.services.storage.model.StorageObject;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -40,6 +40,10 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
     
     @Autowired
     public WebFileMapper webFileMapper;
+    
+    @Autowired
+    WebConstants webConstants;
+    
     
     @Override
     public GenericDao getGenericDao(){
@@ -88,7 +92,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         WebFile webFile= new WebFile();
         webFile.setWebFile(parentWebFile);
         String path= webFile.getPath();
-        String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+        String location= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
 
         if(slice==0){
             webFile.setName(fileName);
@@ -139,7 +143,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         super.create(webFile);
         
         String path= webFile.getPath();
-        String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+        String location= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
         FileService.createFolder(location + webFile.getName());
         
         return webFile;
@@ -160,7 +164,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
         super.create(webFile);
         
         String path= webFile.getPath();
-        String location= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+        String location= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
         FileService.createFile(location + webFile.getName());
         
         return webFile;

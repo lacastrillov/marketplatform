@@ -3,22 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.lacv.marketplatform.constants;
+package com.lacv.marketplatform.components;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author desarrollador
  */
-public interface WebConstants {
+@Component
+public class WebConstants {
     
-    public static final String REMOTE_DOMAIN= "https://storage.googleapis.com/";
+    @Autowired
+    @Value("${static.domain.url}")
+    public String LOCAL_DOMAIN;
     
-    public static final String LOCAL_DOMAIN= "http://localhost/";
-    public static final String LOCAL_DIR= "/var/www/html/";
+    @Autowired
+    @Value("${static.folder}")
+    public String LOCAL_DIR;
     
     public static final String ROOT_FOLDER= "recursos/";
 
     public static final String SECURITY_SEED_PASSW = "=12GJHG#$%467ryf";
+    
     public static final String SECURITY_SALT = "38684329";
     
     public static final String CLIENT_ROLE= "Cliente";

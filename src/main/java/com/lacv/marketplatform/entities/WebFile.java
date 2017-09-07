@@ -5,7 +5,7 @@
  */
 package com.lacv.marketplatform.entities;
 
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import java.util.Date;
 import java.util.List;
@@ -174,7 +174,7 @@ public class WebFile implements BaseEntity {
     }
     
     public String getLocation() {
-        return WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + getPath() + getName();
+        return "/" + WebConstants.ROOT_FOLDER + getPath() + getName();
     }
     
     public String getPath(){

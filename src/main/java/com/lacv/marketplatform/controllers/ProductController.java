@@ -8,6 +8,7 @@ import com.lacv.marketplatform.services.ProductImageService;
 import com.lacv.marketplatform.services.ProductService;
 import com.lacv.marketplatform.services.SubCategoryService;
 import com.lacv.marketplatform.services.security.SecurityService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -84,13 +85,28 @@ public class ProductController {
         Parameters p2= new Parameters();
         p2.whereEqual("subCategory", product.getSubCategory());
         p2.whereEqual("status", "Publicado");
+        p2.whereDifferentThan("id", product.getId());
         p2.orderBy("registerDate", "DESC");
         p2.setMaxResults(8L);
         
         List<Product> relatedProducts= productService.findByParameters(p2);
         
         if(relatedProducts.size()<8){
+            p2.getEqualParameters().remove("subCategory");
+            p2.whereEqual("category", product.getCategory());
+            if(relatedProducts.size()>0){
+                List<Integer> listIds= new ArrayList<>();
+                for(Product rProduct: relatedProducts){
+                    listIds.add(rProduct.getId());
+                }
+                p2.whereNotIn("id", listIds.toArray());
+            }
+            p2.setMaxResults(8L-relatedProducts.size());
             
+            List<Product> complementsProducts= productService.findByParameters(p2);
+            for(Product cProduct: complementsProducts){
+                relatedProducts.add(cProduct);
+            }
         }
         
         mav.addObject("product", product);
