@@ -81,7 +81,20 @@ public class ProductController {
         p1.orderBy("order", "ASC");
         product.setProductImageList(productImageService.findByParameters(p1));
         
+        Parameters p2= new Parameters();
+        p2.whereEqual("subCategory", product.getSubCategory());
+        p2.whereEqual("status", "Publicado");
+        p2.orderBy("registerDate", "DESC");
+        p2.setMaxResults(8L);
+        
+        List<Product> relatedProducts= productService.findByParameters(p2);
+        
+        if(relatedProducts.size()<8){
+            
+        }
+        
         mav.addObject("product", product);
+        mav.addObject("relatedProducts", relatedProducts);
         
         return mav;
     }
