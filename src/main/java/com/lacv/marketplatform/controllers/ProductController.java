@@ -108,6 +108,14 @@ public class ProductController {
                 relatedProducts.add(cProduct);
             }
         }
+        if(relatedProducts.size()>0){
+            for(Product rProduct: relatedProducts){
+                Parameters p3= new Parameters();
+                p3.whereEqual("product", rProduct);
+                p3.orderBy("order", "ASC");
+                rProduct.setProductImageList(productImageService.findByParameters(p3));
+            }
+        }
         
         mav.addObject("product", product);
         mav.addObject("relatedProducts", relatedProducts);
