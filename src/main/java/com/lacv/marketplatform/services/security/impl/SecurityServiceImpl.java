@@ -6,7 +6,7 @@
 package com.lacv.marketplatform.services.security.impl;
 
 import com.dot.gcpbasedot.dto.MenuItem;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.security.UserDetailsDto;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.entities.UserRole;

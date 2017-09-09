@@ -5,7 +5,7 @@
  */
 package com.lacv.marketplatform.entities;
 
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.ContextLoader;
 
 /**
  *
@@ -174,7 +176,9 @@ public class WebFile implements BaseEntity {
     }
     
     public String getLocation() {
-        return WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + getPath() + getName();
+        ApplicationContext ctx = ContextLoader.getCurrentWebApplicationContext();
+        WebConstants webConstants= (WebConstants) ctx.getBean("webConstants");
+        return webConstants.LOCAL_DOMAIN + "/" + WebConstants.ROOT_FOLDER + getPath() + getName();
     }
     
     public String getPath(){

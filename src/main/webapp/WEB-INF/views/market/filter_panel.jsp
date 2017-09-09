@@ -23,10 +23,12 @@
         <tbody id="currentItems">
             <tr id="simpleProductTemplate" style="display:none;">
                 <td>
-                    <a class="btn btn-danger small-close-btn" onclick="shoppingCart.removeFromCart('={product.code}')" href="javascript:void(0)">x</a>
+                    <a class="btn btn-danger small-close-btn" onclick="shoppingCart.removeFromCart('={product.code}')" href="javascript:void(0)">
+                        <i class="icon-remove icon-white"></i>
+                    </a>
                     <img src="={productImage}" alt="" width="60">
                 </td>
-                <td>={product.name}<br><span class="badge badge-warning">={quantity}</span></td>
+                <td><a href="/productos/detalle/={product.code}">={product.name}</a><br><span class="badge badge-inverse">={quantity}</span></td>
                 <td>={total}</td>
             </tr>
         </tbody>

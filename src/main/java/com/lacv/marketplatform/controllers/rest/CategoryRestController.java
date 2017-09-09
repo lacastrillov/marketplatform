@@ -10,7 +10,7 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.CategoryMapper;
 import com.lacv.marketplatform.services.CategoryService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
@@ -37,6 +37,9 @@ public class CategoryRestController extends RestController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     @PostConstruct
     public void init(){
@@ -51,7 +54,7 @@ public class CategoryRestController extends RestController {
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
             Category category = categoryService.findById(idParent);
-            category.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            category.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             categoryService.update(category);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);

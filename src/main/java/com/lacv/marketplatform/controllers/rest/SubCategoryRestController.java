@@ -11,7 +11,7 @@ import com.dot.gcpbasedot.controller.RestController;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.mappers.SubCategoryMapper;
 import com.lacv.marketplatform.services.SubCategoryService;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
 import java.io.InputStream;
@@ -37,6 +37,9 @@ public class SubCategoryRestController extends RestController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     @PostConstruct
     public void init(){
@@ -51,7 +54,7 @@ public class SubCategoryRestController extends RestController {
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
             SubCategory subCategory = subCategoryService.findById(idEntity);
-            subCategory.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            subCategory.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             subCategoryService.update(subCategory);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);

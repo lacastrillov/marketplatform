@@ -324,7 +324,9 @@
                 </property>
             </activation>
             <properties>
-                <domain.url>http://localhost:8084</domain.url>
+                <domain.url>http://localhost:8081</domain.url>
+                <static.domain.url>http://localhost:8081</static.domain.url>
+                <static.folder>/opt/apache-tomcat-8.5.20/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
@@ -345,19 +347,20 @@
                 </property>
             </activation>
             <properties>
-                <domain.url>http://localhost:8880</domain.url>
+                <domain.url>http://186.83.137.240:8081/</domain.url>
+                <static.domain.url>http://186.83.137.240:8081/</static.domain.url>
+                <static.folder>/opt/apache-tomcat-8.5.20-as-habitares/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://173.194.250.95:3306/beacons_test_db?zeroDateTimeBehavior=convertToNull</jdbc.url>
-                <jdbc.username>developerbeacons</jdbc.username>
-                <jdbc.password>DotBeacon321</jdbc.password>
+                <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>calsatrilievlo</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
                 <mail.username>enviocorreodot1@gmail.com</mail.username>
-                <mail.userlabel>Beacon Platform</mail.userlabel>
+                <mail.userlabel>Habitares</mail.userlabel>
                 <mail.password>dot12345</mail.password>
             </properties>
         </profile>
-        
         <profile>
             <id>prod</id>
             <activation>
@@ -367,15 +370,17 @@
                 </property>
             </activation>
             <properties>
-                <domain.url>https://beacons-platform-dev.appspot.com</domain.url>
-                <jdbc.driverClassName>com.mysql.jdbc.GoogleDriver</jdbc.driverClassName>
-                <jdbc.url>jdbc:google:mysql://beacons-platform-dev:beacons-sql-instance-pg/beacons_test_db</jdbc.url>
+                <domain.url>http://www.habitares.tk</domain.url>
+                <static.domain.url>http://www.habitares.tk</static.domain.url>
+                <static.folder>/opt/apache-tomcat-8.5.20-as-habitares/webapps/</static.folder>
+                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+                <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password>DotBeacon321</jdbc.password>
+                <jdbc.password>calsatrilievlo</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
                 <mail.username>enviocorreodot1@gmail.com</mail.username>
-                <mail.userlabel>Beacon Platform</mail.userlabel>
+                <mail.userlabel>Habitares</mail.userlabel>
                 <mail.password>dot12345</mail.password>
             </properties>
         </profile>

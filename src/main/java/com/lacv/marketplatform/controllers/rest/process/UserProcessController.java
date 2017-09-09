@@ -17,7 +17,7 @@ import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.annotation.DoProcess;
 import com.dot.gcpbasedot.controller.RestController;
 import com.dot.gcpbasedot.util.AESEncrypt;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
 import com.lacv.marketplatform.dtos.process.RegisterUserPDto;
 import com.lacv.marketplatform.entities.Role;

@@ -11,7 +11,7 @@ import com.dot.gcpbasedot.controller.RestController;
 import com.lacv.marketplatform.entities.Commerce;
 import com.lacv.marketplatform.mappers.CommerceMapper;
 import com.lacv.marketplatform.services.CommerceService;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
 import java.io.InputStream;
@@ -37,6 +37,9 @@ public class CommerceRestController extends RestController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     @PostConstruct
     public void init(){
@@ -51,7 +54,7 @@ public class CommerceRestController extends RestController {
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
             Commerce commerce = commerceService.findById(idEntity);
-            commerce.setCommerceImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            commerce.setCommerceImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             commerceService.update(commerce);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);

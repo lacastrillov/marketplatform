@@ -5,7 +5,7 @@
  */
 package com.lacv.marketplatform.controllers.rest;
 
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.mappers.WebFileMapper;
 import com.lacv.marketplatform.services.WebFileService;
@@ -45,6 +45,9 @@ public class WebFileRestController extends RestController {
 
     @Autowired
     WebFileMapper webFileMapper;
+    
+    @Autowired
+    WebConstants webConstants;
     
 
     @PostConstruct
@@ -89,7 +92,7 @@ public class WebFileRestController extends RestController {
         if (jsonObject.has("id") && jsonObject.has("name")) {
             WebFile webFile = webFileService.findById(jsonObject.getLong("id"));
             if (!webFile.getName().equals(jsonObject.getString("name"))) {
-                String location = WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + webFile.getPath();
+                String location = webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + webFile.getPath();
                 FileService.renameFile(location + webFile.getName(), location + jsonObject.getString("name"));
             }
         }
@@ -106,12 +109,12 @@ public class WebFileRestController extends RestController {
         try{
             Long destWebFileId= jsonObject.getJSONObject("uv").getLong("webFile");
             WebFile destWebFile= webFileService.findById(destWebFileId);
-            String destLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + ((destWebFile!=null)?destWebFile.getPath():"");
+            String destLocation= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + ((destWebFile!=null)?destWebFile.getPath():"");
             
             JSONArray fileIdToMove= jsonObject.getJSONObject("in").getJSONArray("id");
             for(int i=0; i<fileIdToMove.length(); i++){
                 WebFile sourceWebFile= webFileService.findById(fileIdToMove.getLong(i));
-                String sourceLocation= WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + sourceWebFile.getPath();
+                String sourceLocation= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + sourceWebFile.getPath();
                 File sourceFile= new File(sourceLocation + sourceWebFile.getName());
                 File destFile= new File(destLocation + ((destWebFile!=null)?destWebFile.getName():""));
                 
@@ -137,7 +140,7 @@ public class WebFileRestController extends RestController {
                 JSONObject webFile = webFiles.getJSONObject(i);
                 String path = (webFile.has("path")) ? webFile.getString("path") : "";
                 LOGGER.info("path: " + path);
-                String location = WebConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
+                String location = webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + path;
 
                 FileService.deleteFile(location + webFile.getString("name"));
             }

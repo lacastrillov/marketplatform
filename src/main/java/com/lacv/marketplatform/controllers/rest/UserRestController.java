@@ -12,7 +12,7 @@ import com.dot.gcpbasedot.domain.BaseEntity;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.mappers.UserMapper;
 import com.lacv.marketplatform.services.UserService;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.UserDto;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.services.WebFileService;
@@ -44,6 +44,9 @@ public class UserRestController extends RestSessionController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     @PostConstruct
     public void init(){
@@ -59,7 +62,7 @@ public class UserRestController extends RestSessionController {
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
             User user = userService.findById(idParent);
-            user.setUrlPhoto(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
+            user.setUrlPhoto(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             userService.update(user);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);

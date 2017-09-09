@@ -10,7 +10,7 @@ package com.lacv.marketplatform.controllers.rest;
 import com.lacv.marketplatform.mappers.ProductImageMapper;
 import com.lacv.marketplatform.services.ProductImageService;
 import com.dot.gcpbasedot.controller.RestController;
-import com.lacv.marketplatform.constants.WebConstants;
+import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.ProductImageDto;
 import com.lacv.marketplatform.entities.ProductImage;
 import com.lacv.marketplatform.entities.WebFile;
@@ -39,6 +39,9 @@ public class ProductImageRestController extends RestController {
     @Autowired
     WebFileService webFileService;
     
+    @Autowired
+    WebConstants webConstants;
+    
     
     @PostConstruct
     public void init(){
@@ -64,7 +67,7 @@ public class ProductImageRestController extends RestController {
             ProductImage productImage = productImageService.findById(idEntity);
             WebFile parentWebFile= getParentWebFile(productImage.getProduct().getId());
             
-            productImage.setImage(WebConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + imageName);
+            productImage.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + imageName);
             productImageService.update(productImage);
             
             webFileService.createByFileData(parentWebFile, slice, imageName, fileType, fileSize, is);
