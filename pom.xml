@@ -326,7 +326,7 @@
             <properties>
                 <domain.url>http://localhost:8081</domain.url>
                 <static.domain.url>http://localhost:8081</static.domain.url>
-                <static.folder>/opt/apache-tomcat-8.5.20/webapps/</static.folder>
+                <static.folder>/opt/apache-tomcat-8.5.20-as-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
@@ -349,7 +349,7 @@
             <properties>
                 <domain.url>http://186.83.137.240:8081</domain.url>
                 <static.domain.url>http://186.83.137.240:8081</static.domain.url>
-                <static.folder>/opt/apache-tomcat-8.5.20-as-habitares/webapps/</static.folder>
+                <static.folder>/opt/apache-tomcat-8.5.20-as-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>
@@ -370,9 +370,9 @@
                 </property>
             </activation>
             <properties>
-                <domain.url>http://www.habitares.tk</domain.url>
-                <static.domain.url>http://www.habitares.tk</static.domain.url>
-                <static.folder>/opt/apache-tomcat-8.5.20-as-habitares/webapps/</static.folder>
+                <domain.url>http://www.mercando.tk</domain.url>
+                <static.domain.url>http://www.mercando.tk</static.domain.url>
+                <static.folder>/opt/apache-tomcat-8.5.20-as-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
                 <jdbc.username>root</jdbc.username>

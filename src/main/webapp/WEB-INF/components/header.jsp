@@ -25,7 +25,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div>
-                    <a class="brand" href="/"><img src="/themes/images/logo.jpg" style="height: 40px;" alt="Bootsshop"/></a>
+                    <a class="brand" href="/"><img src="/themes/images/logo.png" style="height: 40px;" alt="Bootsshop"/></a>
                     <div class="span5">
                         <form class="form-inline form-search" method="post" action="products.html" >
                             <input id="searchQuery" class="search-query" placeholder="Buscar" type="text" />

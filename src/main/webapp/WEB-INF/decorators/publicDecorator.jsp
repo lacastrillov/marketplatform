@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><sitemesh:write property='title'>Habitares</sitemesh:write> - Habitares</title>
+        <title><sitemesh:write property='title'>Mercando</sitemesh:write> - Mercando</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -26,7 +26,7 @@
         <script src="/themes/js/less.js" type="text/javascript"></script> -->
 
         <!-- Bootstrap style --> 
-        <link id="callCss" rel="stylesheet" href="/themes/united/bootstrap.min.css" media="screen"/>
+        <link id="callCss" rel="stylesheet" href="/themes/bootshop/bootstrap.min.css" media="screen"/>
         <link href="/themes/css/base.css" rel="stylesheet" media="screen"/>
         <!-- Bootstrap style responsive -->	
         <link href="/themes/css/bootstrap-responsive.min.css" rel="stylesheet"/>
