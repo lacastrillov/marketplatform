@@ -100,6 +100,7 @@ function Util() {
             "⟩": "&rang;", "◊": "&loz;", "♠": "&spades;",
             "♣": "&clubs;", "♥": "&hearts;", "♦": "&diams;"
         };
+        Instance.configReplaceAll();
     };
     
     Instance.getIndex= function(name){
@@ -217,6 +218,13 @@ function Util() {
             textoFinal = textoFinal.replace(origen, remplazo);
         }
         return textoFinal;
+    };
+    
+    this.configReplaceAll= function(){
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
     };
     
     this.checkAll= function(checked){

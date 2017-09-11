@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,14 +56,14 @@ public class ProductController {
         p.orderBy("orderLevel", "ASC");
         
         List<Product> products = productService.findByParameters(p);
-        for(Product product: products){
+        products.forEach((product) -> {
             Parameters p1= new Parameters();
             p1.whereEqual("product", product);
             p1.orderBy("order", "ASC");
             product.setProductImageList(productImageService.findByParameters(p1));
-        }
+        });
         
-        mav.addObject("title", getTitle(filter));
+        mav.addObject("title", getTitle(p));
         mav.addObject("queryString", request.getQueryString());
         mav.addObject("parameters", p);
         mav.addObject("products", products);
@@ -96,25 +95,25 @@ public class ProductController {
             p2.whereEqual("category", product.getCategory());
             if(relatedProducts.size()>0){
                 List<Integer> listIds= new ArrayList<>();
-                for(Product rProduct: relatedProducts){
+                relatedProducts.forEach((rProduct) -> {
                     listIds.add(rProduct.getId());
-                }
+                });
                 p2.whereNotIn("id", listIds.toArray());
             }
             p2.setMaxResults(8L-relatedProducts.size());
             
             List<Product> complementsProducts= productService.findByParameters(p2);
-            for(Product cProduct: complementsProducts){
+            complementsProducts.forEach((cProduct) -> {
                 relatedProducts.add(cProduct);
-            }
+            });
         }
         if(relatedProducts.size()>0){
-            for(Product rProduct: relatedProducts){
+            relatedProducts.forEach((rProduct) -> {
                 Parameters p3= new Parameters();
                 p3.whereEqual("product", rProduct);
                 p3.orderBy("order", "ASC");
                 rProduct.setProductImageList(productImageService.findByParameters(p3));
-            }
+            });
         }
         
         mav.addObject("product", product);
@@ -123,25 +122,19 @@ public class ProductController {
         return mav;
     }
     
-    private String getTitle(String filter){
-        if(filter!=null){
-            JSONObject jsonFilter= new JSONObject(filter);
-            if(jsonFilter.has("eq")){
-                JSONObject eq= jsonFilter.getJSONObject("eq");
-                if(eq.has("subCategory")){
-                    Integer subCategoryId= eq.getInt("subCategory");
-                    SubCategory subCategory= subCategoryService.findById(subCategoryId);
-                    if(subCategory!=null){
-                        return subCategory.getName();
-                    }
-                }
-            }else if(jsonFilter.has("lk")){
-                JSONObject lk= jsonFilter.getJSONObject("lk");
-                if(lk.has("name")){
-                    return lk.getString("name");
+    private String getTitle(Parameters p){
+        if(p.getEqualParameters().size()>0){
+            if(p.getEqualParameters().containsKey("subCategory")){
+                Integer subCategoryId= ((SubCategory)p.getEqualParameters().get("subCategory")[1]).getId();
+                SubCategory subCategory= subCategoryService.findById(subCategoryId);
+                if(subCategory!=null){
+                    return subCategory.getName();
                 }
             }
-                
+        }else if(p.getLikeParameters().size()>0){
+            if(p.getLikeParameters().containsKey("name")){
+                return p.getLikeParameters().get("name");
+            }
         }
         return "Listado de productos";
     }
