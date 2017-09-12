@@ -51,6 +51,9 @@ public class PurchaseOrder implements BaseEntity {
     private Date registrationDate;
     @Column(name = "record_time")
     private Time recordTime;
+    @Column(name = "delivery_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deliveryDate;
     @Column(name = "sub_total")
     private Integer subTotal;
     @Column(name = "discount")
@@ -114,6 +117,14 @@ public class PurchaseOrder implements BaseEntity {
 
     public void setRecordTime(Time recordTime) {
         this.recordTime = recordTime;
+    }
+    
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public Integer getSubTotal() {
