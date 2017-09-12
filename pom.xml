@@ -325,7 +325,7 @@
             </activation>
             <properties>
                 <domain.url>http://localhost:8084</domain.url>
-                <static.domain.url>http://localhost:8084</static.domain.url>
+                <static.domain.url>http://localhost:8084/</static.domain.url>
                 <static.folder>/opt/apache-tomcat-9.0.0.M26-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?useSSL=false</jdbc.url>
@@ -348,7 +348,7 @@
             </activation>
             <properties>
                 <domain.url>http://186.83.137.240:8084</domain.url>
-                <static.domain.url>http://186.83.137.240:8084</static.domain.url>
+                <static.domain.url>http://186.83.137.240:8084/</static.domain.url>
                 <static.folder>/opt/apache-tomcat-9.0.0.M26-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?useSSL=false</jdbc.url>
@@ -371,10 +371,10 @@
             </activation>
             <properties>
                 <domain.url>http://www.mercando.tk</domain.url>
-                <static.domain.url>http://www.mercando.tk</static.domain.url>
+                <static.domain.url>http://www.mercando.tk/</static.domain.url>
                 <static.folder>/opt/apache-tomcat-9.0.0.M26-mercando/webapps/</static.folder>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?zeroDateTimeBehavior=convertToNull</jdbc.url>
+                <jdbc.url>jdbc:mysql://localhost:3306/marketplatform?useSSL=false</jdbc.url>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>calsatrilievlo</jdbc.password>
                 <mail.host>smtp.gmail.com</mail.host>

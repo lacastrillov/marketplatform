@@ -178,7 +178,7 @@ public class WebFile implements BaseEntity {
     public String getLocation() {
         ApplicationContext ctx = ContextLoader.getCurrentWebApplicationContext();
         WebConstants webConstants= (WebConstants) ctx.getBean("webConstants");
-        return webConstants.LOCAL_DOMAIN + "/" + WebConstants.ROOT_FOLDER + getPath() + getName();
+        return webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + getPath() + getName();
     }
     
     public String getPath(){
