@@ -66,7 +66,7 @@ public class CustomSecurityFilter extends GenericFilterBean {
         resp.setHeader("x-frame-options", "allow");
         try {
             String requestURI= req.getRequestURI();
-            logger.info("CustomSecurityFilter INGRESA :"+requestURI);
+            logger.info("CustomSecurityFilter IN: "+requestURI);
             
             if(req.getHeader("Authorization")!=null){
                 connectUserByBasicAuthentication(req);
@@ -83,7 +83,7 @@ public class CustomSecurityFilter extends GenericFilterBean {
             }else{
                 accessDenied(req, resp);
             }
-            logger.info("CustomSecurityFilter FIN ");
+            logger.info("CustomSecurityFilter END ");
         } catch (Exception ex) {
             logger.error("CustomSecurityFilter ex ", ex);
             

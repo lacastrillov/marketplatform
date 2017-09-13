@@ -25,8 +25,8 @@
         <appengine.app.version>marketplatform-version-01</appengine.app.version>
         <appengine.target.version>1.9.38</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.3.7.RELEASE</org.springframework.version>
-        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <org.springframework.version>4.3.11.RELEASE</org.springframework.version>
+        <spring.security.version>4.2.3.RELEASE</spring.security.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <sitemesh.version>3.0.1</sitemesh.version>
@@ -34,19 +34,13 @@
     
 
     <dependencies>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.6</version>
-        </dependency>
-
         <!-- Compile/runtime dependencies -->
         <dependency>
-            <groupId>com.dot.appengine</groupId>
-            <artifactId>gcpbasedot</artifactId>
-            <version>1.0</version>
+            <groupId>com.lacv</groupId>
+            <artifactId>jmagrexs</artifactId>
+            <version>1.0.1</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
@@ -56,30 +50,17 @@
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>javax.servlet.jsp.jstl-api</artifactId>
             <version>1.2.1</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>javax.servlet.jsp.jstl</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.5-b03</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-        <!-- Test Dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.1.7.RELEASE</version>
-        </dependency>
-        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
