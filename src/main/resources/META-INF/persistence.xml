@@ -30,6 +30,7 @@
     <class>com.lacv.marketplatform.entities.LeadTable</class>
     <class>com.lacv.marketplatform.entities.Column</class>
     <class>com.lacv.marketplatform.entities.TableColumn</class>
+    <class>com.lacv.marketplatform.entities.JsonObject</class>
     <properties>
       <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="wildfly.jpa.default-unit" value="true"/>
