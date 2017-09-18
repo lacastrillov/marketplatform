@@ -15,7 +15,7 @@ import com.lacv.marketplatform.services.LogProcessService;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.annotation.DoProcess;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestProcessController;
 import com.dot.gcpbasedot.util.AESEncrypt;
 import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.process.ContactUserPDto;
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/processUser")
-public class UserProcessController extends RestController {
+public class UserProcessController extends RestProcessController {
     
     @Autowired
     UserService userService;

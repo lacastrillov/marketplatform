@@ -11,7 +11,7 @@ import com.lacv.marketplatform.entities.LogProcess;
 import com.lacv.marketplatform.entities.User;
 import com.lacv.marketplatform.services.LogProcessService;
 import com.lacv.marketplatform.services.security.SecurityService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestProcessController;
 import com.dot.gcpbasedot.dto.ExternalServiceDto;
 import com.lacv.marketplatform.dtos.process.BasicPDto;
 import com.lacv.marketplatform.dtos.process.NetworkPDto;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/externalService")
-public class ExternalServiceProcessController extends RestController {
+public class ExternalServiceProcessController extends RestProcessController {
     
     @Autowired
     LogProcessService logProcessService;

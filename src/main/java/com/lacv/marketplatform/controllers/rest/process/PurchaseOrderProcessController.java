@@ -6,7 +6,7 @@
 package com.lacv.marketplatform.controllers.rest.process;
 
 import com.dot.gcpbasedot.annotation.DoProcess;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestProcessController;
 import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.dtos.process.BasicResultDto;
 import com.lacv.marketplatform.dtos.process.ShoppingCartPDto;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/processPurchaseOrder")
-public class PurchaseOrderProcessController extends RestController  {
+public class PurchaseOrderProcessController extends RestProcessController  {
     
     @Autowired
     PurchaseOrderService purchaseOrderService;

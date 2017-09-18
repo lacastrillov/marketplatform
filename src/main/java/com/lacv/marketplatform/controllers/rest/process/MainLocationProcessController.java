@@ -14,7 +14,7 @@ import com.lacv.marketplatform.dtos.process.UsuarioPDto;
 import com.lacv.marketplatform.entities.LogProcess;
 import com.lacv.marketplatform.services.LogProcessService;
 import com.dot.gcpbasedot.annotation.DoProcess;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestProcessController;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/processMainLocation")
-public class MainLocationProcessController extends RestController {
+public class MainLocationProcessController extends RestProcessController {
     
     @Autowired
     LogProcessService logProcessService;

@@ -61,9 +61,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
             Parameters p1= new Parameters();
             p1.whereIsNull("webFile");
             p1.whereEqual("name", folders[0]);
-            try {
-                parentWebFile= super.findUniqueByParameters(p1);
-            } catch (Exception ex) {}
+            parentWebFile= super.findUniqueByParameters(p1);
             webFile= parentWebFile;
                 
             for(int i=1; i<folders.length; i++){
@@ -71,11 +69,7 @@ public class WebFileServiceImpl extends EntityServiceImpl1<WebFile> implements W
                     Parameters p2= new Parameters();
                     p2.whereEqual("webFile", parentWebFile);
                     p2.whereEqual("name", folders[i]);
-                    try {
-                        parentWebFile= super.findUniqueByParameters(p2);
-                    } catch (Exception ex) {
-                        parentWebFile= null;
-                    }
+                    parentWebFile= super.findUniqueByParameters(p2);
                     if(parentWebFile!=null){
                         webFile= parentWebFile;
                     }

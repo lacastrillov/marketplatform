@@ -39,9 +39,9 @@ public class HomeController {
         p0.setMaxResults(12L);
         
         List<Product> lastFeatured = productService.findByParameters(p0);
-        for(Product product: lastFeatured){
+        lastFeatured.forEach((product) -> {
             product.setProductImageList(productImageService.findByParameter("product", product));
-        }
+        });
         
         Parameters p1= new Parameters();
         p1.whereEqual("status", "Publicado");
@@ -49,9 +49,9 @@ public class HomeController {
         p1.setMaxResults(6L);
         
         List<Product> lastProducts = productService.findByParameters(p1);
-        for(Product product: lastProducts){
+        lastProducts.forEach((product) -> {
             product.setProductImageList(productImageService.findByParameter("product", product));
-        }
+        });
         
         mav.addObject("parametersFeatured", p0);
         mav.addObject("lastFeatured", lastFeatured);

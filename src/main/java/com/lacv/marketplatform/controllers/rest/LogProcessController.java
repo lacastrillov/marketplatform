@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.lacv.marketplatform.controllers.rest.process;
+package com.lacv.marketplatform.controllers.rest;
 
 
 import com.lacv.marketplatform.mappers.LogProcessMapper;

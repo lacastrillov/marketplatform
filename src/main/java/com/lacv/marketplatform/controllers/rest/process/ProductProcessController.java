@@ -14,7 +14,7 @@ import com.lacv.marketplatform.services.LogProcessService;
 import com.lacv.marketplatform.services.UserService;
 import com.lacv.marketplatform.services.security.SecurityService;
 import com.dot.gcpbasedot.annotation.DoProcess;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestProcessController;
 import com.lacv.marketplatform.dtos.process.ActivationProductPDto;
 import com.lacv.marketplatform.services.mail.MailingService;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/processProduct")
-public class ProductProcessController extends RestController {
+public class ProductProcessController extends RestProcessController {
     
     @Autowired
     UserService userService;
