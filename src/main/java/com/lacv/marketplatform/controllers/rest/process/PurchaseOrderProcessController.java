@@ -73,7 +73,7 @@ public class PurchaseOrderProcessController extends RestProcessController  {
         if(isClient || shoppingCartPDto.getUserId()==null){
             buyerUser= user;
         }else if(shoppingCartPDto.getUserId()!=null){
-            buyerUser= userService.findById(shoppingCartPDto.getUserId());
+            buyerUser= userService.loadById(shoppingCartPDto.getUserId());
         }
         
         Long number= purchaseOrderService.generatePurchaseOrder(shoppingCartPDto, buyerUser);

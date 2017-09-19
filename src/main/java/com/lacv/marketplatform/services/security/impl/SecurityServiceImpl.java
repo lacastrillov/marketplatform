@@ -204,7 +204,7 @@ public class SecurityServiceImpl implements AuthenticationProvider, SecurityServ
     }
 
     private User getUser(String username) {
-        User user = userService.findUniqueByParameter("username", username);
+        User user = userService.loadByParameter("username", username);
 
         return user;
     }

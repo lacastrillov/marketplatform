@@ -40,7 +40,7 @@ public class PropertyServiceImpl extends EntityServiceImpl1<Property> implements
     
     @Override
     public String getString(String propertyName){
-        Property property= super.findUniqueByParameter("key", propertyName);
+        Property property= super.loadByParameter("key", propertyName);
         if(property!=null && property.getStatus().equals("Activa")){
             return property.getValue();
         }else{

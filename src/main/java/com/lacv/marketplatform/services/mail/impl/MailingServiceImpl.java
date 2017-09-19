@@ -166,7 +166,7 @@ public class MailingServiceImpl implements MailingService {
      */
     @Override
     public boolean sendTemplateMail(String mail, String alias, String subject, Map<String,String> data) {
-        MailTemplate mailTemplate= mailTemplateService.findUniqueByParameter("alias", alias);
+        MailTemplate mailTemplate= mailTemplateService.loadByParameter("alias", alias);
         data.put("domainUrl", domainUrl);
         if(mailTemplate!=null && mailTemplate.getStatus().equals("Active")){
             String message = mailTemplate.getContent();

@@ -53,7 +53,7 @@ public class DirectRestController extends RestDirectController {
     public String saveFilePart(String tableName, String fieldName, String fileName, String fileType, int fileSize, InputStream is, Integer idEntity) {
         try {
             String newFileName= idEntity + "_" +fieldName+"."+FilenameUtils.getExtension(fileName);
-            Map<String,Object> entity = jdbcDirectService.findUniqueByParameter(tableName, "id", idEntity);
+            Map<String,Object> entity = jdbcDirectService.loadByParameter(tableName, "id", idEntity);
             WebFile parentWebFile= getParentWebFile(tableName);
             
             entity.put(fieldName, webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + newFileName);

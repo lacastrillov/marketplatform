@@ -82,7 +82,7 @@ public class PurchaseOrderServiceImpl extends EntityServiceImpl1<PurchaseOrder> 
         
         List<PurchaseorderDetail> purchaseorderDetailList= new ArrayList<>();
         for(ShippingCartItemPDto shippingCartItemPDto: shoppingCartPDto.getItems()){
-            Product product= productService.findById(shippingCartItemPDto.getProductId());
+            Product product= productService.loadById(shippingCartItemPDto.getProductId());
             
             PurchaseorderDetail purchaseorderDetail= new PurchaseorderDetail();
             purchaseorderDetail.setProduct(product);

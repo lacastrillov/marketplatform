@@ -76,7 +76,7 @@ public class TableColumnRestController extends RestController {
             JSONObject jsonResult= new JSONObject(new String(result, StandardCharsets.UTF_8));
             if(jsonResult.getBoolean("success")){
                 JSONObject jsonColumn= jsonResult.getJSONObject("data");
-                TableColumn tableColumn= tableColumnService.findById(jsonColumn.getInt("id"));
+                TableColumn tableColumn= tableColumnService.loadById(jsonColumn.getInt("id"));
                 String tableName= tableColumn.getLeadTable().getTableAlias();
                 
                 GenericTableColumn column= new GenericTableColumn();
@@ -118,7 +118,7 @@ public class TableColumnRestController extends RestController {
                 String columnAlias= formatColumnAlias(jsonObject.getString("columnAlias"));
                 jsonObject.put("columnAlias", columnAlias);
             }
-            TableColumn tableColumn= tableColumnService.findById(jsonObject.getInt("id"));
+            TableColumn tableColumn= tableColumnService.loadById(jsonObject.getInt("id"));
             oldColumnAlias= tableColumn.getColumnAlias();
             tableName= tableColumn.getLeadTable().getTableAlias();
         } catch (Exception e) {
@@ -160,7 +160,7 @@ public class TableColumnRestController extends RestController {
         String tableName="";
         String columnAlias= "";
         try {
-            TableColumn tableColumn= tableColumnService.findById(new Integer(idEntity));
+            TableColumn tableColumn= tableColumnService.loadById(new Integer(idEntity));
             columnAlias= tableColumn.getColumnAlias();
             tableName= tableColumn.getLeadTable().getTableAlias();
         } catch (Exception e) {

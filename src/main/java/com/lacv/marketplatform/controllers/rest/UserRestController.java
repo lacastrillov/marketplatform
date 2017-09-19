@@ -61,7 +61,7 @@ public class UserRestController extends RestSessionController {
         
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
-            User user = userService.findById(idParent);
+            User user = userService.loadById(idParent);
             user.setUrlPhoto(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             userService.update(user);
             

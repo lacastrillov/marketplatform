@@ -53,7 +53,7 @@ public class CategoryRestController extends RestController {
         
         try {
             String imageName= idParent + "_" +fileName.replaceAll(" ", "_");
-            Category category = categoryService.findById(idParent);
+            Category category = categoryService.loadById(idParent);
             category.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             categoryService.update(category);
             

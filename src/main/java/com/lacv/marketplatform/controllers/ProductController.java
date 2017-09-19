@@ -75,7 +75,7 @@ public class ProductController {
     public ModelAndView getProductDetails(@PathVariable String code) {
         ModelAndView mav = new ModelAndView("market/product/product_details");
         
-        Product product= productService.findUniqueByParameter("code", code);
+        Product product= productService.loadByParameter("code", code);
         Parameters p1= new Parameters();
         p1.whereEqual("product", product);
         p1.orderBy("order", "ASC");
@@ -126,7 +126,7 @@ public class ProductController {
         if(p.getEqualParameters().size()>0){
             if(p.getEqualParameters().containsKey("subCategory")){
                 Integer subCategoryId= ((SubCategory)p.getEqualParameters().get("subCategory")[1]).getId();
-                SubCategory subCategory= subCategoryService.findById(subCategoryId);
+                SubCategory subCategory= subCategoryService.loadById(subCategoryId);
                 if(subCategory!=null){
                     return subCategory.getName();
                 }

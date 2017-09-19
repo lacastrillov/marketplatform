@@ -64,7 +64,7 @@ public class ProductImageRestController extends RestController {
     public String saveFilePart(int slice, String fileName, String fileType, int fileSize, InputStream is, Object idEntity) {
         try {
             String imageName= idEntity + "_" +"product-image."+FilenameUtils.getExtension(fileName);
-            ProductImage productImage = productImageService.findById(idEntity);
+            ProductImage productImage = productImageService.loadById(idEntity);
             WebFile parentWebFile= getParentWebFile(productImage.getProduct().getId());
             
             productImage.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + parentWebFile.getPath() + parentWebFile.getName() + "/" + imageName);
@@ -82,7 +82,7 @@ public class ProductImageRestController extends RestController {
     public String saveResizedImage(String fileName, String fileType, int width, int height, int fileSize, InputStream is, Object idEntity){
         try {
             String imageName= idEntity + "_" + width + "x" + height + "_" +"product-image."+FilenameUtils.getExtension(fileName);
-            ProductImage productImage = productImageService.findById(idEntity);
+            ProductImage productImage = productImageService.loadById(idEntity);
             WebFile parentWebFile= getParentWebFile(productImage.getProduct().getId());
             webFileService.createByFileData(parentWebFile, 0, imageName, fileType, fileSize, is);
             

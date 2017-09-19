@@ -124,7 +124,7 @@ public class LeadTableRestController extends RestController {
                 String tableAlias= formatTableAlias(jsonObject.getString("tableAlias"));
                 jsonObject.put("tableAlias", tableAlias);
             }
-            LeadTable leadTable= leadTableService.findById(jsonObject.getInt("id"));
+            LeadTable leadTable= leadTableService.loadById(jsonObject.getInt("id"));
             oldTableAlias= leadTable.getTableAlias();
         } catch (Exception e) {
             LOGGER.error("update " + entityRef, e);

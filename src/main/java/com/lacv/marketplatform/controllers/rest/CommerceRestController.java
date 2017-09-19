@@ -53,7 +53,7 @@ public class CommerceRestController extends RestController {
         
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
-            Commerce commerce = commerceService.findById(idEntity);
+            Commerce commerce = commerceService.loadById(idEntity);
             commerce.setCommerceImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             commerceService.update(commerce);
             

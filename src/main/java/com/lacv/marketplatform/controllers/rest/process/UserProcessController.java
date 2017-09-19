@@ -81,7 +81,7 @@ public class UserProcessController extends RestProcessController {
         BasicResultDto result= new BasicResultDto();
         result.setUsername(createPassword.getUsername());
         
-        User user= userService.findUniqueByParameter("username", createPassword.getUsername());
+        User user= userService.loadByParameter("username", createPassword.getUsername());
         
         result.setSuccess(false);
         if(user!=null){
@@ -128,7 +128,7 @@ public class UserProcessController extends RestProcessController {
     public BasicResultDto registerUser(RegisterUserPDto registerUserPDto){
         BasicResultDto result= new BasicResultDto();
         
-        User user= userService.findUniqueByParameter("email", registerUserPDto.getEmail());
+        User user= userService.loadByParameter("email", registerUserPDto.getEmail());
         result.setUsername(registerUserPDto.getEmail());
         if(user==null){
             user= new User();
@@ -145,7 +145,7 @@ public class UserProcessController extends RestProcessController {
             
             userService.create(user);
             
-            Role role= roleService.findUniqueByParameter("name", WebConstants.CLIENT_ROLE);
+            Role role= roleService.loadByParameter("name", WebConstants.CLIENT_ROLE);
             UserRole userRole= new UserRole();
             userRole.setUser(user);
             userRole.setRole(role);

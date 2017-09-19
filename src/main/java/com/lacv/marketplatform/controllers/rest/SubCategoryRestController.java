@@ -53,7 +53,7 @@ public class SubCategoryRestController extends RestController {
         
         try {
             String imageName= idEntity + "_" +fileName.replaceAll(" ", "_");
-            SubCategory subCategory = subCategoryService.findById(idEntity);
+            SubCategory subCategory = subCategoryService.loadById(idEntity);
             subCategory.setImage(webConstants.LOCAL_DOMAIN + WebConstants.ROOT_FOLDER + path + imageName);
             subCategoryService.update(subCategory);
             

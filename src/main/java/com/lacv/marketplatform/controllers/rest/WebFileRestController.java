@@ -65,7 +65,7 @@ public class WebFileRestController extends RestController {
             WebFile webFile = null;
             WebFile parentWebFile = null;
             if(jsonObject.has("webFile")){
-                parentWebFile= webFileService.findById(jsonObject.getLong("webFile"));
+                parentWebFile= webFileService.loadById(jsonObject.getLong("webFile"));
             }
 
             if (jsonObject.getString("type").equals(WebFileType.folder.name())) {
@@ -90,7 +90,7 @@ public class WebFileRestController extends RestController {
         JSONObject jsonObject = new JSONObject(data);
 
         if (jsonObject.has("id") && jsonObject.has("name")) {
-            WebFile webFile = webFileService.findById(jsonObject.getLong("id"));
+            WebFile webFile = webFileService.loadById(jsonObject.getLong("id"));
             if (!webFile.getName().equals(jsonObject.getString("name"))) {
                 String location = webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + webFile.getPath();
                 FileService.renameFile(location + webFile.getName(), location + jsonObject.getString("name"));
@@ -108,12 +108,12 @@ public class WebFileRestController extends RestController {
         String resultData;
         try{
             Long destWebFileId= jsonObject.getJSONObject("uv").getLong("webFile");
-            WebFile destWebFile= webFileService.findById(destWebFileId);
+            WebFile destWebFile= webFileService.loadById(destWebFileId);
             String destLocation= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + ((destWebFile!=null)?destWebFile.getPath():"");
             
             JSONArray fileIdToMove= jsonObject.getJSONObject("in").getJSONArray("id");
             for(int i=0; i<fileIdToMove.length(); i++){
-                WebFile sourceWebFile= webFileService.findById(fileIdToMove.getLong(i));
+                WebFile sourceWebFile= webFileService.loadById(fileIdToMove.getLong(i));
                 String sourceLocation= webConstants.LOCAL_DIR + WebConstants.ROOT_FOLDER + sourceWebFile.getPath();
                 File sourceFile= new File(sourceLocation + sourceWebFile.getName());
                 File destFile= new File(destLocation + ((destWebFile!=null)?destWebFile.getName():""));
@@ -154,7 +154,7 @@ public class WebFileRestController extends RestController {
         try {
             WebFile parentWebFile = null;
             if (!idParent.toString().equals("undefined")) {
-                parentWebFile = webFileService.findById(new Long(idParent.toString()));
+                parentWebFile = webFileService.loadById(new Long(idParent.toString()));
             }
             webFileService.createByFileData(parentWebFile, slice, fileName, fileType, fileSize, filePart);
 
