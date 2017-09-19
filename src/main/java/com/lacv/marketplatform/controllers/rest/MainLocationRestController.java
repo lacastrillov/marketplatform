@@ -7,7 +7,7 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.lacv.marketplatform.mappers.MainLocationMapper;
 import com.lacv.marketplatform.services.MainLocationService;
 import javax.annotation.PostConstruct;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/mainLocation")
-public class MainLocationRestController extends RestController {
+public class MainLocationRestController extends RestEntityController {
     
     @Autowired
     MainLocationService mainLocationService;

@@ -10,7 +10,7 @@ package com.lacv.marketplatform.controllers.rest;
 import com.dot.gcpbasedot.components.TableColumnsConfig;
 import com.lacv.marketplatform.mappers.TableColumnMapper;
 import com.lacv.marketplatform.services.TableColumnService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
 import com.dot.gcpbasedot.util.Formats;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value="/rest/tableColumn")
-public class TableColumnRestController extends RestController {
+public class TableColumnRestController extends RestEntityController {
     
     @Autowired
     TableColumnService tableColumnService;

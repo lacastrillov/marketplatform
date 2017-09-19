@@ -9,7 +9,7 @@ package com.lacv.marketplatform.controllers.rest;
 
 import com.lacv.marketplatform.mappers.CategoryMapper;
 import com.lacv.marketplatform.services.CategoryService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.Category;
 import com.lacv.marketplatform.entities.WebFile;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/category")
-public class CategoryRestController extends RestController {
+public class CategoryRestController extends RestEntityController {
     
     @Autowired
     CategoryService categoryService;

@@ -9,7 +9,7 @@ import com.lacv.marketplatform.components.WebConstants;
 import com.lacv.marketplatform.entities.WebFile;
 import com.lacv.marketplatform.mappers.WebFileMapper;
 import com.lacv.marketplatform.services.WebFileService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.dot.gcpbasedot.dao.Parameters;
 import com.dot.gcpbasedot.enums.WebFileType;
 import com.dot.gcpbasedot.util.FileService;
@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/rest/webFile")
-public class WebFileRestController extends RestController {
+public class WebFileRestController extends RestEntityController {
 
     @Autowired
     WebFileService webFileService;

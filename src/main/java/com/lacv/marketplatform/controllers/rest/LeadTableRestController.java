@@ -8,7 +8,7 @@ package com.lacv.marketplatform.controllers.rest;
 
 import com.lacv.marketplatform.mappers.LeadTableMapper;
 import com.lacv.marketplatform.services.LeadTableService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.dot.gcpbasedot.dto.GenericTableColumn;
 import com.dot.gcpbasedot.service.JdbcDirectService;
 import com.dot.gcpbasedot.util.Formats;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value="/rest/leadTable")
-public class LeadTableRestController extends RestController {
+public class LeadTableRestController extends RestEntityController {
     
     @Autowired
     LeadTableService leadTableService;

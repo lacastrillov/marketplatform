@@ -9,7 +9,7 @@ package com.lacv.marketplatform.controllers.rest;
 
 import com.lacv.marketplatform.mappers.MailMapper;
 import com.lacv.marketplatform.services.MailService;
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/mail")
-public class MailRestController extends RestController {
+public class MailRestController extends RestEntityController {
     
     @Autowired
     MailService mailService;

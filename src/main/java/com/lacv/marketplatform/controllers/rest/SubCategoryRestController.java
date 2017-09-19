@@ -7,7 +7,7 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.lacv.marketplatform.entities.SubCategory;
 import com.lacv.marketplatform.mappers.SubCategoryMapper;
 import com.lacv.marketplatform.services.SubCategoryService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/subCategory")
-public class SubCategoryRestController extends RestController {
+public class SubCategoryRestController extends RestEntityController {
     
     @Autowired
     SubCategoryService subCategoryService;

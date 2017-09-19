@@ -7,7 +7,7 @@
 package com.lacv.marketplatform.controllers.rest;
 
 
-import com.dot.gcpbasedot.controller.RestController;
+import com.dot.gcpbasedot.controller.RestEntityController;
 import com.lacv.marketplatform.entities.Commerce;
 import com.lacv.marketplatform.mappers.CommerceMapper;
 import com.lacv.marketplatform.services.CommerceService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/rest/commerce")
-public class CommerceRestController extends RestController {
+public class CommerceRestController extends RestEntityController {
     
     @Autowired
     CommerceService commerceService;
