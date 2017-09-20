@@ -40,6 +40,7 @@ public class ContactConfigDto {
     @TypeFormField(FieldType.TEXT_AREA)
     private String comments;
     
+    @Order(5)
     @TextField("Usuario")
     private UsuarioPDto usuario;
     

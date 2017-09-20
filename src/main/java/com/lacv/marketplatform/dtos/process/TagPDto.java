@@ -6,6 +6,7 @@
 package com.lacv.marketplatform.dtos.process;
 
 import com.dot.gcpbasedot.annotation.NotNull;
+import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.enums.FieldType;
 
@@ -22,6 +23,9 @@ public class TagPDto {
     
     @TypeFormField(value = FieldType.LIST, data = {"Active", "Inactive", "Locked", "Deleted"})
     private String estado;
+    
+    @TextField("Visible")
+    private boolean visible;
     
     
     public TagPDto(){
@@ -60,6 +64,13 @@ public class TagPDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
     
 }
