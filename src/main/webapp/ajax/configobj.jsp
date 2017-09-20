@@ -385,7 +385,7 @@ function GeneralConfigExtView(parentExtController, parentExtView){
                     //show visible list
                     var itemsGroup=Ext.getCmp('locations');
                     setTimeout(function(){
-                        for(var i=0; i<9; i++){
+                        for(var i=1; i<9; i++){
                             var itemEntity=Ext.getCmp('locations['+i+']');
                             if(itemEntity.query){
                               itemEntity.query('.field').forEach(function(c){
@@ -396,8 +396,8 @@ function GeneralConfigExtView(parentExtController, parentExtView){
                             }else{
                                 var text=itemEntity.getValue();
                                 if(text!==""){
-                                    itemEntity.setVisible(true);
-                                    itemEntity.setDisabled(false);
+                                    //itemEntity.setVisible(true);
+                                    //itemEntity.setDisabled(false);
                                     console.log("##2. ");
                                     console.log(text);
                                     itemsGroup.itemTop=i;
@@ -657,7 +657,7 @@ function GeneralConfigExtController(parentExtController, parentExtView){
     
     Instance.showListItems= function(formComponent){
         formComponent.query('.fieldset').forEach(function(c){
-            c.setDisabled(true);
+            console.log(c);
         });
     };
 

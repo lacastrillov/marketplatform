@@ -10,6 +10,9 @@ import com.dot.gcpbasedot.annotation.Order;
 import com.dot.gcpbasedot.annotation.TextField;
 import com.dot.gcpbasedot.annotation.TypeFormField;
 import com.dot.gcpbasedot.enums.FieldType;
+import com.lacv.marketplatform.dtos.process.TagPDto;
+import com.lacv.marketplatform.dtos.process.UsuarioPDto;
+import java.util.List;
 
 /**
  *
@@ -36,6 +39,11 @@ public class ContactConfigDto {
     @TextField("Comentarios")
     @TypeFormField(FieldType.TEXT_AREA)
     private String comments;
+    
+    @TextField("Usuario")
+    private UsuarioPDto usuario;
+    
+    private List<TagPDto> tags;
     
     
     public ContactConfigDto(){
@@ -71,6 +79,22 @@ public class ContactConfigDto {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public UsuarioPDto getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioPDto usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<TagPDto> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagPDto> tags) {
+        this.tags = tags;
     }
     
 }
