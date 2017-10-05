@@ -37,7 +37,7 @@ public class ProductController {
     
     
     @RequestMapping(value = "/listado", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView getProductList(@RequestParam(required = false) String filter,
+    public ModelAndView getProductList(@RequestParam(required = false) String filter, @RequestParam(required = false) String query,
             @RequestParam(required = false) Long limit, @RequestParam(required = false) Long page,
             @RequestParam(required = false) String sort, @RequestParam(required = false) String dir, HttpServletRequest request) {
 
@@ -48,8 +48,10 @@ public class ProductController {
         if (filter != null && !filter.equals("")) {
             p = FilterQueryJSON.processFilters(filter, Product.class);
         }
+        if(query!=null && !query.equals("")){
+            p.whereQuery(new String[]{"code","name","description","brand"}, query);
+        }
         p.whereEqual("status", "Publicado");
-        
         p.setPage((page != null) ? page : 1L);
         p.setMaxResults((limit != null) ? limit : 9L);
         p.orderBy((sort != null) ? sort : "registerDate", (dir != null) ? dir : "DESC");
