@@ -5,6 +5,7 @@
  */
 package com.lacv.marketplatform.entities;
 
+import com.dot.gcpbasedot.annotation.QueryParam;
 import com.dot.gcpbasedot.domain.BaseEntity;
 import java.util.Date;
 import java.util.List;
@@ -41,11 +42,14 @@ public class User implements BaseEntity {
     private Integer id;
     @Size(max = 100)
     @Column(name = "first_name")
+    @QueryParam
     private String firstName;
     @Size(max = 100)
     @Column(name = "last_name")
+    @QueryParam
     private String lastName;
     @Column(name = "id_document")
+    @QueryParam
     private Long idDocument;
     @Size(max = 10)
     @Column(name = "document_type")
@@ -65,6 +69,7 @@ public class User implements BaseEntity {
     private String city;
     @Basic(optional = false)
     @Column(name = "email")
+    @QueryParam
     private String email;
     @Column(name = "gender")
     private String gender;
@@ -82,6 +87,7 @@ public class User implements BaseEntity {
     @Column(name = "verified")
     private Boolean verified;
     @Column(name = "username")
+    @QueryParam
     private String username;
     @Column(name = "password")
     private String password;
