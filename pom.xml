@@ -40,17 +40,6 @@
             <artifactId>jmagrexs</artifactId>
             <version>1.0.1</version>
         </dependency>
-        <!--<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-            <version>1.2.1</version>
-        </dependency>-->
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>javax.servlet.jsp.jstl</artifactId>
@@ -79,16 +68,6 @@
             <version>${appengine.target.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-            <version>7.4.3</version>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>-->
         
         <!-- ####################### SPRING ini ####################### -->
         <dependency>
@@ -235,7 +214,6 @@
         <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory> 
         <finalName>ROOT</finalName>
         <resources>
-            
             <!-- Para que los resources sean procesados -->
             <resource>
                 <directory>src/main/resources</directory>
@@ -252,9 +230,17 @@
                     <include>**/*.p12</include>
                 </includes>
             </resource>
-
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -275,24 +261,7 @@
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <!--<plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>${appengine.target.version}</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>-->
+
         </plugins>
     </build>
 
